@@ -108,9 +108,21 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
-  "defaultProject": "if137-flights-info"
+  "defaultProject": "if137-flights-info",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }
