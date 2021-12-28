@@ -1,0 +1,10 @@
+{
+  "/": {
+    "target": "https://api.travelpayouts.com/v1/",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/": ""
+    }
+  }
+}
