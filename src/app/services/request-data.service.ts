@@ -9,9 +9,7 @@ import { take } from 'rxjs/operators';
 
 @Injectable()
 export class RequestDataService {
-  baseUrl: string;
-  constructor(private httpClient: HttpClient, @Inject(DOCUMENT) private document: Document) {
-    this.baseUrl = this.document.location.origin;
+  constructor(private httpClient: HttpClient) {
   }
 
   getCountriesData(): Observable<any> {
@@ -31,17 +29,4 @@ export class RequestDataService {
       take(1)
     )
   }
-
-  // exampleRequestGetChipTickets() {
-  //   const headerDict = {
-  //     'Access-Control-Allow-Origin': '*',
-  //     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  //     'x-access-token': 'a178f5b65a824a9f54d30f2f37421ac2'
-  //   }
-  //
-  //   const requestOptions = {
-  //     headers: new HttpHeaders(headerDict)
-  //   };
-  //   return this.httpClient.request('get', this.baseUrl + '/prices/cheap?origin=LWO&destination=HKT&token=PutYourTokenHere', requestOptions)
-  // }
 }
