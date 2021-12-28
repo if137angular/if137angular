@@ -72,6 +72,9 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
+            "options": {
+              "proxyConfig": "./proxy.conf.json"
+            },
             "production": {
               "browserTarget": "if137-flights-info:build:production"
             },
