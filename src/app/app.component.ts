@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from "@ngxs/store";
-import { GetAirports, GetCities, GetCountries } from "src/app/store/request-data.action";
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,9 +6,8 @@ import { GetAirports, GetCities, GetCountries } from "src/app/store/request-data
 })
 export class AppComponent implements OnInit {
 
-  constructor(private store: Store) {
+  constructor() {
   }
-  ngOnInit() {
-    this.store.dispatch([new GetCountries(), new GetCities(), new GetAirports()]);
-  }
+
+  ngOnInit() {}
 }

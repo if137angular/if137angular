@@ -32,16 +32,16 @@ export class RequestDataService {
     )
   }
 
-  // exampleRequestGetChipTickets() {
-  //   const headerDict = {
-  //     'Access-Control-Allow-Origin': '*',
-  //     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  //     'x-access-token': 'a178f5b65a824a9f54d30f2f37421ac2'
-  //   }
-  //
-  //   const requestOptions = {
-  //     headers: new HttpHeaders(headerDict)
-  //   };
-  //   return this.httpClient.request('get', this.baseUrl + '/prices/cheap?origin=LWO&destination=HKT&token=PutYourTokenHere', requestOptions)
-  // }
+  exampleRequestGetChipTickets() {
+    const headerDict = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'x-access-token': 'a178f5b65a824a9f54d30f2f37421ac2'
+    }
+  
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict)
+    };
+    return this.httpClient.request('get', this.baseUrl + '/prices/cheap?origin=LWO&destination=HKT&token=4df3f89d6861e092b8f5d30e3d49cde8', requestOptions)
+  }
 }
