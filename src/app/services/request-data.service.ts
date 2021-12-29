@@ -42,6 +42,6 @@ export class RequestDataService {
     const requestOptions = {
       headers: new HttpHeaders(headerDict)
     };
-    return this.httpClient.request('get', this.baseUrl + '/prices/cheap?origin=LWO&destination=HKT&token=4df3f89d6861e092b8f5d30e3d49cde8', requestOptions)
+    return this.httpClient.request('get', this.baseUrl + '/prices/direct?origin=MOW&destination=LED&token=4df3f89d6861e092b8f5d30e3d49cde8', requestOptions)
   }
 }
