@@ -123,6 +123,7 @@
   },
   "defaultProject": "if137-flights-info",
   "cli": {
+    "analytics": false,
     "defaultCollection": "@angular-eslint/schematics"
   }
 }
