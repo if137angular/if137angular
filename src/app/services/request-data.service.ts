@@ -32,7 +32,7 @@ export class RequestDataService {
     )
   }
 
-  exampleRequestGetChipTickets() {
+  RequestGetNonStopTickets() {
     const headerDict = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',

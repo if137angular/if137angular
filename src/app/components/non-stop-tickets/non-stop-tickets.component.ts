@@ -15,7 +15,7 @@ export class NonStopTicketsComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch([new GetCountries(), new GetCities(), new GetAirports()]);
-    this.requestDataService.exampleRequestGetChipTickets().subscribe((res) => {
+    this.requestDataService.RequestGetNonStopTickets().subscribe((res) => {
       console.log(res);
     })
   }
