@@ -1,1 +1,12 @@
-<p>special-offers works!</p>
+<mat-card class="special-offers">
+  <div class="special-offers__header">
+    <h2 class="special-offers__title" *ngFor="let item of offers.data">
+      {{ item.title }}
+    </h2>
+  </div>
+
+  <div class="special-offers__content"></div>
+  <div class="special-offers__actions">
+    <button mat-flat-button color="primary">MORE</button>
+  </div>
+</mat-card>

@@ -1,0 +1,15 @@
+.special-offers {
+  max-width: 500px;
+  margin: 100px auto;
+  background-color: rgb(248, 248, 248);
+  &__header {
+    width: auto;
+    padding: 10px;
+    background-color: rgb(52, 192, 227);
+  }
+  &__title {
+    text-align: center;
+    margin: 0;
+    color: white;
+  }
+}

@@ -1,6 +1,6 @@
 {
   "/": {
-    "target": "https://api.travelpayouts.com/v1/",
+    "target": "https://api.travelpayouts.com/aviasales/v3",
     "secure": true,
     "changeOrigin": true,
     "pathRewrite": {

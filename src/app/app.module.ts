@@ -12,6 +12,9 @@ import { RequestDataService } from "src/app/services/request-data.service";
 import { HttpClientModule } from "@angular/common/http";
 import { SpecialOffersComponent } from './components/special-offers/special-offers.component';
 
+
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +28,11 @@ import { SpecialOffersComponent } from './components/special-offers/special-offe
     NgxsModule.forRoot(AppState, {
       developmentMode: true
     }),
-    NgxsLoggerPluginModule.forRoot()
+    NgxsLoggerPluginModule.forRoot(),
+
+
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [RequestDataService],
   bootstrap: [AppComponent]

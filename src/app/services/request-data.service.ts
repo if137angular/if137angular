@@ -36,12 +36,12 @@ export class RequestDataService {
     const headerDict = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'x-access-token': 'a178f5b65a824a9f54d30f2f37421ac2'
+      'x-access-token': 'b482025a8bf39817b6b6f219686b4799'
     }
 
     const requestOptions = {
       headers: new HttpHeaders(headerDict)
     };
-    return this.httpClient.request('get', this.baseUrl + '/prices/cheap?origin=LWO&destination=HKT&token=a178f5b65a824a9f54d30f2f37421ac2', requestOptions)
+    return this.httpClient.request('get', this.baseUrl + '/get_special_offers?token=b482025a8bf39817b6b6f219686b4799', requestOptions)
   }
 }
