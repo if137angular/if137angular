@@ -10,10 +10,12 @@ import { AppState } from "src/app/store/app.state";
 import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
 import { RequestDataService } from "src/app/services/request-data.service";
 import { HttpClientModule } from "@angular/common/http";
+import { SpecialOffersComponent } from './components/special-offers/special-offers.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SpecialOffersComponent
   ],
   imports: [
     BrowserModule,
