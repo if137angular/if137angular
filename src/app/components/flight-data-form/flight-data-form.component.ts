@@ -11,5 +11,9 @@ export class FlightDataFormComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
+  onSubmitForm() {
+  }
+
 
 }
