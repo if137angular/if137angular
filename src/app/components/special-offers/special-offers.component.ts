@@ -8,16 +8,27 @@ import { RequestDataService } from 'src/app/services/request-data.service';
 })
 export class SpecialOffersComponent implements OnInit {
 
-  offers: any = [];
+  offers: any = {};
 
   constructor(private specialOffersService: RequestDataService) { }
 
   ngOnInit(): void {
     this.specialOffersService.exampleRequestGetChipTickets().subscribe((offers => {
       this.offers = offers;
-      console.log('AAAAAAAAAAAAAAAAAA', offers)
+
+      console.log('AAAAAAAAAAAAAAAAAA', this.offers.data[0].departure_at);
     }));
 
   }
+
+  getTime(time: any) {
+    let currentDate = Date.now();
+    let departure = Date.parse(time);
+    let left = departure - currentDate;
+    let days = left / 1000 / 60 / 60 / 24;
+    return Math.round(days);
+
+  }
+
 
 }

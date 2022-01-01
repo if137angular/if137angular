@@ -1,11 +1,29 @@
 <mat-card class="special-offers" *ngFor="let item of offers.data">
-  <div class="special-offers__header">
+  <div
+    class="special-offers__header"
+    [ngStyle]="{ 'background-color': '#' + item.color }"
+  >
     <h2 class="special-offers__title">
       {{ item.title }}
     </h2>
   </div>
 
-  <div class="special-offers__content"></div>
+  <div class="special-offers__content">
+    <div class="special-offers__logo">
+      <img
+        src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png"
+        alt="{{ item.airline_title }}"
+      />
+    </div>
+    <div class="special-offers__price-date">
+      <span class="special-offers__price"
+        >Prices start from {{ item.price }}&#36;</span
+      >
+      <span class="special-offers__departure"
+        >Remaining {{ getTime(item.departure_at) }} days</span
+      >
+    </div>
+  </div>
   <div class="special-offers__actions">
     <button mat-flat-button color="primary">MORE</button>
   </div>

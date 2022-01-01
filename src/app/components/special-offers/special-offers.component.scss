@@ -5,11 +5,25 @@
   &__header {
     width: auto;
     padding: 10px;
-    background-color: rgb(52, 192, 227);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
   }
   &__title {
     text-align: center;
     margin: 0;
     color: white;
+  }
+
+  &__content {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-content: center;
+  }
+
+  &__price-date {
+    display: flex;
+    flex-direction: column;
   }
 }
