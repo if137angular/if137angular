@@ -1,6 +1,6 @@
-<mat-card class="special-offers">
+<mat-card class="special-offers" *ngFor="let item of offers.data">
   <div class="special-offers__header">
-    <h2 class="special-offers__title" *ngFor="let item of offers.data">
+    <h2 class="special-offers__title">
       {{ item.title }}
     </h2>
   </div>
