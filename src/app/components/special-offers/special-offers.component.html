@@ -9,7 +9,11 @@
   </div>
 
   <div class="special-offers__content">
-    <div class="special-offers__logo">
+    <div
+      class="special-offers__logo mat-tooltip-panel-right"
+      matTooltipPosition="right"
+      matTooltip="{{ item.airline_title }}"
+    >
       <img
         src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png"
         alt="{{ item.airline_title }}"
@@ -26,6 +30,8 @@
   </div>
   <p class="special-offers__text-title">{{ item.title }}</p>
   <div class="special-offers__actions">
-    <button mat-flat-button color="primary">show details</button>
+    <button (click)="gotToLink(item.link)" mat-flat-button color="primary">
+      show details
+    </button>
   </div>
 </mat-card>

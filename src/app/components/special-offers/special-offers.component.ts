@@ -30,5 +30,10 @@ export class SpecialOffersComponent implements OnInit {
 
   }
 
+  gotToLink(link: any) {
+    // window.location.href = 'https://app.travelpayouts.com' + link;
+    window.open('https://www.aviasales.ua' + link, '_blank')
+  }
+
 
 }

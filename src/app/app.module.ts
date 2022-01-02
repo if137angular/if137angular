@@ -15,6 +15,7 @@ import { SpecialOffersComponent } from './components/special-offers/special-offe
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +33,8 @@ import { MatButtonModule } from '@angular/material/button';
 
 
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTooltipModule
   ],
   providers: [RequestDataService],
   bootstrap: [AppComponent]
