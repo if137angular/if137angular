@@ -1,7 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { FirstComponent } from './components/forTest/first/first.component';
+import { SecondComponent } from './components/forTest/second/second.component';
+import { ThirdComponent } from './components/forTest/third/third.component';
+
+export const routes: Routes = [
+  {path: '', component: FirstComponent, data: {tab: 'First'}},
+  {path: 'second', component: SecondComponent, data: {tab: 'Second'}},
+  {path: 'third', component: ThirdComponent, data: {tab: 'Third'}}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
