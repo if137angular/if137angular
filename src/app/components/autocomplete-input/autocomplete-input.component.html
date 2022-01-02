@@ -7,20 +7,8 @@
         </mat-option>
       </mat-autocomplete>
 
-      <mat-label>Type country</mat-label>
+      <mat-label>{{text}}</mat-label>
       <input matInput [formControl]="searchItem" [matAutocomplete]="countryOrigin" />
-    </mat-form-field>
-  </form>
-
-  <form class="example-form">
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-autocomplete #countryDestination="matAutocomplete">
-        <mat-option [value]="country" *ngFor="let country of filteredOptions | async">{{country}}
-        </mat-option>
-      </mat-autocomplete>
-
-      <mat-label>Type country</mat-label>
-      <input matInput [formControl]="searchItem" [matAutocomplete]="countryDestination" />
     </mat-form-field>
   </form>
 

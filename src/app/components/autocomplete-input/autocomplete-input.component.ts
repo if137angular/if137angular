@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -10,6 +10,11 @@ import { map, startWith } from 'rxjs/operators';
   styleUrls: ['./autocomplete-input.component.scss']
 })
 export class AutocompleteInputComponent implements OnInit {
+  @Input() text: string;
+  @Input() color: string;
+  @Output() btnClick = new EventEmitter();
+
+
   title = "countries";
   countries: string[] = [
     "New York",
