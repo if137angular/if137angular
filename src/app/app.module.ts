@@ -16,10 +16,12 @@ import { SpecialOffersComponent } from './components/special-offers/special-offe
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AutocompleteOriginComponent } from './components/special-offers/autocomplete-origin/autocomplete-origin.component';
 @NgModule({
   declarations: [
     AppComponent,
-    SpecialOffersComponent
+    SpecialOffersComponent,
+    AutocompleteOriginComponent
   ],
   imports: [
     BrowserModule,
