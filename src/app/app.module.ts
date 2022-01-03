@@ -11,9 +11,22 @@ import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
 import { RequestDataService } from "src/app/services/request-data.service";
 import { HttpClientModule } from "@angular/common/http";
 
+import {MatTabsModule} from '@angular/material/tabs'; // this import for tabs material
+
+import { NavComponent } from './components/nav/nav.component';
+
+// code below only for testing
+import { FirstComponent } from './components/forTest/first/first.component';
+import { SecondComponent } from './components/forTest/second/second.component';
+import { ThirdComponent } from './components/forTest/third/third.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavComponent,
+    FirstComponent,
+    SecondComponent,
+    ThirdComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +36,8 @@ import { HttpClientModule } from "@angular/common/http";
     NgxsModule.forRoot(AppState, {
       developmentMode: true
     }),
-    NgxsLoggerPluginModule.forRoot()
+    NgxsLoggerPluginModule.forRoot(),
+    MatTabsModule
   ],
   providers: [RequestDataService],
   bootstrap: [AppComponent]
