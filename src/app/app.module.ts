@@ -19,6 +19,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { FirstComponent } from './components/forTest/first/first.component';
 import { SecondComponent } from './components/forTest/second/second.component';
 import { ThirdComponent } from './components/forTest/third/third.component';
+import { FlightsInfoService } from "src/app/services/flights-info.service";
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { ThirdComponent } from './components/forTest/third/third.component';
     NgxsLoggerPluginModule.forRoot(),
     MatTabsModule
   ],
-  providers: [RequestDataService],
+  providers: [RequestDataService, FlightsInfoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
