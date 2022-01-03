@@ -16,7 +16,13 @@ import { SpecialOffersComponent } from './components/special-offers/special-offe
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+
 import { AutocompleteOriginComponent } from './components/special-offers/autocomplete-origin/autocomplete-origin.component';
+
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { FormControl } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +42,12 @@ import { AutocompleteOriginComponent } from './components/special-offers/autocom
 
     MatCardModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatAutocompleteModule,
+    FormControl,
+    MatFormFieldModule,
+
+
   ],
   providers: [RequestDataService],
   bootstrap: [AppComponent]

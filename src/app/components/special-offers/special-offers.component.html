@@ -1,7 +1,11 @@
+<app-autocomplete-origin></app-autocomplete-origin>
+
 <mat-card class="special-offers" *ngFor="let item of offers.data">
   <div
     class="special-offers__header"
-    [ngStyle]="{ 'background-color': '#' + item.color }"
+    [ngStyle]="{
+      'background-color': item.color !== '' ? '#' + item.color : '#08578f'
+    }"
   >
     <h2 class="special-offers__mini-title">
       {{ item.mini_title }}
