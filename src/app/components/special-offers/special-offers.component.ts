@@ -15,8 +15,6 @@ export class SpecialOffersComponent implements OnInit {
   ngOnInit(): void {
     this.specialOffersService.exampleRequestGetChipTickets().subscribe((offers => {
       this.offers = offers;
-
-      console.log('AAAAAAAAAAAAAAAAAA', this.offers.data[0].departure_at);
     }));
 
   }
@@ -27,13 +25,9 @@ export class SpecialOffersComponent implements OnInit {
     let left = departure - currentDate;
     let days = left / 1000 / 60 / 60 / 24;
     return Math.round(days);
-
   }
 
   gotToLink(link: any) {
-    // window.location.href = 'https://app.travelpayouts.com' + link;
     window.open('https://www.aviasales.ua' + link, '_blank')
   }
-
-
 }
