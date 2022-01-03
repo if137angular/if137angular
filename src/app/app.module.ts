@@ -23,6 +23,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
     MatFormFieldModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatInputModule
 
   ],
   providers: [RequestDataService],
