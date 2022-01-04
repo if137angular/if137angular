@@ -22,8 +22,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { FlightDataFormComponent } from './components/flight-data-form/flight-data-form.component';
 import { AutocompleteInputComponent } from './components/autocomplete-input/autocomplete-input.component';
 import { ButtonComponent } from './components/button/button.component';
-import { DatepickerComponent } from './components/datepicker/datepicker.component';
-import { TransfersComponent } from './components/transfers/transfers.component';
+// import { DatepickerComponent } from './components/datepicker/datepicker.component';
 
 import { MatTabsModule } from '@angular/material/tabs'; // this import for tabs material
 
@@ -41,8 +40,6 @@ import { FlightsInfoService } from "src/app/services/flights-info.service";
     FlightDataFormComponent,
     AutocompleteInputComponent,
     ButtonComponent,
-    DatepickerComponent,
-    TransfersComponent,
     NavComponent,
     FirstComponent,
     SecondComponent,
