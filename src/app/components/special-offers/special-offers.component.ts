@@ -19,13 +19,13 @@ export class SpecialOffersComponent implements OnInit {
 
   }
 
-  getTime(time: any) {
-    let currentDate = Date.now();
-    let departure = Date.parse(time);
-    let left = departure - currentDate;
-    let days = left / 1000 / 60 / 60 / 24;
-    return Math.round(days);
-  }
+  // getTime(time: any) {
+  //   let currentDate = Date.now();
+  //   let departure = Date.parse(time);
+  //   let left = departure - currentDate;
+  //   let days = left / 1000 / 60 / 60 / 24;
+  //   return Math.round(days);
+  // }
 
   gotToLink(link: any) {
     window.open('https://www.aviasales.ua' + link, '_blank')

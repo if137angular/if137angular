@@ -28,8 +28,8 @@
       <span class="special-offers__price"
         >from <b>{{ item.price }}&#36;</b></span
       >
-      <span class="special-offers__departure"
-        >departure in <b>{{ getTime(item.departure_at) }}</b> days</span
+      <span class="special-offers__departure">
+        &#x23F0; <b>{{ item.departure_at | date }}</b></span
       >
     </div>
   </div>
