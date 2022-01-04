@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RequestDataService } from 'src/app/services/request-data.service';
+import { SpecialOffersService } from 'src/app/services/special-offers.service';
 
 @Component({
   selector: 'app-special-offers',
@@ -10,10 +10,10 @@ export class SpecialOffersComponent implements OnInit {
 
   offers: any = {};
 
-  constructor(private specialOffersService: RequestDataService) { }
+  constructor(private specialOffersService: SpecialOffersService) { }
 
   ngOnInit(): void {
-    this.specialOffersService.exampleRequestGetChipTickets().subscribe((offers => {
+    this.specialOffersService.getSpecialOffers().subscribe((offers => {
       this.offers = offers;
     }));
 
