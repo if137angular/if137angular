@@ -11,7 +11,7 @@ export class AutocopmpleteCityService {
 
   constructor(private http: HttpClient) { }
 
-  getCurrency(): Observable<any> {
+  getAutocompleteAPI(): Observable<any> {
     return this.http.get<any>(this.autocompleteAPI)
   }
 }

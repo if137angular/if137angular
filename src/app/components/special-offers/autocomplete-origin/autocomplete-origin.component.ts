@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { AutocopmpleteCityService } from './../../../services/autocopmplete-city.service';
 
-export interface User {
+export interface City {
   name: string;
 }
 
@@ -15,12 +16,17 @@ export interface User {
 export class AutocompleteOriginComponent implements OnInit {
 
   myControl = new FormControl();
-  options: User[] = [{ name: 'Mary' }, { name: 'Shelley' }, { name: 'Igor' }];
-  filteredOptions: Observable<User[]>;
+  options: City[] = [];
+  filteredOptions: Observable<City[]>;
 
-  constructor() { }
-
+  constructor(private getCityApi: AutocopmpleteCityService) { }
+  getCity: any = [];
   ngOnInit(): void {
+    this.getCityApi.getAutocompleteAPI().subscribe((offers => {
+      this.options = offers;
+    }));
+
+
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => (typeof value === 'string' ? value : value.name)),
@@ -28,11 +34,11 @@ export class AutocompleteOriginComponent implements OnInit {
     );
   }
 
-  displayFn(user: User): string {
-    return user && user.name ? user.name : '';
+  displayFn(City: City): string {
+    return City && City.name ? City.name : '';
   }
 
-  private _filter(name: string): User[] {
+  private _filter(name: string): City[] {
     const filterValue = name.toLowerCase();
 
     return this.options.filter(option => option.name.toLowerCase().includes(filterValue));
