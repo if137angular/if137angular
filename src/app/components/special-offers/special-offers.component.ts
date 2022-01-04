@@ -8,6 +8,8 @@ import { SpecialOffersService } from 'src/app/services/special-offers.service';
 })
 export class SpecialOffersComponent implements OnInit {
 
+  testEvent: any = '';
+
   offers: any = {};
 
   constructor(private specialOffersService: SpecialOffersService) { }
@@ -16,7 +18,6 @@ export class SpecialOffersComponent implements OnInit {
     this.specialOffersService.getSpecialOffers().subscribe((offers => {
       this.offers = offers;
     }));
-
   }
 
   // getTime(time: any) {
@@ -29,5 +30,10 @@ export class SpecialOffersComponent implements OnInit {
 
   gotToLink(link: any) {
     window.open('https://www.aviasales.ua' + link, '_blank')
+  }
+
+  testInput($event: any) {
+    this.testEvent = $event
+    console.log('aaaaa', $event);
   }
 }

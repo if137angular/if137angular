@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AutocopmpleteCityService } from './../../../services/autocopmplete-city.service';
+
 
 export interface City {
   name: string;
@@ -15,17 +16,19 @@ export interface City {
 })
 export class AutocompleteOriginComponent implements OnInit {
 
+  @Output() newGetInput = new EventEmitter<any>();
+
   myControl = new FormControl();
   options: City[] = [];
   filteredOptions: Observable<City[]>;
 
   constructor(private getCityApi: AutocopmpleteCityService) { }
   getCity: any = [];
+
   ngOnInit(): void {
     this.getCityApi.getAutocompleteAPI().subscribe((offers => {
       this.options = offers;
     }));
-
 
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -42,6 +45,12 @@ export class AutocompleteOriginComponent implements OnInit {
     const filterValue = name.toLowerCase();
 
     return this.options.filter(option => option.name.toLowerCase().includes(filterValue));
+  }
+
+  getInput($event: any) {
+    // console.log($event.target.value)
+
+    this.newGetInput.emit($event.target.value);
   }
 
 }

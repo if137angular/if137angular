@@ -6,6 +6,7 @@
       matInput
       [formControl]="myControl"
       [matAutocomplete]="auto"
+      (change)="getInput($event)"
     />
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
       <mat-option
