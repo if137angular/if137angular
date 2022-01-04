@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Store } from '@ngxs/store';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -24,11 +25,16 @@ export class AutocompleteInputComponent implements OnInit {
   searchItem = new FormControl();
   filteredOptions: Observable<string[]> = new Subject();
 
+  constructor(private store: Store) {
+
+  
+}
+
   ngOnInit() {
     this.filteredOptions = this.searchItem.valueChanges.pipe(
       startWith(""),
       map((item) => {
-        return this.countries.filter((country) => country.toLowerCase().includes(item))
+        return this.store.selectSnapshot("countries").filter((country: string) => country.toLowerCase().includes(item))
       })
     )
   }
