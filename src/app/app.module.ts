@@ -8,7 +8,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +25,16 @@ import { ButtonComponent } from './components/button/button.component';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { TransfersComponent } from './components/transfers/transfers.component';
 
+import { MatTabsModule } from '@angular/material/tabs'; // this import for tabs material
+
+import { NavComponent } from './components/nav/nav.component';
+
+// code below only for testing
+import { FirstComponent } from './components/forTest/first/first.component';
+import { SecondComponent } from './components/forTest/second/second.component';
+import { ThirdComponent } from './components/forTest/third/third.component';
+import { FlightsInfoService } from "src/app/services/flights-info.service";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +43,10 @@ import { TransfersComponent } from './components/transfers/transfers.component';
     ButtonComponent,
     DatepickerComponent,
     TransfersComponent,
+    NavComponent,
+    FirstComponent,
+    SecondComponent,
+    ThirdComponent
   ],
   imports: [
     BrowserModule,
@@ -51,9 +65,10 @@ import { TransfersComponent } from './components/transfers/transfers.component';
     NgxsModule.forRoot(AppState, {
       developmentMode: true
     }),
-    NgxsLoggerPluginModule.forRoot()
+    NgxsLoggerPluginModule.forRoot(),
+    MatTabsModule
   ],
-  providers: [RequestDataService],
+  providers: [RequestDataService, FlightsInfoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
