@@ -13,7 +13,6 @@ export class FlightDataFormComponent  {
     endDate: new FormControl({}),
     flightTransfers: new FormControl(false),
   });
-
   onSubmitForm() {
   }
 }
