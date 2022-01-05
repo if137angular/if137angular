@@ -34,6 +34,13 @@
             "prefix": "app",
             "style": "kebab-case"
           }
+        ],
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "variable",
+            "format": ["camelCase"]
+          }
         ]
       }
     },
@@ -44,7 +51,15 @@
       "extends": [
         "plugin:@angular-eslint/template/recommended"
       ],
-      "rules": {}
+      "rules": {
+        "@typescript-eslint/no-empty-function": ["error"],
+        "@typescript-eslint/no-useless-constructor": ["error"],
+        "@typescript-eslint/no-unused-vars": ["error"],
+        "no-multiple-empty-lines": ["error"],
+        "semi": ["error", "always"],
+        "quotes": ["error", "double"],
+        "no-trailing-spaces": ["error"]
+      }
     }
   ]
 }
