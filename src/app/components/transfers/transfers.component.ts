@@ -6,12 +6,6 @@ import {FormControl} from '@angular/forms';
   templateUrl: './transfers.component.html',
   styleUrls: ['./transfers.component.scss']
 })
-export class TransfersComponent implements OnInit {
+export class TransfersComponent {
   disableSelect = new FormControl(false);
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

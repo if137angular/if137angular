@@ -2,9 +2,10 @@
     <a mat-tab-link
         *ngFor="let link of links"
        (click)="activeLink = link.data.tab"
-       [active]="activeLink == link.data.tab"
+       [active]="activeLink === link.data.tab"
        routerLink={{link.path}}
-    > 
+    >
         {{link.data.tab}}
+        
     </a>
 </nav>
