@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { NgxsModule } from '@ngxs/store';
-import { AppState } from 'src/app/store/app.state';
+import { appState } from 'src/app/store/appState';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -33,7 +33,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { FirstComponent } from './components/forTest/first/first.component';
 import { SecondComponent } from './components/forTest/second/second.component';
 import { ThirdComponent } from './components/forTest/third/third.component';
-import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
+// import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +47,7 @@ import { AutocompleteComponent } from './components/autocomplete/autocomplete.co
     FirstComponent,
     SecondComponent,
     ThirdComponent,
-    AutocompleteComponent,
+    // AutocompleteComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +68,7 @@ import { AutocompleteComponent } from './components/autocomplete/autocomplete.co
     MatTabsModule,
     MatFormFieldModule,
 
-    NgxsModule.forRoot(AppState, {
+    NgxsModule.forRoot(appState, {
       developmentMode: true,
     }),
     NgxsLoggerPluginModule.forRoot(),
