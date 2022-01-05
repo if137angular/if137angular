@@ -21,6 +21,6 @@ export class FlightsInfoService {
     const requestOptions = {
       headers: new HttpHeaders(headerDict)
     };
-    return this.httpClient.request('get', this.baseUrl + 'v1/prices/direct?origin=MOW&destination=LED&token=4df3f89d6861e092b8f5d30e3d49cde8', requestOptions)
+    return this.httpClient.request('get', this.baseUrl + '/v1/prices/direct?origin=MOW&destination=LED&token=4df3f89d6861e092b8f5d30e3d49cde8', requestOptions)
   }
 }
