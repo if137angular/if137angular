@@ -20,8 +20,8 @@ import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
 import { RequestDataService } from "src/app/services/request-data.service";
 import { HttpClientModule } from "@angular/common/http";
 import { FlightDataFormComponent } from './components/flight-data-form/flight-data-form.component';
-import { AutocompleteInputComponent } from './components/autocomplete-input/autocomplete-input.component';
 import { ButtonComponent } from './components/button/button.component';
+import { AutocompleteInputComponent } from './components/autocomplete-input/autocomplete-input.component';
 
 import { MatTabsModule } from '@angular/material/tabs'; // this import for tabs material
 
