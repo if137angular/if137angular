@@ -11,16 +11,16 @@ export class FlightsInfoService {
     this.baseUrl = this.document.location.origin;
   }
 
-  exampleRequestGetChipTickets(): Observable<any> {
+  requestGetNonStopTickets(): Observable<any> {
     const headerDict = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'x-access-token': 'PutYourTokenHere'
+      'x-access-token': '4df3f89d6861e092b8f5d30e3d49cde8'
     }
 
     const requestOptions = {
       headers: new HttpHeaders(headerDict)
     };
-    return this.httpClient.request('get', this.baseUrl + '/v1/prices/cheap?origin=LWO&destination=HKT&token=PutYourTokenHere', requestOptions)
+    return this.httpClient.request('get', this.baseUrl + 'v1/prices/direct?origin=MOW&destination=LED&token=4df3f89d6861e092b8f5d30e3d49cde8', requestOptions)
   }
 }
