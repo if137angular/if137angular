@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsModule } from "@ngxs/store";
 
-import { AppState } from "src/app/store/app.state";
+import { appState } from "src/app/store/appState";
 import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
 import { RequestDataService } from "src/app/services/request-data.service";
 import { HttpClientModule } from "@angular/common/http";
@@ -59,7 +59,7 @@ import { FlightsInfoService } from "src/app/services/flights-info.service";
     MatSelectModule,
     MatCheckboxModule,
     HttpClientModule,
-    NgxsModule.forRoot(AppState, {
+    NgxsModule.forRoot(appState, {
       developmentMode: true
     }),
     NgxsLoggerPluginModule.forRoot(),
