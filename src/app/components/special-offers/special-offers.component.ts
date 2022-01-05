@@ -12,10 +12,12 @@ export class SpecialOffersComponent implements OnInit {
 
   offers: any = {};
 
+  originCity: string = 'LWO'
+
   constructor(private specialOffersService: SpecialOffersService) { }
 
   ngOnInit(): void {
-    this.specialOffersService.getSpecialOffers().subscribe((offers => {
+    this.specialOffersService.getSpecialOffers(this.originCity).subscribe((offers => {
       this.offers = offers;
     }));
   }

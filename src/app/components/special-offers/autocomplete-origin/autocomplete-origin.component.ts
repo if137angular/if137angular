@@ -22,11 +22,13 @@ export class AutocompleteOriginComponent implements OnInit {
   options: City[] = [];
   filteredOptions: Observable<City[]>;
 
+  search: string = 'Lviv';
+
   constructor(private getCityApi: AutocopmpleteCityService) { }
   getCity: any = [];
 
   ngOnInit(): void {
-    this.getCityApi.getAutocompleteAPI().subscribe((offers => {
+    this.getCityApi.getAutocompleteAPI(this.search).subscribe((offers => {
       this.options = offers;
     }));
 

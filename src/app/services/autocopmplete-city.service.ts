@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
 })
 export class AutocopmpleteCityService {
 
-  private autocompleteAPI = 'http://autocomplete.travelpayouts.com/places2?term=lviv&locale=ua&types[]=city'
+  // private autocompleteAPI = 'http://autocomplete.travelpayouts.com/places2?term=lviv&locale=ua&types[]=city'
 
   constructor(private http: HttpClient) { }
 
-  getAutocompleteAPI(): Observable<any> {
-    return this.http.get<any>(this.autocompleteAPI)
+  getAutocompleteAPI(serach: string): Observable<any> {
+    return this.http.get<any>(`http://autocomplete.travelpayouts.com/places2?term=${serach}&locale=ua&types[]=city`)
   }
 }
