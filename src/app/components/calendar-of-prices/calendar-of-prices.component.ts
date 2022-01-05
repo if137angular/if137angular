@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FlightsInfoService } from '../services/flights-info.service';
+import { FlightsInfoService } from 'src/app/services/flights-info.service';
 
 @Component({
   selector: 'app-calendar-of-prices',
