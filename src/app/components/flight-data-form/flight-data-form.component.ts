@@ -11,7 +11,7 @@ export class FlightDataFormComponent  {
   flightDataFormGroup: FormGroup = new FormGroup({
     startDate: new FormControl({}),
     endDate: new FormControl({}),
-    disableSelect: new FormControl(false),
+    flightTransfers: new FormControl(false),
   });
 
   onSubmitForm() {
