@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GetAirports, GetCities, GetCountries } from 'src/app/store/request-data.action';
 import { Store } from '@ngxs/store';
+import { FlightsInfoService } from './services/flights-info.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,7 +10,7 @@ import { Store } from '@ngxs/store';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private flightInfoService:FlightsInfoService) {
   }
 
   ngOnInit() {

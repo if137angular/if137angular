@@ -43,8 +43,7 @@ import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-
 import { TransfersComponent } from './components/transfers/transfers.component';
 import { SpecialOffersSelectComponent } from './components/special-offers/special-offers-select/special-offers-select.component';
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
-
-
+import { CityDestinationComponent } from './component/city-destination/city-destination.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +58,10 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
     TransfersComponent,
     SpecialOffersSelectComponent,
     CheapestTicketsComponent,
+
+    AppComponent,
+    CityDestinationComponent
+
 
   ],
   imports: [

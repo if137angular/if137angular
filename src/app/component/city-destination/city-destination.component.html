@@ -1,0 +1,83 @@
+<!--<div class="city-destination__content">-->
+<!--  <div *ngFor="let city of response">-->
+<!--    <div class="city-destination__origin" *ngFor="let item of city.data | keyvalue">-->
+<!--      <mat-card >-->
+<!--        <div>-->
+<!--          <div>-->
+<!--          <p class="origin">From: {{item.value.origin}}-->
+<!--            <span class="material-icons">flight_takeoff</span>-->
+<!--          </p>-->
+<!--          <p class="destinetion">To: {{item.value.destination}}-->
+<!--            <span class="material-icons">flight_land</span>-->
+<!--          </p>-->
+<!--            <mat-card-subtitle>{{item.value.price}} {{city.currency}}</mat-card-subtitle>-->
+<!--        </div>-->
+<!--          <button mat-raised-button  (click)="toggleActive()">Show Detail</button>-->
+<!--        </div>-->
+<!--        <div  [ngClass]="isActive ? 'active' : ''">-->
+<!--          <div >-->
+<!--            <div>-->
+<!--              <mat-card (click)="toggleActive()">-->
+<!--                <div *ngIf = "isActive">{{item.value.destination}}</div>-->
+<!--              </mat-card>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--      </mat-card>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--UPDATED BRANCH-->
+<!--<div class="city-destination__content">-->
+<!--  <div class="city-destination__placing" *ngFor="let city of response">-->
+<!--    <div class="city-destination__origin" *ngFor="let item of city.data | keyvalue">-->
+<!--      <mat-card class="city-destination__card">-->
+<!--        <span class="material-icons">flight_takeoff-->
+<!--          <div>-->
+<!--          {{item.value.origin}}-->
+<!--          </div>-->
+<!--        </span>-->
+<!--        <mat-icon>arrow_right_alt</mat-icon>-->
+<!--        <span class="material-icons">flight_land-->
+<!--          <div>-->
+<!--            {{item.value.destination}}-->
+<!--          </div>-->
+<!--        </span>-->
+<!--        <mat-card-subtitle>-->
+<!--          {{item.value.price}}{{city.currency}}-->
+<!--        </mat-card-subtitle>-->
+<!--        <button mat-raised-button>Show more</button>-->
+<!--      </mat-card>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<div class="city-destination__content">
+  <div class="city-destination__placing" *ngFor="let city of response">
+    <form class="city-destination__origin" >
+      <h4>The popular destination</h4>
+     <mat-card class="city-destination__border">
+       <p> From Kyiv </p>
+      <mat-form-field appearance="fill">
+        <mat-label>To:</mat-label>
+        <mat-select >
+          <div *ngFor="let item of city.data | keyvalue" (click)="toggleActive()">
+            <mat-option>
+               to :{{item.value.destination}}
+            </mat-option>
+          </div>
+        </mat-select>
+      </mat-form-field>
+      <p> Currency : {{city.currency}} </p>
+     </mat-card>
+    </form>
+  </div>
+  <div class="city-destination__placing" *ngFor="let city of response[0].data | keyvalue" >
+    <mat-card >
+      {{city.value.destination }}
+    </mat-card>
+  </div>
+</div>
+
+
+
