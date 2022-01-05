@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { GetAirports, GetCities, GetCountries } from "src/app/store/request-data.action";
 import { RequestDataService } from 'src/app/services/request-data.service';
+import { FlightsInfoService } from 'src/app/services/flights-info.service';
 
 @Component({
   selector: 'app-non-stop-tickets',
@@ -11,13 +12,8 @@ import { RequestDataService } from 'src/app/services/request-data.service';
 export class NonStopTicketsComponent implements OnInit {
     title: string = "Non-Stop Tickets";
 
-  constructor(private store: Store, private requestDataService: RequestDataService) { }
+  constructor(private store: Store, private flightsInfoService: FlightsInfoService) { }
 
-  ngOnInit(): void {
-    this.store.dispatch([new GetCountries(), new GetCities(), new GetAirports()]);
-    this.requestDataService.RequestGetNonStopTickets().subscribe((res) => {
-      console.log(res);
-    })
-  }
+  ngOnInit(): void {}
 
 }
