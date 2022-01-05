@@ -9,12 +9,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsModule } from "@ngxs/store";
-
 import { appState } from "src/app/store/appState";
 import { NgxsLoggerPluginModule } from "@ngxs/logger-plugin";
 import { RequestDataService } from "src/app/services/request-data.service";
@@ -24,9 +22,7 @@ import { AutocompleteInputComponent } from './components/autocomplete-input/auto
 import { ButtonComponent } from './components/button/button.component';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { TransfersComponent } from './components/transfers/transfers.component';
-
 import { MatTabsModule } from '@angular/material/tabs'; // this import for tabs material
-
 import { NavComponent } from './components/nav/nav.component';
 
 // code below only for testing
@@ -34,6 +30,12 @@ import { FirstComponent } from './components/forTest/first/first.component';
 import { SecondComponent } from './components/forTest/second/second.component';
 import { ThirdComponent } from './components/forTest/third/third.component';
 import { FlightsInfoService } from "src/app/services/flights-info.service";
+import { SpecialOffersComponent } from './components/special-offers/special-offers.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AutocompleteOriginComponent } from './components/special-offers/autocomplete-origin/autocomplete-origin.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { FlightsInfoService } from "src/app/services/flights-info.service";
     NavComponent,
     FirstComponent,
     SecondComponent,
-    ThirdComponent
+    ThirdComponent,
+    SpecialOffersComponent,
+    AutocompleteOriginComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +70,16 @@ import { FlightsInfoService } from "src/app/services/flights-info.service";
       developmentMode: true
     }),
     NgxsLoggerPluginModule.forRoot(),
-    MatTabsModule
+    MatTabsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatInputModule
   ],
   providers: [RequestDataService, FlightsInfoService],
   bootstrap: [AppComponent]

@@ -11,13 +11,13 @@ export interface RequestDataStateModel {
 }
 
 @State<RequestDataStateModel>({
-    name: 'RequestDataState',
-    defaults: {
-      countries: [],
-      cities: [],
-      airports: []
-    }
+  name: 'RequestDataState',
+  defaults: {
+    countries: [],
+    cities: [],
+    airports: []
   }
+}
 )
 
 @Injectable()
