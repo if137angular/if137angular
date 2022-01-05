@@ -80,4 +80,4 @@ import { CalendarOfPricesComponent } from './components/calendar-of-prices/calen
   providers: [RequestDataService, FlightsInfoService],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
