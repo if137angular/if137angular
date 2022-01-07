@@ -19,6 +19,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
 
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
@@ -27,19 +30,23 @@ import { AppComponent } from './app.component';
 import { FlightDataFormComponent } from './components/flight-data-form/flight-data-form.component';
 import { AutocompleteInputComponent } from './components/autocomplete-input/autocomplete-input.component';
 import { ButtonComponent } from './components/button/button.component';
-import { DatepickerComponent } from './components/datepicker/datepicker.component';
-import { TransfersComponent } from './components/transfers/transfers.component';
 import { NavComponent } from './components/nav/nav.component';
 import { FirstComponent } from './components/forTest/first/first.component';
 import { SecondComponent } from './components/forTest/second/second.component';
 import { ThirdComponent } from './components/forTest/third/third.component';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
+import { CalendarOfPricesItemComponent } from './components/calendar-of-prices/calendar-of-prices-item/calendar-of-prices-item.component';
+import { CalendarOfPricesComponent } from './components/calendar-of-prices/calendar-of-prices.component';
+import { DatepickerComponent } from './components/datepicker/datepicker.component';
+import { TransfersComponent } from './components/transfers/transfers.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FlightDataFormComponent,
     AutocompleteInputComponent,
+    CalendarOfPricesComponent,
+    CalendarOfPricesItemComponent,
     ButtonComponent,
     DatepickerComponent,
     TransfersComponent,
@@ -50,6 +57,10 @@ import { AutocompleteComponent } from './components/autocomplete/autocomplete.co
     AutocompleteComponent,
   ],
   imports: [
+    MatIconModule,
+    MatTableModule,
+    MatButtonModule,
+    MatCardModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
