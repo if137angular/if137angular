@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
-import { map } from 'rxjs/operators';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { RequestDataState } from 'src/app/store/request-data.state';
 
 @Component({
   selector: 'app-autocomplete',
@@ -13,28 +14,26 @@ export class AutocompleteComponent implements OnInit {
   filteredCities: any = [];
   autoCompleteControl: FormControl = new FormControl('');
 
-  constructor(private http: HttpClient) {}
+  @Select(RequestDataState.cities) cities$: Observable<any>;
+
+  constructor() {}
 
   ngOnInit(): void {
-    const headerDict = {
-      'x-access-token': '8f399398f352163f2c3e4cb293d221e3',
-    };
-
-    const requestOptions = {
-      headers: new HttpHeaders(headerDict),
-    };
-    this.http
-      .get('/data/uk/cities.json', requestOptions)
-      .subscribe((res: any) => {
-        this.cities = res;
-        this.filteredCities = this.cities.slice(0, 5);
-      });
-
-    // Control filter
-    this.autoCompleteControl.valueChanges.subscribe((value) => {
-      this.filteredCities = this.cities.filter(
-        (city: any) => city.name === value.toLowerCase()
+    // Get cities
+    this.cities$.subscribe((res) => {
+      this.cities = Array.from(res).map(
+        (city: any) => city.name_translations.uk
       );
+    });
+
+    // Search filter
+    this.autoCompleteControl.valueChanges.subscribe((value) => {
+      this.filteredCities =
+        value !== ''
+          ? this.cities.filter((city: any) =>
+              city.toLowerCase().startsWith(value.toLowerCase())
+            )
+          : [];
     });
   }
 }
