@@ -1,5 +1,5 @@
 <mat-form-field class="example-full-width" appearance="fill">
-  <mat-label>Оберіть місто</mat-label>
+  <mat-label>Choose city</mat-label>
   <input type="text" matInput [formControl]="autoCompleteControl" [matAutocomplete]="auto">
   <mat-autocomplete #auto="matAutocomplete">
     <mat-option *ngFor="let city of filteredCities.slice(0, 10)" [value]="city">

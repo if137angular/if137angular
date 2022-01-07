@@ -10,20 +10,18 @@ import { RequestDataState } from 'src/app/store/request-data.state';
   styleUrls: ['./autocomplete.component.scss'],
 })
 export class AutocompleteComponent implements OnInit {
-  cities: any = [];
-  filteredCities: any = [];
+  cities: string[] = [];
+  filteredCities: string[] = [];
   autoCompleteControl: FormControl = new FormControl('');
 
-  @Select(RequestDataState.cities) cities$: Observable<any>;
+  @Select(RequestDataState.cities) cities$: Observable<string[]>;
 
   constructor() {}
 
   ngOnInit(): void {
     // Get cities
     this.cities$.subscribe((res) => {
-      this.cities = Array.from(res).map(
-        (city: any) => city.name_translations.uk
-      );
+      this.cities = Array.from(res).map((city: any) => city.name);
     });
 
     // Search filter
