@@ -33,7 +33,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { FirstComponent } from './components/forTest/first/first.component';
 import { SecondComponent } from './components/forTest/second/second.component';
 import { ThirdComponent } from './components/forTest/third/third.component';
-// import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
+import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +47,7 @@ import { ThirdComponent } from './components/forTest/third/third.component';
     FirstComponent,
     SecondComponent,
     ThirdComponent,
-    // AutocompleteComponent,
+    AutocompleteComponent,
   ],
   imports: [
     BrowserModule,
