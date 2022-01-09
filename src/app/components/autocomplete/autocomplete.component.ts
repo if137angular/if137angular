@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Select } from '@ngxs/store';
-import { Observable } from 'rxjs';
-import { RequestDataState } from 'src/app/store/request-data.state';
 
 @Component({
   selector: 'app-autocomplete',
@@ -10,28 +7,27 @@ import { RequestDataState } from 'src/app/store/request-data.state';
   styleUrls: ['./autocomplete.component.scss'],
 })
 export class AutocompleteComponent implements OnInit {
-  cities: string[] = [];
-  filteredCities: string[] = [];
+  @Input() items: string[] = [];
+  @Input() label: string = '';
+
+  @Output() selectedItem = new EventEmitter<string>();
+
+  filteredItems: string[] = [];
   autoCompleteControl: FormControl = new FormControl('');
 
-  @Select(RequestDataState.cities) cities$: Observable<string[]>;
-
-  constructor() {}
-
   ngOnInit(): void {
-    // Get cities
-    this.cities$.subscribe((res) => {
-      this.cities = Array.from(res).map((city: any) => city.name);
-    });
-
     // Search filter
     this.autoCompleteControl.valueChanges.subscribe((value) => {
-      this.filteredCities =
+      this.filteredItems =
         value !== ''
-          ? this.cities.filter((city: any) =>
+          ? this.items.filter((city: any) =>
               city.toLowerCase().startsWith(value.toLowerCase())
             )
           : [];
     });
+  }
+
+  optionSelected(): void {
+    this.selectedItem.emit(this.autoCompleteControl.value);
   }
 }

@@ -28,7 +28,6 @@ import { FlightsInfoService } from 'src/app/services/flights-info.service';
 
 import { AppComponent } from './app.component';
 import { FlightDataFormComponent } from './components/flight-data-form/flight-data-form.component';
-import { AutocompleteInputComponent } from './components/autocomplete-input/autocomplete-input.component';
 import { ButtonComponent } from './components/button/button.component';
 import { NavComponent } from './components/nav/nav.component';
 import { FirstComponent } from './components/forTest/first/first.component';
@@ -44,7 +43,7 @@ import { TransfersComponent } from './components/transfers/transfers.component';
   declarations: [
     AppComponent,
     FlightDataFormComponent,
-    AutocompleteInputComponent,
+    AutocompleteComponent,
     CalendarOfPricesComponent,
     CalendarOfPricesItemComponent,
     ButtonComponent,
@@ -54,7 +53,6 @@ import { TransfersComponent } from './components/transfers/transfers.component';
     FirstComponent,
     SecondComponent,
     ThirdComponent,
-    AutocompleteComponent,
   ],
   imports: [
     MatIconModule,
