@@ -36,8 +36,6 @@ import { ThirdComponent } from './components/forTest/third/third.component';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 import { CalendarOfPricesItemComponent } from './components/calendar-of-prices/calendar-of-prices-item/calendar-of-prices-item.component';
 import { CalendarOfPricesComponent } from './components/calendar-of-prices/calendar-of-prices.component';
-import { DatepickerComponent } from './components/datepicker/datepicker.component';
-import { TransfersComponent } from './components/transfers/transfers.component';
 
 @NgModule({
   declarations: [
@@ -47,8 +45,6 @@ import { TransfersComponent } from './components/transfers/transfers.component';
     CalendarOfPricesComponent,
     CalendarOfPricesItemComponent,
     ButtonComponent,
-    DatepickerComponent,
-    TransfersComponent,
     NavComponent,
     FirstComponent,
     SecondComponent,

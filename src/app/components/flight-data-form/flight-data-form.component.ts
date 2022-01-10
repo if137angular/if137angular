@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { RequestDataState } from 'src/app/store/request-data.state';
@@ -12,6 +13,12 @@ export class FlightDataFormComponent implements OnInit {
   cities: string[] = [];
   destinationFrom: string = '';
   destinationTo: string = '';
+
+  flightDataFormGroup: FormGroup = new FormGroup({
+    startDate: new FormControl({}),
+    endDate: new FormControl({}),
+    flightTransfers: new FormControl(false),
+  });
 
   @Select(RequestDataState.cities) cities$: Observable<string[]>;
 
