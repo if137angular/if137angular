@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AutocompleteInputComponent } from './autocomplete-input.component';
+import { SpecialOffersComponent } from './special-offers.component';
 
-describe('AutocompleteInputComponent', () => {
-  let component: AutocompleteInputComponent;
-  let fixture: ComponentFixture<AutocompleteInputComponent>;
+describe('SpecialOffersComponent', () => {
+  let component: SpecialOffersComponent;
+  let fixture: ComponentFixture<SpecialOffersComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AutocompleteInputComponent ]
+      declarations: [ SpecialOffersComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AutocompleteInputComponent);
+    fixture = TestBed.createComponent(SpecialOffersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
