@@ -36,6 +36,7 @@ import { ThirdComponent } from './components/forTest/third/third.component';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 import { CalendarOfPricesItemComponent } from './components/calendar-of-prices/calendar-of-prices-item/calendar-of-prices-item.component';
 import { CalendarOfPricesComponent } from './components/calendar-of-prices/calendar-of-prices.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { CalendarOfPricesComponent } from './components/calendar-of-prices/calen
     FirstComponent,
     SecondComponent,
     ThirdComponent,
+    SearchComponent,
   ],
   imports: [
     MatIconModule,
