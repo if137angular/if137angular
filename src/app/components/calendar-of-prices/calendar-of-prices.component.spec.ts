@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AutocompleteInputComponent } from './autocomplete-input.component';
+import { CalendarOfPricesComponent } from './calendar-of-prices.component';
 
-describe('AutocompleteInputComponent', () => {
-  let component: AutocompleteInputComponent;
-  let fixture: ComponentFixture<AutocompleteInputComponent>;
+describe('CalendarOfPricesComponent', () => {
+  let component: CalendarOfPricesComponent;
+  let fixture: ComponentFixture<CalendarOfPricesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AutocompleteInputComponent ]
+      declarations: [ CalendarOfPricesComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AutocompleteInputComponent);
+    fixture = TestBed.createComponent(CalendarOfPricesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
