@@ -1,15 +1,18 @@
 <mat-card class="calendar-card" color="primary" (click)="toggleActive()">
   <mat-card-content class="calendar-card-content">
     <div class="calendar-card-content-found">
-      Found at: {{ data.found_at | date: "shortDate" }}
+      Found at:
+      <p>{{ data.found_at | date: "mediumDate" }}</p>
     </div>
     <div class="calendar-card-content-value">
       <div>
         Actuality:
-        <span
-          [ngStyle]="data.actual ? { color: '#70e000' } : { color: '#ef233c' }"
-          >{{ data.actual }}</span
-        >
+        <span *ngIf="data.actual">
+          <mat-icon [ngStyle]="{ color: '#38b000' }">check</mat-icon>
+        </span>
+        <span *ngIf="!data.actual">
+          <mat-icon [ngStyle]="{ color: '#d00000' }">close</mat-icon>
+        </span>
       </div>
     </div>
   </mat-card-content>
