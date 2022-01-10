@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DatepickerComponent } from './datepicker.component';
+import { SpecialOffersComponent } from './special-offers.component';
 
-describe('DatepickerComponent', () => {
-  let component: DatepickerComponent;
-  let fixture: ComponentFixture<DatepickerComponent>;
+describe('SpecialOffersComponent', () => {
+  let component: SpecialOffersComponent;
+  let fixture: ComponentFixture<SpecialOffersComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DatepickerComponent ]
+      declarations: [ SpecialOffersComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DatepickerComponent);
+    fixture = TestBed.createComponent(SpecialOffersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

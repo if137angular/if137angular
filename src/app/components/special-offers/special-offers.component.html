@@ -1,0 +1,41 @@
+<div class="special-offers__wrapper">
+  <mat-card class="special-offers" *ngFor="let item of offers.data">
+    <div
+      class="special-offers__header"
+      [ngStyle]="{
+        'background-color': item.color !== '' ? '#' + item.color : '#08578f'
+      }"
+    >
+      <h2 class="special-offers__mini-title">
+        {{ item.mini_title }}
+      </h2>
+    </div>
+
+    <div class="special-offers__content">
+      <div
+        class="special-offers__logo"
+        matTooltipPosition="right"
+        matTooltip="{{ item.airline_title }}"
+      >
+        <img
+          src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png"
+          alt="{{ item.airline_title }}"
+        />
+      </div>
+      <div class="special-offers__price-date">
+        <span class="special-offers__price"
+          >from <b>{{ item.price }}&#36;</b></span
+        >
+        <span class="special-offers__departure">
+          &#x23F0; <b>{{ item.departure_at | date }}</b></span
+        >
+      </div>
+    </div>
+    <p class="special-offers__text-title">{{ item.title }}</p>
+    <div class="special-offers__actions">
+      <button (click)="gotToLink(item.link)" mat-flat-button color="primary">
+        show details
+      </button>
+    </div>
+  </mat-card>
+</div>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngxs/store';
 import { GetAirports, GetCities, GetCountries } from 'src/app/store/request-data.action';
-
+import { Store } from '@ngxs/store';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

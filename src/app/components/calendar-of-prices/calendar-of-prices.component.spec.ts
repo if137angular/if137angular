@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TransfersComponent } from './transfers.component';
+import { CalendarOfPricesComponent } from './calendar-of-prices.component';
 
-describe('TransfersComponent', () => {
-  let component: TransfersComponent;
-  let fixture: ComponentFixture<TransfersComponent>;
+describe('CalendarOfPricesComponent', () => {
+  let component: CalendarOfPricesComponent;
+  let fixture: ComponentFixture<CalendarOfPricesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TransfersComponent ]
+      declarations: [ CalendarOfPricesComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TransfersComponent);
+    fixture = TestBed.createComponent(CalendarOfPricesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
