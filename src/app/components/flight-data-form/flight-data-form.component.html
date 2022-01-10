@@ -1,8 +1,8 @@
+<h4>Destination</h4>
+<app-autocomplete label="From" [items]="cities" (selectedItem)="destinationFrom = $event"></app-autocomplete>
+<app-autocomplete label="To" [items]="cities" (selectedItem)="destinationTo = $event"></app-autocomplete>
+
 <form [formGroup]="flightDataFormGroup">
-
-  <app-autocomplete-input text="Type country From"></app-autocomplete-input>
-  <app-autocomplete-input text="Type country To"></app-autocomplete-input>
-
   <mat-form-field appearance="fill">
     <mat-label>Enter a date range</mat-label>
     <mat-date-range-input [rangePicker]="picker">
@@ -16,13 +16,12 @@
   <p>
     <mat-checkbox formControlName="flightTransfers">Flight Transfers</mat-checkbox>
   </p>
-  
-  <mat-radio-group matNativeControl aria-label="Select an option" [disabled]="!flightDataFormGroup.controls['flightTransfers'].value">
+  <mat-radio-group matNativeControl aria-label="Select an option"
+    [disabled]="!flightDataFormGroup.controls['flightTransfers'].value">
     <mat-radio-button value="1">Direct</mat-radio-button>
     <mat-radio-button value="2">Transfers</mat-radio-button>
   </mat-radio-group>
 
   <app-button color="beige" text="Search" (btnClick)="onSubmitForm()"></app-button>
   <app-button color="tomato" text="Clear" (btnClick)="onSubmitForm()"></app-button>
-
 </form>

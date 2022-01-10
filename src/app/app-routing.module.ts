@@ -7,9 +7,21 @@ import { ThirdComponent } from './components/forTest/third/third.component';
 import { CalendarOfPricesComponent } from './components/calendar-of-prices/calendar-of-prices.component';
 
 export const routes: Routes = [
-  { path: '', component: FirstComponent, data: { tab: 'First' } },
-  { path: 'second', component: SecondComponent, data: { tab: 'Second' } },
-  { path: 'third', component: ThirdComponent, data: { tab: 'Third' } },
+  {
+    path: '',
+    component: FirstComponent,
+    data: { tab: 'First' },
+  },
+  {
+    path: 'second',
+    component: SecondComponent,
+    data: { tab: 'Second' },
+  },
+  {
+    path: 'third',
+    component: ThirdComponent,
+    data: { tab: 'Third' },
+  },
   {
     path: 'calendar',
     component: CalendarOfPricesComponent,
@@ -18,7 +30,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
