@@ -14,10 +14,10 @@
   </mat-form-field>
 
   <p>
-    <mat-checkbox [formControl]="flightTransfers">Flight Transfers</mat-checkbox>
+    <mat-checkbox formControlName="flightTransfers">Flight Transfers</mat-checkbox>
   </p>
   
-  <mat-radio-group matNativeControl aria-label="Select an option" [disabled]="!disableSelect.value">
+  <mat-radio-group matNativeControl aria-label="Select an option" [disabled]="!flightDataFormGroup.controls['flightTransfers'].value">
     <mat-radio-button value="1">Direct</mat-radio-button>
     <mat-radio-button value="2">Transfers</mat-radio-button>
   </mat-radio-group>
