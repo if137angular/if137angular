@@ -22,8 +22,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FlightDataFormComponent } from './components/flight-data-form/flight-data-form.component';
 import { AutocompleteInputComponent } from './components/autocomplete-input/autocomplete-input.component';
 import { ButtonComponent } from './components/button/button.component';
-import { DatepickerComponent } from './components/datepicker/datepicker.component';
-import { TransfersComponent } from './components/transfers/transfers.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -49,8 +47,6 @@ import { CalendarOfPricesComponent } from './components/calendar-of-prices/calen
     CalendarOfPricesComponent,
     CalendarOfPricesItemComponent,
     ButtonComponent,
-    DatepickerComponent,
-    TransfersComponent,
     NavComponent,
     FirstComponent,
     SecondComponent,
@@ -84,4 +80,4 @@ import { CalendarOfPricesComponent } from './components/calendar-of-prices/calen
   providers: [RequestDataService, FlightsInfoService],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

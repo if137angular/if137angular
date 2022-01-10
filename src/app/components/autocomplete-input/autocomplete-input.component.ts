@@ -15,7 +15,6 @@ export class AutocompleteInputComponent implements OnInit {
   @Input() color: string;
   @Output() btnClick = new EventEmitter();
 
-
   title = "countries";
   countries: string[] = [
     "New York",
@@ -26,8 +25,7 @@ export class AutocompleteInputComponent implements OnInit {
   filteredOptions: Observable<string[]> = new Subject();
 
   constructor(private store: Store) {
-
-  
+ 
 }
 
   ngOnInit() {
