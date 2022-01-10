@@ -45,7 +45,7 @@ export class FlightsInfoService {
     return this.httpClient.request<GetCalendarOfPricesRequest>(
       'get',
       this.baseUrl +
-        '/prices/week-matrix?currency=usd&origin=LED&destination=HKT&show_to_affiliates=true&depart_date=2022-01-17&return_date=2022-01-24&token=51b362c72de38be9bcfdc31c8339c019',
+        '/v2/prices/week-matrix?currency=usd&origin=LED&destination=HKT&show_to_affiliates=true&depart_date=2022-01-17&return_date=2022-01-24&token=51b362c72de38be9bcfdc31c8339c019',
       requestOptions
     );
   }
