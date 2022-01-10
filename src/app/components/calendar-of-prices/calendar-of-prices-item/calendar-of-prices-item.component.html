@@ -1,0 +1,77 @@
+<mat-card class="calendar-card" color="primary" (click)="toggleActive()">
+  <mat-card-content class="calendar-card-content">
+    <div class="calendar-card-content-found">
+      Found at: {{ data.found_at | date: "shortDate" }}
+    </div>
+    <div class="calendar-card-content-value">
+      <div>
+        Actuality:
+        <span
+          [ngStyle]="data.actual ? { color: '#70e000' } : { color: '#ef233c' }"
+          >{{ data.actual }}</span
+        >
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<div class="modal-wrapper" [ngClass]="isActive ? 'active' : ''">
+  <div class="calendar-modal">
+    <div class="calendar-modal-content">
+      <mat-icon class="calendar-modal-content-close" (click)="toggleActive()"
+        >close</mat-icon
+      >
+      <p>Ticket info</p>
+      <div class="calendar-modal-content-dates">
+        <div>
+          <mat-icon class="icon">flight_takeoff</mat-icon
+          ><span class="bolded-text">{{
+            data.depart_date | date: "longDate"
+          }}</span>
+        </div>
+        <div>
+          <mat-icon class="icon">flight_land</mat-icon
+          ><span class="bolded-text">{{
+            data.return_date | date: "longDate"
+          }}</span>
+        </div>
+      </div>
+      <div class="calendar-modal-content-origin">
+        <mat-icon class="icon">airplane_ticket</mat-icon>
+        <div>
+          <span class="bolded-text">{{ data.origin }}</span>
+        </div>
+      </div>
+      <div class="calendar-modal-content-main">
+        <div class="calendar-modal-content-main-destination">
+          <div>
+            Point of destination:
+            <span class="bolded-text">{{ data.destination }}</span>
+          </div>
+          <div>
+            Flight class:
+            <span class="bolded-text">
+              {{ data.trip_class === 0 ? "Economy" : "Business" }}</span
+            >
+          </div>
+          <div>
+            Value: <span class="bolded-text">{{ data.value }}</span>
+          </div>
+        </div>
+        <div class="calendar-modal-content-main-value">
+          <div>
+            Found at:
+            <span class="bolded-text">{{
+              data.found_at | date: "mediumDate"
+            }}</span>
+          </div>
+          <div>
+            Gate: <span class="bolded-text">{{ data.gate }}</span>
+          </div>
+          <div>Duration: {{ data.duration }}</div>
+        </div>
+      </div>
+      <button class="add-button" mat-button color="primary">Add</button>
+    </div>
+  </div>
+</div>
