@@ -36,6 +36,8 @@ import { ThirdComponent } from './components/forTest/third/third.component';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 import { CalendarOfPricesItemComponent } from './components/calendar-of-prices/calendar-of-prices-item/calendar-of-prices-item.component';
 import { CalendarOfPricesComponent } from './components/calendar-of-prices/calendar-of-prices.component';
+import { SpecialOffersComponent } from './components/special-offers/special-offers.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { CalendarOfPricesComponent } from './components/calendar-of-prices/calen
     FirstComponent,
     SecondComponent,
     ThirdComponent,
+    SpecialOffersComponent
   ],
   imports: [
     MatIconModule,
@@ -72,7 +75,7 @@ import { CalendarOfPricesComponent } from './components/calendar-of-prices/calen
     MatCheckboxModule,
     MatTabsModule,
     MatFormFieldModule,
-
+    MatTooltipModule,
     NgxsModule.forRoot(appState, {
       developmentMode: true,
     }),
@@ -81,4 +84,4 @@ import { CalendarOfPricesComponent } from './components/calendar-of-prices/calen
   providers: [RequestDataService, FlightsInfoService],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

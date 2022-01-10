@@ -5,7 +5,7 @@ import { GetCalendarOfPricesRequest } from '../components/calendar-of-prices/cal
 
 @Injectable()
 export class FlightsInfoService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   exampleRequestGetChipTickets(): Observable<any> {
     const headerDict = {
@@ -32,5 +32,8 @@ export class FlightsInfoService {
       '/v2/prices/week-matrix?currency=usd&origin=LED&destination=HKT&show_to_affiliates=true&depart_date=2022-01-17&return_date=2022-01-24&token=51b362c72de38be9bcfdc31c8339c019',
       requestOptions
     );
+  }
+  getSpecialOffers(originCity: string): Observable<any> {
+    return this.http.get<any>(`/aviasales/v3/get_special_offers?origin=${originCity}&currency=usd&token=b482025a8bf39817b6b6f219686b4799`)
   }
 }

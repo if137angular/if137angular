@@ -1,14 +1,14 @@
-.autocomplete-origin {
-  display: block;
-  width: max-content;
-  margin: auto;
-}
-
 .special-offers {
-  max-width: 500px;
-  margin: 100px auto;
-  background-color: rgb(248, 248, 248);
+  margin: 10px;
+  background-color: rgb(247, 247, 247);
   font-size: 14px;
+  &__wrapper {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
   &__header {
     width: auto;
     padding: 10px;
