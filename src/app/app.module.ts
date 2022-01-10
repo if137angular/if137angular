@@ -26,7 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs'; // this import for tabs material
 
 import { NavComponent } from './components/nav/nav.component';
@@ -71,6 +71,7 @@ import { CalendarOfPricesComponent } from './components/calendar-of-prices/calen
     MatCheckboxModule,
     HttpClientModule,
     CommonModule,
+    MatProgressSpinnerModule,
     NgxsModule.forRoot(appState, {
       developmentMode: true,
     }),
@@ -80,4 +81,4 @@ import { CalendarOfPricesComponent } from './components/calendar-of-prices/calen
   providers: [RequestDataService, FlightsInfoService],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
