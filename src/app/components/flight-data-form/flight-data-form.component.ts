@@ -18,10 +18,8 @@ export class FlightDataFormComponent implements OnInit {
   startDate: string = '';
   endDate: string = '';
 
-  flights: string[] = [];
-  transfer: string = '';
-
   flightDataFormGroup: FormGroup = new FormGroup({
+    cities: new FormControl({}),
     startDate: new FormControl({}),
     endDate: new FormControl({}),
     flightTransfers: new FormControl(false),
@@ -38,5 +36,9 @@ export class FlightDataFormComponent implements OnInit {
   onSubmitForm() {
     console.log(`City From: ${this.destinationFrom}, To: ${this.destinationTo}`);
     console.log(`Date From: ${this.startDate}, To: ${this.endDate}`);
+  }
+
+  onResetForm() {
+    this.flightDataFormGroup.reset({});
   }
 }
