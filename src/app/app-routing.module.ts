@@ -7,6 +7,7 @@ import { ThirdComponent } from './components/forTest/third/third.component';
 import { CalendarOfPricesComponent } from './components/calendar-of-prices/calendar-of-prices.component';
 import { SpecialOffersComponent } from './components/special-offers/special-offers.component';
 import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-tickets.component';
+import {CheapestTicketsComponent} from "./components/cheapest-tickets/cheapest-tickets.component";
 
 export const routes: Routes = [
   {
@@ -38,6 +39,11 @@ export const routes: Routes = [
     path: 'non-stop-tickets',
     component: NonStopTicketsComponent,
     data: { tab: 'Non Stop Tickets' },
+  },
+  {
+    path: 'cheapest-tickets',
+    component: CheapestTicketsComponent,
+    data: { tab: 'Cheapest Tickets' },
   },
 ];
 

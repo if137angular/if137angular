@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { GetCalendarOfPricesRequestModel } from '../models/calendar-of-prices.model';
+import {TicketsRequestParam} from "../models/cheapest-tickets.model";
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class FlightsInfoService {
@@ -52,5 +54,29 @@ export class FlightsInfoService {
       '/v1/prices/direct?origin=MOW&destination=LED&token=4df3f89d6861e092b8f5d30e3d49cde8',
       requestOptions
     );
+  }
+
+  requestCheapestTickets(ticketsParam: TicketsRequestParam): Observable<any> {
+    const baseURL: string = '/v1/prices/cheap'
+    const myToken: string = 'f29a4f3a27eb2f3ea190c91cd4e15fa5'
+
+    let myParamsURL = new HttpParams()
+      .append('origin', ticketsParam.origin)
+      .append('destination', ticketsParam.destination)
+      .append('currency', ticketsParam.currency)
+      .append('token', myToken)
+    if(ticketsParam.departDate) myParamsURL.append('depart_date', ticketsParam.departDate)
+    if(ticketsParam.returnDate) myParamsURL.append('depart_date', ticketsParam.returnDate)
+
+    let myHeadersURL = new HttpHeaders()
+      .append('x-access-token', myToken)
+
+    return this.http.get(baseURL, { headers: myHeadersURL, params: myParamsURL }).pipe(
+      map((response) => ({
+        ...response,
+        'origin': ticketsParam.origin,
+        'destination': ticketsParam.destination,
+      }))
+    )
   }
 }

@@ -1,0 +1,12 @@
+<div class="wrapper">
+  <h1>Cheapest Tickets!</h1>
+  <button
+    (click)="requestTickets(ticketsParam)"
+    mat-raised-button
+    color="primary">
+    Get Cheapest Tickets
+  </button>
+  <div class="ticketsWrapper" *ngIf="ticketsData || ticketsData?.['ticketsArray']">
+    <p *ngFor="let ticket of ticketsData.ticketsArray">ticket price {{ticket.price}}</p>
+  </div>
+</div>
