@@ -1,22 +1,19 @@
 <form class="data-form" [formGroup]="flightDataFormGroup">
+  <app-autocomplete label="From" [items]="cities" [(selectedItem)]="destinationFrom"></app-autocomplete>
+  <app-autocomplete label="To" [items]="cities" [(selectedItem)]="destinationTo"></app-autocomplete>
 
-  <app-autocomplete label="From" [items]="cities" (selectedItem)="destinationFrom = $event"></app-autocomplete>
-  <app-autocomplete label="To" [items]="cities" (selectedItem)="destinationTo = $event"></app-autocomplete>
-
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline">
     <mat-label>Enter a date range</mat-label>
     <mat-date-range-input [rangePicker]="picker">
-      <input [(ngModel)]="startDate" formControlName="startDate" matStartDate placeholder="Start date" />
-      <input [(ngModel)]="endDate" formControlName="endDate" matEndDate placeholder="End date" />
+      <input formControlName="startDate" matStartDate placeholder="Start date" />
+      <input formControlName="endDate" matEndDate placeholder="End date" />
     </mat-date-range-input>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-date-range-picker #picker></mat-date-range-picker>
   </mat-form-field>
 
-  <app-transfers>
-  </app-transfers>
+  <app-transfers></app-transfers>
 
   <app-button color="beige" text="Search" (btnClick)="onSubmitForm()"></app-button>
   <app-button color="tomato" text="Clear" (btnClick)="onResetForm()"></app-button>
-
 </form>

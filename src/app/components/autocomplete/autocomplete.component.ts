@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -6,11 +13,12 @@ import { FormControl } from '@angular/forms';
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.scss'],
 })
-export class AutocompleteComponent implements OnInit {
+export class AutocompleteComponent implements OnInit, OnChanges {
   @Input() items: string[] = [];
   @Input() label: string = '';
 
-  @Output() selectedItem = new EventEmitter<string>();
+  @Input() selectedItem: string = '';
+  @Output() selectedItemChange = new EventEmitter<string>();
 
   filteredItems: string[] = [];
   autoCompleteControl: FormControl = new FormControl('');
@@ -27,7 +35,12 @@ export class AutocompleteComponent implements OnInit {
     });
   }
 
+  ngOnChanges(): void {
+    this.autoCompleteControl.setValue(this.selectedItem);
+  }
+
   optionSelected(): void {
-    this.selectedItem.emit(this.autoCompleteControl.value);
+    this.selectedItem = this.autoCompleteControl.value;
+    this.selectedItemChange.emit(this.selectedItem);
   }
 }
