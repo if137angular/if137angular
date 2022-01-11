@@ -15,12 +15,7 @@ export class FlightDataFormComponent implements OnInit {
   destinationTo: string = '';
   transfers: string = ''
 
-  dates: string[] = [];
-  startDate: string = '';
-  endDate: string = '';
-
   flightDataFormGroup: FormGroup = new FormGroup({
-    cities: new FormControl({}),
     startDate: new FormControl({}),
     endDate: new FormControl({}),
   });
@@ -50,5 +45,8 @@ export class FlightDataFormComponent implements OnInit {
     this.destinationFrom = '';
     this.destinationTo = '';
     this.transfers = '';
+
+    this.destinationFrom = '';
+    this.destinationTo = '';
   }
 }
