@@ -13,8 +13,7 @@
     <mat-date-range-picker #picker></mat-date-range-picker>
   </mat-form-field>
 
-  <app-transfers>
-  </app-transfers>
+  <app-transfers [(selectedItem)]="transfers"></app-transfers>
 
   <app-button color="beige" text="Search" (btnClick)="onSubmitForm()"></app-button>
   <app-button color="tomato" text="Clear" (btnClick)="onResetForm()"></app-button>
