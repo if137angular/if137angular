@@ -21,6 +21,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
+
 import { MatIconModule } from '@angular/material/icon';
 
 import { RequestDataService } from 'src/app/services/request-data.service';
@@ -67,7 +68,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-
     MatAutocompleteModule,
     MatInputModule,
     MatButtonModule,
@@ -87,4 +87,4 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   providers: [RequestDataService, FlightsInfoService],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
