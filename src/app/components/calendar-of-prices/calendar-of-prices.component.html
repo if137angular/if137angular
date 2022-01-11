@@ -1,4 +1,12 @@
 <div class="calendar">
-  <app-calendar-of-prices-item *ngFor="let data of prices" [data]="data">
+  <mat-progress-spinner
+    *ngIf="calendatData.loading"
+    mode="indeterminate"
+  ></mat-progress-spinner>
+  <app-calendar-of-prices-item
+    *ngFor="let data of calendatData.data"
+    [data]="data"
+    [currency]="calendatData.currency"
+  >
   </app-calendar-of-prices-item>
 </div>

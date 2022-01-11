@@ -58,7 +58,10 @@
             >
           </div>
           <div>
-            Value: <span class="bolded-text">{{ data.value }}</span>
+            Value:
+            <span class="bolded-text"
+              >{{ data.value }} {{ currency | uppercase }}</span
+            >
           </div>
         </div>
         <div class="calendar-modal-content-main-value">
@@ -71,7 +74,9 @@
           <div>
             Gate: <span class="bolded-text">{{ data.gate }}</span>
           </div>
-          <div>Duration: {{ data.duration }}</div>
+          <div>
+            Duration: <span class="bolded-text">{{ data.duration }}</span>
+          </div>
         </div>
       </div>
       <button class="add-button" mat-button color="primary">Add</button>

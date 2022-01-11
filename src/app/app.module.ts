@@ -21,6 +21,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
+
 import { MatIconModule } from '@angular/material/icon';
 
 import { RequestDataService } from 'src/app/services/request-data.service';
@@ -37,6 +38,9 @@ import { AutocompleteComponent } from './components/autocomplete/autocomplete.co
 import { CalendarOfPricesItemComponent } from './components/calendar-of-prices/calendar-of-prices-item/calendar-of-prices-item.component';
 import { CalendarOfPricesComponent } from './components/calendar-of-prices/calendar-of-prices.component';
 import { SearchComponent } from './components/search/search.component';
+import { SpecialOffersComponent } from './components/special-offers/special-offers.component';
+import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-tickets.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -51,6 +55,8 @@ import { SearchComponent } from './components/search/search.component';
     SecondComponent,
     ThirdComponent,
     SearchComponent,
+    SpecialOffersComponent,
+    NonStopTicketsComponent
   ],
   imports: [
     MatIconModule,
@@ -63,7 +69,6 @@ import { SearchComponent } from './components/search/search.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-
     MatAutocompleteModule,
     MatInputModule,
     MatButtonModule,
@@ -74,7 +79,7 @@ import { SearchComponent } from './components/search/search.component';
     MatCheckboxModule,
     MatTabsModule,
     MatFormFieldModule,
-
+    MatTooltipModule,
     NgxsModule.forRoot(appState, {
       developmentMode: true,
     }),

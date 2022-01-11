@@ -1,25 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FlightsInfoService } from 'src/app/services/flights-info.service';
-
-export type CalendarOfPricesModel = {
-  value: number;
-  trip_class: number;
-  show_to_affiliates: boolean;
-  origin: string;
-  destination: string;
-  gate: string;
-  depart_date: Date;
-  return_date: Date;
-  number_of_changes: number;
-  found_at: Date;
-  duration: number;
-  distance: number;
-  actual: boolean;
-};
-
-export type GetCalendarOfPricesRequest = {
-  data: CalendarOfPricesModel[];
-};
+import { Store } from '@ngxs/store';
+import { CalendarOfPricesStateModel } from 'src/app/models/calendar-of-prices.model';
+import { FetchCalendarOfPrices } from 'src/app/store/flight-info.action';
+import { FlightInfoState } from 'src/app/store/flight-info.state';
 
 @Component({
   selector: 'app-calendar-of-prices',
@@ -27,13 +10,14 @@ export type GetCalendarOfPricesRequest = {
   styleUrls: ['./calendar-of-prices.component.scss'],
 })
 export class CalendarOfPricesComponent implements OnInit {
-  constructor(private flightInfoService: FlightsInfoService) {}
+  constructor(private store: Store) {}
 
-  prices: CalendarOfPricesModel[] = [];
+  calendatData: CalendarOfPricesStateModel;
 
   ngOnInit(): void {
-    this.flightInfoService
-      .RequestGetCalendarOfPrices()
-      .subscribe(({ data }) => (this.prices = data));
+    this.store.dispatch(new FetchCalendarOfPrices());
+    this.store
+      .select(FlightInfoState.calendarOfPrices)
+      .subscribe((state) => (this.calendatData = state));
   }
 }
