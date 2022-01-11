@@ -36,4 +36,17 @@ export class FlightsInfoService {
   getSpecialOffers(originCity: string): Observable<any> {
     return this.http.get<any>(`/aviasales/v3/get_special_offers?origin=${originCity}&currency=usd&token=b482025a8bf39817b6b6f219686b4799`)
   }
+
+  requestGetNonStopTickets(): Observable<any> {
+    const headerDict = {
+      'x-access-token': '4df3f89d6861e092b8f5d30e3d49cde8'
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict)
+    };
+    return this.http.get('/v1/prices/direct?origin=MOW&destination=LED&token=4df3f89d6861e092b8f5d30e3d49cde8', requestOptions)
+  }
 }
+
+

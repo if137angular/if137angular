@@ -37,7 +37,9 @@ import { AutocompleteComponent } from './components/autocomplete/autocomplete.co
 import { CalendarOfPricesItemComponent } from './components/calendar-of-prices/calendar-of-prices-item/calendar-of-prices-item.component';
 import { CalendarOfPricesComponent } from './components/calendar-of-prices/calendar-of-prices.component';
 import { SpecialOffersComponent } from './components/special-offers/special-offers.component';
+import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-tickets.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+
 
 @NgModule({
   declarations: [
@@ -51,7 +53,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     FirstComponent,
     SecondComponent,
     ThirdComponent,
-    SpecialOffersComponent
+    SpecialOffersComponent,
+    NonStopTicketsComponent
   ],
   imports: [
     MatIconModule,
