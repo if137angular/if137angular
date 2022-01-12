@@ -20,6 +20,7 @@ export class FlightDataFormComponent implements OnInit {
     endDate: new FormControl({}),
     destinationFrom: new FormControl(),
     destinationTo: new FormControl(),
+    transfers: new FormControl()
   });
 
   @Select(RequestDataState.cities) cities$: Observable<CitiesModel[]>;
@@ -39,6 +40,5 @@ export class FlightDataFormComponent implements OnInit {
 
   onResetForm() {
     this.flightDataFormGroup.reset({});
-    this.transfers = '';
   }
 }
