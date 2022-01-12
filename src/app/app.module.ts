@@ -35,14 +35,15 @@ import { AppComponent } from './app.component';
 import { FlightDataFormComponent } from './components/flight-data-form/flight-data-form.component';
 import { ButtonComponent } from './components/button/button.component';
 import { NavComponent } from './components/nav/nav.component';
-import { FirstComponent } from './components/forTest/first/first.component';
-import { SecondComponent } from './components/forTest/second/second.component';
-import { ThirdComponent } from './components/forTest/third/third.component';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 import { CalendarOfPricesItemComponent } from './components/calendar-of-prices/calendar-of-prices-item/calendar-of-prices-item.component';
 import { CalendarOfPricesComponent } from './components/calendar-of-prices/calendar-of-prices.component';
 import { SpecialOffersComponent } from './components/special-offers/special-offers.component';
 import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-tickets.component';
+import { TransfersComponent } from './components/transfers/transfers.component';
+import { SpecialOffersSelectComponent } from './components/special-offers/special-offers-select/special-offers-select.component';
+import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
+
 
 @NgModule({
   declarations: [
@@ -53,11 +54,12 @@ import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-
     CalendarOfPricesItemComponent,
     ButtonComponent,
     NavComponent,
-    FirstComponent,
-    SecondComponent,
-    ThirdComponent,
     SpecialOffersComponent,
     NonStopTicketsComponent,
+    TransfersComponent,
+    SpecialOffersSelectComponent,
+    CheapestTicketsComponent,
+
   ],
   imports: [
     BrowserModule,

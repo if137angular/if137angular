@@ -9,6 +9,8 @@ import { CalendarOfPricesModel } from 'src/app/models/calendar-of-prices.model';
 export class CalendarOfPricesItemComponent {
   @Input() data: CalendarOfPricesModel;
   @Input() currency: string;
+  @Input() origin: string;
+  @Input() destination: string;
 
   isActive: boolean = false;
 
