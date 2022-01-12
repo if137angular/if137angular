@@ -1,13 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-special-offers-select',
   templateUrl: './special-offers-select.component.html',
   styleUrls: ['./special-offers-select.component.scss']
 })
-export class SpecialOffersSelectComponent implements OnInit {
+export class SpecialOffersSelectComponent implements OnChanges {
 
-  locale: { [key: string]: string } = {
+  @Input() selectedLocale: string = '';
+  @Output() selectedLocaleChange = new EventEmitter<string>();
+  localeControl: FormControl = new FormControl('');
+
+  @Input() selectedCurrency: string = '';
+  @Output() selectedCurrencyChange = new EventEmitter<string>();
+  currencyControl: FormControl = new FormControl('');
+
+  specialOffersFrom: FormGroup;
+
+  locales: { [key: string]: string } = {
     "ar": "Arabic",
     "az": "Azerbaijani",
     "be": "Belarusian",
@@ -71,7 +82,7 @@ export class SpecialOffersSelectComponent implements OnInit {
     "zh-hant": "Chinese (Traditional)"
   };
 
-  currency: { [key: string]: string } = {
+  currencies: { [key: string]: string } = {
     "usd": "US Dollar (USD)",
     "eur": "Euro (EUR)",
     "aed": "UAE dirham (AED)",
@@ -153,14 +164,28 @@ export class SpecialOffersSelectComponent implements OnInit {
     "zmw": "Zambian Kwacha (ZMW)",
   };
 
+  constructor() {
+    this.specialOffersFrom = new FormGroup({
+      locale: this.localeControl,
+      currency: this.currencyControl
+    });
+  }
 
+  ngOnChanges(): void {
+    this.localeControl.setValue(this.selectedLocale);
+    this.currencyControl.setValue(this.selectedCurrency);
+  }
 
+  localeSelected(): void {
+    this.selectedLocale = this.localeControl.value;
+    this.selectedLocaleChange.emit(this.selectedLocale);
+    console.log('TESTING Locale value:', this.selectedLocale);
+  }
 
-
-  constructor() { }
-
-  ngOnInit(): void {
-    console.log('this.states')
+  currencySelected(): void {
+    this.selectedCurrency = this.currencyControl.value;
+    this.selectedCurrencyChange.emit(this.selectedCurrency);
+    console.log('TESTING Currency value:', this.selectedCurrency);
   }
 
 }
