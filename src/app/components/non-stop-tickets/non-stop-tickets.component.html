@@ -1,24 +1,40 @@
 <div class="container">
-    
-  <div class="origin-city">
-      <label>Origin</label>
+  <div class="forms-non-stop">
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Origin City</mat-label>
       <input type="text"
-      [(ngModel)]="updateText">
-      <button (click)="onAddTickets()">Add</button>
-  </div>
-    
-   <div class="destination-city">
-    <label>Destination</label>
-    <input type="text"
-    [(ngModel)]="updateText">
-    <button (click)="onAddTickets()">Add</button>
-  </div>
-  
-<hr>
+             aria-label="Origin City"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of options" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Destination</mat-label>
+      <input type="text"
+             aria-label="Destination"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of options" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  <button mat-raised-button color="warn" (click)="onGetNonStopTicket()">Go</button>
+</div>  
   <p>Airline is {{ data.data.PAR['0'].airline }}</p>
   <p>Flight number is {{ data.data.PAR['0'].flight_number }}</p>
   <p>Departure date {{ data.data.PAR['0'].departure_at }}</p>
   <p>Return date {{ data.data.PAR['0'].return_at }}</p>
   <p>Price is {{ data.data.PAR['0'].price }} {{ data.currency | uppercase }}</p>
-  <p *ngIf="addNewText">{{ addTicketStatus }} {{ updateText}}</p>
 </div>

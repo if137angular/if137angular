@@ -9,14 +9,23 @@
   text-align: center;
 }
 
-.origin-city {
+.forms-non-stop {
   display: flex;
-  justify-content: center;
-  margin: 1em;
+  justify-content: space-around;
+
 }
 
-.destination-city {
-  display: flex;
-  justify-content: center;
-  margin: 1em;
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 60%;
+}
+
+.example-full-width {
+  width: 60%;
+}
+
+.mat-raised-button {
+  height: 50px;
+
 }

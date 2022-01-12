@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
+
 
 @Component({
   selector: 'app-non-stop-tickets',
@@ -8,9 +10,8 @@ import { FlightsInfoService } from 'src/app/services/flights-info.service';
 })
 export class NonStopTicketsComponent implements OnInit {
   data: any;
-  addTicketStatus: string = 'No Tickets';
-  updateText: string = '';
-  addNewText: boolean = false;
+  myControl = new FormControl();
+  options: string[] = ['Kyiv', 'Lviv', 'Krakow'];
 
   constructor(private flightsInfoService: FlightsInfoService) {
 
@@ -23,10 +24,7 @@ export class NonStopTicketsComponent implements OnInit {
     });
   }
 
-  onAddTickets() {
-    this.addNewText = true;
-    this.addTicketStatus = this.updateText;
-    this.updateText = '';
+  onGetNonStopTicket() {
+    
   }
-
 }
