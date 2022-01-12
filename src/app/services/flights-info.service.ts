@@ -1,11 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { GetCalendarOfPricesRequestModel } from '../models/calendar-of-prices.model';
+import { DOCUMENT } from "@angular/common";
 
 @Injectable()
 export class FlightsInfoService {
-  constructor(private http: HttpClient) {}
+  private baseUrl: string;
+  constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document) {
+  this.baseUrl = this.document.location.origin;
+}
 
   exampleRequestGetChipTickets(): Observable<any> {
     const headerDict = {
@@ -50,6 +54,21 @@ export class FlightsInfoService {
     };
     return this.http.get(
       '/v1/prices/direct?origin=MOW&destination=LED&token=4df3f89d6861e092b8f5d30e3d49cde8',
+      requestOptions
+    );
+  }
+
+  getFlightPriceTrends(): Observable<any>{
+    const headerDict = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'x-access-token': '51b362c72de38be9bcfdc31c8339c019',
+    };
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    return this.http.get(
+      '/v1/prices/calendar?depart_date=2021–11&origin=MOW&destination=BCN&calendar_type=departure_date&token=51b362c72de38be9bcfdc31c8339c019',
       requestOptions
     );
   }
