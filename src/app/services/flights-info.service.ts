@@ -49,7 +49,7 @@ export class FlightsInfoService {
       headers: new HttpHeaders(headerDict),
     };
     return this.http.get(
-      '/v1/prices/direct?origin=MOW&destination=LED&token=4df3f89d6861e092b8f5d30e3d49cde8',
+      '/v1/prices/direct?origin=KBP&destination=CDG&token=4df3f89d6861e092b8f5d30e3d49cde8',
       requestOptions
     );
   }

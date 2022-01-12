@@ -1,3 +1,24 @@
 <div class="container">
-  <p>non-stop-tickets works!</p>
+    
+  <div class="origin-city">
+      <label>Origin</label>
+      <input type="text"
+      [(ngModel)]="updateText">
+      <button (click)="onAddTickets()">Add</button>
+  </div>
+    
+   <div class="destination-city">
+    <label>Destination</label>
+    <input type="text"
+    [(ngModel)]="updateText">
+    <button (click)="onAddTickets()">Add</button>
+  </div>
+  
+<hr>
+  <p>Airline is {{ data.data.PAR['0'].airline }}</p>
+  <p>Flight number is {{ data.data.PAR['0'].flight_number }}</p>
+  <p>Departure date {{ data.data.PAR['0'].departure_at }}</p>
+  <p>Return date {{ data.data.PAR['0'].return_at }}</p>
+  <p>Price is {{ data.data.PAR['0'].price }} {{ data.currency | uppercase }}</p>
+  <p *ngIf="addNewText">{{ addTicketStatus }} {{ updateText}}</p>
 </div>
