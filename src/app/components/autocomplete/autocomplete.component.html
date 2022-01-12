@@ -1,9 +1,9 @@
 <mat-form-field class="example-full-width" appearance="outline">
   <mat-label>{{label}}</mat-label>
-  <input type="text" matInput [formControl]="autoCompleteControl" [matAutocomplete]="auto">
+  <input type="text" matInput  [matAutocomplete]="auto" [formControl]="autoCompleteControl">
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionSelected()">
     <mat-option *ngFor="let item of filteredItems.slice(0, 10)" [value]="item">
-      {{item}}
+      {{item.name}}
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>

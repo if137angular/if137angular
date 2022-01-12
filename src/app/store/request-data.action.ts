@@ -14,6 +14,11 @@ export class GetAirports {
   constructor(public payload: any = null) { }
 }
 
+export class SetFormDate {
+  static readonly type = '[Request] Set Form Data';
+  constructor(public payload: any) { }
+}
+
 export type RequestDataActions =
   GetCountries |
   GetCities |
