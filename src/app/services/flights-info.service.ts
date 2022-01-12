@@ -8,10 +8,12 @@ import { DOCUMENT } from "@angular/common";
 
 @Injectable()
 export class FlightsInfoService {
+
   private baseUrl: string;
   constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document) {
-  this.baseUrl = this.document.location.origin;
-}
+    this.baseUrl = this.document.location.origin;
+  }
+
 
   exampleRequestGetChipTickets(): Observable<any> {
     const headerDict = {
@@ -40,9 +42,9 @@ export class FlightsInfoService {
       requestOptions
     );
   }
-  getSpecialOffers(originCity: string): Observable<any> {
+  getSpecialOffers(cityOrign: string, locale: string, currency: string): Observable<any> {
     return this.http.get<any>(
-      `/aviasales/v3/get_special_offers?origin=${originCity}&currency=usd&token=b482025a8bf39817b6b6f219686b4799`
+      `/aviasales/v3/get_special_offers?origin=${cityOrign}&locale=${locale}&currency=${currency}&token=b482025a8bf39817b6b6f219686b4799`
     );
   }
 
@@ -59,6 +61,9 @@ export class FlightsInfoService {
       requestOptions
     );
   }
+
+
+  getFlightPriceTrends(): Observable<any> {
 
   requestCheapestTickets(ticketsParam: TicketsRequestParam): Observable<any> {
     const baseURL: string = '/v1/prices/cheap'
@@ -84,6 +89,7 @@ export class FlightsInfoService {
     )
 }
   getFlightPriceTrends(): Observable<any>{
+
     const headerDict = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
