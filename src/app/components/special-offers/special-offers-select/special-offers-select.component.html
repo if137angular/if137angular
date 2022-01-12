@@ -1,0 +1,28 @@
+<div class="form">
+  <div class="form__select">
+    <mat-form-field appearance="fill">
+      <mat-label>LOCALE</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let item of locale | keyvalue" [value]="item.key">{{
+          item.value
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="form__select">
+    <mat-form-field appearance="fill">
+      <mat-label>СURRENCY</mat-label>
+      <mat-select>
+        <mat-option
+          *ngFor="let item of currency | keyvalue"
+          [value]="item.key"
+          >{{ item.value }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="form__autocomplete">
+    <app-autocomplete></app-autocomplete>
+  </div>
+</div>

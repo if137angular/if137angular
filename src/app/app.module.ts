@@ -44,6 +44,7 @@ import { CalendarOfPricesComponent } from './components/calendar-of-prices/calen
 import { SpecialOffersComponent } from './components/special-offers/special-offers.component';
 import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-tickets.component';
 import { TransfersComponent } from './components/transfers/transfers.component';
+import { SpecialOffersSelectComponent } from './components/special-offers/special-offers-select/special-offers-select.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { TransfersComponent } from './components/transfers/transfers.component';
     SpecialOffersComponent,
     NonStopTicketsComponent,
     TransfersComponent,
+    SpecialOffersSelectComponent,
   ],
   imports: [
     BrowserModule,
