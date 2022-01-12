@@ -1,3 +1,9 @@
 .data-form {
-  display: inline-flex;
+  // position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
 }
