@@ -40,6 +40,7 @@ import { CalendarOfPricesItemComponent } from './components/calendar-of-prices/c
 import { CalendarOfPricesComponent } from './components/calendar-of-prices/calendar-of-prices.component';
 import { SpecialOffersComponent } from './components/special-offers/special-offers.component';
 import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-tickets.component';
+import { TransfersComponent } from './components/transfers/transfers.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-
     NavComponent,
     SpecialOffersComponent,
     NonStopTicketsComponent,
+    TransfersComponent,
   ],
   imports: [
     BrowserModule,

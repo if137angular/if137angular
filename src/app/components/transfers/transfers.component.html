@@ -1,0 +1,11 @@
+<form [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label>Transfers</mat-label>
+    <mat-select [formControl]="transfersControl" (selectionChange)="transferSelected()" name="transfer">
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let transfer of transfers" [value]="transfer">
+        {{transfer}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>

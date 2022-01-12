@@ -13,11 +13,11 @@ export class FlightDataFormComponent implements OnInit {
   cities: string[] = [];
   destinationFrom: string = '';
   destinationTo: string = '';
+  transfers: string = ''
 
   flightDataFormGroup: FormGroup = new FormGroup({
     startDate: new FormControl({}),
     endDate: new FormControl({}),
-    flightTransfers: new FormControl(false),
   });
 
   @Select(RequestDataState.cities) cities$: Observable<string[]>;
@@ -29,6 +29,24 @@ export class FlightDataFormComponent implements OnInit {
   }
 
   onSubmitForm() {
-    console.log(`From: ${this.destinationFrom}, To: ${this.destinationTo}`);
+    console.log(
+      `City From: ${this.destinationFrom}, To: ${this.destinationTo}`
+    );
+    console.log(
+      `Date From: ${this.flightDataFormGroup.controls['startDate'].value}, To: ${this.flightDataFormGroup.controls['endDate'].value}`
+    );
+    console.log(
+      `Transfers: ${this.transfers}`
+    );
+  }
+
+  onResetForm() {
+    this.flightDataFormGroup.reset({});
+    this.destinationFrom = '';
+    this.destinationTo = '';
+    this.transfers = '';
+
+    this.destinationFrom = '';
+    this.destinationTo = '';
   }
 }
