@@ -1,6 +1,6 @@
 <form class="data-form" [formGroup]="flightDataFormGroup">
-  <app-autocomplete label="From" [items]="cities" [(selectedItem)]="destinationFrom"></app-autocomplete>
-  <app-autocomplete label="To" [items]="cities" [(selectedItem)]="destinationTo"></app-autocomplete>
+  <app-autocomplete formControlName="destinationFrom" label="From" [items]="cities"></app-autocomplete>
+  <app-autocomplete formControlName="destinationTo" label="To" [items]="cities"></app-autocomplete>
 
   <mat-form-field appearance="outline">
     <mat-label>Enter a date range</mat-label>

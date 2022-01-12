@@ -3,11 +3,13 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { tap } from 'rxjs/operators';
 import * as RequestDataActions from './request-data.action';
+import { CitiesModel } from "src/app/models/cities.model";
 
 export interface RequestDataStateModel {
   countries: any[];
-  cities: any[];
+  cities: CitiesModel[];
   airports: any[];
+  formData: any; // TODO: create model
 }
 
 @State<RequestDataStateModel>({
@@ -16,11 +18,14 @@ export interface RequestDataStateModel {
     countries: [],
     cities: [],
     airports: [],
+    formData: {}
   },
 })
 @Injectable()
 export class RequestDataState {
-  constructor(private requestService: RequestDataService) {}
+  constructor(private requestService: RequestDataService) {
+  }
+
   @Selector()
   static countries(state: RequestDataStateModel): any[] {
     return state.countries;
@@ -34,6 +39,11 @@ export class RequestDataState {
   @Selector()
   static airports(state: RequestDataStateModel): any[] {
     return state.airports;
+  }
+
+  @Selector()
+  static formData(state: RequestDataStateModel): any {
+    return state.formData;
   }
 
   @Action(RequestDataActions.GetCountries)
@@ -61,5 +71,13 @@ export class RequestDataState {
         patchState({ airports });
       })
     );
+  }
+
+  @Action(RequestDataActions.SetFormDate)
+  SetFormData(
+    { patchState }: StateContext<RequestDataStateModel>,
+    { payload }: RequestDataActions.SetFormDate
+  ) {
+    return patchState({ formData: payload })
   }
 }
