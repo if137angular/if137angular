@@ -5,7 +5,7 @@ import { GetCalendarOfPricesRequestModel } from '../models/calendar-of-prices.mo
 
 @Injectable()
 export class FlightsInfoService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   exampleRequestGetChipTickets(): Observable<any> {
     const headerDict = {
@@ -34,9 +34,9 @@ export class FlightsInfoService {
       requestOptions
     );
   }
-  getSpecialOffers(originCity: string): Observable<any> {
+  getSpecialOffers(cityOrign: string, locale: string, currency: string): Observable<any> {
     return this.http.get<any>(
-      `/aviasales/v3/get_special_offers?origin=${originCity}&currency=usd&token=b482025a8bf39817b6b6f219686b4799`
+      `/aviasales/v3/get_special_offers?origin=${cityOrign}&locale=${locale}&currency=${currency}&token=b482025a8bf39817b6b6f219686b4799`
     );
   }
 
