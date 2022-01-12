@@ -1,24 +1,34 @@
-<div class="form">
+<form [formGroup]="specialOffersFrom" class="form">
   <div class="form__select">
     <mat-form-field appearance="outline">
       <mat-label>LOCALE</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let item of locale | keyvalue" [value]="item.key">{{
-          item.value
-        }}</mat-option>
+      <mat-select
+        [formControl]="localeControl"
+        (selectionChange)="localeSelected()"
+        name="locale"
+      >
+        <mat-option
+          *ngFor="let local of locales | keyvalue"
+          [value]="local.key"
+          >{{ local.value }}</mat-option
+        >
       </mat-select>
     </mat-form-field>
   </div>
   <div class="form__select">
     <mat-form-field appearance="outline">
       <mat-label>СURRENCY</mat-label>
-      <mat-select>
+      <mat-select
+        [formControl]="currencyControl"
+        (selectionChange)="currencySelected()"
+        name="currency"
+      >
         <mat-option
-          *ngFor="let item of currency | keyvalue"
-          [value]="item.key"
-          >{{ item.value }}</mat-option
+          *ngFor="let currency of currencies | keyvalue"
+          [value]="currency.key"
+          >{{ currency.value }}</mat-option
         >
       </mat-select>
     </mat-form-field>
   </div>
-</div>
+</form>
