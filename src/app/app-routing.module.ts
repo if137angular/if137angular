@@ -8,11 +8,6 @@ import { FlightDataFormComponent } from './components/flight-data-form/flight-da
 
 export const routes: Routes = [
   {
-    path: '',
-    component: FlightDataFormComponent,
-    data: { tab: 'Flight Data' },
-  },
-  {
     path: 'calendar',
     component: CalendarOfPricesComponent,
     data: { tab: 'Calendar of prices' },
