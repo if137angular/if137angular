@@ -1,10 +1,11 @@
 <nav mat-tab-nav-bar mat-align-tabs="center">
-  <a mat-tab-link
-     *ngFor="let link of links"
-     (click)="activeLink = link.path"
-     [active]="activeLink === link.path"
-     routerLink={{link.path}}
+  <a
+    mat-tab-link
+    *ngFor="let link of links"
+    (click)="activeLink = link.path"
+    [active]="activeLink === link.path"
+    routerLink="{{ link.path }}"
   >
-    {{link.data.tab}}
+    {{ link.data.tab }}
   </a>
 </nav>

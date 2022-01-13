@@ -43,6 +43,9 @@ import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-
 import { TransfersComponent } from './components/transfers/transfers.component';
 import { FlightTicketsForSpecialDatesComponent } from './components/flight-tickets-for-special-dates/flight-tickets-for-special-dates.component';
 
+import { SpecialOffersSelectComponent } from './components/special-offers/special-offers-select/special-offers-select.component';
+import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
+import { CityDestinationComponent } from './components/city-destination/city-destination.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +59,13 @@ import { FlightTicketsForSpecialDatesComponent } from './components/flight-ticke
     NonStopTicketsComponent,
     TransfersComponent,
     FlightTicketsForSpecialDatesComponent,
+    SpecialOffersSelectComponent,
+    CheapestTicketsComponent,
+
+    AppComponent,
+    CityDestinationComponent
+
+
   ],
   imports: [
     BrowserModule,
@@ -64,7 +74,7 @@ import { FlightTicketsForSpecialDatesComponent } from './components/flight-ticke
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-
+    MatSelectModule,
     MatAutocompleteModule,
     MatInputModule,
     MatButtonModule,

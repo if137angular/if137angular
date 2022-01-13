@@ -1,12 +1,14 @@
 <div class="calendar">
   <mat-progress-spinner
-    *ngIf="calendatData.loading"
+    *ngIf="calendarData.loading"
     mode="indeterminate"
   ></mat-progress-spinner>
   <app-calendar-of-prices-item
-    *ngFor="let data of calendatData.data"
+    *ngFor="let data of calendarData.data"
     [data]="data"
-    [currency]="calendatData.currency"
+    [currency]="calendarData.currency"
+    [destination]="formData.destination"
+    [origin]="formData.origin"
   >
   </app-calendar-of-prices-item>
 </div>
