@@ -1,40 +1,49 @@
 <div class="container">
   <div class="forms-non-stop">
+
   <form class="example-form">
-    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-form-field class="example-full-width">
       <mat-label>Origin City</mat-label>
       <input type="text"
              aria-label="Origin City"
              matInput
-             [formControl]="myControl"
-             [matAutocomplete]="auto">
+      
+             [matAutocomplete]="auto">       
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of options" [value]="option">
-          {{option}}
+        <mat-option *ngFor="let option of originOptions" [value]="option.label"
+          (click)="onUpdateOrigin(option.key)">
+          {{option.label}}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
   </form>
+
   <form class="example-form">
-    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-form-field class="example-full-width">
       <mat-label>Destination</mat-label>
       <input type="text"
              aria-label="Destination"
              matInput
-             [formControl]="myControl"
-             [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of options" [value]="option">
-          {{option}}
+        
+             [matAutocomplete]="auto2">
+      <mat-autocomplete #auto2="matAutocomplete">
+        <mat-option 
+         *ngFor="let option of destinationOptions" [value]="option.label"
+         (click)="onUpdateDestination(option.key)">
+          {{option.label}}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
   </form>
-  <button mat-raised-button color="warn" (click)="onGetNonStopTicket()">Go</button>
+  <button mat-raised-button color="warn">Go</button>
 </div>  
-  <p>Airline is {{ data.data.PAR['0'].airline }}</p>
-  <p>Flight number is {{ data.data.PAR['0'].flight_number }}</p>
+  <p>Airline is {{data.data}}<p>
+  <!-- <p>Flight number is {{ data.data.PAR['0'].flight_number }}</p>
   <p>Departure date {{ data.data.PAR['0'].departure_at }}</p>
   <p>Return date {{ data.data.PAR['0'].return_at }}</p>
-  <p>Price is {{ data.data.PAR['0'].price }} {{ data.currency | uppercase }}</p>
+  <p>Price is {{ data.data.PAR['0'].price }} {{ data.currency | uppercase }}</p> -->
 </div>
+
+
+
+
