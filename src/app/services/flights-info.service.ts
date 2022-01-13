@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { GetCalendarOfPricesRequestModel } from '../models/calendar-of-prices.model';
 import { TicketsRequestParam } from '../models/cheapest-tickets.model';
@@ -122,6 +122,6 @@ export class FlightsInfoService {
     const requestOptions = {
       headers: new HttpHeaders(headerDict)
     };
-    return this.http.request<GetDestinationPopular>('get', "/city-directions?origin=IEV&currency=usd&token=fd45945b3cf27c0f371a6a177e5c8adc",requestOptions)
+    return this.http.get<GetDestinationPopular>( `/v1/city-directions?origin=${origin}&currency=usd&token=fd45945b3cf27c0f371a6a177e5c8adc`,requestOptions)
   }
 }
