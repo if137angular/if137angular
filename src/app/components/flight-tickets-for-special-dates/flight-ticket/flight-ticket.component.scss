@@ -1,0 +1,41 @@
+*,h1,h2,h3,h4,h5 {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.wrap__tikcet {
+    border: 1px solid rgb(185, 177, 148);
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 6px rgba(34, 60, 80, 0.2);
+    margin: 10px 10px 20px;
+    background-color: #fff;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
+
+.price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #ccc;
+    &-title {
+        font-size: 1.7rem;
+        font-weight: bold;
+    }
+}
+
+.info__flight-duration {
+    text-align: center;
+    color: #ccc;
+    font-size: 0.8rem;
+}
+.info-date {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.hr {
+    width: 85%;
+    margin: 0 auto;
+}

@@ -46,6 +46,7 @@ import { FlightTicketsForSpecialDatesComponent } from './components/flight-ticke
 import { SpecialOffersSelectComponent } from './components/special-offers/special-offers-select/special-offers-select.component';
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
 import { CityDestinationComponent } from './components/city-destination/city-destination.component';
+import { FlightTicketComponent } from './components/flight-tickets-for-special-dates/flight-ticket/flight-ticket.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +64,8 @@ import { CityDestinationComponent } from './components/city-destination/city-des
     CheapestTicketsComponent,
 
     AppComponent,
-    CityDestinationComponent
+    CityDestinationComponent,
+    FlightTicketComponent
 
 
   ],

@@ -1,2 +1,12 @@
-<p>flight-tickets-for-special-dates works!</p>
-<button (click)="consoleFormData()">Get tikets</button>
+
+<div class="container">
+    <h3>Flight Tickets for Special Date</h3>
+    <button (click)="getFlightInfo()">Get info</button>  <!--This button for test for project need delete-->
+    <div class="wrap">
+        <app-flight-ticket
+            *ngFor="let info of flightInfo"
+            [flightInfo]="info"
+        ></app-flight-ticket>
+
+    </div>
+</div>

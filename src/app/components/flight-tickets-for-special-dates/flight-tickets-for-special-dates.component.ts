@@ -3,6 +3,7 @@ import { Store } from '@ngxs/store';
 
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { RequestDataState } from 'src/app/store/request-data.state';
+import { FlightInfo } from 'src/app/models/flight-tickets-for-date.model';
 
 
 @Component({
@@ -13,30 +14,37 @@ import { RequestDataState } from 'src/app/store/request-data.state';
 export class FlightTicketsForSpecialDatesComponent implements OnInit {
 
   formData: any;
+  flightInfo: FlightInfo[] = [];
 
   constructor(private flightInfoService: FlightsInfoService, private store: Store) { }
 
   ngOnInit(): void {
-    // this.formData = this.store.selectSnapshot(RequestDataState.formData);
-
+    // this.getFlightInfo()
   }
 
-  consoleFormData() {
-    const formData = this.store.selectSnapshot(RequestDataState.formData);
+  getFlightInfo() {
+    this.formData = this.store.selectSnapshot(RequestDataState.formData);
 
-    const codeFrom: string = formData.destinationFrom.code;
-    const codeTo: string = formData.destinationTo.code;
-    const startDate: string = formData.startDate.toISOString().slice(0, 10);
-    const endDate: string = formData.endDate.toISOString().slice(0, 10);
+    console.log(this.formData)
 
-    console.log('Data start: ', startDate )
-    console.log('Data end: ', endDate )
-    console.log('From city ', codeFrom)
-    console.log('To city ', codeTo)
+    const codeFrom: string = this.formData.destinationFrom.code;
+    const codeTo: string = this.formData.destinationTo.code;
+    const startDate: string = this.formData.startDate.toISOString().slice(0, 10);
+    const endDate: string = this.formData.endDate.toISOString().slice(0, 10);
 
     this.flightInfoService.getFlightTicketsForDate(codeFrom, codeTo, startDate, endDate).subscribe(data => {
+      this.flightInfo = data.data
       console.log(data)
     })
+
+    // ********* Code below only for test ****************
+
+    // this.flightInfoService.getFlightTicketsForDate('LWO', 'MIL', '2022-01-15', '2022-01-22')
+    //   .subscribe(data => {
+    //     this.flightInfo = data.data
+    //     console.log(data)
+    //   })
+    // *************************************
   }
 
 }
