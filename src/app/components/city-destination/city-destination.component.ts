@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FlightsInfoService} from 'src/app/services/flights-info.service';
 import {zip} from "rxjs";
-import {newArray} from "@angular/compiler/src/util";
 
 export type DestinationPopular = {
   origin: string;
@@ -38,7 +37,7 @@ export class CityDestinationComponent implements OnInit {
   }
 
   items: GetDestinationPopular[] = []
-  response: Map<string, DestinationPopular>[] = [];
+  response: Map<string, DestinationPopular[]> = new Map<string,DestinationPopular[]>();
   keys: Set<string>;
   keys1: string[];
   keys2: string[];
@@ -50,12 +49,26 @@ export class CityDestinationComponent implements OnInit {
       this.flightInfoService
         .requestDestinationModel("LWO"))
       .subscribe(([data1, data2]) => {
-        this.keys1 = Object.keys(data1.data);
-        this.keys2 = Object.keys(data2.data);
-        this.keys = new Set([...this.keys1, ...this.keys2]);
-        this.keys.forEach(value => console.log(value))
-        this.response = [data1.data, data2.data]
-        console.log(this.response)
+        const result1 = data1.data;
+        const result2 = data2.data;
+        const cities = [...result1.values(), ...result2.values()];
+        console.log(cities)
+        const groupOFCities = cities.reduce((acc:Map<string,DestinationPopular[]>, value:DestinationPopular) => {
+          if (!acc.get(value.destination)) {
+            acc.set(value.destination,[]);
+          }
+
+          acc.get(value.destination).push(value);
+
+          return acc;
+        }, new Map<string,DestinationPopular[]>());
+        this.response = groupOFCities;
+        // this.keys1 = Object.keys(data1.data);
+        // this.keys2 = Object.keys(data2.data);
+        // this.keys = new Set([...this.keys1, ...this.keys2]);
+        // this.keys.forEach(value => console.log(value))
+        // this.response = [data1.data, data2.data]
+        // console.log(this.response)
       })
   }
 
