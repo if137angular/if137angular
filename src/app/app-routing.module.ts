@@ -6,7 +6,7 @@ import { SpecialOffersComponent } from './components/special-offers/special-offe
 import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-tickets.component';
 import {CheapestTicketsComponent} from "./components/cheapest-tickets/cheapest-tickets.component";
 import { FlightDataFormComponent } from './components/flight-data-form/flight-data-form.component';
-
+import {CityDestinationComponent} from "./components/city-destination/city-destination.component";
 export const routes: Routes = [
   {
     path: 'calendar',
@@ -28,6 +28,11 @@ export const routes: Routes = [
     component: CheapestTicketsComponent,
     data: { tab: 'Cheapest Tickets' },
   },
+  {
+    path: 'app-city-destination',
+    component: CityDestinationComponent,
+    data: {tab: 'Popular destination'},
+  }
 ];
 
 @NgModule({
