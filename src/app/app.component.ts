@@ -10,7 +10,7 @@ import { FlightsInfoService } from './services/flights-info.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private store: Store, private flightInfoService:FlightsInfoService) {
+  constructor(private store: Store) {
   }
 
   ngOnInit() {

@@ -31,25 +31,31 @@ export class CityDestinationComponent implements OnInit {
 
   isActive: boolean = false;
 
-  selectByDestination(){
+  selectByDestination() {
 
   }
 
   toggleActive() {
     this.isActive = !this.isActive;
   }
+
   constructor(private flightInfoService: FlightsInfoService) {
   }
-
+  items:GetDestinationPopular[] = []
   response: GetDestinationPopular[] = [];
 
   ngOnInit(): void {
     this.flightInfoService
-      .requestPopularDestination()
+      .requestPopularDestination("IEV")
       .subscribe((data => {
         this.response = new Array<GetDestinationPopular>(data);
         console.log(this.response);
       }));
+    this.flightInfoService
+      .requestDestinationModel("LWO")
+      .subscribe((data => {
+        this.items = new Array<GetDestinationPopular>(data);
+        console.log(this.items);
+      }));
   }
-
 }

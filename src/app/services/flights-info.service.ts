@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { GetCalendarOfPricesRequestModel } from '../models/calendar-of-prices.model';
 import { TicketsRequestParam } from '../models/cheapest-tickets.model';
-import {GetDestinationPopular} from "../component/city-destination/city-destination.component";
 import { map } from 'rxjs/operators';
+import {GetDestinationPopular} from "../components/city-destination/city-destination.component";
 
 @Injectable()
 export class FlightsInfoService {
@@ -99,12 +99,25 @@ export class FlightsInfoService {
       requestOptions
     );
   }
+
+
+  requestDestinationModel(origin:string):Observable<GetDestinationPopular>{
+    const headerDict = {
+      'x-access-token': 'fd45945b3cf27c0f371a6a177e5c8adc',
+    };
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    return this.http.get<GetDestinationPopular>( `/v1/city-directions?origin=${origin}&currency=usd&token=fd45945b3cf27c0f371a6a177e5c8adc`,requestOptions);
+  }
+
+
+
   requestPopularDestination(origin:string ): Observable<GetDestinationPopular> {
     const headerDict = {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
       'x-access-token': 'fd45945b3cf27c0f371a6a177e5c8adc'
-    }
+    };
 
     const requestOptions = {
       headers: new HttpHeaders(headerDict)
