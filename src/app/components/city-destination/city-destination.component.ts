@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FlightsInfoService} from 'src/app/services/flights-info.service';
-
+import {zip} from "rxjs";
+import {newArray} from "@angular/compiler/src/util";
 
 export type DestinationPopular = {
   origin: string;
@@ -29,33 +30,38 @@ export type GetDestinationPopular = {
 
 export class CityDestinationComponent implements OnInit {
 
-  isActive: boolean = false;
-
   selectByDestination() {
 
   }
 
-  toggleActive() {
-    this.isActive = !this.isActive;
-  }
-
   constructor(private flightInfoService: FlightsInfoService) {
   }
-  items:GetDestinationPopular[] = []
-  response: GetDestinationPopular[] = [];
+
+  items: GetDestinationPopular[] = []
+  response: Map<string, DestinationPopular>[] = [];
+  keys: Set<string>;
+  keys1: string[];
+  keys2: string[];
 
   ngOnInit(): void {
-    this.flightInfoService
-      .requestPopularDestination("IEV")
-      .subscribe((data => {
-        this.response = new Array<GetDestinationPopular>(data);
-        console.log(this.response);
-      }));
-    this.flightInfoService
-      .requestDestinationModel("LWO")
-      .subscribe((data => {
-        this.items = new Array<GetDestinationPopular>(data);
-        console.log(this.items);
-      }));
+    // const getPopularDestination$
+    zip(this.flightInfoService
+        .requestPopularDestination("IEV"),
+      this.flightInfoService
+        .requestDestinationModel("LWO"))
+      .subscribe(([data1, data2]) => {
+        this.keys1 = Object.keys(data1.data);
+        this.keys2 = Object.keys(data2.data);
+        this.keys = new Set([...this.keys1, ...this.keys2]);
+        this.keys.forEach(value => console.log(value))
+        this.response = [data1.data, data2.data]
+        console.log(this.response)
+      })
   }
+
+  // .subscribe((data => {
+  //   this.response = new Array<GetDestinationPopular>(data);
+  //   console.log(this.response);
+  // }));
+
 }
