@@ -3,7 +3,8 @@
      *ngFor="let link of links"
      (click)="activeLink = link.path"
      [active]="activeLink === link.path"
-     routerLink={{link.path}}>p
+     routerLink={{link.path}}
+  >
     {{link.data.tab}}
   </a>
 </nav>

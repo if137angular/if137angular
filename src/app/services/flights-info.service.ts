@@ -72,4 +72,24 @@ export class FlightsInfoService {
       requestOptions
     );
   }
+
+
+  // My code for Get Flight tikets for Date
+
+  getFlightTicketsForDate(codeFrom: string, codeTo: string, startDate: string, endDate: string): Observable<any> {
+    const headerDict = {
+      'x-access-token': 'd077e8cd07cd09cedc63a920f064b1ab'
+    }
+
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    return this.http.get(
+      `/aviasales/v3/prices_for_dates?origin=${codeFrom}&destination=${codeTo}&departure_at=${startDate}&return_at=${endDate}&unique=false&sorting=price&direct=true&currency=usd&limit=10&page=1&one_way=true&token=d077e8cd07cd09cedc63a920f064b1ab`,
+      requestOptions
+    );
+  }
+
+
+  // ****** END *******
 }
