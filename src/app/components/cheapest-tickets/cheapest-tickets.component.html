@@ -7,6 +7,32 @@
     Get Cheapest Tickets
   </button>
   <div class="ticketsWrapper" *ngIf="ticketsData || ticketsData?.['ticketsArray']">
-    <p *ngFor="let ticket of ticketsData.ticketsArray">ticket price {{ticket.price}}</p>
+    <app-ticket-item
+      *ngFor="let ticket of ticketsData.ticketsArray"
+      [ticketData]="ticket"
+      [currency]="ticketsData.currency"
+      [origin]="ticketsData.origin"
+      [destination]="ticketsData.destination">
+    </app-ticket-item>
   </div>
+<!--  <div class="ticketsWrapper">-->
+<!--    <app-ticket-item>-->
+<!--      [ticketData]="ticket"-->
+<!--      [currency]="ticketsData.currency"-->
+<!--      [origin]="ticketsData.origin"-->
+<!--      [destination]="ticketsData.destination">-->
+<!--    </app-ticket-item>-->
+<!--    <app-ticket-item>-->
+<!--      [ticketData]="ticket"-->
+<!--      [currency]="ticketsData.currency"-->
+<!--      [origin]="ticketsData.origin"-->
+<!--      [destination]="ticketsData.destination">-->
+<!--    </app-ticket-item>-->
+<!--    <app-ticket-item>-->
+<!--      [ticketData]="ticket"-->
+<!--      [currency]="ticketsData.currency"-->
+<!--      [origin]="ticketsData.origin"-->
+<!--      [destination]="ticketsData.destination">-->
+<!--    </app-ticket-item>-->
+<!--  </div>-->
 </div>
