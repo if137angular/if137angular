@@ -19,7 +19,7 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
   constructor(private flightInfoService: FlightsInfoService, private store: Store) { }
 
   ngOnInit(): void {
-    // this.getFlightInfo()
+    this.getFlightInfo()
   }
 
   getFlightInfo() {
@@ -31,20 +31,11 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
     const codeTo: string = this.formData.destinationTo.code;
     const startDate: string = this.formData.startDate.toISOString().slice(0, 10);
     const endDate: string = this.formData.endDate.toISOString().slice(0, 10);
+    const direct: boolean = this.formData.transfers  === 'Directly';
 
-    this.flightInfoService.getFlightTicketsForDate(codeFrom, codeTo, startDate, endDate).subscribe(data => {
-      this.flightInfo = data.data
-      console.log(data)
+    this.flightInfoService.getFlightTicketsForDate(codeFrom, codeTo, startDate, endDate, direct).subscribe(data => {
+       this.flightInfo = data.data
     })
-
-    // ********* Code below only for test ****************
-
-    // this.flightInfoService.getFlightTicketsForDate('LWO', 'MIL', '2022-01-15', '2022-01-22')
-    //   .subscribe(data => {
-    //     this.flightInfo = data.data
-    //     console.log(data)
-    //   })
-    // *************************************
   }
 
 }

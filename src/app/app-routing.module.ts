@@ -7,6 +7,7 @@ import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-
 import {CheapestTicketsComponent} from "./components/cheapest-tickets/cheapest-tickets.component";
 import { FlightDataFormComponent } from './components/flight-data-form/flight-data-form.component';
 import {CityDestinationComponent} from "./components/city-destination/city-destination.component";
+import { FlightTicketsForSpecialDatesComponent } from './components/flight-tickets-for-special-dates/flight-tickets-for-special-dates.component';
 export const routes: Routes = [
   {
     path: 'calendar',
@@ -32,6 +33,11 @@ export const routes: Routes = [
     path: 'app-city-destination',
     component: CityDestinationComponent,
     data: {tab: 'Popular destination'},
+  },
+  {
+    path: 'flight-tickets',
+    component: FlightTicketsForSpecialDatesComponent,
+    data: {tab: 'Tikets'}
   }
 ];
 

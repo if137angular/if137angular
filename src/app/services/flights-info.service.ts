@@ -103,7 +103,7 @@ export class FlightsInfoService {
 
   //***** Code for Get Flight tikets for Date ******
 
-  getFlightTicketsForDate(codeFrom: string, codeTo: string, startDate: string, endDate: string): Observable<any> {
+  getFlightTicketsForDate(codeFrom: string, codeTo: string, startDate: string, endDate: string, direct: boolean): Observable<any> {
     const headerDict = {
       'x-access-token': 'd077e8cd07cd09cedc63a920f064b1ab'
     }
@@ -112,7 +112,7 @@ export class FlightsInfoService {
     };
 
     return this.http.get(
-      `/aviasales/v3/prices_for_dates?origin=${codeFrom}&destination=${codeTo}&departure_at=${startDate}&return_at=${endDate}&unique=false&sorting=price&direct=false&currency=usd&limit=15&page=1&one_way=true&token=d077e8cd07cd09cedc63a920f064b1ab`,
+      `/aviasales/v3/prices_for_dates?origin=${codeFrom}&destination=${codeTo}&departure_at=${startDate}&return_at=${endDate}&unique=false&sorting=price&direct=${direct}&currency=usd&limit=15&page=2&one_way=true&token=d077e8cd07cd09cedc63a920f064b1ab`,
       requestOptions
     );
   }

@@ -1,4 +1,5 @@
 export interface FlightInfo {
+    loading: boolean;
     airline: string;
     departure_at: string;
     destination: string;

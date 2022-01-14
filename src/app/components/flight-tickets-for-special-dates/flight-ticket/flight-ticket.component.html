@@ -6,17 +6,18 @@
         <p class="info__flight-duration">Flight duration: {{myTime(flightInfo.duration)}}</p>
         <div class="info__flight">
             <div class="info-date">
-                <h3>{{formData.destinationFrom.name}}</h3>
+                <h3>{{formData.destinationFrom.name}} - {{formData.destinationTo.name}}</h3>
                 <h3><b>Time:</b> {{flightInfo.departure_at | date: 'shortTime'}}</h3>
                 <h3><b>Data:</b> {{flightInfo.departure_at | date}}</h3>
             </div>
             <hr class="hr">
             <div class="info-date">
-                <h3>{{formData.destinationTo.name}}</h3>
+                <h3>{{formData.destinationTo.name}} - {{formData.destinationFrom.name}}</h3>
                 <h3><b>Time:</b> {{flightInfo.return_at| date: 'shortTime'}}</h3>
                 <h3><b>Data:</b> {{flightInfo.return_at | date}}</h3>
             </div>
-
         </div>
     </div>
 </div>
+
+

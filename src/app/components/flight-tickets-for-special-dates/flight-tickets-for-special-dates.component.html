@@ -1,7 +1,6 @@
-
-<div class="container">
+<div class="container" *ngIf="flightInfo.length > 0; else noRecordsFound">
     <h3>Flight Tickets for Special Date</h3>
-    <button (click)="getFlightInfo()">Get info</button>  <!--This button for test for project need delete-->
+    <!-- <button (click)="getFlightInfo()">Get info</button>  This button for test for project need delete -->
     <div class="wrap">
         <app-flight-ticket
             *ngFor="let info of flightInfo"
@@ -10,3 +9,8 @@
 
     </div>
 </div>
+
+<ng-template #noRecordsFound>
+    <h1>Not founded</h1>
+</ng-template>
+
