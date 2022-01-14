@@ -1,4 +1,4 @@
-import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';
+import { CalendarOfPricesPayload } from '../models/calendar-of-prices.model';
 
 //-- Calendar State Actions --
 export class CalendarOfPricesRequested {
@@ -7,6 +7,7 @@ export class CalendarOfPricesRequested {
 
 export class CalendarOfPricesLoaded {
   static readonly type = '[FlightInfo] CalendarOfPricesLoaded';
+  constructor(public payload: CalendarOfPricesPayload) {}
 }
 
 export class CalendarOfPricesFailed {
@@ -14,12 +15,7 @@ export class CalendarOfPricesFailed {
   constructor(public payload: string) {}
 }
 
-export class FetchCalendarOfPrices {
-  static readonly type = '[FlightInfo] FetchCalendarOfPrices';
-}
-
 export type FlightInfoActions =
   | CalendarOfPricesRequested
   | CalendarOfPricesLoaded
-  | CalendarOfPricesFailed
-  | FetchCalendarOfPrices;
+  | CalendarOfPricesFailed;
