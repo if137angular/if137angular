@@ -9,7 +9,9 @@ export interface RequestDataStateModel {
   countries: any[];
   cities: CitiesModel[];
   airports: any[];
+  airlines: any[];
   formData: any; // TODO: create model
+
 }
 
 @State<RequestDataStateModel>({
@@ -18,7 +20,9 @@ export interface RequestDataStateModel {
     countries: [],
     cities: [],
     airports: [],
+    airlines: [],
     formData: {}
+
   },
 })
 @Injectable()
@@ -42,8 +46,13 @@ export class RequestDataState {
   }
 
   @Selector()
+  static airlines(state: RequestDataStateModel): any[] {
+    return state.airlines;
+  }
+
   static formData(state: RequestDataStateModel): any {
     return state.formData;
+
   }
 
   @Action(RequestDataActions.GetCountries)
@@ -73,6 +82,14 @@ export class RequestDataState {
     );
   }
 
+  @Action(RequestDataActions.GetAirports)
+  GetAirLinesData({ patchState }: StateContext<RequestDataStateModel>) {
+    return this.requestService.getAirlinesData().pipe(
+      tap((airlines: any[]) => {
+        patchState({ airlines });
+      })
+    );
+  }
   @Action(RequestDataActions.SetFormDate)
   SetFormData(
     { patchState }: StateContext<RequestDataStateModel>,
