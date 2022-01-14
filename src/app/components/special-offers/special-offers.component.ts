@@ -1,3 +1,5 @@
+import { RequestDataState } from 'src/app/store/request-data.state';
+import { Store } from '@ngxs/store';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
@@ -11,11 +13,10 @@ export class SpecialOffersComponent implements OnInit {
 
   offers$: Observable<{ data: any }>;
 
-  cityOrign: string = 'LWO'
-  language: string = 'en_us';
+  language: string = 'en';
   currency: string = 'eur';
 
-  constructor(public flightsInfoService: FlightsInfoService) { }
+  constructor(public flightsInfoService: FlightsInfoService, private store: Store) { }
 
 
 
@@ -34,8 +35,17 @@ export class SpecialOffersComponent implements OnInit {
   //   this.offers$ = this.flightsInfoService.getSpecialOffers(cityOrign, language, currency);
   // }
 
-  ngOnInit(language = 'rus', currency = 'eur', cityOrign: string = 'LWO'): void {
-    this.offers$ = this.flightsInfoService.getSpecialOffers(cityOrign, language, currency);
+  ngOnInit(language = 'en', currency = 'eur', cityOrign: string = 'IFO'): void {
+    const formData = this.store.selectSnapshot(RequestDataState.formData);
+
+    if (!formData.destinationFrom) {
+      this.offers$ = this.flightsInfoService.getSpecialOffers(cityOrign, language, currency);
+      console.log("TEST dataForm:", formData.destinationFrom);
+    } else {
+      this.offers$ = this.flightsInfoService.getSpecialOffers(formData.destinationFrom.code, language, currency);
+      console.log("TEST dataForm:", formData.destinationFrom.code);
+    }
+
   }
 
   onSelectedLanguageChanged(language: string) {
