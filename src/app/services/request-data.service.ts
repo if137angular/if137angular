@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import * as countriesData from '../../assets/countries.json';
 import * as citiesData from '../../assets/cities.json';
 import * as airportsData from '../../assets/airports.json';
+import * as airlinesData from '../../assets/airlines.json';
 
 
 @Injectable()
@@ -21,6 +22,9 @@ export class RequestDataService {
 
   getAirportsData(): Observable<any> {
     return of(airportsData)
+  }
 
+  getAirlinesData(): Observable<any> {
+    return of(airlinesData)
   }
 }

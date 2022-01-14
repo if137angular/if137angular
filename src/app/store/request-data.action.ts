@@ -14,7 +14,13 @@ export class GetAirports {
   constructor(public payload: any = null) { }
 }
 
+export class GetAirlines {
+  static readonly type = '[Request] Get All Airlines Data';
+  constructor(public payload: any = null) { }
+}
+
 export type RequestDataActions =
   GetCountries |
   GetCities |
-  GetAirports;
+  GetAirports |
+  GetAirlines;

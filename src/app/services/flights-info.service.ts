@@ -63,10 +63,11 @@ export class FlightsInfoService {
     let myParamsURL = new HttpParams()
       .append('origin', ticketsParam.origin)
       .append('destination', ticketsParam.destination)
+      .append('depart_date', ticketsParam.departDate)
+      .append('return_date', ticketsParam.returnDate)
       .append('currency', ticketsParam.currency)
       .append('token', myToken)
-    if(ticketsParam.departDate) myParamsURL.append('depart_date', ticketsParam.departDate)
-    if(ticketsParam.returnDate) myParamsURL.append('depart_date', ticketsParam.returnDate)
+
 
     let myHeadersURL = new HttpHeaders()
       .append('x-access-token', myToken)
