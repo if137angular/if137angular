@@ -23,5 +23,5 @@ export interface CalendarOfPricesStateModel {
   loading: boolean;
   data: CalendarOfPricesModel[];
   currency: string;
-  error: string;
+  error?: string;
 }

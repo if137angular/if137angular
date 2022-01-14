@@ -27,11 +27,11 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
 
     console.log(this.formData)
 
-    const codeFrom: string = this.formData.destinationFrom.code;
-    const codeTo: string = this.formData.destinationTo.code;
-    const startDate: string = this.formData.startDate.toISOString().slice(0, 10);
-    const endDate: string = this.formData.endDate.toISOString().slice(0, 10);
-    const direct: boolean = this.formData.transfers  === 'Directly';
+    const codeFrom: string = this.formData?.destinationFrom?.code;
+    const codeTo: string = this.formData?.destinationTo?.code;
+    const startDate: string = this.formData?.startDate?.toISOString().slice(0, 10);
+    const endDate: string = this.formData?.endDate?.toISOString().slice(0, 10);
+    const direct: boolean = this.formData?.transfers  === 'Directly';
 
     this.flightInfoService.getFlightTicketsForDate(codeFrom, codeTo, startDate, endDate, direct).subscribe(data => {
        this.flightInfo = data.data

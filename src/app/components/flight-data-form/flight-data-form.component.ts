@@ -19,7 +19,10 @@ export class FlightDataFormComponent implements OnInit {
   flightDataFormGroup: FormGroup = new FormGroup({
     startDate: new FormControl({}),
     endDate: new FormControl({}),
-    destinationFrom: new FormControl(),
+    destinationFrom: new FormControl({
+      code: "LWO",
+      name: "Lviv"
+    }),
     destinationTo: new FormControl(),
     transfers: new FormControl()
   });
