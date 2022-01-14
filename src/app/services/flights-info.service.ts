@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GetCalendarOfPricesRequestModel } from '../models/calendar-of-prices.model';
+import {
+  CalendarOfPricesPayload,
+  GetCalendarOfPricesRequestModel,
+} from '../models/calendar-of-prices.model';
 import { TicketsRequestParam } from '../models/cheapest-tickets.model';
 import { map } from 'rxjs/operators';
-import {GetDestinationPopular} from "../components/city-destination/city-destination.component";
+import { GetDestinationPopular } from '../components/city-destination/city-destination.component';
 
 @Injectable()
 export class FlightsInfoService {
@@ -23,7 +26,12 @@ export class FlightsInfoService {
       requestOptions
     );
   }
-  RequestGetCalendarOfPrices(): Observable<any> {
+  RequestGetCalendarOfPrices({
+    originCode,
+    destinationCode,
+    depart_date,
+    return_date,
+  }: CalendarOfPricesPayload): Observable<any> {
     const headerDict = {
       'x-access-token': '51b362c72de38be9bcfdc31c8339c019',
     };
@@ -33,7 +41,7 @@ export class FlightsInfoService {
     };
 
     return this.http.get<GetCalendarOfPricesRequestModel>(
-      '/v2/prices/week-matrix?currency=usd&origin=LED&destination=HKT&show_to_affiliates=true&depart_date=2022-01-17&return_date=2022-01-24&token=51b362c72de38be9bcfdc31c8339c019',
+      `/v2/prices/week-matrix?currency=usd&origin=${originCode}&destination=${destinationCode}&show_to_affiliates=true&depart_date=${depart_date}&return_date=${return_date}&token=51b362c72de38be9bcfdc31c8339c019`,
       requestOptions
     );
   }
@@ -73,7 +81,6 @@ export class FlightsInfoService {
       .append('currency', ticketsParam.currency)
       .append('token', myToken);
 
-
     let myHeadersURL = new HttpHeaders().append('x-access-token', myToken);
 
     return this.http
@@ -100,12 +107,16 @@ export class FlightsInfoService {
     );
   }
 
-
-
-  getFlightTicketsForDate(codeFrom: string, codeTo: string, startDate: string, endDate: string, direct: boolean): Observable<any> {
+  getFlightTicketsForDate(
+    codeFrom: string,
+    codeTo: string,
+    startDate: string,
+    endDate: string,
+    direct: boolean
+  ): Observable<any> {
     const headerDict = {
-      'x-access-token': 'd077e8cd07cd09cedc63a920f064b1ab'
-    }
+      'x-access-token': 'd077e8cd07cd09cedc63a920f064b1ab',
+    };
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
     };
@@ -115,29 +126,32 @@ export class FlightsInfoService {
     );
   }
 
-
-    requestDestinationModel(origin:string):Observable<GetDestinationPopular>{
+  requestDestinationModel(origin: string): Observable<GetDestinationPopular> {
     const headerDict = {
       'x-access-token': 'fd45945b3cf27c0f371a6a177e5c8adc',
     };
 
     const requestOptions = {
-      headers: new HttpHeaders(headerDict)
+      headers: new HttpHeaders(headerDict),
     };
 
-    return this.http.get<GetDestinationPopular>( `/v1/city-directions?origin=${origin}&currency=usd&token=fd45945b3cf27c0f371a6a177e5c8adc`,requestOptions);
+    return this.http.get<GetDestinationPopular>(
+      `/v1/city-directions?origin=${origin}&currency=usd&token=fd45945b3cf27c0f371a6a177e5c8adc`,
+      requestOptions
+    );
   }
 
-
-
-  requestPopularDestination(origin:string ): Observable<GetDestinationPopular> {
+  requestPopularDestination(origin: string): Observable<GetDestinationPopular> {
     const headerDict = {
-      'x-access-token': 'fd45945b3cf27c0f371a6a177e5c8adc'
+      'x-access-token': 'fd45945b3cf27c0f371a6a177e5c8adc',
     };
 
     const requestOptions = {
-      headers: new HttpHeaders(headerDict)
+      headers: new HttpHeaders(headerDict),
     };
-    return this.http.get<GetDestinationPopular>( `/v1/city-directions?origin=${origin}&currency=usd&token=fd45945b3cf27c0f371a6a177e5c8adc`,requestOptions)
+    return this.http.get<GetDestinationPopular>(
+      `/v1/city-directions?origin=${origin}&currency=usd&token=fd45945b3cf27c0f371a6a177e5c8adc`,
+      requestOptions
+    );
   }
 }
