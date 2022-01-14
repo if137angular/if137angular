@@ -1,0 +1,80 @@
+*,h1,h2,h3,h4,h5 {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.wrap__tikcet {
+    width: 75vw;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 6px rgba(34, 60, 80, 0.2);
+    margin: 30px auto;
+    background-color: #fff;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
+.price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #ccc;
+    &-title {
+        font-size: 3.3rem;
+        font-weight: normal;
+        color: rgb(47, 79, 79);
+    }
+}
+.info__flight {
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    &-header {
+        display: flex;
+        &-img {
+            padding: 8px;
+        }
+        &-duration {
+            margin: auto;
+            color: rgb(180, 180, 180);
+        }
+    }
+    &-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+}
+.info__date {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    &-city {
+        font-size: 1.5rem;
+        margin: 15px 0;
+        font-weight: 500;
+        color: rgb(47, 79, 79);
+    }
+    &-info {
+        margin: 15px 0;
+        color: rgb(47, 79, 79);
+        font-size: 1.2rem;
+        font-weight: 500;
+        &-span {
+            color: rgb(180, 180, 180);
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+    }
+}
+.hr {
+    width: 85%;
+    margin: 0 auto;
+    padding: 0;
+    height: 0;
+    border: none;
+    border-top: 1px solid #ccc;
+    box-shadow: 0px 0px 10px 1px #ccc;
+}
+
+
+

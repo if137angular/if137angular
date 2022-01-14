@@ -101,14 +101,30 @@ export class FlightsInfoService {
   }
 
 
-  requestDestinationModel(origin:string):Observable<GetDestinationPopular>{
+
+  getFlightTicketsForDate(codeFrom: string, codeTo: string, startDate: string, endDate: string, direct: boolean): Observable<any> {
+    const headerDict = {
+      'x-access-token': 'd077e8cd07cd09cedc63a920f064b1ab'
+    }
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    return this.http.get(
+      `/aviasales/v3/prices_for_dates?origin=${codeFrom}&destination=${codeTo}&departure_at=${startDate}&return_at=${endDate}&unique=false&sorting=price&direct=${direct}&currency=usd&limit=15&page=1&one_way=true&token=d077e8cd07cd09cedc63a920f064b1ab`,
+      requestOptions
+    );
+  }
+
+
+    requestDestinationModel(origin:string):Observable<GetDestinationPopular>{
     const headerDict = {
       'x-access-token': 'fd45945b3cf27c0f371a6a177e5c8adc',
     };
 
     const requestOptions = {
-      headers: new HttpHeaders(headerDict),
+      headers: new HttpHeaders(headerDict)
     };
+
     return this.http.get<GetDestinationPopular>( `/v1/city-directions?origin=${origin}&currency=usd&token=fd45945b3cf27c0f371a6a177e5c8adc`,requestOptions);
   }
 
