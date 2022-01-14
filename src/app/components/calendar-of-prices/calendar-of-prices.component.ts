@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngxs/store';
-import { map } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
 import { CalendarOfPricesStateModel } from 'src/app/models/calendar-of-prices.model';
-import { FetchCalendarOfPrices } from 'src/app/store/flight-info.action';
+import { CalendarOfPricesLoaded, FetchCalendarOfPrices } from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { RequestDataState } from 'src/app/store/request-data.state';
+import { Observable } from 'rxjs';
 
 type FormDataDestinations = {
   destination: string;
@@ -17,24 +17,32 @@ type FormDataDestinations = {
   styleUrls: ['./calendar-of-prices.component.scss'],
 })
 export class CalendarOfPricesComponent implements OnInit {
-  constructor(private store: Store) {}
+  @Select(RequestDataState.formData)
+  formData$: Observable<any>;
+
+  @Select(FlightInfoState.calendarOfPrices)
+  calendarOfPrices$: Observable<CalendarOfPricesStateModel>;
+
+  constructor(private store: Store) { }
 
   calendarData: CalendarOfPricesStateModel;
   formData: FormDataDestinations;
 
   ngOnInit(): void {
-    this.store.dispatch(new FetchCalendarOfPrices());
-    this.store
-      .select(FlightInfoState.calendarOfPrices)
-      .subscribe((state) => (this.calendarData = state));
-    this.store
-      .select(RequestDataState.formData)
-      .pipe(
-        map((state) => ({
-          destination: state.destinationFrom.name,
-          origin: state.destinationTo.name,
-        }))
-      )
-      .subscribe((data) => (this.formData = data));
+    // this.store.dispatch(new FetchCalendarOfPrices());
+    // this.store
+    //   .select(FlightInfoState.calendarOfPrices)
+    //   .subscribe((state) => (this.calendarData = state));
+    // this.store
+    //   .select(RequestDataState.formData)
+    //   .pipe(
+    //     map((state) => ({
+    //       destination: state.destinationFrom.name,
+    //       origin: state.destinationTo.name,
+    //     }))
+    //   )
+    //   .subscribe((data) => (this.formData = data));
+    console.log("");
   }
+
 }

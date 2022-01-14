@@ -51,7 +51,6 @@ export class FlightInfoState {
         const state = context.getState();
         context.patchState({
           calendarOfPrices: {
-            ...state.calendarOfPrices,
             loading: false,
             data,
             currency,

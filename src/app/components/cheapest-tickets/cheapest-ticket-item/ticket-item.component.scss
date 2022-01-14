@@ -1,0 +1,80 @@
+.ticketWrapper {
+  display: flex;
+  max-width: 800px;
+  margin: 0 auto 40px;
+  border: 1px #e0e0e0 solid;
+  box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+  border-radius: 15px;
+  overflow: hidden;
+  .priceInfo {
+    width: 25%;
+    padding: 10px 10px 15px;
+    border-right: 1px #e0e0e0 solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .airlineInfo {
+      align-self: center;
+      display: flex;
+      align-items: center;
+      p { color: #1976d2; }
+      .airlineLogo {
+        margin-left: 10px;
+        max-width: 40px;
+        img { width: 100% }
+      }
+    }
+    .priceContainer {
+      flex: 1 0 auto;
+      display: flex;
+      align-items: center;
+      h2 {
+        white-space: nowrap;
+        margin: 0 0 0 0;
+        font-size: 24px;
+      }
+    }
+    p {
+      flex: 0 0 auto;
+      margin: 0 0;
+      text-align: center;
+      color: #e53935;
+      span {
+        font-size: 16px;
+      }
+    }
+  }
+  .flightInfo {
+    width: 75%;
+    padding: 5px;
+  }
+}
+
+:host .flightInfo ::ng-deep app-flight-item:nth-child(2):before {
+  content: '';
+  display: block;
+  margin: 10px 0;
+  height: 1px;
+  background-color: #e0e0e0;
+}
+
+@media(max-width: 700px)  {
+  .ticketWrapper {
+    flex-direction: column;
+    .flightInfo, { width: calc(100% - 10px); }
+    .priceInfo {
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 15px 5px 5px;
+      width: calc(100% - 10px);
+      .airlineInfo {
+        p { display: none }
+      }
+      .priceContainer {
+        flex: 0 1 auto;
+        h2 { font-size: 20px; }
+      }
+      p, p > span { font-size: 13px; }
+    }
+  }
+}

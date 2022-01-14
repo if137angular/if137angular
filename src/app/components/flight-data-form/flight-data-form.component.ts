@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { CitiesModel } from "src/app/models/cities.model";
 import { SetFormDate } from "src/app/store/request-data.action";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-flight-data-form',
@@ -18,14 +19,17 @@ export class FlightDataFormComponent implements OnInit {
   flightDataFormGroup: FormGroup = new FormGroup({
     startDate: new FormControl({}),
     endDate: new FormControl({}),
-    destinationFrom: new FormControl(),
+    destinationFrom: new FormControl({
+      code: "LWO",
+      name: "Lviv"
+    }),
     destinationTo: new FormControl(),
     transfers: new FormControl()
   });
 
   @Select(RequestDataState.cities) cities$: Observable<CitiesModel[]>;
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -36,6 +40,7 @@ export class FlightDataFormComponent implements OnInit {
 
   onSubmitForm() {
     this.store.dispatch(new SetFormDate(this.flightDataFormGroup.value));
+    this.router.navigate(['/flight-tickets']); // This code for need for component flight-tickets-for-special-date
   }
 
   onResetForm() {

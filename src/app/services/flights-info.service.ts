@@ -23,7 +23,7 @@ export class FlightsInfoService {
       requestOptions
     );
   }
-  RequestGetCalendarOfPrices() {
+  RequestGetCalendarOfPrices(): Observable<any> {
     const headerDict = {
       'x-access-token': '51b362c72de38be9bcfdc31c8339c019',
     };
@@ -69,12 +69,11 @@ export class FlightsInfoService {
     let myParamsURL = new HttpParams()
       .append('origin', ticketsParam.origin)
       .append('destination', ticketsParam.destination)
+      .append('depart_date', ticketsParam.departDate)
+      .append('return_date', ticketsParam.returnDate)
       .append('currency', ticketsParam.currency)
       .append('token', myToken);
-    if (ticketsParam.departDate)
-      myParamsURL.append('depart_date', ticketsParam.departDate);
-    if (ticketsParam.returnDate)
-      myParamsURL.append('depart_date', ticketsParam.returnDate);
+
 
     let myHeadersURL = new HttpHeaders().append('x-access-token', myToken);
 
@@ -88,6 +87,7 @@ export class FlightsInfoService {
         }))
       );
   }
+
   getFlightPriceTrends(): Observable<any> {
     const headerDict = {
       'x-access-token': '51b362c72de38be9bcfdc31c8339c019',
@@ -102,14 +102,30 @@ export class FlightsInfoService {
   }
 
 
+
+  getFlightTicketsForDate(codeFrom: string, codeTo: string, startDate: string, endDate: string, direct: boolean): Observable<any> {
+    const headerDict = {
+      'x-access-token': 'd077e8cd07cd09cedc63a920f064b1ab'
+    }
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    return this.http.get(
+      `/aviasales/v3/prices_for_dates?origin=${codeFrom}&destination=${codeTo}&departure_at=${startDate}&return_at=${endDate}&unique=false&sorting=price&direct=${direct}&currency=usd&limit=15&page=1&one_way=true&token=d077e8cd07cd09cedc63a920f064b1ab`,
+      requestOptions
+    );
+  }
+
+
   requestDestinationModel(origin: string): Observable<GetDestinationPopular> {
     const headerDict = {
       'x-access-token': 'fd45945b3cf27c0f371a6a177e5c8adc',
     };
 
     const requestOptions = {
-      headers: new HttpHeaders(headerDict),
+      headers: new HttpHeaders(headerDict)
     };
+
     return this.http.get<GetDestinationPopular>(`/v1/city-directions?origin=${origin}&currency=usd&token=fd45945b3cf27c0f371a6a177e5c8adc`, requestOptions);
   }
 

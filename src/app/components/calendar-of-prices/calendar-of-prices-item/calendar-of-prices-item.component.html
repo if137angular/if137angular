@@ -1,4 +1,4 @@
-<mat-card class="calendar-card" color="primary" (click)="toggleActive()">
+<!-- <mat-card class="calendar-card" color="primary" (click)="toggleActive()">
   <mat-card-content class="calendar-card-content">
     <div class="calendar-card-content-found">
       Found at:
@@ -80,6 +80,28 @@
         </div>
       </div>
       <button class="add-button" mat-button color="primary">Add</button>
+    </div>
+  </div>
+</div> -->
+<div class="ticket-wrapper">
+  <div class="ticket">
+    <div class="ticket-content">
+      <mat-icon class="ticket-content-favourite">favorite_outline</mat-icon>
+      <div class="ticket-content-pill">
+        <div class="ticket-content-pill-prices">
+          <div>365$</div>
+          <div>for 5 nights</div>
+        </div>
+        <div class="ticket-content-pill-arrow"><span>&#62;</span></div>
+      </div>
+      <div class="ticket-content-airline">
+        {{ data.gate }}
+      </div>
+      <div class="ticket-content-info">
+        <p>{{ origin }}</p>
+        <p>{{ destination }}</p>
+        <p>{{ data.value }} {{ currency | uppercase }}</p>
+      </div>
     </div>
   </div>
 </div>
