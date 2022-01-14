@@ -1,13 +1,12 @@
 <div class="container">
+  <h3 class="non-stop-title">Non Stop Tickets</h3>
   <div class="forms-non-stop">
-
-  <form class="example-form">
+    <form class="example-form">
     <mat-form-field class="example-full-width">
       <mat-label>Origin City</mat-label>
       <input type="text"
              aria-label="Origin City"
              matInput
-      
              [matAutocomplete]="auto">       
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let option of originOptions" [value]="option.label"
@@ -16,15 +15,14 @@
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
-  </form>
+  </form> 
 
   <form class="example-form">
     <mat-form-field class="example-full-width">
       <mat-label>Destination</mat-label>
-      <input type="text"
+      <input type="text" 
              aria-label="Destination"
-             matInput
-        
+             matInput       
              [matAutocomplete]="auto2">
       <mat-autocomplete #auto2="matAutocomplete">
         <mat-option 
@@ -35,13 +33,19 @@
       </mat-autocomplete>
     </mat-form-field>
   </form>
-  <button mat-raised-button color="warn">Go</button>
-</div>  
-  <p>Airline is {{data.data}}<p>
-  <!-- <p>Flight number is {{ data.data.PAR['0'].flight_number }}</p>
-  <p>Departure date {{ data.data.PAR['0'].departure_at }}</p>
-  <p>Return date {{ data.data.PAR['0'].return_at }}</p>
-  <p>Price is {{ data.data.PAR['0'].price }} {{ data.currency | uppercase }}</p> -->
+  <button mat-raised-button color="primary" (click)="onSubmitFlights()">Go</button>
+</div>      
+  <div *ngIf="data">
+      <div *ngFor="let item of data.data | keyvalue">
+        <p>from {{cityOrigin}} to {{cityDest}}</p>  
+        <p>Airline is {{item.value['0'].airline}}</p>
+        <p>Flight number is {{item.value['0'].price}}</p>
+        <p>Departure date {{ item.value['0'].departure_at }}</p>
+        <p>Return date {{ item.value['0'].return_at }}</p>
+        <p>Price is {{ item.value['0'].price }} {{currency}}</p>
+      </div>
+  </div>
+
 </div>
 
 
