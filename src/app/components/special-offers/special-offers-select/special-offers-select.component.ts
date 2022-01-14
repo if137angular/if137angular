@@ -8,9 +8,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class SpecialOffersSelectComponent implements OnChanges {
 
-  @Input() selectedLocale: string = '';
-  @Output() selectedLocaleChange = new EventEmitter<string>();
-  localeControl: FormControl = new FormControl('');
+  @Input() selectedLanguage: string = '';
+  @Output() selectedLanguageChange = new EventEmitter<string>();
+  languageControl: FormControl = new FormControl('');
 
   @Input() selectedCurrency: string = '';
   @Output() selectedCurrencyChange = new EventEmitter<string>();
@@ -18,7 +18,7 @@ export class SpecialOffersSelectComponent implements OnChanges {
 
   specialOffersFrom: FormGroup;
 
-  locales: { [key: string]: string } = {
+  languages: { [key: string]: string } = {
     "ar": "Arabic",
     "az": "Azerbaijani",
     "be": "Belarusian",
@@ -166,20 +166,20 @@ export class SpecialOffersSelectComponent implements OnChanges {
 
   constructor() {
     this.specialOffersFrom = new FormGroup({
-      locale: this.localeControl,
+      language: this.languageControl,
       currency: this.currencyControl
     });
   }
 
   ngOnChanges(): void {
-    this.localeControl.setValue(this.selectedLocale);
+    this.languageControl.setValue(this.selectedLanguage);
     this.currencyControl.setValue(this.selectedCurrency);
   }
 
-  localeSelected(): void {
-    this.selectedLocale = this.localeControl.value;
-    this.selectedLocaleChange.emit(this.selectedLocale);
-    console.log('TESTING Locale value:', this.selectedLocale);
+  languageSelected(): void {
+    this.selectedLanguage = this.languageControl.value;
+    this.selectedLanguageChange.emit(this.selectedLanguage);
+    console.log('TESTING Language value:', this.selectedLanguage);
   }
 
   currencySelected(): void {
