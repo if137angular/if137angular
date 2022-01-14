@@ -13,11 +13,11 @@ export class RequestDataService {
   }
 
   getCountriesData(): Observable<any> {
-    return of(countriesData)
+    return of(Array.from(countriesData))
   }
 
   getCitiesData(): Observable<any> {
-    return of(citiesData)
+    return of(Array.from(citiesData))
   }
 
   getAirportsData(): Observable<any> {

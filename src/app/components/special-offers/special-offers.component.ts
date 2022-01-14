@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 
 @Component({
@@ -8,20 +9,42 @@ import { FlightsInfoService } from 'src/app/services/flights-info.service';
 })
 export class SpecialOffersComponent implements OnInit {
 
-  offers: any = {};
+  offers$: Observable<{ data: any }>;
 
-  originCity: string = 'LWO'
+  cityOrign: string = 'LWO'
+  language: string = 'en_us';
+  currency: string = 'eur';
 
-  constructor(private specialOffersService: FlightsInfoService) { }
+  constructor(public flightsInfoService: FlightsInfoService) { }
 
-  ngOnInit(): void {
-    this.specialOffersService.getSpecialOffers(this.originCity).subscribe((offers => {
-      this.offers = offers;
-    }));
-  }
+
 
   gotToLink(link: any) {
     window.open('https://www.aviasales.ua' + link, '_blank')
   }
 
+  getCurrency(number: any) {
+    let language = this.language;
+    return new Intl.NumberFormat(language.substring(0, 2), { style: 'currency', currency: this.currency }).format(number);
+  }
+
+  // If I use getSpecialOffers() it doesn't display UI in first time rendering.
+
+  // getSpecialOffers(language = 'rus', currency = 'eur', cityOrign: string = 'LWO'): void {
+  //   this.offers$ = this.flightsInfoService.getSpecialOffers(cityOrign, language, currency);
+  // }
+
+  ngOnInit(language = 'rus', currency = 'eur', cityOrign: string = 'LWO'): void {
+    this.offers$ = this.flightsInfoService.getSpecialOffers(cityOrign, language, currency);
+  }
+
+  onSelectedLanguageChanged(language: string) {
+    this.language = language;
+    this.ngOnInit(language, this.currency);
+  }
+
+  onSelectedCurrencyChanged(currency: string) {
+    this.currency = currency;
+    this.ngOnInit(this.language, currency);
+  }
 }

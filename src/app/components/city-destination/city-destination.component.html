@@ -1,0 +1,46 @@
+<div class="main">
+<div class="container">
+<div class="city-destination">
+  <div *ngFor="let city of response">
+    <form>
+      <mat-card>
+        <p> From Kyiv </p>
+        <mat-form-field appearance="fill">
+          <mat-label>To:</mat-label>
+          <mat-select>
+            <div *ngFor="let item of city.data | keyvalue" >
+              <mat-option>
+                to :{{item.value.destination}}
+              </mat-option>
+            </div>
+          </mat-select>
+        </mat-form-field>
+        <p> Currency : {{city.currency}} </p>
+      </mat-card>
+    </form>
+  </div>
+</div>
+
+<div class="city-destination">
+  <div *ngFor="let city of items">
+    <form>
+      <mat-card>
+        <p> From Lviv </p>
+        <mat-form-field appearance="fill">
+          <mat-label>To:</mat-label>
+          <mat-select>
+            <div *ngFor="let x of city.data | keyvalue">
+              <mat-option>
+                to :{{x.value.destination}}
+              </mat-option>
+            </div>
+          </mat-select>
+        </mat-form-field>
+        <p> Currency : {{city.currency}} </p>
+      </mat-card>
+    </form>
+  </div>
+</div>
+</div>
+</div>
+
