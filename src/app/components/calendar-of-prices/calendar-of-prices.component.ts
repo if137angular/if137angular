@@ -23,7 +23,7 @@ export class CalendarOfPricesComponent implements OnInit {
   @Select(FlightInfoState.calendarOfPrices)
   calendarOfPrices$: Observable<CalendarOfPricesStateModel>;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) { }
 
   calendarData: CalendarOfPricesStateModel;
   formData: FormDataDestinations;
@@ -42,5 +42,7 @@ export class CalendarOfPricesComponent implements OnInit {
     //     }))
     //   )
     //   .subscribe((data) => (this.formData = data));
+    console.log("");
   }
+
 }
