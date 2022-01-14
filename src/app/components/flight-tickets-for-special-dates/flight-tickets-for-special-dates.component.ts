@@ -35,6 +35,7 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
 
     this.flightInfoService.getFlightTicketsForDate(codeFrom, codeTo, startDate, endDate, direct).subscribe(data => {
        this.flightInfo = data.data
+      console.log(data)
     })
   }
 
