@@ -23,7 +23,7 @@ export class FlightsInfoService {
       requestOptions
     );
   }
-  RequestGetCalendarOfPrices() {
+  RequestGetCalendarOfPrices(): Observable<any> {
     const headerDict = {
       'x-access-token': '51b362c72de38be9bcfdc31c8339c019',
     };

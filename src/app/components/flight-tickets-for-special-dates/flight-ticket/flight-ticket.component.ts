@@ -7,18 +7,19 @@ import { RequestDataState } from 'src/app/store/request-data.state';
 @Component({
   selector: 'app-flight-ticket',
   templateUrl: './flight-ticket.component.html',
-  styleUrls: ['./flight-ticket.component.scss']
+  styleUrls: [ './flight-ticket.component.scss' ]
 })
-export class FlightTicketComponent implements OnInit{
+export class FlightTicketComponent implements OnInit {
 
   formData: any;
 
   @Input() flightInfo: FlightInfo;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) {
+  }
 
   ngOnInit(): void {
-      this.formData = this.store.selectSnapshot(RequestDataState.formData)
+    this.formData = this.store.selectSnapshot(RequestDataState.formData)
   }
 
   myTime(value: number): string {
