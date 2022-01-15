@@ -14,6 +14,11 @@
 
   <app-transfers formControlName="transfers"></app-transfers>
 
-  <app-button color="beige" text="Search" (btnClick)="onSubmitForm()"></app-button>
-  <app-button color="tomato" text="Clear" (btnClick)="onResetForm()"></app-button>
+  <div>
+    <button mat-flat-button color="warn" style="padding: 8px 64px; margin-top: 0.25em"
+      (click)="onSubmitForm()">SEARCH</button>
+  </div>
+
+  <!-- <app-button text="SEARCH" color="warn" (btnClick)="onSubmitForm()"></app-button> -->
+  <!-- <app-button color="tomato" text="Clear" (btnClick)="onResetForm()"></app-button> -->
 </form>
