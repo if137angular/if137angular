@@ -25,6 +25,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 // Services
 import { RequestDataService } from 'src/app/services/request-data.service';
@@ -43,13 +44,12 @@ import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-
 import { TransfersComponent } from './components/transfers/transfers.component';
 import { SpecialOffersSelectComponent } from './components/special-offers/special-offers-select/special-offers-select.component';
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
-
 import { TicketItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/ticket-item.component';
 import { FlightItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/flight-item/flight-item.component';
-
-
-
 import { CityDestinationComponent } from './components/city-destination/city-destination.component';
+
+import { MainComponent } from './components/main/main.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +68,9 @@ import { CityDestinationComponent } from './components/city-destination/city-des
     TicketItemComponent,
     FlightItemComponent,
     AppComponent,
-    CityDestinationComponent
+    CityDestinationComponent,
+    MainComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,6 +79,7 @@ import { CityDestinationComponent } from './components/city-destination/city-des
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+
     MatSelectModule,
     MatAutocompleteModule,
     MatInputModule,
@@ -94,6 +97,7 @@ import { CityDestinationComponent } from './components/city-destination/city-des
     MatButtonModule,
     MatCardModule,
     MatProgressSpinnerModule,
+    MatToolbarModule,
 
     NgxsModule.forRoot(appState, {
       developmentMode: true,
