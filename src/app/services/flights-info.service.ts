@@ -126,22 +126,7 @@ export class FlightsInfoService {
     );
   }
 
-  requestDestinationModel(origin: string): Observable<GetDestinationPopular> {
-    const headerDict = {
-      'x-access-token': 'fd45945b3cf27c0f371a6a177e5c8adc',
-    };
-
-    const requestOptions = {
-      headers: new HttpHeaders(headerDict),
-    };
-
-    return this.http.get<GetDestinationPopular>(
-      `/v1/city-directions?origin=${origin}&currency=usd&token=fd45945b3cf27c0f371a6a177e5c8adc`,
-      requestOptions
-    );
-  }
-
-  requestPopularDestination(origin: string): Observable<GetDestinationPopular> {
+  requestPopularDestination(origin:string ): Observable<GetDestinationPopular> {
     const headerDict = {
       'x-access-token': 'fd45945b3cf27c0f371a6a177e5c8adc',
     };

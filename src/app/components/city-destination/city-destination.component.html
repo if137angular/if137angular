@@ -1,23 +1,23 @@
 <div class="main">
-<div class="container">
-<div class="city-destination">
-  <div *ngFor="let cityKey of keys">
-    <form>
-      <mat-card>
-        <p> From Kyiv </p>
-        <mat-form-field appearance="fill">
-          <mat-label>To:</mat-label>
-          <mat-select>
-            <div >
-              <mat-option *ngFor="let city of response" >
-
-              </mat-option>
-            </div>
-          </mat-select>
-        </mat-form-field>
-        <p> Currency : </p>
-      </mat-card>
-    </form>
+  <h1>Popular Destination</h1>
+  <div class="container">
+    <div class="city-destination">
+      <div *ngFor="let cities of response | keyvalue">
+        <form>
+          <mat-form-field appearance="fill">
+            <mat-label>To: {{cities.key}}</mat-label>
+            <mat-select>
+              <div>
+                <mat-option *ngFor="let items of cities.value">
+                  {{items.origin}}-{{items.destination}}
+                  <span style="margin-left: 15px">starting at {{items.price}} usd </span>
+                </mat-option>
+              </div>
+            </mat-select>
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 
