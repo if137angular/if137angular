@@ -44,14 +44,17 @@ export class FlightInfoState {
   }
 
   @Action(FlightInfoActions.CalendarOfPricesLoaded)
-  LoadCalendarOfPrices(context: StateContext<FlightInfoStateModel>) {
+  LoadCalendarOfPrices(
+    context: StateContext<FlightInfoStateModel>,
+    { payload }: FlightInfoActions.CalendarOfPricesLoaded
+  ) {
     this.flightInfoService
-      .RequestGetCalendarOfPrices()
+      .RequestGetCalendarOfPrices(payload)
       .subscribe(({ data, currency }) => {
         const state = context.getState();
         context.patchState({
           calendarOfPrices: {
-            ...state.calendarOfPrices,
+            ...state,
             loading: false,
             data,
             currency,
@@ -76,13 +79,5 @@ export class FlightInfoState {
         error: payload,
       },
     });
-  }
-
-  @Action(FlightInfoActions.FetchCalendarOfPrices)
-  GetCalendarOfPrices() {
-    this.store.dispatch([
-      new FlightInfoActions.CalendarOfPricesRequested(),
-      new FlightInfoActions.CalendarOfPricesLoaded(),
-    ]);
   }
 }

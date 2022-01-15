@@ -3,6 +3,7 @@
     *ngIf="calendarData.loading"
     mode="indeterminate"
   ></mat-progress-spinner>
+  <div *ngIf="calendarData.data.length === 0">There is no data :(</div>
   <app-calendar-of-prices-item
     *ngFor="let data of calendarData.data"
     [data]="data"

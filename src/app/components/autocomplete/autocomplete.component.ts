@@ -30,7 +30,8 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
 
   filteredItems: CitiesModel[] = [];
   autoCompleteControl: FormControl = new FormControl('');
-  private onChange: any = () => {};
+  private onChange: any = () => {
+  };
 
   ngOnInit(): void {
     // Search filter
@@ -52,13 +53,14 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(value: CitiesModel): void {
-    if (!value) { return; }
+    if (!value) {
+      return;
+    }
     this.autoCompleteControl.setValue(value.name);
   }
 
   optionSelected(): void {
-    this.selectedItem = this.autoCompleteControl.value;
-    this.onChange(this.selectedItem);
-    this.autoCompleteControl.setValue(this.selectedItem.name);
+    const matchedCity = this.items.find((item: CitiesModel) => item.name === this.autoCompleteControl.value);
+    this.onChange(matchedCity);
   }
 }

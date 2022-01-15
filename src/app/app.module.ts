@@ -42,11 +42,14 @@ import { CalendarOfPricesComponent } from './components/calendar-of-prices/calen
 import { SpecialOffersComponent } from './components/special-offers/special-offers.component';
 import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-tickets.component';
 import { TransfersComponent } from './components/transfers/transfers.component';
+import { FlightTicketsForSpecialDatesComponent } from './components/flight-tickets-for-special-dates/flight-tickets-for-special-dates.component';
+
 import { SpecialOffersSelectComponent } from './components/special-offers/special-offers-select/special-offers-select.component';
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
 import { TicketItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/ticket-item.component';
 import { FlightItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/flight-item/flight-item.component';
 import { CityDestinationComponent } from './components/city-destination/city-destination.component';
+import { FlightTicketComponent } from 'src/app/components/flight-tickets-for-special-dates/flight-ticket/flight-ticket.component';
 
 import { MainComponent } from './components/main/main.component';
 import { SearchComponent } from './components/search/search.component';
@@ -63,12 +66,14 @@ import { SearchComponent } from './components/search/search.component';
     SpecialOffersComponent,
     NonStopTicketsComponent,
     TransfersComponent,
+    FlightTicketsForSpecialDatesComponent,
     SpecialOffersSelectComponent,
     CheapestTicketsComponent,
     TicketItemComponent,
     FlightItemComponent,
     AppComponent,
     CityDestinationComponent,
+    FlightTicketComponent,
     MainComponent,
     SearchComponent,
   ],

@@ -19,7 +19,10 @@ export class FlightDataFormComponent implements OnInit {
   flightDataFormGroup: FormGroup = new FormGroup({
     startDate: new FormControl({}),
     endDate: new FormControl({}),
-    destinationFrom: new FormControl(),
+    destinationFrom: new FormControl({
+      code: 'LWO',
+      name: 'Lviv',
+    }),
     destinationTo: new FormControl(),
     transfers: new FormControl(),
   });
@@ -37,6 +40,7 @@ export class FlightDataFormComponent implements OnInit {
   onSubmitForm() {
     this.store.dispatch(new SetFormDate(this.flightDataFormGroup.value));
     this.router.navigate(['/search']);
+    // this.router.navigate(['/flight-tickets']); // This code for need for component flight-tickets-for-special-date
   }
 
   onResetForm() {

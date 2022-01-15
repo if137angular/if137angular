@@ -6,6 +6,7 @@ import { SpecialOffersComponent } from './components/special-offers/special-offe
 import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-tickets.component';
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
 import { CityDestinationComponent } from './components/city-destination/city-destination.component';
+import { FlightTicketsForSpecialDatesComponent } from './components/flight-tickets-for-special-dates/flight-tickets-for-special-dates.component';
 
 import { MainComponent } from './components/main/main.component';
 import { SearchComponent } from './components/search/search.component';
@@ -40,6 +41,11 @@ export const routes: Routes = [
         path: 'app-city-destination',
         component: CityDestinationComponent,
         data: { tab: 'Popular destination' },
+      },
+      {
+        path: 'flight-tickets',
+        component: FlightTicketsForSpecialDatesComponent,
+        data: { tab: 'Tikets' },
       },
     ],
   },
