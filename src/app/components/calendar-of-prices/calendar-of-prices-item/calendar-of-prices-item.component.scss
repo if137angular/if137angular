@@ -1,6 +1,7 @@
 .calendar-card {
-  background-color: #3f51b5;
-  color: #f1faee;
+  border: 1px solid #b5179e;
+  background-color: #fff;
+  color: #b5179e;
   width: 100px;
   cursor: pointer;
 
@@ -27,66 +28,12 @@
   }
 }
 
-.calendar-modal {
-  display: block;
-  width: 500px;
-  font-size: 15px;
-  color: #1d3557;
-  background-color: #f8edeb;
-  border-radius: 15px;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-  z-index: 10;
+p {
+  margin: 0;
+}
 
-  &-content {
-    position: relative;
-    height: 200px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-
-    &-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      cursor: pointer;
-    }
-    p {
-      text-align: center;
-      font-size: 25px;
-    }
-    &-dates {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      div {
-        display: flex;
-        align-items: center;
-      }
-    }
-    &-main {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      &-destination,
-      &-value {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-      }
-    }
-
-    &-origin,
-    &-class {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
+.mat-icon {
+  height: 21px;
 }
 
 .icon {
@@ -115,5 +62,125 @@
 
   &.active {
     display: block;
+  }
+}
+
+.calendar-modal {
+  display: block;
+  width: 650px;
+  font-size: 15px;
+  color: #1d3557;
+  background-image: url(https://media.istockphoto.com/photos/white-plane-on-the-blue-runway-top-view-and-white-background-minimal-picture-id1297855347?b=1&k=20&m=1297855347&s=170667a&w=0&h=RxFx8vsv0F9jnTmvZP35g-H6ssWqTNCJ6Zx_s2ocz2k=);
+  background-size: cover;
+  border-radius: 15px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  z-index: 10;
+
+  &-content {
+    position: relative;
+    height: 250px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &-title {
+      width: 35%;
+      text-align: center;
+      font-size: 25px;
+    }
+
+    &-sub {
+      line-height: 30px;
+    }
+
+    &-close {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      color: #fbfbff;
+      cursor: pointer;
+      font-size: 35px;
+    }
+    &-like {
+      position: absolute;
+      top: 55px;
+      right: 25px;
+      color: #fbfbff;
+      cursor: pointer;
+      font-size: 35px;
+
+      &.liked {
+        color: #fb3640;
+      }
+    }
+
+    &-info {
+      width: 53%;
+      display: flex;
+      flex-direction: row;
+      padding: 5px;
+      justify-content: space-between;
+      background-color: #fff;
+      box-shadow: 0px 0px 15px -3px rgba(34, 60, 80, 0.21);
+      border-radius: 10px;
+
+      &-destination {
+        text-align: center;
+
+        .date {
+          font-size: 10px;
+          font-style: italic;
+          color: #b0b5bf;
+        }
+      }
+
+      &-main {
+        flex: 1 0 auto;
+        padding: 0 15px;
+        display: flex;
+        flex-direction: column;
+
+        &-top {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+
+          span {
+            color: #0096c7;
+            font-size: 12px;
+            margin-bottom: 5px;
+          }
+        }
+
+        &-line {
+          height: 1px;
+          border-top: 3px solid black;
+          margin: -4px 0px;
+        }
+
+        &-bottom {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          padding-top: 5px;
+
+          span:nth-child(2) {
+            color: #0096c7;
+            font-size: 12px;
+          }
+
+          span {
+            font-size: 10px;
+            padding: 0 3px;
+          }
+        }
+      }
+    }
   }
 }
