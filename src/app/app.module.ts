@@ -34,7 +34,6 @@ import { FlightsInfoService } from 'src/app/services/flights-info.service';
 // Components
 import { AppComponent } from './app.component';
 import { FlightDataFormComponent } from './components/flight-data-form/flight-data-form.component';
-import { ButtonComponent } from './components/button/button.component';
 import { NavComponent } from './components/nav/nav.component';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 import { CalendarOfPricesItemComponent } from './components/calendar-of-prices/calendar-of-prices-item/calendar-of-prices-item.component';
@@ -61,7 +60,6 @@ import { SearchComponent } from './components/search/search.component';
     AutocompleteComponent,
     CalendarOfPricesComponent,
     CalendarOfPricesItemComponent,
-    ButtonComponent,
     NavComponent,
     SpecialOffersComponent,
     NonStopTicketsComponent,
