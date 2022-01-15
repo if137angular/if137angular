@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { CitiesModel } from 'src/app/models/cities.model';
 import { SetFormDate } from 'src/app/store/request-data.action';
+import { FormDataModel } from 'src/app/models/formData.model';
 
 @Component({
   selector: 'app-flight-data-form',
@@ -17,17 +18,15 @@ export class FlightDataFormComponent implements OnInit {
   transfers: string = '';
 
   flightDataFormGroup: FormGroup = new FormGroup({
-    startDate: new FormControl({}),
-    endDate: new FormControl({}),
-    destinationFrom: new FormControl({
-      code: 'LWO',
-      name: 'Lviv',
-    }),
+    startDate: new FormControl(),
+    endDate: new FormControl(),
+    destinationFrom: new FormControl(),
     destinationTo: new FormControl(),
     transfers: new FormControl(),
   });
 
   @Select(RequestDataState.cities) cities$: Observable<CitiesModel[]>;
+  @Select(RequestDataState.formData) formData$: Observable<FormDataModel>;
 
   constructor(private store: Store, private router: Router) {}
 
@@ -35,12 +34,30 @@ export class FlightDataFormComponent implements OnInit {
     this.cities$.subscribe((cities: CitiesModel[]) => {
       this.cities = cities;
     });
+
+    this.formData$.subscribe((formData: FormDataModel) => {
+      this.flightDataFormGroup.patchValue({
+        destinationFrom:
+          formData.destinationFrom.name === ''
+            ? {
+                code: 'LWO',
+                name: 'Lviv',
+              }
+            : formData.destinationFrom,
+        destinationTo: formData.destinationTo,
+        startDate: formData.startDate,
+        endDate: formData.endDate,
+        transfers: formData.transfers,
+      });
+    });
   }
 
   onSubmitForm() {
     this.store.dispatch(new SetFormDate(this.flightDataFormGroup.value));
-    this.router.navigate(['/search']);
-    // this.router.navigate(['/flight-tickets']); // This code for need for component flight-tickets-for-special-date
+
+    if (!this.router.url.startsWith('/search')) {
+      this.router.navigate(['/search']);
+    }
   }
 
   onResetForm() {
