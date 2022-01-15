@@ -38,11 +38,18 @@
       </div>
     </div>
     <div class="card__footer">
-      <p>
+      <p class="card__airport">
         {{ item.origin_airport }} - {{ item.destination_airport }},&nbsp;
         {{ item.airline }}
       </p>
-      <p>{{ item.origin_name }} - {{ item.destination_name }}</p>
+      <p class="card__name">
+        {{ item.origin_name === "" ? item.origin : item.origin_name }} -
+        {{
+          item.destination_name === ""
+            ? item.destination
+            : item.destination_name
+        }}
+      </p>
     </div>
   </div>
 </div>
