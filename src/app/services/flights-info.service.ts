@@ -11,7 +11,7 @@ import { GetDestinationPopular } from '../components/city-destination/city-desti
 
 @Injectable()
 export class FlightsInfoService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   exampleRequestGetChipTickets(): Observable<any> {
     const headerDict = {
@@ -47,11 +47,12 @@ export class FlightsInfoService {
   }
   getSpecialOffers(
     cityOrign: string,
+    cityDestination: string,
     locale: string,
     currency: string
   ): Observable<any> {
     return this.http.get<any>(
-      `/aviasales/v3/get_special_offers?origin=${cityOrign}&locale=${locale}&currency=${currency}&token=b482025a8bf39817b6b6f219686b4799`
+      `/aviasales/v3/get_special_offers?origin=${cityOrign}&destination=${cityDestination}&locale=${locale}&currency=${currency}&token=b482025a8bf39817b6b6f219686b4799`
     );
   }
 
@@ -126,7 +127,7 @@ export class FlightsInfoService {
     );
   }
 
-  requestPopularDestination(origin:string ): Observable<GetDestinationPopular> {
+  requestPopularDestination(origin: string): Observable<GetDestinationPopular> {
     const headerDict = {
       'x-access-token': 'fd45945b3cf27c0f371a6a177e5c8adc',
     };

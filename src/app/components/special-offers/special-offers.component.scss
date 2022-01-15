@@ -1,61 +1,146 @@
-.special-offers {
-  margin: 10px;
-  background-color: rgb(240, 240, 240);
-  font-size: 14px;
-  &__wrapper {
-    margin-top: 20px;
+.card-group {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 55px 70px;
+}
+
+p,
+h3 {
+  margin: 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: space-around;
+  justify-content: space-around;
+  height: 216px;
+  width: 343px;
+  border-radius: 10px;
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url(https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80);
+
+  border-collapse: separate;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+  color: rgb(255, 255, 255);
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) all 0.4s;
+
+  &:hover {
+    transform: scale(1.01);
+  }
+
+  &__header {
+    width: 100%;
+    display: flex;
+    // padding-top: 16px;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 18px;
+  }
+
+  &__logo {
+    p {
+      margin: 0;
+      text-align: center;
+    }
+
+    img {
+      display: block;
+      width: 40px;
+      margin: auto;
+    }
+  }
+
+  &__body {
+    display: flex;
+    justify-content: space-around;
+  }
+  &__content {
+    line-height: 25px;
+  }
+
+  &__destination {
+    font-size: 18px;
+  }
+  &__departure {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
+    img {
+      padding-right: 5px;
+    }
   }
-  &__header {
-    width: auto;
-    padding: 10px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-  }
-  &__mini-title {
-    text-align: center;
-    margin: 0;
-    font-size: 2.2em;
-    color: white;
-  }
-
-  &__content {
-    margin-top: 16px;
+  &__action {
     display: flex;
     justify-content: space-between;
-    align-content: center;
-    align-content: center;
+    align-items: center;
+    align-self: center;
+    width: 115px;
+    height: 45px;
+    border-radius: 7px;
+    background-color: white;
+    color: black;
+    overflow: hidden;
+    a {
+      display: block;
+      position: relative;
+      width: 28px !important;
+      height: 100%;
+      border-radius: 0px 7px 7px 0px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: cubic-bezier(0.075, 0.82, 0.165, 1) all 0.7s;
+      &:hover {
+        background: rgba(100, 80, 182, 1);
+        &::after {
+          border-top: 2px solid rgb(255, 255, 255);
+          border-right: 2px solid rgb(255, 255, 255);
+        }
+      }
+      &::after {
+        position: absolute;
+        display: block;
+        top: 50%;
+        left: 42%;
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-top: 2px solid #333;
+        border-right: 2px solid #333;
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+    }
   }
 
-  &__price-date {
-    display: flex;
-    flex-direction: column;
-    font-size: 1.5em;
-    line-height: 1.3em;
+  &__info {
+    width: 100%;
   }
   &__price {
-    text-align: right;
-  }
-
-  &__departure {
-    font-size: 0.8em;
-  }
-
-  &__text-title {
-    padding: 35px 0;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 18px;
+    font-weight: 500;
   }
-
-  &__actions {
+  &__duration {
+    display: flex;
     width: max-content;
     margin: auto;
-    button {
-      font-size: 1em;
-      text-transform: uppercase;
+    font-weight: 300;
+    span {
+      font-size: 12px;
     }
+  }
+
+  &__footer {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 300;
   }
 }
