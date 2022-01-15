@@ -1,3 +1,5 @@
+import { RequestDataState } from 'src/app/store/request-data.state';
+import { Select, Store } from '@ngxs/store';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
@@ -9,18 +11,17 @@ import { FlightsInfoService } from 'src/app/services/flights-info.service';
 })
 export class SpecialOffersComponent implements OnInit {
 
+  @Select(RequestDataState.formData)
+
+  formData$: Observable<any>;
   offers$: Observable<{ data: any }>;
 
-  cityOrign: string = 'LWO'
-  language: string = 'en_us';
-  currency: string = 'eur';
-
+  language: string = 'en';
+  currency: string = 'usd';
   constructor(public flightsInfoService: FlightsInfoService) { }
 
-
-
   gotToLink(link: any) {
-    window.open('https://www.aviasales.ua' + link, '_blank')
+    window.open(`https://search.jetradar.com/flights/${link}&currency=${this.currency}&locale=${this.language}`, '_blank')
   }
 
   getCurrency(number: any) {
@@ -28,14 +29,27 @@ export class SpecialOffersComponent implements OnInit {
     return new Intl.NumberFormat(language.substring(0, 2), { style: 'currency', currency: this.currency }).format(number);
   }
 
-  // If I use getSpecialOffers() it doesn't display UI in first time rendering.
+  getHours(min: any) {
+    let hours = Math.trunc(min / 60);
+    let minutes = min % 60;
+    return `${hours}h:${minutes}min`;
+  }
 
-  // getSpecialOffers(language = 'rus', currency = 'eur', cityOrign: string = 'LWO'): void {
-  //   this.offers$ = this.flightsInfoService.getSpecialOffers(cityOrign, language, currency);
-  // }
+  ngOnInit(language = 'en', currency = 'eur', cityOrign: string = 'IEV', cityDestination: string = ''): void {
+    this.formData$.subscribe((formData: any) => {
 
-  ngOnInit(language = 'rus', currency = 'eur', cityOrign: string = 'LWO'): void {
-    this.offers$ = this.flightsInfoService.getSpecialOffers(cityOrign, language, currency);
+      // if (!formData) {
+      //   this.offers$ = this.flightsInfoService.getSpecialOffers(cityOrign, cityDestination, language, currency)
+      // } else {
+      //   this.offers$ = this.flightsInfoService.getSpecialOffers(formData.destinationFrom.code, cityDestination, language, currency)
+      // }
+
+      this.offers$ = this.flightsInfoService.getSpecialOffers(
+        formData.destinationFrom ? formData.destinationFrom.code : cityOrign,
+        formData.destinationTo ? formData.destinationTo.code : cityDestination,
+        language, currency);
+
+    });
   }
 
   onSelectedLanguageChanged(language: string) {
