@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -109,7 +109,14 @@ import { SearchComponent } from './components/search/search.component';
     }),
     NgxsLoggerPluginModule.forRoot(),
   ],
-  providers: [RequestDataService, FlightsInfoService],
+  providers: [
+    RequestDataService,
+    FlightsInfoService,
+    {
+      provide: LOCALE_ID,
+      useValue: 'en-GB',
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
