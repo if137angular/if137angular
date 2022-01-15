@@ -107,6 +107,19 @@ export class FlightsInfoService {
     );
   }
 
+   getLocale(): Observable<any> {
+    const headerDict = {
+      'x-access-token': '8f399398f352163f2c3e4cb293d221e3',
+    };
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    return this.http.get(
+      '/whereami?locale=uk&ip=194.44.160.160',
+      requestOptions
+    );
+  }
+
   getFlightTicketsForDate(
     codeFrom: string,
     codeTo: string,
