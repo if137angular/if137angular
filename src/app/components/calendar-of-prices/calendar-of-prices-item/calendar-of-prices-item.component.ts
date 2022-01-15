@@ -13,8 +13,35 @@ export class CalendarOfPricesItemComponent {
   @Input() destination: string;
 
   isActive: boolean = false;
+  liked: boolean = false;
 
   toggleActive() {
     this.isActive = !this.isActive;
+  }
+
+  isLiked() {
+    this.liked = !this.liked;
+  }
+
+  calculateDuration(time: number): string {
+    let hours = Math.floor(time / 60);
+    let minutes = Math.floor(time % 60);
+    if (minutes === 0) {
+      return `${hours}h`;
+    }
+    if (hours === 0 && minutes !== 0) {
+      return ` ${minutes}m`;
+    }
+    return `${hours}h ${minutes}m`;
+  }
+
+  getFlightClass(number: number): string {
+    if (number === 0) {
+      return 'Economy class';
+    }
+    if (number === 1) {
+      return 'Business class';
+    }
+    return 'First class';
   }
 }
