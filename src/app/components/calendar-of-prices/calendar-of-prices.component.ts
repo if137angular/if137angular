@@ -22,8 +22,11 @@ import { RequestDataState } from 'src/app/store/request-data.state';
 export class CalendarOfPricesComponent implements OnInit {
   calendarData: CalendarOfPricesStateModel;
   formData: CalendarOfPricesPayload;
+  loadingCardCount: number[];
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) {
+    this.loadingCardCount = Array(36).map((n) => n);
+  }
 
   ngOnInit(): void {
     this.store

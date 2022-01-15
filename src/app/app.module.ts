@@ -9,6 +9,9 @@ import { NgxsModule } from '@ngxs/store';
 import { appState } from 'src/app/store/appState';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 
+//other
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+
 // Angular Material
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
@@ -103,7 +106,7 @@ import { SearchComponent } from './components/search/search.component';
     MatCardModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
-
+    NgxSkeletonLoaderModule,
     NgxsModule.forRoot(appState, {
       developmentMode: true,
     }),
