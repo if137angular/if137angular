@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 55px 70px;
+  gap: 30px 50px;
 }
 
 p,
@@ -18,7 +18,7 @@ h3 {
   align-items: space-around;
   justify-content: space-around;
   height: 216px;
-  width: 343px;
+  width: 370px;
   border-radius: 10px;
   background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
     url(https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80);
@@ -29,7 +29,8 @@ h3 {
   background-size: cover;
   overflow: hidden;
   color: rgb(255, 255, 255);
-  transition: cubic-bezier(0.075, 0.82, 0.165, 1) all 0.4s;
+  box-shadow: 0px 0px 8px 4px rgba(73, 73, 73, 0.3);
+  transition: ease-in-out all 0.2s;
 
   &:hover {
     transform: scale(1.01);
@@ -38,7 +39,6 @@ h3 {
   &__header {
     width: 100%;
     display: flex;
-    // padding-top: 16px;
     justify-content: space-around;
     align-items: center;
   }
@@ -46,26 +46,24 @@ h3 {
   &__title {
     font-size: 18px;
   }
-
+  &__body {
+    display: flex;
+    justify-content: space-around;
+  }
   &__logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
     p {
-      margin: 0;
       text-align: center;
     }
 
     img {
       display: block;
-      width: 40px;
-      margin: auto;
+      width: 25px;
+      height: 25px;
+      padding-right: 10px;
     }
-  }
-
-  &__body {
-    display: flex;
-    justify-content: space-around;
-  }
-  &__content {
-    line-height: 25px;
   }
 
   &__destination {
@@ -75,7 +73,7 @@ h3 {
     display: flex;
     align-items: center;
     img {
-      padding-right: 5px;
+      padding-right: 10px;
     }
   }
   &__action {
@@ -83,7 +81,7 @@ h3 {
     justify-content: space-between;
     align-items: center;
     align-self: center;
-    width: 115px;
+    width: max-content;
     height: 45px;
     border-radius: 7px;
     background-color: white;
@@ -97,6 +95,7 @@ h3 {
       border-radius: 0px 7px 7px 0px;
       overflow: hidden;
       cursor: pointer;
+      background: gainsboro;
       transition: cubic-bezier(0.075, 0.82, 0.165, 1) all 0.7s;
       &:hover {
         background: rgba(100, 80, 182, 1);

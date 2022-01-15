@@ -35,14 +35,19 @@ export class SpecialOffersComponent implements OnInit {
     return `${hours}h:${minutes}min`;
   }
 
-  ngOnInit(language = 'en', currency = 'eur', cityOrign: string = 'LWO', cityDestination: string = ''): void {
+  ngOnInit(language = 'en', currency = 'eur', cityOrign: string = 'IEV', cityDestination: string = ''): void {
     this.formData$.subscribe((formData: any) => {
 
-      if (!formData.destinationFrom) {
-        this.offers$ = this.flightsInfoService.getSpecialOffers(cityOrign, cityDestination, language, currency)
-      } else {
-        this.offers$ = this.flightsInfoService.getSpecialOffers(formData.destinationFrom.code, formData.destinationTo.code, language, currency)
-      }
+      // if (!formData) {
+      //   this.offers$ = this.flightsInfoService.getSpecialOffers(cityOrign, cityDestination, language, currency)
+      // } else {
+      //   this.offers$ = this.flightsInfoService.getSpecialOffers(formData.destinationFrom.code, cityDestination, language, currency)
+      // }
+
+      this.offers$ = this.flightsInfoService.getSpecialOffers(
+        formData.destinationFrom ? formData.destinationFrom.code : cityOrign,
+        formData.destinationTo ? formData.destinationTo.code : cityDestination,
+        language, currency);
 
     });
   }
