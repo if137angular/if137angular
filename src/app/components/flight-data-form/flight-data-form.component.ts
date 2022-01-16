@@ -16,6 +16,7 @@ import { FormDataModel } from 'src/app/models/formData.model';
 export class FlightDataFormComponent implements OnInit {
   cities: CitiesModel[] = [];
   transfers: string = '';
+  minDate: Date = new Date();
 
   flightDataFormGroup: FormGroup = new FormGroup({
     startDate: new FormControl(),

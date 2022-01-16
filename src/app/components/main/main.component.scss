@@ -2,7 +2,9 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #673ab7;
+  background: url("/assets/background.svg") 10% 10% no-repeat,
+    url("/assets/background.svg") 90% 90% no-repeat;
+  background-color: #673ab7;
 
   h1,
   h3 {
@@ -24,7 +26,6 @@
     align-items: center;
     justify-content: center;
     flex: 1;
-    background: url("/assets/background.svg") 10% center no-repeat;
     margin-bottom: 128px;
   }
 

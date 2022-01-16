@@ -2,7 +2,6 @@
   <mat-form-field appearance="fill">
     <mat-label>Select type of transfers</mat-label>
     <mat-select [formControl]="transfersControl" (selectionChange)="transferSelected()">
-      <mat-option>None</mat-option>
       <mat-option *ngFor="let transfer of transfers" [value]="transfer">
         {{ transfer }}
       </mat-option>
