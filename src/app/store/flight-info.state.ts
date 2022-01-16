@@ -18,9 +18,7 @@ export interface FlightInfoStateModel {
       data: [],
       error: '',
     },
-    specialOffers: {
-      data: []
-    }
+    specialOffers: [],
   },
 })
 @Injectable()
@@ -28,8 +26,7 @@ export class FlightInfoState {
   constructor(
     private flightInfoService: FlightsInfoService,
     private store: Store
-  ) {
-  }
+  ) {}
 
   @Selector()
   static calendarOfPrices(
@@ -39,9 +36,7 @@ export class FlightInfoState {
   }
 
   @Selector()
-  static specialOffers(
-    state: FlightInfoStateModel
-  ): any {
+  static specialOffers(state: FlightInfoStateModel): any {
     return state.specialOffers;
   }
 
@@ -100,9 +95,14 @@ export class FlightInfoState {
     { payload }: FlightInfoActions.GetSpecialOffers
   ) {
     this.flightInfoService
-      .getSpecialOffers(payload.cityOrigin, payload.cityDestination, payload.language, payload.currency)
+      .getSpecialOffers(
+        payload.cityOrigin,
+        payload.cityDestination,
+        payload.language,
+        payload.currency
+      )
       .subscribe((specialOffers: { data: any }) => {
-        context.patchState({ specialOffers: specialOffers.data })
+        context.patchState({ specialOffers: specialOffers.data });
       });
   }
 }
