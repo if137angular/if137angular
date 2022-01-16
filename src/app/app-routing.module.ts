@@ -46,12 +46,12 @@ export const routes: Routes = [
       {
         path: 'flight-tickets',
         component: FlightTicketsForSpecialDatesComponent,
-        data: { tab: 'Tikets' },
+        data: { tab: 'Tickets' },
       },
       {
         path: 'trends',
         component: FlightPriceTrendsComponent,
-        data: { tab: 'Flight price trends' },
+        data: { tab: 'Price trends' },
       },
     ],
   },
