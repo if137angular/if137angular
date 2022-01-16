@@ -1,18 +1,19 @@
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { Select, Store } from '@ngxs/store';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { FormDataModel } from "src/app/models/formData.model";
 import { GetSpecialOffers } from "src/app/store/flight-info.action";
 import { FlightInfoState } from "src/app/store/flight-info.state";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
 
 @Component({
   selector: 'app-special-offers',
   templateUrl: './special-offers.component.html',
   styleUrls: [ './special-offers.component.scss' ]
 })
-export class SpecialOffersComponent implements OnInit {
+export class SpecialOffersComponent implements OnInit, OnDestroy {
 
   @Select(RequestDataState.formData)
   formData$: Observable<any>;
@@ -25,6 +26,7 @@ export class SpecialOffersComponent implements OnInit {
   currency: string = 'usd';
   cityOrigin: string = 'IEV';
 
+  private unsubscribe$ = new Subject<null>();
   constructor(public store: Store) {
   }
 
@@ -47,8 +49,8 @@ export class SpecialOffersComponent implements OnInit {
   }
 
   ngOnInit(language = 'en', currency = 'eur', cityOrign: string = 'IEV', cityDestination: string = ''): void {
-    this.dispatchSpecialOffers(this.store.selectSnapshot(RequestDataState.formData));
-    this.formData$.subscribe((formData: FormDataModel) => {
+
+    this.formData$.pipe(takeUntil(this.unsubscribe$)).subscribe((formData: FormDataModel) => {
       this.dispatchSpecialOffers(formData);
     });
   }
@@ -63,7 +65,7 @@ export class SpecialOffersComponent implements OnInit {
     this.dispatchSpecialOffers(this.store.selectSnapshot(RequestDataState.formData));
   }
 
-  dispatchSpecialOffers(formData: FormDataModel): void {
+    dispatchSpecialOffers(formData: FormDataModel): void {
     const payload = {
       cityOrigin: formData.destinationFrom ? formData.destinationFrom.code : this.cityOrigin,
       cityDestination: formData.destinationTo ? formData.destinationTo.code : '',
@@ -71,5 +73,9 @@ export class SpecialOffersComponent implements OnInit {
       currency: this.currency
       }
     this.store.dispatch(new GetSpecialOffers(payload))
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.complete();
   }
 }
