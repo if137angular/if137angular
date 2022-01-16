@@ -1,3 +1,13 @@
+.no-data {
+  display: block;
+  max-width: 800px;
+  margin: auto;
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
 .card-group {
   margin-top: 20px;
   display: flex;
