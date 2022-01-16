@@ -38,7 +38,8 @@ export class FlightDataFormComponent implements OnInit {
     this.formData$.subscribe((formData: FormDataModel) => {
       this.flightDataFormGroup.patchValue({
         destinationFrom:
-          formData.destinationFrom.name === ''
+          formData.destinationFrom.name === '' &&
+          !this.router.url.startsWith('/search')
             ? {
                 code: 'LWO',
                 name: 'Lviv',

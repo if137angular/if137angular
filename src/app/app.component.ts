@@ -20,10 +20,8 @@ export class AppComponent implements OnInit {
     this.store.dispatch([new GetCountries(), new GetAirports(), new GetCities()]);
 
     this.visitorsService.getIpAddress().subscribe(res => {
-      console.log(res);
 
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-        console.log(res);
       });
     });
   }

@@ -25,7 +25,7 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
   cityOrigin: string = 'IEV';
 
   private unsubscribe$ = new Subject<null>();
-  constructor(public store: Store) {}
+  constructor(public store: Store) { }
 
   gotToLink(link: any) {
     window.open(
@@ -84,9 +84,11 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
         ? formData.destinationTo.code
         : '',
       language: this.language,
+
       currency: this.currency,
     };
     this.store.dispatch(new GetSpecialOffers(payload));
+
   }
 
   ngOnDestroy() {
