@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import {
   CalendarOfPricesPayload,
   GetCalendarOfPricesRequestModel,
 } from '../models/calendar-of-prices.model';
 import { TicketsRequestParam } from '../models/cheapest-tickets.model';
 import { map } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 import { GetDestinationPopular } from '../components/city-destination/city-destination.component';
+
+
 
 @Injectable()
 export class FlightsInfoService {
@@ -108,18 +111,15 @@ export class FlightsInfoService {
     );
   }
 
-   getLocale(): Observable<any> {
-    const headerDict = {
-      'x-access-token': '8f399398f352163f2c3e4cb293d221e3',
-    };
-    const requestOptions = {
-      headers: new HttpHeaders(headerDict),
-    };
-    return this.http.get(
-      '/whereami?locale=uk&ip=194.44.160.160',
-      requestOptions
-    );
-  }
+  getIpAddress() {
+    return this.http
+      .get('https://api.ipify.org/?format=json');
+  };
+
+  getGEOLocation(ip: string) {
+    let url = "https://api.ipgeolocation.io/ipgeo?apiKey=a4503669913f4ef28711027d136d2d68&ip=" + ip;
+    return this.http.get(url);
+  };
 
   getFlightTicketsForDate(
     codeFrom: string,
