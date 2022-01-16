@@ -51,14 +51,11 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
 import { TicketItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/ticket-item.component';
 import { FlightItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/flight-item/flight-item.component';
 import { CityDestinationComponent } from './components/city-destination/city-destination.component';
-<<<<<<< HEAD
-=======
 import { FlightTicketComponent } from 'src/app/components/flight-tickets-for-special-dates/flight-ticket/flight-ticket.component';
 
 import { MainComponent } from './components/main/main.component';
 import { SearchComponent } from './components/search/search.component';
 import { FlightPriceTrendsComponent } from './components/flight-price-trends/flight-price-trends.component';
->>>>>>> main
 
 @NgModule({
   declarations: [
@@ -78,16 +75,10 @@ import { FlightPriceTrendsComponent } from './components/flight-price-trends/fli
     FlightItemComponent,
     AppComponent,
     CityDestinationComponent,
-<<<<<<< HEAD
- 
-
-
-=======
     FlightTicketComponent,
     MainComponent,
     SearchComponent,
     FlightPriceTrendsComponent,
->>>>>>> main
   ],
   imports: [
     BrowserModule,
