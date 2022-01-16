@@ -2,11 +2,11 @@ import { RequestDataState } from 'src/app/store/request-data.state';
 import { Select, Store } from '@ngxs/store';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FormDataModel } from "src/app/models/formData.model";
-import { GetSpecialOffers } from "src/app/store/flight-info.action";
-import { FlightInfoState } from "src/app/store/flight-info.state";
-import { takeUntil } from "rxjs/operators";
-import { Subject } from "rxjs";
+import { FormDataModel } from 'src/app/models/formData.model';
+import { GetSpecialOffers } from 'src/app/store/flight-info.action';
+import { FlightInfoState } from 'src/app/store/flight-info.state';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-special-offers',
@@ -76,6 +76,7 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.unsubscribe$.next(null);
     this.unsubscribe$.complete();
   }
 }
