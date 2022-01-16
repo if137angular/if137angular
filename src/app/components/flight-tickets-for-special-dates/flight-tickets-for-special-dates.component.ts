@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngxs/store';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
 
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { FlightInfo } from 'src/app/models/flight-tickets-for-date.model';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -11,7 +12,9 @@ import { FlightInfo } from 'src/app/models/flight-tickets-for-date.model';
   templateUrl: './flight-tickets-for-special-dates.component.html',
   styleUrls: ['./flight-tickets-for-special-dates.component.scss']
 })
-export class FlightTicketsForSpecialDatesComponent implements OnInit {
+export class FlightTicketsForSpecialDatesComponent implements OnInit, OnDestroy {
+  @Select(RequestDataState.formData)
+  formData$: Observable<any>
 
   formData: any;
   flightInfo: FlightInfo[] = [];
@@ -19,24 +22,22 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
   constructor(private flightInfoService: FlightsInfoService, private store: Store) { }
 
   ngOnInit(): void {
-    this.getFlightInfo()
+    this.formData = this.formData$.subscribe(formData => {
+
+      const codeFrom: string = formData.destinationFrom.code;
+      const codeTo: string = formData.destinationTo.code;
+      const startDate: string = formData.startDate.toISOString().slice(0, 10);
+      const endDate: string = formData.endDate.toISOString().slice(0, 10);
+      const direct: boolean = formData.transfers  === 'Directly';
+      
+      this.flightInfoService.getFlightTicketsForDate(codeFrom, codeTo, startDate, endDate, direct).subscribe((data: any) => {
+        this.flightInfo = data.data
+      })
+    });
   }
 
-  getFlightInfo() {
-    this.formData = this.store.selectSnapshot(RequestDataState.formData);
-
-    console.log(this.formData)
-
-    const codeFrom: string = this.formData?.destinationFrom?.code;
-    const codeTo: string = this.formData?.destinationTo?.code;
-    const startDate: string = this.formData?.startDate?.toISOString().slice(0, 10);
-    const endDate: string = this.formData?.endDate?.toISOString().slice(0, 10);
-    const direct: boolean = this.formData?.transfers  === 'Directly';
-
-    this.flightInfoService.getFlightTicketsForDate(codeFrom, codeTo, startDate, endDate, direct).subscribe(data => {
-       this.flightInfo = data.data
-      console.log(data)
-    })
+  ngOnDestroy(): void {
+      this.formData.unsubscribe()
   }
 
 }

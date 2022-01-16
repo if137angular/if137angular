@@ -1,16 +1,16 @@
 <div class="container" *ngIf="flightInfo.length > 0; else noRecordsFound">
-    <h2 class="title">Flight Tickets For Special Date</h2>
-    <div class="wrap">
-        <app-flight-ticket
-            *ngFor="let info of flightInfo"
-            [flightInfo]="info"
-        ></app-flight-ticket>
-    </div>
+  <h2 class="title">Flight Tickets For Special Date</h2>
+  <div class="wrap">
+    <app-flight-ticket
+      *ngFor="let info of flightInfo"
+      [flightInfo]="info"
+      ></app-flight-ticket>
+  </div>
 </div>
 <ng-template #noRecordsFound>
-    <div class="container">
-        <h1 class="text">Sory, we are not founded tickets.</h1>
-        <h3 class="text">Please change the date or location</h3>
-    </div>
+  <div class="container">
+    <h1 class="text">Sory, we are not founded tickets.</h1>
+    <h3 class="text">Please change the date or location</h3>
+  </div>
 </ng-template>
 
