@@ -70,29 +70,29 @@ export class FlightsInfoService {
     );
   }
 
-  requestCheapestTickets(ticketsParam: TicketsRequestParam): Observable<any> {
+  requestCheapestTickets(ticketsParam: any): Observable<any> {
     const baseURL: string = '/v1/prices/cheap';
     const myToken: string = 'f29a4f3a27eb2f3ea190c91cd4e15fa5';
+    let myHeadersURL = new HttpHeaders().append('x-access-token', myToken);
 
     let myParamsURL = new HttpParams()
-      .append('origin', ticketsParam.origin)
-      .append('destination', ticketsParam.destination)
+      .append('origin', ticketsParam.originInfo.cityCode)
+      .append('destination', ticketsParam.destinationInfo.cityCode)
       .append('depart_date', ticketsParam.departDate)
       .append('return_date', ticketsParam.returnDate)
       .append('currency', ticketsParam.currency)
       .append('token', myToken);
 
-    let myHeadersURL = new HttpHeaders().append('x-access-token', myToken);
 
     return this.http
       .get(baseURL, { headers: myHeadersURL, params: myParamsURL })
       .pipe(
         map((response) => ({
           ...response,
-          origin: ticketsParam.origin,
-          destination: ticketsParam.destination,
+          originInfo: ticketsParam.originInfo,
+          destinationInfo: ticketsParam.destinationInfo,
         }))
-      );
+      )
   }
 
   getFlightPriceTrends(): Observable<any> {
