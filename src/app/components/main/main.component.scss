@@ -25,10 +25,11 @@
     justify-content: center;
     flex: 1;
     background: url("/assets/background.svg") 10% center no-repeat;
+    margin-bottom: 128px;
   }
 
   .form {
-    padding: 5px 20px 0 20px;
+    padding: 1.34375em 20px 0 20px;
     background: rgba(0, 0, 0, 0.3);
     border-radius: 16px;
   }

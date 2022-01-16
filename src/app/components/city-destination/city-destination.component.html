@@ -5,7 +5,7 @@
       <div *ngFor="let cities of response | keyvalue">
         <form>
           <mat-form-field appearance="fill">
-            <mat-label>To: {{cities.key}}</mat-label>
+            <mat-label>To: {{getCityNameByKey(cities.key)}}</mat-label>
             <mat-select>
               <div>
                 <mat-option *ngFor="let items of cities.value">

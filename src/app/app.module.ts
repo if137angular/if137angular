@@ -9,6 +9,9 @@ import { NgxsModule } from '@ngxs/store';
 import { appState } from 'src/app/store/appState';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 
+// Other
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+
 // Angular Material
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
@@ -53,6 +56,7 @@ import { FlightTicketComponent } from 'src/app/components/flight-tickets-for-spe
 import { MainComponent } from './components/main/main.component';
 import { SearchComponent } from './components/search/search.component';
 import { FlightPriceTrendsComponent } from './components/flight-price-trends/flight-price-trends.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +80,7 @@ import { FlightPriceTrendsComponent } from './components/flight-price-trends/fli
     MainComponent,
     SearchComponent,
     FlightPriceTrendsComponent,
+    ToolbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,6 +113,7 @@ import { FlightPriceTrendsComponent } from './components/flight-price-trends/fli
       developmentMode: true,
     }),
     NgxsLoggerPluginModule.forRoot(),
+    NgxSkeletonLoaderModule,
   ],
   providers: [
     RequestDataService,

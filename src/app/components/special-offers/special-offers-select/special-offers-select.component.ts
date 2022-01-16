@@ -7,7 +7,6 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./special-offers-select.component.scss']
 })
 export class SpecialOffersSelectComponent implements OnChanges {
-
   @Input() selectedLanguage: string = '';
   @Output() selectedLanguageChange = new EventEmitter<string>();
   languageControl: FormControl = new FormControl('');
