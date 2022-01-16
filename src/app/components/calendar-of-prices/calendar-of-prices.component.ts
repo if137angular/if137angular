@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { map } from 'rxjs';
 import {
-  CalendarOfPricesModel,
   CalendarOfPricesPayload,
   CalendarOfPricesStateModel,
 } from 'src/app/models/calendar-of-prices.model';
