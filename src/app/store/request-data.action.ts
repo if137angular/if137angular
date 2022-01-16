@@ -4,6 +4,11 @@ export class GetCountries {
   constructor(public payload: any = null) { }
 }
 
+export class GetLocation {
+  static readonly type = '[Request] Get Location Data';
+  constructor(public payload: any = null) { }
+}
+
 export class GetCities {
   static readonly type = '[Request] Get All Cities Data';
   constructor(public payload: any = null) { }
