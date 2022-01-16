@@ -1,38 +1,8 @@
 <div class="wrapper">
-  <h1>Cheapest Tickets!</h1>
-  <button
-    (click)="requestTickets(ticketsParam)"
-    mat-raised-button
-    color="primary">
-    Get Cheapest Tickets
-  </button>
-  <div class="ticketsWrapper" *ngIf="ticketsData || ticketsData?.['ticketsArray']">
+  <div class="ticketsWrapper" *ngIf="ticketsData">
     <app-ticket-item
-      *ngFor="let ticket of ticketsData.ticketsArray"
-      [ticketData]="ticket"
-      [currency]="ticketsData.currency"
-      [origin]="ticketsData.origin"
-      [destination]="ticketsData.destination">
+      *ngFor="let ticket of ticketsData"
+      [ticketData]="ticket">
     </app-ticket-item>
   </div>
-<!--  <div class="ticketsWrapper">-->
-<!--    <app-ticket-item>-->
-<!--      [ticketData]="ticket"-->
-<!--      [currency]="ticketsData.currency"-->
-<!--      [origin]="ticketsData.origin"-->
-<!--      [destination]="ticketsData.destination">-->
-<!--    </app-ticket-item>-->
-<!--    <app-ticket-item>-->
-<!--      [ticketData]="ticket"-->
-<!--      [currency]="ticketsData.currency"-->
-<!--      [origin]="ticketsData.origin"-->
-<!--      [destination]="ticketsData.destination">-->
-<!--    </app-ticket-item>-->
-<!--    <app-ticket-item>-->
-<!--      [ticketData]="ticket"-->
-<!--      [currency]="ticketsData.currency"-->
-<!--      [origin]="ticketsData.origin"-->
-<!--      [destination]="ticketsData.destination">-->
-<!--    </app-ticket-item>-->
-<!--  </div>-->
 </div>

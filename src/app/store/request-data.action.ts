@@ -22,7 +22,7 @@ export class GetAirlines {
   }
 }
 
-  export class SetFormDate {
+export class SetFormDate {
   static readonly type = '[Request] Set Form Data';
   constructor(public payload: any) { }
 }
