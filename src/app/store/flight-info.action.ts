@@ -15,6 +15,13 @@ export class CalendarOfPricesFailed {
   constructor(public payload: string) {}
 }
 
+export class GetSpecialOffers {
+  static readonly type = '[FlightInfo] Get Special Offers';
+  constructor(public payload: {
+    cityOrigin: string, cityDestination: string, language: string, currency: string
+  }) {}
+}
+
 export type FlightInfoActions =
   | CalendarOfPricesRequested
   | CalendarOfPricesLoaded
