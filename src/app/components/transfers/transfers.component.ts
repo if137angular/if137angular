@@ -25,7 +25,6 @@ export class TransfersComponent {
   }
 
   registerOnTouched(fn: (value: string) => void): void {
-    // no need in touch handlers
   }
 
   writeValue(value: 'Directly' | 'Transfers'): void {
