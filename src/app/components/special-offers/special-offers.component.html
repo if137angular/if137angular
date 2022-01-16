@@ -1,9 +1,11 @@
 <app-special-offers-select
+  [selectedLanguage]="language"
+  [selectedCurrency]="currency"
   (selectedLanguageChange)="onSelectedLanguageChanged($event)"
   (selectedCurrencyChange)="onSelectedCurrencyChanged($event)"
 ></app-special-offers-select>
 <div class="card-group">
-  <div class="card" *ngFor="let item of (offers$ | async)?.data">
+  <div class="card" *ngFor="let item of (offers$ | async)">
     <div class="card__header">
       <div class="card__title">{{ item.title }}</div>
     </div>

@@ -1,29 +1,24 @@
 <div class="ticketWrapper">
   <div class="priceInfo">
     <div class="airlineInfo">
-      <p>{{ticketInfo.airlineInfo.name}}</p>
+      <p>{{ticketData.airlineInfo.name}}</p>
       <div class="airlineLogo">
-        <img src="{{ticketInfo.airlineInfo.logo}}" alt="{{ticketInfo.airlineInfo.name}}">
+        <img src="{{ticketData.airlineInfo.logo}}" alt="{{ticketData.airlineInfo.name}}">
       </div>
     </div>
     <div class="priceContainer">
-      <h2>{{ticketInfo.price.currencySymbol}} {{ticketInfo.price.priceValue}}</h2>
+      <h2>{{ticketData.priceInfo.currencySymbol}} {{ticketData.priceInfo.priceValue}}</h2>
     </div>
     <p> Offer is valid until<br>
-      <span>{{ticketInfo.expires_at.departureDate}} {{ticketInfo.expires_at.departureTime}}</span>
+      <span>{{expiresDate}}</span>
     </p>
   </div>
 
   <div class="flightInfo">
-    <app-flight-item
-      [flightDate]="ticketInfo.departure_at"
-      [flightFrom]="ticketInfo.origin"
-      [flightTo]="ticketInfo.destination">
+    <app-flight-item [flightInfo]="ticketData.departureInfo">
     </app-flight-item>
-    <app-flight-item
-      [flightDate]="ticketInfo.return_at"
-      [flightFrom]="ticketInfo.destination"
-      [flightTo]="ticketInfo.origin">>
+    <app-flight-item [flightInfo]="ticketData.returnInfo">
     </app-flight-item>
   </div>
 </div>
+
