@@ -56,7 +56,7 @@ export class FlightDataFormComponent implements OnInit {
     this.store.dispatch(new SetFormDate(this.flightDataFormGroup.value));
 
     if (!this.router.url.startsWith('/search')) {
-      this.router.navigate(['/search']);
+      this.router.navigate(['/search/special-offers']);
     }
   }
 
