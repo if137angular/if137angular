@@ -54,7 +54,6 @@ export class CheapestTicketsComponent implements OnInit {
       .subscribe((response: any) => {
         if(Object.entries(response.data).length === 0 && response.data.constructor === Object) {
           this.isTicketData = false
-          console.log(this.isTicketData)
           return
         }
         this.isTicketData = true
