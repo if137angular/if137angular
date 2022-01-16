@@ -14,8 +14,12 @@
     *ngFor="let n of loadingCardCount"
   ></ngx-skeleton-loader>
 </div>
-<div *ngIf="calendarData.data.length === 0 && !calendarData.loading">
-  There is no data :(
+<div
+  class="error"
+  *ngIf="calendarData.data.length === 0 && !calendarData.loading"
+>
+  <p>Sorry, there are no tickets now</p>
+  <p>Please, please choose another destinations or dates</p>
 </div>
 <div
   class="calendar"

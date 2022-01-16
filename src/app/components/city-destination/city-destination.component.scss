@@ -2,6 +2,7 @@
   position: fixed;
   bottom: 70px;
   width: 100%;
+
 }
 .container{
   display: flex;
@@ -22,8 +23,19 @@ form{
   flex: 1 0 21%;
   margin: 5px;
   height: 100px;
-  background-color: mediumpurple;
+  border-radius: 15px;
+  background-image: url(https://images.kiwi.com/photos/220x165/non-existing.jpg);
 }
 h1{
   text-align: center;
 }
+.option{
+  color:mediumpurple ;
+}
+.price{
+  margin:10px;
+}
+.destination{
+  margin-right: 5px;
+}
+
