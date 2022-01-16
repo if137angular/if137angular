@@ -3,6 +3,8 @@ import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { RequestDataState } from 'src/app/store/request-data.state';
+import { FormDataModel } from 'src/app/models/formData.model';
+import { FlightPriceTrends } from 'src/app/models/flight-price-trends.model';
 
 
 @Component({
@@ -12,30 +14,45 @@ import { RequestDataState } from 'src/app/store/request-data.state';
 })
 export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
   @Select(RequestDataState.formData)
-  formData$: Observable<any>;
+  formData$: Observable<FormDataModel>;
 
-  constructor(private flightInfoService: FlightsInfoService, private store: Store) { }
-  data: any = [];
-  currency: any = 'USD';
-  cityFrom: any;
-  cityTo: any;
+  data: FlightPriceTrends[] = [];
+  currency: string = 'USD';
+  cityFrom: string;
+  cityTo: string;
   formData: any;
 
+  constructor(private flightInfoService: FlightsInfoService, private store: Store) { }
+
   ngOnInit(): void {
+    this.getData()
+  }
+
+  getData() {
     this.formData = this.formData$.subscribe(formData => {
       this.flightInfoService.getFlightPriceTrends(formData.destinationFrom.code, formData.destinationTo.code, formData.startDate.toISOString().slice(0, 7), formData.endDate.toISOString().slice(0, 7), this.currency).subscribe((response: any) => {
         this.data = Object.values(response.data);
-        console.log(this.data);
         this.cityFrom = formData.destinationFrom.name;
-        console.log(this.cityFrom)
         this.cityTo = formData.destinationTo.name;
-
+        if (formData.transfers === "Directly") {
+          this.getDirectlyFlights(this.data);
+        }
       });
     })
   }
-  ngOnDestroy(): void {
-    this.formData.unsubscribe()
 
+  getDirectlyFlights(data: FlightPriceTrends[]) {
+    const newArray: FlightPriceTrends[] = [];
+    for (let item of data) {
+      if (item.transfers === 0) {
+        newArray.unshift(item);
+      }
+    }
+    this.data = newArray;
+  }
+
+  ngOnDestroy(): void {
+    this.formData.unsubscribe();
   }
 }
 

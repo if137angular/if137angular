@@ -3,43 +3,46 @@
         Flight price trends
     </mat-card-title>
     <div class="container">
-        <mat-card class="flights-card" *ngFor="let item of data">
-            <div class="flights-card-container">
-                <div class="flights-card-leftSide">
-                    <div class="flights-card-leftSide-info">
-                        <div> <b> {{ cityFrom }} - {{ cityTo }} </b></div>
-                        <div class="flights-card-leftSide-info-airline">
-                            <img src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png" alt="airlineImage">
-                            <p> Airline: {{ item.airline }}</p>
-                            <p> Flight number: {{ item.flight_number }}</p>
+        <mat-card-content class="info-card-content"*ngFor="let item of data">
+            <mat-card class="flights-card">
+                <div class="flights-card-container">
+                    <div class="flights-card-leftSide">
+                        <div class="flights-card-leftSide-info">
+                            <div> <b> {{ cityFrom }} - {{ cityTo }} </b></div>
+                            <div class="flights-card-leftSide-info-airline">
+                                <img src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png"
+                                    alt="airlineImage">
+                                <p> Airline: {{ item.airline }}</p>
+                                <p> Flight number: {{ item.flight_number }}</p>
+                            </div>
+                            <div>
+                                <p>Transfers: {{ item.transfers }}</p>
+                            </div>
+                            <div class="flights-card-leftSide-info-price">
+                                <p> <b>{{ item.price }} {{ currency }}</b></p>
+                                <p>The offer valid untill {{ item.expires_at | date : "short" }}</p>
+                            </div>
                         </div>
-                        <div>
-                            <p>Transfers: {{ item.transfers }}</p>
+                    </div>
+                    <div class="flights-card-rightSide">
+                        <div class="flights-card-rightSide-time">{{ item.departure_at | date : "medium"}}</div>
+                        <div class="flights-card-rightSide-img">
+                            <img class="plane-img" src="https://www.flyswoop.com/images/icon-route.png" alt="plane"
+                                mat-card-img>
+                            <span class="flights-card-rightSide-img-departure">{{item.origin}}</span>
+                            <span class="flights-card-rightSide-img-arrive">{{item.destination}}</span>
                         </div>
-                        <div class="flights-card-leftSide-info-price">
-                            <p> <b>{{ item.price }} {{ currency }}</b></p>
-                            <p>The offer valid untill {{ item.expires_at | date : "short" }}</p>
+                        <div class="flights-card-rightSide-time">{{item.return_at | date : "medium"}}</div>
+                        <div class="flights-card-rightSide-img">
+                            <img class="plane-img" src="https://www.flyswoop.com/images/icon-route.png" alt="plane"
+                                mat-card-img>
+                            <span class="flights-card-rightSide-img-departure">{{item.destination}}</span>
+                            <span class="flights-card-rightSide-img-arrive">{{item.origin}}</span>
                         </div>
                     </div>
                 </div>
-                <div class="flights-card-rightSide">
-                    <div class="flights-card-rightSide-time">{{ item.departure_at | date : "medium"}}</div>
-                    <div class="flights-card-rightSide-img">
-                        <img class="plane-img" src="https://www.flyswoop.com/images/icon-route.png" alt="plane"
-                            mat-card-img>
-                        <span class="flights-card-rightSide-img-departure">{{item.origin}}</span>
-                        <span class="flights-card-rightSide-img-arrive">{{item.destination}}</span>
-                    </div>
-                    <div class="flights-card-rightSide-time">{{item.return_at | date : "medium"}}</div>
-                    <div class="flights-card-rightSide-img">
-                        <img class="plane-img" src="https://www.flyswoop.com/images/icon-route.png" alt="plane"
-                            mat-card-img>
-                        <span class="flights-card-rightSide-img-departure">{{item.destination}}</span>
-                        <span class="flights-card-rightSide-img-arrive">{{item.origin}}</span>
-                    </div>
-                </div>
-            </div>
-        </mat-card>
+            </mat-card>
+        </mat-card-content>
     </div>
 </mat-card>
 <div class="notFound" *ngIf="data.length === 0">
