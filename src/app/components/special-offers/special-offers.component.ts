@@ -48,7 +48,6 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
     return `${hours}h:${minutes}min`;
   }
 
-
   ngOnInit(
     language = 'en',
     currency = 'eur',
@@ -60,7 +59,6 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
       .subscribe((formData: FormDataModel) => {
         this.dispatchSpecialOffers(formData);
       });
-
   }
 
   onSelectedLanguageChanged(language: string) {
