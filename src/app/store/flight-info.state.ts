@@ -6,6 +6,7 @@ import { FlightsInfoService } from '../services/flights-info.service';
 
 export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesStateModel;
+  specialOffers: any; // TODO: create model
 }
 
 @State<FlightInfoStateModel>({
@@ -17,6 +18,9 @@ export interface FlightInfoStateModel {
       data: [],
       error: '',
     },
+    specialOffers: {
+      data: []
+    }
   },
 })
 @Injectable()
@@ -24,12 +28,21 @@ export class FlightInfoState {
   constructor(
     private flightInfoService: FlightsInfoService,
     private store: Store
-  ) {}
+  ) {
+  }
+
   @Selector()
   static calendarOfPrices(
     state: FlightInfoStateModel
   ): CalendarOfPricesStateModel {
     return state.calendarOfPrices;
+  }
+
+  @Selector()
+  static specialOffers(
+    state: FlightInfoStateModel
+  ): any {
+    return state.specialOffers;
   }
 
   @Action(FlightInfoActions.CalendarOfPricesRequested)
@@ -79,5 +92,17 @@ export class FlightInfoState {
         error: payload,
       },
     });
+  }
+
+  @Action(FlightInfoActions.GetSpecialOffers)
+  GetSpecialOffers(
+    context: StateContext<FlightInfoStateModel>,
+    { payload }: FlightInfoActions.GetSpecialOffers
+  ) {
+    this.flightInfoService
+      .getSpecialOffers(payload.cityOrigin, payload.cityDestination, payload.language, payload.currency)
+      .subscribe((specialOffers: { data: any }) => {
+        context.patchState({ specialOffers: specialOffers.data })
+      });
   }
 }

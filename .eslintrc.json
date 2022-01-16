@@ -58,7 +58,8 @@
         "no-multiple-empty-lines": ["error"],
         "semi": ["error", "always"],
         "quotes": ["error", "double"],
-        "no-trailing-spaces": ["error"]
+        "no-trailing-spaces": ["error"],
+        "no-console": ["error"]
       }
     }
   ]
