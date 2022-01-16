@@ -1,31 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {FlightsInfoService} from 'src/app/services/flights-info.service'
-import {TicketsRequestParam} from "../../models/cheapest-tickets.model";
 import {map, Observable} from "rxjs";
 import {Select, Store} from "@ngxs/store";
 import {RequestDataState} from "../../store/request-data.state";
 import {FormDataModel} from "../../models/formData.model";
 import * as moment from 'moment';
 
-
-
-
 @Component({
   selector: 'app-cheapest-tickets',
   templateUrl: './cheapest-tickets.component.html',
   styleUrls: ['./cheapest-tickets.component.scss']
 })
-export class CheapestTicketsComponent implements OnInit{
-  ticketsParam: TicketsRequestParam = {
-    origin: 'MOW',
-    destination: 'HKT',
-    departDate: '2022-08',
-    returnDate: '2022-09',
-    currency: 'USD',
-  }
-
+export class CheapestTicketsComponent implements OnInit {
   @Select(RequestDataState.airlines) airlines$: Observable<string[]>;
   ticketsData: any = null
+  isTicketData: boolean
 
   constructor(
     private httpService: FlightsInfoService,
@@ -63,6 +52,12 @@ export class CheapestTicketsComponent implements OnInit{
   requestTickets(ticketsParam: any) {
     this.httpService.requestCheapestTickets(ticketsParam)
       .subscribe((response: any) => {
+        if(Object.entries(response.data).length === 0 && response.data.constructor === Object) {
+          this.isTicketData = false
+          console.log(this.isTicketData)
+          return
+        }
+        this.isTicketData = true
         this.ticketsData = preparingData(response)
         this.airlines$.subscribe(res => {
           findAirlineInfo(this.ticketsData, Array.from(res))
