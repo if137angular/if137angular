@@ -2,6 +2,17 @@
   (selectedLanguageChange)="onSelectedLanguageChanged($event)"
   (selectedCurrencyChange)="onSelectedCurrencyChanged($event)"
 ></app-special-offers-select>
+<div
+  class="no-data"
+  *ngIf="
+    (offers$ | async)?.data.length === 0 && !(offers$ | async)?.data.loading
+  "
+>
+  <img
+    src="https://cdn.dribbble.com/users/2382015/screenshots/6065978/no_result.gif"
+    alt="Sorry! No result found :-( "
+  />
+</div>
 <div class="card-group">
   <div class="card" *ngFor="let item of (offers$ | async)?.data">
     <div class="card__header">
