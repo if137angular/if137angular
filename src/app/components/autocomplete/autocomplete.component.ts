@@ -45,6 +45,8 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
               city.name.toLowerCase().startsWith(value.toLowerCase())
             )
           : [];
+
+      if (!this.filteredItems.length) this.onChange({ name: '', code: '' });
     });
   }
 
