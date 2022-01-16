@@ -11,11 +11,7 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'app-special-offers',
   templateUrl: './special-offers.component.html',
-<<<<<<< HEAD
-  styleUrls: ['./special-offers.component.scss']
-=======
   styleUrls: ['./special-offers.component.scss'],
->>>>>>> 9b32ffd26ed2a0963f80df2876f28a87b480294d
 })
 export class SpecialOffersComponent implements OnInit, OnDestroy {
   @Select(RequestDataState.formData)
