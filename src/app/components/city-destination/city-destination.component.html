@@ -11,9 +11,9 @@
                 <mat-option *ngFor="let items of cities.value">
                   <div>
                    <span>
-                     <span class="destination">{{items.origin}}</span>
+                     <span class="destination">{{getCityNameByKey(items.origin)}}</span>
                      <mat-icon>trending_flat</mat-icon>
-                     <span>{{items.destination}}</span>
+                     <span>{{getCityNameByKey(items.destination)}}</span>
                      <span class="price">starting at {{items.price}}
                      <mat-icon>dollar</mat-icon>
                      </span>
