@@ -1,9 +1,13 @@
 .calendar {
   position: relative;
+}
+
+.calendar,
+.calendar-loading {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 30px;
-  margin-top: 15px;
+  gap: 15px;
+  margin: 15px 0;
 }

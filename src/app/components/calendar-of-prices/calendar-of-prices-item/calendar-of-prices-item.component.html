@@ -1,4 +1,4 @@
-<!-- <mat-card class="calendar-card" color="primary" (click)="toggleActive()">
+<mat-card class="calendar-card" (click)="toggleActive()">
   <mat-card-content class="calendar-card-content">
     <div class="calendar-card-content-found">
       Found at:
@@ -24,83 +24,60 @@
       <mat-icon class="calendar-modal-content-close" (click)="toggleActive()"
         >close</mat-icon
       >
-      <p>Ticket info</p>
-      <div class="calendar-modal-content-dates">
-        <div>
-          <mat-icon class="icon">flight_takeoff</mat-icon
-          ><span class="bolded-text">{{
-            data.depart_date | date: "longDate"
-          }}</span>
-        </div>
-        <div>
-          <mat-icon class="icon">flight_land</mat-icon
-          ><span class="bolded-text">{{
-            data.return_date | date: "longDate"
-          }}</span>
-        </div>
+      <mat-icon
+        class="calendar-modal-content-like"
+        [ngClass]="liked ? 'liked' : ''"
+        (click)="isLiked()"
+        >{{ liked ? "favorite" : "favorite_border" }}</mat-icon
+      >
+      <p div class="calendar-modal-content-title">Ticket info</p>
+      <div class="calendar-modal-content-sub">
+        <p>
+          Price:
+          <span class="bolded-text"
+            >{{ data.value }}{{ currency | uppercase }}</span
+          >
+        </p>
+        <p>
+          Gate: <span class="bolded-text">{{ data.gate || "KIWI.com" }}</span>
+        </p>
+        <p>
+          Number o changes:
+          <span class="bolded-text">{{ data.number_of_changes }}</span>
+        </p>
+        <p>
+          Trip class:
+          <span class="bolded-text">{{ getFlightClass(data.trip_class) }}</span>
+        </p>
+        <p class="calendar-modal-content-sub-dates">
+          <span class="bolded-text">
+            {{ data.depart_date | date: "mediumDate" }} -
+            {{ data.return_date | date: "mediumDate" }}
+          </span>
+        </p>
       </div>
-      <div class="calendar-modal-content-origin">
-        <mat-icon class="icon">airplane_ticket</mat-icon>
-        <div>
-          <span class="bolded-text">{{ origin }}</span>
+      <div class="calendar-modal-content-info">
+        <div class="calendar-modal-content-info-destination">
+          <p class="bolded-text">{{ origin }}</p>
+          <p class="date">{{ data.depart_date | date: "mediumDate" }}</p>
         </div>
-      </div>
-      <div class="calendar-modal-content-main">
-        <div class="calendar-modal-content-main-destination">
-          <div>
-            Point of destination:
-            <span class="bolded-text">{{ destination }}</span>
+        <div class="calendar-modal-content-info-main">
+          <div class="calendar-modal-content-info-main-top">
+            <mat-icon>flight_takeoff</mat-icon>
+            <span>{{ calculateDuration(data.duration) }}</span>
+            <mat-icon>flight_land</mat-icon>
           </div>
-          <div>
-            Flight class:
-            <span class="bolded-text">
-              {{ data.trip_class === 0 ? "Economy" : "Business" }}</span
-            >
-          </div>
-          <div>
-            Value:
-            <span class="bolded-text"
-              >{{ data.value }} {{ currency | uppercase }}</span
-            >
+          <div class="calendar-modal-content-info-main-line"></div>
+          <div class="calendar-modal-content-info-main-bottom">
+            <span class="bolded-text">{{ data.origin }}</span>
+            <span>{{ data.distance }}km</span>
+            <span class="bolded-text">{{ data.destination }}</span>
           </div>
         </div>
-        <div class="calendar-modal-content-main-value">
-          <div>
-            Found at:
-            <span class="bolded-text">{{
-              data.found_at | date: "mediumDate"
-            }}</span>
-          </div>
-          <div>
-            Gate: <span class="bolded-text">{{ data.gate }}</span>
-          </div>
-          <div>
-            Duration: <span class="bolded-text">{{ data.duration }}</span>
-          </div>
+        <div class="calendar-modal-content-info-destination">
+          <p class="bolded-text">{{ destination }}</p>
+          <p class="date">{{ data.return_date | date: "mediumDate" }}</p>
         </div>
-      </div>
-      <button class="add-button" mat-button color="primary">Add</button>
-    </div>
-  </div>
-</div> -->
-<div class="ticket-wrapper">
-  <div class="ticket">
-    <div class="ticket-content">
-      <mat-icon class="ticket-content-favourite">favorite_outline</mat-icon>
-      <div class="ticket-content-pill">
-        <div class="ticket-content-pill-prices">
-          <div>365$</div>
-          <div>for 5 nights</div>
-        </div>
-        <div class="ticket-content-pill-arrow"><span>&#62;</span></div>
-      </div>
-      <div class="ticket-content-airline">
-        {{ data.gate }}
-      </div>
-      <div class="ticket-content-info">
-        <p>{{ origin }}</p>
-        <p>{{ destination }}</p>
-        <p>{{ data.value }} {{ currency | uppercase }}</p>
       </div>
     </div>
   </div>

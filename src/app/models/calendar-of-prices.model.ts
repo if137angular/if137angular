@@ -23,5 +23,14 @@ export interface CalendarOfPricesStateModel {
   loading: boolean;
   data: CalendarOfPricesModel[];
   currency: string;
-  error: string;
+  error?: string;
 }
+
+export type CalendarOfPricesPayload = {
+  destination: string;
+  origin: string;
+  return_date: string;
+  depart_date: string;
+  originCode: string;
+  destinationCode: string;
+};

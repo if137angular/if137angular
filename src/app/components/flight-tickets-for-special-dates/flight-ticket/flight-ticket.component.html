@@ -1,6 +1,16 @@
 <div class="wrap__tikcet">
-    <div class="price">
-        <h3 class="price-title">{{flightInfo.price}}$</h3>
+  <div class="price">
+    <h3 class="price-title">{{flightInfo.price}}$</h3>
+  </div>
+  <div class="info__flight">
+    <div class="info__flight-header">
+      <img class="info__flight-header-img"
+           src="https://images.kiwi.com/airlines/64/{{flightInfo.airline}}.png"
+           alt="{{flightInfo.airline}}"
+      >
+      <p class="info__flight-header-duration">
+        Flight duration: {{myTime(flightInfo.duration)}}
+      </p>
     </div>
     <div class="info__flight">
         <div class="info__flight-header">
