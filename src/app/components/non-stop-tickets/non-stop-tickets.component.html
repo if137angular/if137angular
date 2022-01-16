@@ -1,6 +1,6 @@
 <div class="container">
-  <h3 class="non-stop-title">Non Stop Tickets</h3>
-  <div class="forms-non-stop">
+  <h2 class="non-stop-title">Non Stop Tickets</h2>
+  <!-- <div class="forms-non-stop">
     <form class="example-form">
       <mat-form-field class="example-full-width">
         <mat-label>From</mat-label>
@@ -43,28 +43,33 @@
       </mat-form-field>
     </form>
     <button mat-raised-button color="primary" (click)="onSubmitFlights()">
-      Search
+      Go
     </button>
-  </div>
+  </div> -->
 
-  <div class="non-stop-tickets-data" *ngIf="data">
+
+  <button mat-raised-button class="opendiv" color="primary" (click)="onToggle()">
+    {{btnName}}
+  </button>
+  <div class="non-stop-tickets-data" *ngIf="div">
     <div
       *ngFor="let item of data.data | keyvalue"
       class="ticket-content__wrapper"
     >
       <div class="ticket__sidecontent">
-        <h3>Price is:{{ item.value["0"].price }} {{ currency }}</h3>
-        <button class="ticket-submit-btn">Add</button>
+        <h3>Price is: {{ item.value["0"].price }} UAH</h3>
+        <button class="ticket-submit-btn">Buy</button>
       </div>
 
       <div class="ticket__maincontainer">
-        <p>Airline is {{ item.value["0"].airline }}</p>
-        <p>Flight Number {{ item.value["0"].flight_number }} </p>
+        <h3>from {{cityOrigin}} To {{cityArrival}}</h3>
+        <h3>Airline: {{ item.value["0"].airline }}</h3>
+        <h3>Flight Number: {{ item.value["0"].flight_number }}</h3>
         <div class="ticket__departure">
-          Departure date {{ item.value["0"].departure_at }}
+          <h3>Departure: {{ item.value["0"].departure_at }}</h3>
         </div>
         <div class="ticket__return">
-          Return date {{ item.value["0"].return_at }}
+          <h3>Return: {{ item.value["0"].return_at }}</h3>
         </div>
       </div>
     </div>

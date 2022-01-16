@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { RequestDataState } from 'src/app/store/request-data.state';
+import { FormDataModel } from 'src/app/models/formData.model';
 
 @Component({
   selector: 'app-non-stop-tickets',
@@ -9,45 +13,38 @@ import { FlightsInfoService } from 'src/app/services/flights-info.service';
 })
 export class NonStopTicketsComponent implements OnInit {
   data: { data: Record<string, any> };
-  originOptions: any[] = [
-    { label: 'Kyiv', key: 'KBP' },
-    { label: 'Lviv', key: 'LWO' },
-    { label: 'Krakow', key: 'KRK' },
-    { label: 'Warszawa', key: 'WAW' },
-  ];
-  destinationOptions: any[] = [
-    { label: 'London', key: 'STN' },
-    { label: 'Paris', key: 'CDG' },
-    { label: 'Berlin', key: 'BER' },
-    { label: 'Budapest', key: 'BUD' },
-  ];
+  formData: any;
   cityOrigin: string;
-  cityDest: string;
-  currency: string = 'UAH';
+  cityArrival: string;
+  div: boolean = false;
+  btnName: string = 'Open';
+  
+  
+
+  @Select(RequestDataState.formData) formData$: Observable<FormDataModel>;
 
   constructor(private flightsInfoService: FlightsInfoService) {}
 
   ngOnInit(): void {
-    //   this.flightsInfoService.requestGetNonStopTickets().subscribe((res) => {
-    //     this.data = res;
-    //     console.log(this.data);
-    // });
+   this.formData = this.formData$.subscribe(formData => {
+      this.flightsInfoService
+        .requestGetNonStopTickets(
+          formData.destinationFrom.code,
+          formData.destinationTo.code
+        )
+        .subscribe((response) => {
+          this.data = response;
+          console.log(this.data);
+          this.cityOrigin = formData.destinationFrom.name;
+          this.cityArrival = formData.destinationTo.name;
+        });
+    });
   }
 
-  onUpdateOrigin(cityOrigin: any) {
-    this.cityOrigin = cityOrigin;
-  }
-
-  onUpdateDestination(cityDest: any) {
-    this.cityDest = cityDest;
-  }
-
-  onSubmitFlights() {
-    this.flightsInfoService
-      .requestGetNonStopTickets(this.cityOrigin, this.cityDest)
-      .subscribe((response) => {
-        this.data = response;
-        console.log(this.data);
-      });
-  }
+  onToggle(){
+    this.div = !this.div
+   if (this.div) 
+   this.btnName = 'Close';
+   else this.btnName = 'Open'
+  };
 }

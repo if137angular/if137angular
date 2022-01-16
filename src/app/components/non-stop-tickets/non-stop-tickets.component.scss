@@ -6,7 +6,6 @@
   margin: 30px auto;
   overflow: auto;
   min-height: 60px;
-  border: 1px solid steelblue;
   padding: 30px;
   border-radius: 5px;
   text-align: center;
@@ -21,23 +20,38 @@
 .non-stop-tickets-data {
   display: flex;
   justify-content: space-around;
-}
+  margin-top: 30px;
+ }
 
 .ticket-content__wrapper {
   display: flex;
   justify-content: space-around;
+  border: 1px solid rgb(179, 179, 185);
+  border-radius: 20px;
+  min-width: 600px;
+  padding-top: 10px;
+  background-image: url(https://media.istockphoto.com/photos/commercial-jet-flying-over-clouds-picture-id155380716?k=20&m=155380716&s=612x612&w=0&h=MlVD8PFPPat21yCmZY4KBLLaV0koQrc_Sn-I2Ar5LoI=);
+
 }
 
 .ticket__sidecontent {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   min-height: 40px;
 }
 
 .ticket__maincontainer {
-  display: flex;
-  justify-content: space-around;
+  margin-left: 50px;
+  }
 
+.ticketet__departure {
+  margin-left: 20px;
+}
+
+h3 {
+  font-family:Arial, Helvetica, sans-serif;
+  color: azure;
 }
 
 
@@ -46,7 +60,7 @@
 	padding: 0 25px;
 	margin: 0 15px 15px 0;
 	outline: none;
-	border: 1px solid #fff;
+	border: none;
 	border-radius: 50px;
 	height: 46px;
 	line-height: 46px;
@@ -54,12 +68,9 @@
 	font-weight: 600;
 	text-decoration: none;
 	color: rgb(255, 255, 255);
-	background-color: rgb(255, 72, 0);
+	background-color: rgb(116, 239, 255);
 	cursor: pointer;
- 
-  
 }
-
 
 
 .example-form, .example-full-width {
