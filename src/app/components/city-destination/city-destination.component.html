@@ -9,8 +9,16 @@
             <mat-select>
               <div>
                 <mat-option *ngFor="let items of cities.value">
-                  {{items.origin}}-{{items.destination}}
-                  <span style="margin-left: 15px">starting at {{items.price}} usd </span>
+                  <div>
+                   <span>
+                     <span class="destination">{{items.origin}}</span>
+                     <mat-icon>trending_flat</mat-icon>
+                     <span>{{items.destination}}</span>
+                     <span class="price">starting at {{items.price}}
+                     <mat-icon>dollar</mat-icon>
+                     </span>
+                   </span>
+                  </div>
                 </mat-option>
               </div>
             </mat-select>
@@ -21,3 +29,14 @@
   </div>
 </div>
 
+
+<!--<div >-->
+<!--  <div class="calendar-modal-content-info-main-bottom">-->
+<!--                      <span class="bolded-text">-->
+<!--                        <mat-icon>flight_takeoff-->
+<!--                        </mat-icon>{{ items.destination }}</span>-->
+
+<!--    <span class="bolded-text">{{ items.destination }}-->
+<!--      <mat-icon>flight_land</mat-icon></span>-->
+<!--  </div>-->
+<!--</div>-->
