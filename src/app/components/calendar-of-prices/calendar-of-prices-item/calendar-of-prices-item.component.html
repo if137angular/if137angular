@@ -1,4 +1,4 @@
-<mat-card class="calendar-card" color="primary" (click)="toggleActive()">
+<mat-card class="calendar-card" (click)="toggleActive()">
   <mat-card-content class="calendar-card-content">
     <div class="calendar-card-content-found">
       Found at:
@@ -39,7 +39,7 @@
           >
         </p>
         <p>
-          Gate: <span class="bolded-text">{{ data.gate }}</span>
+          Gate: <span class="bolded-text">{{ data.gate || "KIWI.com" }}</span>
         </p>
         <p>
           Number o changes:
@@ -48,6 +48,12 @@
         <p>
           Trip class:
           <span class="bolded-text">{{ getFlightClass(data.trip_class) }}</span>
+        </p>
+        <p class="calendar-modal-content-sub-dates">
+          <span class="bolded-text">
+            {{ data.depart_date | date: "mediumDate" }} -
+            {{ data.return_date | date: "mediumDate" }}
+          </span>
         </p>
       </div>
       <div class="calendar-modal-content-info">
