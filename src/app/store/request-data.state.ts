@@ -8,6 +8,7 @@ import { FormDataModel } from '../models/formData.model';
 
 export interface RequestDataStateModel {
   countries: any[];
+  location: any[];
   cities: CitiesModel[];
   airports: any[];
   airlines: any[];
@@ -18,6 +19,7 @@ export interface RequestDataStateModel {
   name: 'RequestDataState',
   defaults: {
     countries: [],
+    location: [],
     cities: [],
     airports: [],
     airlines: [],
@@ -45,6 +47,11 @@ export class RequestDataState {
     return state.countries;
   }
 
+    @Selector()
+  static location(state: RequestDataStateModel): any[] {
+    return state.location;
+  }
+
   @Selector()
   static cities(state: RequestDataStateModel): any[] {
     return state.cities;
@@ -70,6 +77,15 @@ export class RequestDataState {
     return this.requestService.getCountriesData().pipe(
       tap((countries: any[]) => {
         patchState({ countries });
+      })
+    );
+  }
+
+   @Action(RequestDataActions.GetLocation)
+  GetLocationData({ patchState }: StateContext<RequestDataStateModel>) {
+    return this.requestService.getLocationData().pipe(
+      tap((location: any[]) => {
+        patchState({ location });
       })
     );
   }
