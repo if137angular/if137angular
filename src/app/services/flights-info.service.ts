@@ -47,7 +47,7 @@ export class FlightsInfoService {
     );
   }
 
-  requestGetNonStopTickets(city = 'KBP', destination = 'STN' ): Observable<any> {
+  requestGetNonStopTickets(city = '', destination = '' ): Observable<any> {
     const headerDict = {
       'x-access-token': '4df3f89d6861e092b8f5d30e3d49cde8',
     };
