@@ -19,14 +19,14 @@ export const routes: Routes = [
     component: SearchComponent,
     children: [
       {
-        path: 'calendar',
-        component: CalendarOfPricesComponent,
-        data: { tab: 'Calendar of prices' },
-      },
-      {
         path: 'special-offers',
         component: SpecialOffersComponent,
         data: { tab: 'Special Offers' },
+      },
+      {
+        path: 'calendar',
+        component: CalendarOfPricesComponent,
+        data: { tab: 'Calendar of prices' },
       },
       {
         path: 'non-stop-tickets',

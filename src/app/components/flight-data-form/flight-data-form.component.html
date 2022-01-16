@@ -3,8 +3,8 @@
   <app-autocomplete formControlName="destinationTo" label="To" [items]="cities"></app-autocomplete>
 
   <mat-form-field appearance="fill">
-    <mat-label>Enter a date range</mat-label>
-    <mat-date-range-input [rangePicker]="picker">
+    <mat-label>From / To date range</mat-label>
+    <mat-date-range-input [rangePicker]="picker" [min]="minDate">
       <input formControlName="startDate" matStartDate placeholder="Start date" />
       <input formControlName="endDate" matEndDate placeholder="End date" />
     </mat-date-range-input>
