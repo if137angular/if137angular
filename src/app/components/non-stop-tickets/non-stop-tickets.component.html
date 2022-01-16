@@ -2,52 +2,71 @@
   <h3 class="non-stop-title">Non Stop Tickets</h3>
   <div class="forms-non-stop">
     <form class="example-form">
-    <mat-form-field class="example-full-width">
-      <mat-label>Origin City</mat-label>
-      <input type="text"
-             aria-label="Origin City"
-             matInput
-             [matAutocomplete]="auto">       
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of originOptions" [value]="option.label"
-          (click)="onUpdateOrigin(option.key)">
-          {{option.label}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-  </form> 
+      <mat-form-field class="example-full-width">
+        <mat-label>From</mat-label>
+        <input
+          type="text"
+          aria-label="Origin City"
+          matInput
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option
+            *ngFor="let option of originOptions"
+            [value]="option.label"
+            (click)="onUpdateOrigin(option.key)"
+          >
+            {{ option.label }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
 
-  <form class="example-form">
-    <mat-form-field class="example-full-width">
-      <mat-label>Destination</mat-label>
-      <input type="text" 
-             aria-label="Destination"
-             matInput       
-             [matAutocomplete]="auto2">
-      <mat-autocomplete #auto2="matAutocomplete">
-        <mat-option 
-         *ngFor="let option of destinationOptions" [value]="option.label"
-         (click)="onUpdateDestination(option.key)">
-          {{option.label}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-  </form>
-  <button mat-raised-button color="primary" (click)="onSubmitFlights()">Go</button>
-</div>      
-  <div *ngIf="data">
-      <div *ngFor="let item of data.data | keyvalue">
-        <p>from {{cityOrigin}} to {{cityDest}}</p>  
-        <p>Airline is {{item.value['0'].airline}}</p>
-        <p>Flight number is {{item.value['0'].price}}</p>
-        <p>Departure date {{ item.value['0'].departure_at }}</p>
-        <p>Return date {{ item.value['0'].return_at }}</p>
-        <p>Price is {{ item.value['0'].price }} {{currency}}</p>
-      </div>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>To</mat-label>
+        <input
+          type="text"
+          aria-label="Destination"
+          matInput
+          [matAutocomplete]="auto2"
+        />
+        <mat-autocomplete #auto2="matAutocomplete">
+          <mat-option
+            *ngFor="let option of destinationOptions"
+            [value]="option.label"
+            (click)="onUpdateDestination(option.key)"
+          >
+            {{ option.label }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+    <button mat-raised-button color="primary" (click)="onSubmitFlights()">
+      Search
+    </button>
   </div>
 
+  <div class="non-stop-tickets-data" *ngIf="data">
+    <div
+      *ngFor="let item of data.data | keyvalue"
+      class="ticket-content__wrapper"
+    >
+      <div class="ticket__sidecontent">
+        <h3>Price is:{{ item.value["0"].price }} {{ currency }}</h3>
+        <button class="ticket-submit-btn">Add</button>
+      </div>
+
+      <div class="ticket__maincontainer">
+        <p>Airline is {{ item.value["0"].airline }}</p>
+        <p>Flight Number {{ item.value["0"].flight_number }} </p>
+        <div class="ticket__departure">
+          Departure date {{ item.value["0"].departure_at }}
+        </div>
+        <div class="ticket__return">
+          Return date {{ item.value["0"].return_at }}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-
-
