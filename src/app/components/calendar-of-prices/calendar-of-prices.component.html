@@ -1,4 +1,7 @@
-<div class="calendar-loading" *ngIf="calendarData.loading">
+<div
+  class="calendar-loading"
+  *ngIf="calendarData.loading && formData.destination && formData.destination"
+>
   <ngx-skeleton-loader
     [ngStyle]="{
       dispay: 'block'
@@ -13,6 +16,10 @@
     }"
     *ngFor="let n of loadingCardCount"
   ></ngx-skeleton-loader>
+</div>
+
+<div class="error" *ngIf="!formData.destination || !formData.origin">
+  <p>Plase choose origin or destination</p>
 </div>
 <div
   class="error"
