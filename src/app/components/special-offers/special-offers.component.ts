@@ -90,6 +90,7 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.unsubscribe$.next(null);
     this.unsubscribe$.complete();
   }
 }
