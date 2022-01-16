@@ -4,10 +4,8 @@
     </div>
     <div class="info__flight">
         <div class="info__flight-header">
-            <img class="info__flight-header-img" 
-                src="https://images.kiwi.com/airlines/64/{{flightInfo.airline}}.png"
-                alt="{{flightInfo.airline}}"
-            >
+            <img class="info__flight-header-img" src="https://images.kiwi.com/airlines/64/{{flightInfo.airline}}.png"
+                alt="{{flightInfo.airline}}">
             <p class="info__flight-header-duration">
                 Flight duration: {{myTime(flightInfo.duration)}}
             </p>
@@ -19,12 +17,11 @@
                 </h3>
                 <h3 class="info__date-info">
                     <span class="info__date-info-span">time:</span>
-                    <!-- {{flightInfo.departure_at | date: 'shortTime'}} -->
-                    {{flightInfo.departure_at}}
+                    {{flightInfo.departure_at | date: 'shortTime'}}
                 </h3>
                 <h3 class="info__date-info">
                     <span class="info__date-info-span">data:</span>
-                    <!-- {{flightInfo.departure_at | date}} -->
+                    {{flightInfo.departure_at | date}}
                     {{flightInfo.departure_at}}
                 </h3>
             </div>
@@ -33,18 +30,16 @@
                 <h3 class="info__date-city">
                     {{formData.destinationTo.name}} - {{formData.destinationFrom.name}}
                 </h3>
-                <h3 class="info__date-info"><span class="info__date-info-span">
-                    <!-- time:</span> {{flightInfo.return_at| date: 'shortTime'}} -->
-                    time:</span> {{flightInfo.return_at}}
+                <h3 class="info__date-info">
+                    <span class="info__date-info-span">
+                        time:
+                    </span> {{flightInfo.return_at}}
                 </h3>
                 <h3 class="info__date-info">
                     <span class="info__date-info-span">data:</span>
-                    <!-- {{flightInfo.return_at | date}} -->
-                    {{flightInfo.return_at}}
+                    {{flightInfo.return_at | date}}
                 </h3>
             </div>
         </div>
     </div>
 </div>
-
-

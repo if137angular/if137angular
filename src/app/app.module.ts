@@ -48,6 +48,7 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
 
 import { TicketItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/ticket-item.component';
 import { FlightItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/flight-item/flight-item.component';
+import { FlightTicketComponent } from './components/flight-tickets-for-special-dates/flight-ticket/flight-ticket.component';
 
 
 
@@ -70,7 +71,8 @@ import { CityDestinationComponent } from './components/city-destination/city-des
     TicketItemComponent,
     FlightItemComponent,
     AppComponent,
-    CityDestinationComponent
+    CityDestinationComponent,
+    FlightTicketComponent
   ],
   imports: [
     BrowserModule,

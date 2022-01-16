@@ -34,7 +34,7 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
     const direct: boolean = this.formData.transfers  === 'Directly';
 
     this.flightInfoService.getFlightTicketsForDate(codeFrom, codeTo, startDate, endDate, direct).subscribe(data => {
-       this.flightInfo = data.data
+      this.flightInfo = data.data
       console.log(data)
     })
   }
