@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FlightsInfoService} from 'src/app/services/flights-info.service';
-
+import {zip, of} from "rxjs";
+import {mergeMap, groupBy, reduce} from 'rxjs/operators';
 
 export type DestinationPopular = {
   origin: string;
@@ -29,33 +30,45 @@ export type GetDestinationPopular = {
 
 export class CityDestinationComponent implements OnInit {
 
-  isActive: boolean = false;
-
   selectByDestination() {
 
   }
 
-  toggleActive() {
-    this.isActive = !this.isActive;
-  }
-
   constructor(private flightInfoService: FlightsInfoService) {
   }
-  items:GetDestinationPopular[] = []
-  response: GetDestinationPopular[] = [];
+
+  items: GetDestinationPopular[] = []
+  response: Map<string, DestinationPopular[]> = new Map<string, DestinationPopular[]>();
+  cities: DestinationPopular[];
 
   ngOnInit(): void {
-    this.flightInfoService
-      .requestPopularDestination("IEV")
-      .subscribe((data => {
-        this.response = new Array<GetDestinationPopular>(data);
-        console.log(this.response);
-      }));
-    this.flightInfoService
-      .requestDestinationModel("LWO")
-      .subscribe((data => {
-        this.items = new Array<GetDestinationPopular>(data);
-        console.log(this.items);
-      }));
+    // const getPopularDestination$
+    zip(this.flightInfoService
+        .requestPopularDestination("IEV"),
+      this.flightInfoService
+        .requestPopularDestination("LWO"),
+      this.flightInfoService
+        .requestPopularDestination("DNK"),
+      this.flightInfoService
+        .requestPopularDestination("ODS"))
+      .subscribe(([data1, data2, data3, data4]) => {
+
+        this.cities = [...Object.values(data1.data), ...Object.values(data2.data), ...Object.values(data3.data), ...Object.values(data4.data),];
+        console.log(this.cities)
+        of(...this.cities).pipe(
+          groupBy(p => p.destination),
+          mergeMap((group$) => group$.pipe(reduce((acc: DestinationPopular[], cur) => [...acc, cur], [])))
+        )
+          .subscribe(items => {
+            if (items.length > 3) {
+              this.response.set(items[0].destination, items)
+            }
+          });
+
+        console.log(this.response)
+
+      })
   }
+
+
 }

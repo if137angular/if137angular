@@ -3,13 +3,15 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { tap } from 'rxjs/operators';
 import * as RequestDataActions from './request-data.action';
-import { CitiesModel } from "src/app/models/cities.model";
+import { CitiesModel } from 'src/app/models/cities.model';
+import { FormDataModel } from '../models/formData.model';
 
 export interface RequestDataStateModel {
   countries: any[];
   cities: CitiesModel[];
   airports: any[];
-  formData: any; // TODO: create model
+  airlines: any[];
+  formData: FormDataModel; // TODO: create model
 }
 
 @State<RequestDataStateModel>({
@@ -18,13 +20,25 @@ export interface RequestDataStateModel {
     countries: [],
     cities: [],
     airports: [],
-    formData: {}
+    airlines: [],
+    formData: {
+      destinationFrom: {
+        name: '',
+        code: '',
+      },
+      destinationTo: {
+        name: '',
+        code: '',
+      },
+      endDate: new Date(),
+      startDate: new Date(),
+      transfers: '',
+    },
   },
 })
 @Injectable()
 export class RequestDataState {
-  constructor(private requestService: RequestDataService) {
-  }
+  constructor(private requestService: RequestDataService) {}
 
   @Selector()
   static countries(state: RequestDataStateModel): any[] {
@@ -39,6 +53,11 @@ export class RequestDataState {
   @Selector()
   static airports(state: RequestDataStateModel): any[] {
     return state.airports;
+  }
+
+  @Selector()
+  static airlines(state: RequestDataStateModel): any[] {
+    return state.airlines;
   }
 
   @Selector()
@@ -73,11 +92,19 @@ export class RequestDataState {
     );
   }
 
+  @Action(RequestDataActions.GetAirports)
+  GetAirLinesData({ patchState }: StateContext<RequestDataStateModel>) {
+    return this.requestService.getAirlinesData().pipe(
+      tap((airlines: any[]) => {
+        patchState({ airlines });
+      })
+    );
+  }
   @Action(RequestDataActions.SetFormDate)
   SetFormData(
     { patchState }: StateContext<RequestDataStateModel>,
     { payload }: RequestDataActions.SetFormDate
   ) {
-    return patchState({ formData: payload })
+    return patchState({ formData: payload });
   }
 }

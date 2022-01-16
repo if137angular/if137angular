@@ -1,8 +1,26 @@
-<div class="calendar">
-  <mat-progress-spinner
-    *ngIf="calendarData.loading"
-    mode="indeterminate"
-  ></mat-progress-spinner>
+<div class="calendar-loading" *ngIf="calendarData.loading">
+  <ngx-skeleton-loader
+    [ngStyle]="{
+      dispay: 'block'
+    }"
+    count="1"
+    appearance="circle"
+    [theme]="{
+      'border-radius': '5px',
+      width: '100px',
+      height: '100px',
+      border: '1px solid white'
+    }"
+    *ngFor="let n of loadingCardCount"
+  ></ngx-skeleton-loader>
+</div>
+<div *ngIf="calendarData.data.length === 0 && !calendarData.loading">
+  There is no data :(
+</div>
+<div
+  class="calendar"
+  *ngIf="calendarData.data.length > 0 && !calendarData.loading"
+>
   <app-calendar-of-prices-item
     *ngFor="let data of calendarData.data"
     [data]="data"

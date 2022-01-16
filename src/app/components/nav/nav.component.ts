@@ -8,8 +8,8 @@ import { PlatformLocation } from '@angular/common';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent {
-  links: any = routes;
-  activeLink = this.pLocation.hash.slice(2);
+  links: any = routes?.[1].children;
+  activeLink = this.pLocation.hash.slice(1);
 
   constructor(private pLocation: PlatformLocation) {}
 }

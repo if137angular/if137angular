@@ -6,21 +6,25 @@ import {
   EventEmitter,
   forwardRef,
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { filter } from 'rxjs/operators';
-import { CitiesModel } from "src/app/models/cities.model";
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
+import { CitiesModel } from 'src/app/models/cities.model';
 
 @Component({
   selector: 'app-autocomplete',
   templateUrl: './autocomplete.component.html',
-  styleUrls: [ './autocomplete.component.scss' ],
-  providers: [ {
-    provide: NG_VALUE_ACCESSOR,
-    multi: true,
-    useExisting: forwardRef(() => AutocompleteComponent),
-  } ]
+  styleUrls: ['./autocomplete.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => AutocompleteComponent),
+    },
+  ],
 })
-
 export class AutocompleteComponent implements OnInit, ControlValueAccessor {
   @Input() items: CitiesModel[] = [];
   @Input() label: string = '';
@@ -34,12 +38,13 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit(): void {
     // Search filter
-    this.autoCompleteControl.valueChanges.pipe(
-      filter(Boolean)
-    ).subscribe((value: string) => {
-      this.filteredItems = this.items.filter((city: CitiesModel) =>
-        city.name.toLowerCase().startsWith(value.toLowerCase())
-      )
+    this.autoCompleteControl.valueChanges.subscribe((value: string) => {
+      this.filteredItems =
+        value !== ''
+          ? this.items.filter((city: CitiesModel) =>
+              city.name.toLowerCase().startsWith(value.toLowerCase())
+            )
+          : [];
     });
   }
 
@@ -52,13 +57,16 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(value: CitiesModel): void {
-    if (!value) { return; }
+    if (!value) {
+      return;
+    }
     this.autoCompleteControl.setValue(value.name);
   }
 
   optionSelected(): void {
-    this.selectedItem = this.autoCompleteControl.value;
-    this.onChange(this.selectedItem);
-    this.autoCompleteControl.setValue(this.selectedItem.name);
+    const matchedCity = this.items.find(
+      (item: CitiesModel) => item.name === this.autoCompleteControl.value
+    );
+    this.onChange(matchedCity);
   }
 }

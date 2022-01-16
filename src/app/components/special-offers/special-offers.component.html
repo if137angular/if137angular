@@ -2,45 +2,54 @@
   (selectedLanguageChange)="onSelectedLanguageChanged($event)"
   (selectedCurrencyChange)="onSelectedCurrencyChanged($event)"
 ></app-special-offers-select>
+<div class="card-group">
+  <div class="card" *ngFor="let item of (offers$ | async)?.data">
+    <div class="card__header">
+      <div class="card__title">{{ item.title }}</div>
+    </div>
+    <div class="card__body">
+      <div class="card__content">
+        <div class="card__logo">
+          <img
+            src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png"
+            alt="{{ item.airline_title }}"
+          />
+          <p class="card__airline">
+            {{ item.airline_title }} | {{ item.flight_number }}
+          </p>
+        </div>
 
-<div class="special-offers__wrapper">
-  <mat-card class="special-offers" *ngFor="let item of (offers$ | async)?.data">
-    <div
-      class="special-offers__header"
-      [ngStyle]="{
-        'background-color': item.color !== '' ? '#' + item.color : '#08578f'
-      }"
-    >
-      <h2 class="special-offers__mini-title">
-        {{ item.mini_title }}
-      </h2>
-    </div>
-
-    <div class="special-offers__content">
-      <div
-        class="special-offers__logo"
-        matTooltipPosition="right"
-        matTooltip="{{ item.airline_title }}"
-      >
-        <img
-          src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png"
-          alt="{{ item.airline_title }}"
-        />
+        <div class="card__departure">
+          <img
+            src="https://img.icons8.com/material-rounded/24/ffffff/airplane-take-off.png"
+          />
+          <p>{{ item.departure_at | date }}</p>
+        </div>
       </div>
-      <div class="special-offers__price-date">
-        <span class="special-offers__price"
-          >from <b>{{ getCurrency(item.price) }}</b></span
-        >
-        <span class="special-offers__departure">
-          &#x23F0; <b>{{ item.departure_at | date }}</b></span
-        >
+      <div class="card__action">
+        <div class="card__info">
+          <p class="card__price">{{ getCurrency(item.price) }}</p>
+          <div class="card__duration">
+            <span>&#x23F0;</span>
+            <p>{{ getHours(item.duration) }}</p>
+          </div>
+        </div>
+        <a (click)="gotToLink(item.link)"></a>
       </div>
     </div>
-    <p class="special-offers__text-title">{{ item.title }}</p>
-    <div class="special-offers__actions">
-      <button (click)="gotToLink(item.link)" mat-flat-button color="primary">
-        show details
-      </button>
+    <div class="card__footer">
+      <p class="card__airport">
+        {{ item.origin_airport }} - {{ item.destination_airport }},&nbsp;
+        {{ item.airline }}
+      </p>
+      <p class="card__name">
+        {{ item.origin_name === "" ? item.origin : item.origin_name }} -
+        {{
+          item.destination_name === ""
+            ? item.destination
+            : item.destination_name
+        }}
+      </p>
     </div>
-  </mat-card>
+  </div>
 </div>

@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { map } from 'rxjs';
-import { CalendarOfPricesStateModel } from 'src/app/models/calendar-of-prices.model';
-import { FetchCalendarOfPrices } from 'src/app/store/flight-info.action';
+import {
+  CalendarOfPricesModel,
+  CalendarOfPricesPayload,
+  CalendarOfPricesStateModel,
+} from 'src/app/models/calendar-of-prices.model';
+import { FormDataModel } from 'src/app/models/formData.model';
+import {
+  CalendarOfPricesLoaded,
+  CalendarOfPricesRequested,
+} from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { RequestDataState } from 'src/app/store/request-data.state';
-
-type FormDataDestinations = {
-  destination: string;
-  origin: string;
-};
 
 @Component({
   selector: 'app-calendar-of-prices',
@@ -17,24 +20,36 @@ type FormDataDestinations = {
   styleUrls: ['./calendar-of-prices.component.scss'],
 })
 export class CalendarOfPricesComponent implements OnInit {
-  constructor(private store: Store) {}
-
   calendarData: CalendarOfPricesStateModel;
-  formData: FormDataDestinations;
+  formData: CalendarOfPricesPayload;
+  loadingCardCount: number[];
+
+  constructor(private store: Store) {
+    this.loadingCardCount = Array(36).map((n) => n);
+  }
 
   ngOnInit(): void {
-    this.store.dispatch(new FetchCalendarOfPrices());
     this.store
       .select(FlightInfoState.calendarOfPrices)
       .subscribe((state) => (this.calendarData = state));
     this.store
       .select(RequestDataState.formData)
       .pipe(
-        map((state) => ({
-          destination: state.destinationFrom.name,
-          origin: state.destinationTo.name,
+        map((state: FormDataModel) => ({
+          origin: state.destinationFrom.name,
+          destination: state.destinationTo.name,
+          originCode: state.destinationFrom.code,
+          destinationCode: state.destinationTo.code,
+          return_date: state.endDate.toISOString().split('T')[0],
+          depart_date: state.startDate.toISOString().split('T')[0],
         }))
       )
-      .subscribe((data) => (this.formData = data));
+      .subscribe((data: CalendarOfPricesPayload) => {
+        this.store.dispatch([
+          new CalendarOfPricesRequested(),
+          new CalendarOfPricesLoaded(data),
+        ]);
+        this.formData = data;
+      });
   }
 }
