@@ -52,6 +52,7 @@ import { FlightTicketComponent } from 'src/app/components/flight-tickets-for-spe
 
 import { MainComponent } from './components/main/main.component';
 import { SearchComponent } from './components/search/search.component';
+import { FlightPriceTrendsComponent } from './components/flight-price-trends/flight-price-trends.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { SearchComponent } from './components/search/search.component';
     FlightTicketComponent,
     MainComponent,
     SearchComponent,
+    FlightPriceTrendsComponent,
   ],
   imports: [
     BrowserModule,
