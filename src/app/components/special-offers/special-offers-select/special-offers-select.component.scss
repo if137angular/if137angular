@@ -1,6 +1,9 @@
 .form {
-  max-width: 700px;
-  margin: 20px auto;
+  max-width: 500px;
   display: flex;
-  justify-content: space-around;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 35px auto 0 auto;
+  padding: 0 40px;
+  gap: 0 50px;
 }

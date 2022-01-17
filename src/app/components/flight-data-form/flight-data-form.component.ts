@@ -16,6 +16,7 @@ import { FormDataModel } from 'src/app/models/formData.model';
 export class FlightDataFormComponent implements OnInit {
   cities: CitiesModel[] = [];
   transfers: string = '';
+  minDate: Date = new Date();
 
   flightDataFormGroup: FormGroup = new FormGroup({
     startDate: new FormControl(),
@@ -38,7 +39,8 @@ export class FlightDataFormComponent implements OnInit {
     this.formData$.subscribe((formData: FormDataModel) => {
       this.flightDataFormGroup.patchValue({
         destinationFrom:
-          formData.destinationFrom.name === ''
+          formData.destinationFrom.name === '' &&
+          !this.router.url.startsWith('/search')
             ? {
                 code: 'LWO',
                 name: 'Lviv',
@@ -56,7 +58,7 @@ export class FlightDataFormComponent implements OnInit {
     this.store.dispatch(new SetFormDate(this.flightDataFormGroup.value));
 
     if (!this.router.url.startsWith('/search')) {
-      this.router.navigate(['/search']);
+      this.router.navigate(['/search/special-offers']);
     }
   }
 

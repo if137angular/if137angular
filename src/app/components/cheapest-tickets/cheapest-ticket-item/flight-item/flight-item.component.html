@@ -1,8 +1,8 @@
 <div class="flightItem">
   <div class="flightFrom">
-    <h2>{{flightDate.departureTime}}</h2>
-    <p>{{flightFrom}}</p>
-    <p>{{flightDate.departureDate}}</p>
+    <h2>{{departTime}}</h2>
+    <p>{{flightInfo.cityFrom.cityName}}</p>
+    <p>{{departDate}}</p>
   </div>
   <div class="flightAnimation">
     <div class="animationTop">
@@ -11,12 +11,12 @@
     </div>
     <div class="animationLine"></div>
     <div class="animationBottom">
-      <span>{{flightFrom}}</span>
-      <span>{{flightTo}}</span>
+      <span>{{flightInfo.cityFrom.cityCode}}</span>
+      <span>{{flightInfo.cityTo.cityCode}}</span>
     </div>
   </div>
   <div class="flightTo">
-    <h2>{{flightTo}}</h2>
+    <h2>{{flightInfo.cityTo.cityName}}</h2>
   </div>
 </div>
 

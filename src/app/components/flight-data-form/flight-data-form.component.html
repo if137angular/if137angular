@@ -2,9 +2,9 @@
   <app-autocomplete formControlName="destinationFrom" label="From" [items]="cities"></app-autocomplete>
   <app-autocomplete formControlName="destinationTo" label="To" [items]="cities"></app-autocomplete>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Enter a date range</mat-label>
-    <mat-date-range-input [rangePicker]="picker">
+  <mat-form-field appearance="fill">
+    <mat-label>From / To date range</mat-label>
+    <mat-date-range-input [rangePicker]="picker" [min]="minDate">
       <input formControlName="startDate" matStartDate placeholder="Start date" />
       <input formControlName="endDate" matEndDate placeholder="End date" />
     </mat-date-range-input>
@@ -15,10 +15,6 @@
   <app-transfers formControlName="transfers"></app-transfers>
 
   <div>
-    <button mat-flat-button type="button" color="warn" style="padding: 8px 64px; margin-top: 0.25em"
-      (click)="onSubmitForm()">SEARCH</button>
+    <button mat-flat-button type="button" color="warn" (click)="onSubmitForm()">SEARCH</button>
   </div>
-
-  <!-- <app-button text="SEARCH" color="warn" (btnClick)="onSubmitForm()"></app-button> -->
-  <!-- <app-button color="tomato" text="Clear" (btnClick)="onResetForm()"></app-button> -->
 </form>

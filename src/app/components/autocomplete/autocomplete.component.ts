@@ -28,6 +28,7 @@ import { CitiesModel } from 'src/app/models/cities.model';
 export class AutocompleteComponent implements OnInit, ControlValueAccessor {
   @Input() items: CitiesModel[] = [];
   @Input() label: string = '';
+  @Input() flightInfo: any;
 
   @Input() selectedItem: CitiesModel;
   @Output() selectedItemChange = new EventEmitter<string>();
@@ -45,6 +46,8 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
               city.name.toLowerCase().startsWith(value.toLowerCase())
             )
           : [];
+
+      if (!this.filteredItems.length) this.onChange({ name: '', code: '' });
     });
   }
 

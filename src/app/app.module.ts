@@ -9,7 +9,7 @@ import { NgxsModule } from '@ngxs/store';
 import { appState } from 'src/app/store/appState';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 
-//other
+// Other
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 // Angular Material
@@ -56,7 +56,11 @@ import { FlightTicketComponent } from 'src/app/components/flight-tickets-for-spe
 import { MainComponent } from './components/main/main.component';
 import { SearchComponent } from './components/search/search.component';
 import { FlightPriceTrendsComponent } from './components/flight-price-trends/flight-price-trends.component';
+<<<<<<< HEAD
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+=======
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
+>>>>>>> main
 
 @NgModule({
   declarations: [
@@ -80,6 +84,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MainComponent,
     SearchComponent,
     FlightPriceTrendsComponent,
+    ToolbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -107,12 +112,16 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatCardModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
-    NgxSkeletonLoaderModule,
+
     NgxsModule.forRoot(appState, {
       developmentMode: true,
     }),
     NgxsLoggerPluginModule.forRoot(),
+<<<<<<< HEAD
     FontAwesomeModule,
+=======
+    NgxSkeletonLoaderModule,
+>>>>>>> main
   ],
   providers: [
     RequestDataService,

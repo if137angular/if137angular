@@ -1,9 +1,10 @@
-.main{
+.main {
   position: fixed;
   bottom: 70px;
   width: 100%;
 }
-.container{
+
+.container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -16,14 +17,47 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+
+  &-label {
+    color: mediumpurple;
+  }
 }
 
-form{
+.option {
+  color: mediumpurple;
+}
+
+.price {
+  font-size: 11px;
+  float: right;
+  margin-right: 15px;
+}
+
+.destination {
+  margin-right: 5px;
+}
+
+.cities_info {
+  background-color: rgb(230, 230, 230);
+}
+
+form {
   flex: 1 0 21%;
   margin: 5px;
   height: 100px;
-  background-color: mediumpurple;
+  border-radius: 15px;
+  background-image: url(https://images.kiwi.com/photos/220x165/non-existing.jpg);
 }
-h1{
+
+h1 {
+  font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
   text-align: center;
+}
+
+span {
+  color: rgb(159, 106, 175);
+}
+
+img {
+  height: 40px;
 }

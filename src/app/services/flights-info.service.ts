@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import {
   CalendarOfPricesPayload,
   GetCalendarOfPricesRequestModel,
 } from '../models/calendar-of-prices.model';
 import { TicketsRequestParam } from '../models/cheapest-tickets.model';
 import { map } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 import { GetDestinationPopular } from '../components/city-destination/city-destination.component';
+
+
 
 @Injectable()
 export class FlightsInfoService {
@@ -46,13 +49,13 @@ export class FlightsInfoService {
     );
   }
   getSpecialOffers(
-    cityOrign: string,
+    cityOrigin: string,
     cityDestination: string,
     locale: string,
     currency: string
   ): Observable<any> {
     return this.http.get<any>(
-      `/aviasales/v3/get_special_offers?origin=${cityOrign}&destination=${cityDestination}&locale=${locale}&currency=${currency}&token=b482025a8bf39817b6b6f219686b4799`
+      `/aviasales/v3/get_special_offers?origin=${cityOrigin}&destination=${cityDestination}&locale=${locale}&currency=${currency}&token=b482025a8bf39817b6b6f219686b4799`
     );
   }
 
@@ -70,29 +73,29 @@ export class FlightsInfoService {
     );
   }
 
-  requestCheapestTickets(ticketsParam: TicketsRequestParam): Observable<any> {
+  requestCheapestTickets(ticketsParam: any): Observable<any> {
     const baseURL: string = '/v1/prices/cheap';
     const myToken: string = 'f29a4f3a27eb2f3ea190c91cd4e15fa5';
+    let myHeadersURL = new HttpHeaders().append('x-access-token', myToken);
 
     let myParamsURL = new HttpParams()
-      .append('origin', ticketsParam.origin)
-      .append('destination', ticketsParam.destination)
+      .append('origin', ticketsParam.originInfo.cityCode)
+      .append('destination', ticketsParam.destinationInfo.cityCode)
       .append('depart_date', ticketsParam.departDate)
       .append('return_date', ticketsParam.returnDate)
       .append('currency', ticketsParam.currency)
       .append('token', myToken);
 
-    let myHeadersURL = new HttpHeaders().append('x-access-token', myToken);
 
     return this.http
       .get(baseURL, { headers: myHeadersURL, params: myParamsURL })
       .pipe(
         map((response) => ({
           ...response,
-          origin: ticketsParam.origin,
-          destination: ticketsParam.destination,
+          originInfo: ticketsParam.originInfo,
+          destinationInfo: ticketsParam.destinationInfo,
         }))
-      );
+      )
   }
 
   getFlightPriceTrends(
@@ -114,6 +117,7 @@ export class FlightsInfoService {
     );
   }
 
+<<<<<<< HEAD
   getLocale(): Observable<any> {
     const headerDict = {
       'x-access-token': '8f399398f352163f2c3e4cb293d221e3',
@@ -126,6 +130,17 @@ export class FlightsInfoService {
       requestOptions
     );
   }
+=======
+  getIpAddress() {
+    return this.http
+      .get('https://api.ipify.org/?format=json');
+  };
+
+  getGEOLocation(ip: string) {
+    let url = "https://api.ipgeolocation.io/ipgeo?apiKey=a4503669913f4ef28711027d136d2d68&ip=" + ip;
+    return this.http.get(url);
+  };
+>>>>>>> main
 
   getFlightTicketsForDate(
     codeFrom: string,

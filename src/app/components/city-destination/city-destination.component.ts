@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FlightsInfoService} from 'src/app/services/flights-info.service';
 import {zip, of} from "rxjs";
 import {mergeMap, groupBy, reduce} from 'rxjs/operators';
+import {Store} from "@ngxs/store";
+import {CitiesModel} from "src/app/models/cities.model";
+import {RequestDataState} from "src/app/store/request-data.state";
 
 export type DestinationPopular = {
   origin: string;
@@ -29,12 +32,7 @@ export type GetDestinationPopular = {
 })
 
 export class CityDestinationComponent implements OnInit {
-
-  selectByDestination() {
-
-  }
-
-  constructor(private flightInfoService: FlightsInfoService) {
+  constructor(private flightInfoService: FlightsInfoService, private store: Store) {
   }
 
   items: GetDestinationPopular[] = []
@@ -54,7 +52,6 @@ export class CityDestinationComponent implements OnInit {
       .subscribe(([data1, data2, data3, data4]) => {
 
         this.cities = [...Object.values(data1.data), ...Object.values(data2.data), ...Object.values(data3.data), ...Object.values(data4.data),];
-        console.log(this.cities)
         of(...this.cities).pipe(
           groupBy(p => p.destination),
           mergeMap((group$) => group$.pipe(reduce((acc: DestinationPopular[], cur) => [...acc, cur], [])))
@@ -64,11 +61,11 @@ export class CityDestinationComponent implements OnInit {
               this.response.set(items[0].destination, items)
             }
           });
-
-        console.log(this.response)
-
       })
   }
 
-
+  getCityNameByKey(cityKey: string): string {
+    const matchedCity = this.store.selectSnapshot(RequestDataState.cities).find((city: CitiesModel) => city.code === cityKey);
+    return matchedCity ? matchedCity.name : ''
+  }
 }
