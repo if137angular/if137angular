@@ -5,6 +5,9 @@ import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { FormDataModel } from 'src/app/models/formData.model';
+import { faPlane, faPlaneDeparture, faPlaneArrival, faHryvnia, faMapMarker, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+
+
 
 @Component({
   selector: 'app-non-stop-tickets',
@@ -18,8 +21,12 @@ export class NonStopTicketsComponent implements OnInit {
   cityArrival: string;
   div: boolean = false;
   btnName: string = 'Open';
-  
-  
+  faPlane = faPlane;
+  faDeparture = faPlaneDeparture;
+  faArrival = faPlaneArrival;
+  faHryvnia = faHryvnia;
+  faMap = faMapMarker;
+  faMapAlt = faMapMarkerAlt;
 
   @Select(RequestDataState.formData) formData$: Observable<FormDataModel>;
 
@@ -34,7 +41,6 @@ export class NonStopTicketsComponent implements OnInit {
         )
         .subscribe((response) => {
           this.data = response;
-          console.log(this.data);
           this.cityOrigin = formData.destinationFrom.name;
           this.cityArrival = formData.destinationTo.name;
         });
