@@ -56,6 +56,7 @@ import { FlightTicketComponent } from 'src/app/components/flight-tickets-for-spe
 import { MainComponent } from './components/main/main.component';
 import { SearchComponent } from './components/search/search.component';
 import { FlightPriceTrendsComponent } from './components/flight-price-trends/flight-price-trends.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { FlightPriceTrendsComponent } from './components/flight-price-trends/fli
       developmentMode: true,
     }),
     NgxsLoggerPluginModule.forRoot(),
+    FontAwesomeModule,
   ],
   providers: [
     RequestDataService,

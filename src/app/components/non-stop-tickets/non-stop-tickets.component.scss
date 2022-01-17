@@ -30,8 +30,8 @@
   border-radius: 20px;
   min-width: 600px;
   padding-top: 10px;
-  background-image: url(https://media.istockphoto.com/photos/commercial-jet-flying-over-clouds-picture-id155380716?k=20&m=155380716&s=612x612&w=0&h=MlVD8PFPPat21yCmZY4KBLLaV0koQrc_Sn-I2Ar5LoI=);
-
+  background-image: url(https://addons-media.operacdn.com/media/CACHE/images/themes/05/144705/1.0-rev1/images/0993404e-79e0-4052-923d-89236e7c102f/ce42ef837a89c852c000eafd63cd0763.jpg);
+  // background-color: rgb(243, 236, 245);
 }
 
 .ticket__sidecontent {
@@ -51,8 +51,17 @@
 
 h3 {
   font-family:Arial, Helvetica, sans-serif;
+  font-size: large;
+  font-weight: 500;
   color: azure;
 }
+
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 30px;
+  color: azure;
+}
+
 
 
 .ticket-submit-btn {
@@ -68,7 +77,7 @@ h3 {
 	font-weight: 600;
 	text-decoration: none;
 	color: rgb(255, 255, 255);
-	background-color: rgb(116, 239, 255);
+	background-color: rgb(78, 4, 112);
 	cursor: pointer;
 }
 
@@ -86,3 +95,10 @@ h3 {
   height: 40px;
 
 }
+
+.btn-toggle {
+  margin-left: 40%;
+  margin-right: 40%;
+  border-radius: 10px;
+}
+
