@@ -22,6 +22,10 @@ export class AppComponent implements OnInit {
     this.visitorsService.getIpAddress().subscribe(res => {
 
       this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
+
+        const stringifiedData = JSON.stringify(res);
+        const response = JSON.parse(stringifiedData);
+        console.log(response.city);
       });
     });
   }
