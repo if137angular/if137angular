@@ -66,28 +66,21 @@
 
    &-rightSide{
        margin: 10px;
+       width: 100%;
 
        &-img{
-        position: relative;
-
-        &-departure{
-            position: absolute;
-            font-size: 10px;
-            left: 20%;
-            bottom: 10px;
-        }
-        &-arrive{
-            position: absolute;
-            font-size: 10px;
-            left: 57%;
-            bottom: 10px;
-        }
+        width: 52%;
+        display: flex;
+        justify-content: space-between;
+        margin-top: -10px;
+        margin-left: 20%;
+        font-size: 12px;
     }
    }
 }
 .plane-img{
-    width: 50%;
-    height: 10%;
+    width: 60%;
+    height: 30%;
     margin-left: 50px;
 }
 .card-modal{
