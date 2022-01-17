@@ -117,7 +117,6 @@ export class FlightsInfoService {
     );
   }
 
-<<<<<<< HEAD
   getLocale(): Observable<any> {
     const headerDict = {
       'x-access-token': '8f399398f352163f2c3e4cb293d221e3',
@@ -130,7 +129,6 @@ export class FlightsInfoService {
       requestOptions
     );
   }
-=======
   getIpAddress() {
     return this.http
       .get('https://api.ipify.org/?format=json');
@@ -140,7 +138,6 @@ export class FlightsInfoService {
     let url = "https://api.ipgeolocation.io/ipgeo?apiKey=a4503669913f4ef28711027d136d2d68&ip=" + ip;
     return this.http.get(url);
   };
->>>>>>> main
 
   getFlightTicketsForDate(
     codeFrom: string,
