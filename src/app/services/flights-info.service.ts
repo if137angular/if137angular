@@ -59,7 +59,7 @@ export class FlightsInfoService {
     );
   }
 
-  requestGetNonStopTickets(): Observable<any> {
+  requestGetNonStopTickets(city: string, destination: string): Observable<any> {
     const headerDict = {
       'x-access-token': '4df3f89d6861e092b8f5d30e3d49cde8',
     };
@@ -68,7 +68,7 @@ export class FlightsInfoService {
       headers: new HttpHeaders(headerDict),
     };
     return this.http.get(
-      '/v1/prices/direct?origin=MOW&destination=LED&token=4df3f89d6861e092b8f5d30e3d49cde8',
+      `/v1/prices/direct?origin=${city}&destination=${destination}&token=4df3f89d6861e092b8f5d30e3d49cde8`,
       requestOptions
     );
   }
@@ -98,7 +98,13 @@ export class FlightsInfoService {
       )
   }
 
-  getFlightPriceTrends(origin: string, destination: string, departDate: string, returnDate: string, currency: string): Observable<any> {
+  getFlightPriceTrends(
+    origin: string,
+    destination: string,
+    departDate: string,
+    returnDate: string,
+    currency: string
+  ): Observable<any> {
     const headerDict = {
       'x-access-token': '14bd9a873621d433eb0d10b3a2a7cceb',
     };
@@ -111,15 +117,39 @@ export class FlightsInfoService {
     );
   }
 
+  getLocale(): Observable<any> {
+    const headerDict = {
+      'x-access-token': '8f399398f352163f2c3e4cb293d221e3',
+    };
+    const requestOptions = {
+      headers: new HttpHeaders(headerDict),
+    };
+    return this.http.get(
+      '/whereami?locale=uk&ip=194.44.160.160',
+      requestOptions
+    );
+  }
   getIpAddress() {
     return this.http
-      .get('https://api.ipify.org/?format=json');
+      .get('https://api.ipify.org/?format=json').pipe(catchError(this.handleError));
   };
 
   getGEOLocation(ip: string) {
     let url = "https://api.ipgeolocation.io/ipgeo?apiKey=a4503669913f4ef28711027d136d2d68&ip=" + ip;
-    return this.http.get(url);
+    return this.http.get(url).pipe(catchError(this.handleError));
   };
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      console.error('An error occurred:', error.error.message);
+    } else {
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    };
+    return throwError(
+      'Something bad happened; please try again later.');
+  }
 
   getFlightTicketsForDate(
     codeFrom: string,

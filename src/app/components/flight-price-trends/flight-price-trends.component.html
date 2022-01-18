@@ -25,17 +25,16 @@
                         </div>
                     </div>
                     <div class="flights-card-rightSide">
-                        <div class="flights-card-rightSide-time">{{ item.departure_at | date : "medium"}}</div>
+                        <div class="flights-card-rightSide-time">{{ item.departure_at | date : "medium"}}</div><img class="plane-img" src="https://www.flyswoop.com/images/icon-route.png" alt="plane"
+												mat-card-img>
                         <div class="flights-card-rightSide-img">
-                            <img class="plane-img" src="https://www.flyswoop.com/images/icon-route.png" alt="plane"
-                                mat-card-img>
                             <span class="flights-card-rightSide-img-departure">{{item.origin}}</span>
                             <span class="flights-card-rightSide-img-arrive">{{item.destination}}</span>
                         </div>
                         <div class="flights-card-rightSide-time">{{item.return_at | date : "medium"}}</div>
+												<img class="plane-img" src="https://www.flyswoop.com/images/icon-route.png" alt="plane"
+												mat-card-img>
                         <div class="flights-card-rightSide-img">
-                            <img class="plane-img" src="https://www.flyswoop.com/images/icon-route.png" alt="plane"
-                                mat-card-img>
                             <span class="flights-card-rightSide-img-departure">{{item.destination}}</span>
                             <span class="flights-card-rightSide-img-arrive">{{item.origin}}</span>
                         </div>

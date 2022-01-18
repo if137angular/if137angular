@@ -56,6 +56,7 @@ import { FlightTicketComponent } from 'src/app/components/flight-tickets-for-spe
 import { MainComponent } from './components/main/main.component';
 import { SearchComponent } from './components/search/search.component';
 import { FlightPriceTrendsComponent } from './components/flight-price-trends/flight-price-trends.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 @NgModule({
@@ -113,6 +114,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
       developmentMode: true,
     }),
     NgxsLoggerPluginModule.forRoot(),
+    FontAwesomeModule,
     NgxSkeletonLoaderModule,
   ],
   providers: [
