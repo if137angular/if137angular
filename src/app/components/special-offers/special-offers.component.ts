@@ -15,7 +15,7 @@ import { Subject } from 'rxjs';
 })
 export class SpecialOffersComponent implements OnInit, OnDestroy {
   @Select(RequestDataState.formData)
-  formData$: Observable<any>;
+  formData$: Observable<FormDataModel>;
 
   @Select(FlightInfoState.specialOffers)
   offers$: Observable<any>;
@@ -84,11 +84,9 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
         ? formData.destinationTo.code
         : '',
       language: this.language,
-
       currency: this.currency,
     };
     this.store.dispatch(new GetSpecialOffers(payload));
-
   }
 
   ngOnDestroy() {
