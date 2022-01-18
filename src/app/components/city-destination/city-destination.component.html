@@ -1,21 +1,23 @@
 <div class="main">
-  <h1>Popular Destination</h1>
+  <h1>
+    <img src="https://pngimg.com/uploads/plane/plane_PNG101262.png" alt="logo-plane">
+    Popular Destination</h1>
   <div class="container">
     <div class="city-destination">
       <div *ngFor="let cities of response | keyvalue">
         <form>
           <mat-form-field appearance="fill">
-            <mat-label>To: {{getCityNameByKey(cities.key)}}</mat-label>
+            <mat-label class="city-destination-label">{{getCityNameByKey(cities.key)}}</mat-label>
             <mat-select>
-              <div>
+              <div class="cities_info">
                 <mat-option *ngFor="let items of cities.value">
                   <div>
                    <span>
                      <span class="destination">{{getCityNameByKey(items.origin)}}</span>
                      <mat-icon>trending_flat</mat-icon>
                      <span>{{getCityNameByKey(items.destination)}}</span>
-                     <span class="price">starting at {{items.price}}
-                     <mat-icon>dollar</mat-icon>
+                     <span class="price"> starting at
+                       <b>{{items.price}}$</b>
                      </span>
                    </span>
                   </div>
@@ -28,15 +30,3 @@
     </div>
   </div>
 </div>
-
-
-<!--<div >-->
-<!--  <div class="calendar-modal-content-info-main-bottom">-->
-<!--                      <span class="bolded-text">-->
-<!--                        <mat-icon>flight_takeoff-->
-<!--                        </mat-icon>{{ items.destination }}</span>-->
-
-<!--    <span class="bolded-text">{{ items.destination }}-->
-<!--      <mat-icon>flight_land</mat-icon></span>-->
-<!--  </div>-->
-<!--</div>-->
