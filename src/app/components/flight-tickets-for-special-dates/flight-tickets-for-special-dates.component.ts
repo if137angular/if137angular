@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { FlightInfo } from 'src/app/models/flight-tickets-for-date.model';
-import { Observable } from 'rxjs';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit, OnDestroy 
   formData: any;
   flightInfo: FlightInfo[] = [];
 
-  constructor(private flightInfoService: FlightsInfoService, private store: Store) { }
+  constructor(private flightInfoService: FlightsInfoService) { }
 
   ngOnInit(): void {
     this.formData = this.formData$.subscribe(formData => {
@@ -30,9 +30,10 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit, OnDestroy 
       const endDate: string = formData.endDate.toISOString().slice(0, 10);
       const direct: boolean = formData.transfers  === 'Directly';
       
-      this.flightInfoService.getFlightTicketsForDate(codeFrom, codeTo, startDate, endDate, direct).subscribe((data: any) => {
+      this.flightInfoService.getFlightTicketsForDate(codeFrom, codeTo, startDate, endDate, direct)
+        .subscribe((data: any) => {
         this.flightInfo = data.data
-      })
+        })
     });
   }
 
