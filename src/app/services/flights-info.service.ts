@@ -14,7 +14,7 @@ import { GetDestinationPopular } from '../components/city-destination/city-desti
 
 @Injectable()
 export class FlightsInfoService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   exampleRequestGetChipTickets(): Observable<any> {
     const headerDict = {
@@ -131,13 +131,25 @@ export class FlightsInfoService {
   }
   getIpAddress() {
     return this.http
-      .get('https://api.ipify.org/?format=json');
+      .get('https://api.ipify.org/?format=json').pipe(catchError(this.handleError));
   };
 
   getGEOLocation(ip: string) {
     let url = "https://api.ipgeolocation.io/ipgeo?apiKey=a4503669913f4ef28711027d136d2d68&ip=" + ip;
-    return this.http.get(url);
+    return this.http.get(url).pipe(catchError(this.handleError));
   };
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      console.error('An error occurred:', error.error.message);
+    } else {
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    };
+    return throwError(
+      'Something bad happened; please try again later.');
+  }
 
   getFlightTicketsForDate(
     codeFrom: string,
