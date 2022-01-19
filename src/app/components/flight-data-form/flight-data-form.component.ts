@@ -7,6 +7,7 @@ import { RequestDataState } from 'src/app/store/request-data.state';
 import { CitiesModel } from 'src/app/models/cities.model';
 import { SetFormDate } from 'src/app/store/request-data.action';
 import { FormDataModel } from 'src/app/models/formData.model';
+import { GetLocationModel } from 'src/app/models/GetLocation.model';
 
 @Component({
   selector: 'app-flight-data-form',
@@ -15,6 +16,7 @@ import { FormDataModel } from 'src/app/models/formData.model';
 })
 export class FlightDataFormComponent implements OnInit {
   cities: CitiesModel[] = [];
+  location: any;
   transfers: string = '';
   minDate: Date = new Date();
 
@@ -27,11 +29,16 @@ export class FlightDataFormComponent implements OnInit {
   });
 
   @Select(RequestDataState.cities) cities$: Observable<CitiesModel[]>;
+  @Select(RequestDataState.location) location$: Observable<GetLocationModel[]>;
   @Select(RequestDataState.formData) formData$: Observable<FormDataModel>;
 
   constructor(private store: Store, private router: Router) {}
 
   ngOnInit(): void {
+    this.location$.subscribe((location: GetLocationModel[]) => {
+      this.location = location;
+    });
+
     this.cities$.subscribe((cities: CitiesModel[]) => {
       this.cities = cities;
     });
