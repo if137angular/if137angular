@@ -6,6 +6,8 @@ import * as locationData from '../../assets/location.json';
 import * as citiesData from '../../assets/cities.json';
 import * as airportsData from '../../assets/airports.json';
 import * as airlinesData from '../../assets/airlines.json';
+import * as currenciesData from '../../assets/currencies.json';
+import * as languagesData from '../../assets/languages.json';
 
 
 @Injectable()
@@ -27,6 +29,14 @@ export class RequestDataService {
 
   getAirportsData(): Observable<any> {
     return of(airportsData)
+  }
+
+  getCurrenciesData(): Observable<any> {
+    return of(currenciesData)
+  }
+
+  getLanguagesData(): Observable<any> {
+    return of(languagesData)
   }
 
   getAirlinesData(): Observable<any> {
