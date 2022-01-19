@@ -31,7 +31,7 @@ import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { GetSpecialOffers } from 'src/app/store/flight-info.action';
 
-fdescribe('SpecialOffersComponent', () => {
+describe('SpecialOffersComponent', () => {
   let component: SpecialOffersComponent;
   let fixture: ComponentFixture<SpecialOffersComponent>;
   let debugElement: DebugElement;
