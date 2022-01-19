@@ -136,7 +136,7 @@ export class RequestDataState {
 
   @Action(RequestDataActions.GetLanguages)
   GetLanguagesData({ patchState }: StateContext<RequestDataStateModel>) {
-    return this.requestService.getCurrenciesData().pipe(
+    return this.requestService.getLanguagesData().pipe(
       tap((languages: any[]) => {
         patchState({ languages });
       })

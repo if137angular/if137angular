@@ -32,11 +32,11 @@ export class RequestDataService {
   }
 
   getCurrenciesData(): Observable<any> {
-    return of(currenciesData)
+    return of(Array.from(currenciesData))
   }
 
   getLanguagesData(): Observable<any> {
-    return of(languagesData)
+    return of(Array.from(languagesData))
   }
 
   getAirlinesData(): Observable<any> {

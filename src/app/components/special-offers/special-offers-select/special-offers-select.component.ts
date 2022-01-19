@@ -11,7 +11,7 @@ import { GetCurrencies, GetLanguages } from 'src/app/store/request-data.action';
   templateUrl: './special-offers-select.component.html',
   styleUrls: ['./special-offers-select.component.scss']
 })
-export class SpecialOffersSelectComponent implements OnChanges {
+export class SpecialOffersSelectComponent implements OnChanges, OnInit {
   @Input() selectedLanguage: string = '';
   @Output() selectedLanguageChange = new EventEmitter<string>();
   languageControl: FormControl = new FormControl('');
@@ -181,30 +181,35 @@ export class SpecialOffersSelectComponent implements OnChanges {
       language: this.languageControl,
       currency: this.currencyControl
     });
+
   }
 
+  ngOnInit(): void {
+    // this.getSelect();
+
+    this.languages$.subscribe((res: any) => {
+      this.languages = res;
+      console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTT", this.languages$)
+    });
+
+  }
 
   ngOnChanges(): void {
-
-    this.getSelect();
-
-
     this.languageControl.setValue(this.selectedLanguage);
     this.currencyControl.setValue(this.selectedCurrency);
   }
 
-  getSelect(): void {
-    this.store.dispatch(new GetCurrencies());
-    this.languages$.subscribe((languages: SpecialOffersSelectModel[]) => {
-      this.languages = languages;
-    });
+  // getSelect(): void {
+  //   this.store.dispatch(new GetCurrencies());
+  //   this.languages$.subscribe((languages: SpecialOffersSelectModel[]) => {
+  //     this.languages = languages;
+  //   });
 
-    this.store.dispatch(new GetLanguages());
-    this.currencies$.subscribe((currencies: SpecialOffersSelectModel[]) => {
-      this.currencies = currencies;
-    });
-
-  }
+  //   this.store.dispatch(new GetLanguages());
+  //   this.currencies$.subscribe((currencies: SpecialOffersSelectModel[]) => {
+  //     this.currencies = currencies;
+  //   });
+  // }
 
   languageSelected(): void {
 
