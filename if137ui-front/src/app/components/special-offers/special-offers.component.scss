@@ -54,6 +54,8 @@ h3 {
   }
 
   &__title {
+    padding: 0 10px;
+    text-align: center;
     font-size: 18px;
   }
   &__body {
@@ -64,9 +66,6 @@ h3 {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-    p {
-      text-align: center;
-    }
 
     img {
       display: block;

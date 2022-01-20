@@ -39,11 +39,6 @@ export const routes: Routes = [
         data: { tab: 'Cheapest Tickets' },
       },
       {
-        path: 'app-city-destination',
-        component: CityDestinationComponent,
-        data: { tab: 'Popular destination' },
-      },
-      {
         path: 'flight-tickets',
         component: FlightTicketsForSpecialDatesComponent,
         data: { tab: 'Tickets' },
