@@ -32,7 +32,7 @@ export class FlightDataFormComponent implements OnInit {
   @Select(RequestDataState.location) location$: Observable<GetLocationModel[]>;
   @Select(RequestDataState.formData) formData$: Observable<FormDataModel>;
 
-  constructor(private store: Store, private router: Router) {}
+  constructor(private store: Store, private router: Router) { }
 
   ngOnInit(): void {
     this.location$.subscribe((location: GetLocationModel[]) => {
@@ -47,11 +47,11 @@ export class FlightDataFormComponent implements OnInit {
       this.flightDataFormGroup.patchValue({
         destinationFrom:
           formData.destinationFrom.name === '' &&
-          !this.router.url.startsWith('/search')
+            !this.router.url.startsWith('/search')
             ? {
-                code: 'LWO',
-                name: 'Lviv',
-              }
+              code: 'LWO',
+              name: 'Lviv',
+            }
             : formData.destinationFrom,
         destinationTo: formData.destinationTo,
         startDate: formData.startDate,
