@@ -27,6 +27,18 @@ export class GetAirlines {
   }
 }
 
+export class GetCurrencies {
+  static readonly type = '[Request] Get All Currencies Data';
+  constructor(public payload: any = null) {
+  }
+}
+
+export class GetLanguages {
+  static readonly type = '[Request] Get All Languages Data';
+  constructor(public payload: any = null) {
+  }
+}
+
 export class SetFormDate {
   static readonly type = '[Request] Set Form Data';
   constructor(public payload: any) { }
@@ -36,4 +48,6 @@ export type RequestDataActions =
   GetCountries |
   GetCities |
   GetAirports |
-  GetAirlines;
+  GetAirlines |
+  GetCurrencies |
+  GetLanguages;
