@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -37,7 +36,9 @@ export class NonStopTicketsComponent implements OnInit {
       this.flightsInfoService
         .requestGetNonStopTickets(
           formData.destinationFrom.code,
-          formData.destinationTo.code
+          formData.destinationTo.code,
+          formData.startDate.toISOString().slice(0,7),
+          formData.endDate.toISOString().slice(0,7)
         )
         .subscribe((response) => {
           this.data = response;
