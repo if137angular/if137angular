@@ -16,6 +16,12 @@ app.use(express.json());
 
 app.use("/api/favorites", favoritesRouter);
 
+app.get("/", (req, res) => {
+  res
+    .status(200)
+    .json("OK! Visit http://localhost:4300/api-docs for more info");
+});
+
 app.use("/", routes);
 
 app.get("/", (req, res) => {
