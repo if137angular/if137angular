@@ -1,15 +1,19 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", async (req, res, next) => {
+router.get("/favorites", async (req, res, next) => {
   res.json({ message: "get all items" });
 });
 
-router.post("/", async (req, res, next) => {
-  res.json({ message: "item add" });
+router.get("/favorites/:favoritesId", async (req, res, next) => {
+  res.json({ message: "get item" });
 });
 
-router.delete("/:favoritesId", async (req, res, next) => {
+router.post("/favorites", async (req, res, next) => {
+  res.json({ message: "item added" });
+});
+
+router.delete("/favorites/:favoritesId", async (req, res, next) => {
   res.json({ message: "item removed" });
 });
 
