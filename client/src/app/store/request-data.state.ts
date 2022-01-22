@@ -6,6 +6,7 @@ import * as RequestDataActions from './request-data.action';
 import { CitiesModel } from 'src/app/models/cities.model';
 import { FormDataModel } from '../models/formData.model';
 import { SpecialOffersSelectModel } from './../models/special-offers.model';
+import { IpFullModel } from '../models/ip.model';
 
 export interface RequestDataStateModel {
   countries: any[];
@@ -13,9 +14,10 @@ export interface RequestDataStateModel {
   cities: CitiesModel[];
   airports: any[];
   airlines: any[];
-  currencies: any[],
-  languages: any[],
-  formData: FormDataModel; // TODO: create model
+  currencies: any[];
+  languages: any[];
+  formData: FormDataModel;
+  userData: IpFullModel;
 }
 
 @State<RequestDataStateModel>({
@@ -41,11 +43,48 @@ export interface RequestDataStateModel {
       startDate: new Date(),
       transfers: '',
     },
+    userData: {
+      calling_code: '',
+      city: '',
+      connection_type: '',
+      continent_code: '',
+      continent_name: '',
+      country_capital: '',
+      country_code2: '',
+      country_code3: '',
+      country_flag: '',
+      country_name: '',
+      country_tld: '',
+      currency: {
+        code: '',
+        name: '',
+        symbol: '',
+      },
+      district: '',
+      geoname_id: '',
+      ip: '',
+      is_eu: false,
+      isp: '',
+      languages: '',
+      latitude: '',
+      longitude: '',
+      organization: '',
+      state_prov: '',
+      time_zone: {
+        current_time: '',
+        current_time_unix: 0,
+        dst_savings: 0,
+        is_dst: false,
+        name: '',
+        offset: 0,
+      },
+      zipcode: '',
+    },
   },
 })
 @Injectable()
 export class RequestDataState {
-  constructor(private requestService: RequestDataService) { }
+  constructor(private requestService: RequestDataService) {}
 
   @Selector()
   static countries(state: RequestDataStateModel): any[] {
@@ -85,6 +124,11 @@ export class RequestDataState {
   @Selector()
   static formData(state: RequestDataStateModel): any {
     return state.formData;
+  }
+
+  @Selector()
+  static userData(state: RequestDataStateModel): any {
+    return state.userData;
   }
 
   @Action(RequestDataActions.GetCountries)
@@ -156,5 +200,13 @@ export class RequestDataState {
     { payload }: RequestDataActions.SetFormDate
   ) {
     return patchState({ formData: payload });
+  }
+
+  @Action(RequestDataActions.SetUserData)
+  SetUserData(
+    { patchState }: StateContext<RequestDataStateModel>,
+    { payload }: RequestDataActions.SetUserData
+  ) {
+    return patchState({ userData: payload });
   }
 }
