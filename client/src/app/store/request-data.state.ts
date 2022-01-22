@@ -140,15 +140,6 @@ export class RequestDataState {
     );
   }
 
-  @Action(RequestDataActions.GetLocation)
-  GetLocationData({ patchState }: StateContext<RequestDataStateModel>) {
-    return this.requestService.getLocationData().pipe(
-      tap((location: any[]) => {
-        patchState({ location });
-      })
-    );
-  }
-
   @Action(RequestDataActions.GetCities)
   GetCitiesData({ patchState }: StateContext<RequestDataStateModel>) {
     return this.requestService.getCitiesData().pipe(
