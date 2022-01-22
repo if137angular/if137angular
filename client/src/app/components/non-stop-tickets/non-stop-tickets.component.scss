@@ -8,6 +8,10 @@
   min-height: 60px;
   border-radius: 5px;
   text-align: center;
+
+  @media screen and(min-width: 980px) {
+    min-width: 980px;
+  }
 }
 
 .forms-non-stop {
@@ -15,20 +19,24 @@
   justify-content: space-around;
 }
 
-.non-stop-tickets-data {
-  padding: 10px;
-}
-
 .ticket-content__wrapper {
   display: flex;
   justify-content: space-around;
+  box-sizing: border-box;
   border: 1px solid rgb(179, 179, 185);
   border-radius: 20px;
   margin: 10px;
   padding: 10px;
+  max-width: 540px;
   background-image: url(https://addons-media.operacdn.com/media/CACHE/images/themes/05/144705/1.0-rev1/images/0993404e-79e0-4052-923d-89236e7c102f/ce42ef837a89c852c000eafd63cd0763.jpg);
   // background-color: rgb(243, 236, 245);
   background-size: cover;
+
+  @media screen and(min-width: 980px) {
+    display: inline-flex;
+
+    width: 470px;
+  }
 }
 
 .ticket__sidecontent {
