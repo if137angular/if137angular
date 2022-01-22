@@ -1,11 +1,6 @@
 <div
   class="calendar-loading"
-  *ngIf="
-    calendarData &&
-    calendarData.loading &&
-    formData.destination &&
-    formData.destination
-  "
+  *ngIf="calendarData.length === 0 && formData.origin && formData.destination"
 >
   <ngx-skeleton-loader
     [ngStyle]="{
@@ -22,25 +17,14 @@
     *ngFor="let n of loadingCardCount"
   ></ngx-skeleton-loader>
 </div>
-
 <div class="error" *ngIf="!formData.origin || !formData.destination">
   <p>Please choose origin and destination</p>
 </div>
-<div
-  class="error"
-  *ngIf="calendarData.data.length === 0 && !calendarData.loading"
->
-  <p>Sorry, there are no tickets now</p>
-  <p>Please, please choose another destinations or dates</p>
-</div>
-<div
-  class="calendar"
-  *ngIf="calendarData.data.length > 0 && !calendarData.loading"
->
+<div class="calendar">
   <app-calendar-of-prices-item
-    *ngFor="let data of calendarData.data"
+    *ngFor="let data of calendarData"
     [data]="data"
-    [currency]="calendarData.currency"
+    [currency]="currency"
     [destination]="formData.destination"
     [origin]="formData.origin"
   >

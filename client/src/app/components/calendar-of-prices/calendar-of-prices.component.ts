@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { map } from 'rxjs';
+import { filter, map, Observable } from 'rxjs';
 import {
+  CalendarOfPricesModel,
   CalendarOfPricesPayload,
-  CalendarOfPricesStateModel,
 } from 'src/app/models/calendar-of-prices.model';
 import { FormDataModel } from 'src/app/models/formData.model';
-import {
-  CalendarOfPricesLoaded,
-  CalendarOfPricesRequested,
-} from 'src/app/store/flight-info.action';
+import { CalendarOfPricesLoaded } from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { RequestDataState } from 'src/app/store/request-data.state';
 
@@ -19,9 +16,10 @@ import { RequestDataState } from 'src/app/store/request-data.state';
   styleUrls: ['./calendar-of-prices.component.scss'],
 })
 export class CalendarOfPricesComponent implements OnInit {
-  calendarData: CalendarOfPricesStateModel;
+  calendarData: CalendarOfPricesModel[];
   formData: CalendarOfPricesPayload;
   loadingCardCount: number[];
+  currency: string;
 
   constructor(private store: Store) {
     this.loadingCardCount = Array(36).map((n) => n);
@@ -30,7 +28,13 @@ export class CalendarOfPricesComponent implements OnInit {
   ngOnInit(): void {
     this.store
       .select(FlightInfoState.calendarOfPrices)
+      .pipe(map((array) => array.filter((item) => item.number_of_changes >= 1)))
       .subscribe((state) => (this.calendarData = state));
+
+    this.store
+      .select(FlightInfoState.currency)
+      .subscribe((currency) => (this.currency = currency));
+
     this.store
       .select(RequestDataState.formData)
       .pipe(
@@ -44,10 +48,7 @@ export class CalendarOfPricesComponent implements OnInit {
         }))
       )
       .subscribe((data: CalendarOfPricesPayload) => {
-        this.store.dispatch([
-          new CalendarOfPricesRequested(),
-          new CalendarOfPricesLoaded(data),
-        ]);
+        this.store.dispatch(new CalendarOfPricesLoaded(data));
         this.formData = data;
       });
   }

@@ -1,24 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import * as FlightInfoActions from './flight-info.action';
-import { CalendarOfPricesStateModel } from '../models/calendar-of-prices.model';
+import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';
 import { FlightsInfoService } from '../services/flights-info.service';
 
 export interface FlightInfoStateModel {
-  calendarOfPrices: CalendarOfPricesStateModel;
+  calendarOfPrices: CalendarOfPricesModel[];
   specialOffers: any; // TODO: create model
+  currency: string;
 }
 
 @State<FlightInfoStateModel>({
   name: 'FlightInfoState',
   defaults: {
-    calendarOfPrices: {
-      loading: false,
-      currency: 'uah',
-      data: [],
-      error: '',
-    },
+    calendarOfPrices: [],
     specialOffers: [],
+    currency: 'uah',
   },
 })
 @Injectable()
@@ -31,7 +28,7 @@ export class FlightInfoState {
   @Selector()
   static calendarOfPrices(
     state: FlightInfoStateModel
-  ): CalendarOfPricesStateModel {
+  ): CalendarOfPricesModel[] {
     return state.calendarOfPrices;
   }
 
@@ -40,15 +37,9 @@ export class FlightInfoState {
     return state.specialOffers;
   }
 
-  @Action(FlightInfoActions.CalendarOfPricesRequested)
-  RequestCalendarOfPrices(context: StateContext<FlightInfoStateModel>) {
-    const state = context.getState();
-    context.patchState({
-      calendarOfPrices: {
-        ...state.calendarOfPrices,
-        loading: true,
-      },
-    });
+  @Selector()
+  static currency(state: FlightInfoStateModel): any {
+    return state.currency;
   }
 
   @Action(FlightInfoActions.CalendarOfPricesLoaded)
@@ -59,34 +50,11 @@ export class FlightInfoState {
     this.flightInfoService
       .RequestGetCalendarOfPrices(payload)
       .subscribe(({ data, currency }) => {
-        const state = context.getState();
         context.patchState({
-          calendarOfPrices: {
-            ...state,
-            loading: false,
-            data,
-            currency,
-          },
+          calendarOfPrices: data,
+          currency,
         });
-      }),
-      (error: string) =>
-        this.store.dispatch(
-          new FlightInfoActions.CalendarOfPricesFailed(error)
-        );
-  }
-
-  @Action(FlightInfoActions.CalendarOfPricesFailed)
-  ErrorCalendarOfPrices(
-    context: StateContext<FlightInfoStateModel>,
-    { payload }: FlightInfoActions.CalendarOfPricesFailed
-  ) {
-    const state = context.getState();
-    context.patchState({
-      calendarOfPrices: {
-        ...state.calendarOfPrices,
-        error: payload,
-      },
-    });
+      });
   }
 
   @Action(FlightInfoActions.GetSpecialOffers)
