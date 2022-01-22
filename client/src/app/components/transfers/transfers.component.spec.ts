@@ -18,7 +18,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 
-fdescribe('TransfersComponent', () => {
+describe('TransfersComponent', () => {
   let component: TransfersComponent;
   let fixture: ComponentFixture<TransfersComponent>;
   let storeMock: any;
@@ -29,11 +29,14 @@ fdescribe('TransfersComponent', () => {
 
   beforeEach(() => {
     storeMock = {
-      select: jasmine.createSpy('select')
-        .withArgs(RequestDataState.formData).and.returnValue(formDataSubject.asObservable())
-        .withArgs(FlightInfoState.specialOffers).and.returnValue(specialOffersSubject.asObservable()),
+      select: jasmine
+        .createSpy('select')
+        .withArgs(RequestDataState.formData)
+        .and.returnValue(formDataSubject.asObservable())
+        .withArgs(FlightInfoState.specialOffers)
+        .and.returnValue(specialOffersSubject.asObservable()),
       dispatch: jasmine.createSpy('dispatch'),
-      selectSnapshot: jasmine.createSpy('selectSnapshot')
+      selectSnapshot: jasmine.createSpy('selectSnapshot'),
     };
     flightsInfoServiceMock = jasmine.createSpy().and.returnValue({});
 
@@ -49,7 +52,7 @@ fdescribe('TransfersComponent', () => {
         NgxsModule.forRoot(appState, {
           developmentMode: true,
         }),
-        NgxsLoggerPluginModule.forRoot()
+        NgxsLoggerPluginModule.forRoot(),
       ],
       declarations: [TransfersComponent],
       providers: [
@@ -57,16 +60,14 @@ fdescribe('TransfersComponent', () => {
         { provide: FlightsInfoService, useValue: flightsInfoServiceMock },
         { provide: RequestDataService, useValue: requestDataService },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
-
-    })
-      .compileComponents();
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
 
     component = new TransfersComponent();
     fixture = TestBed.createComponent(TransfersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    component.transfersControl.value
+    component.transfersControl.value;
   });
 
   it('should create TransfersComponent', () => {
@@ -74,20 +75,19 @@ fdescribe('TransfersComponent', () => {
   });
 
   it('registerOnChange', () => {
-    expect(component.transfersControl.value).toBe("");
+    expect(component.transfersControl.value).toBe('');
   });
 
   it('writeValue', () => {
     // arrange
-    const testVal = 'Directly'
+    const testVal = 'Directly';
     // act
     component.writeValue(testVal);
     // assert
-    expect(component.transfersControl.value
-    ).toBe('Directly');
+    expect(component.transfersControl.value).toBe('Directly');
   });
 
   it('transferSelected', () => {
-    expect(component.transfersControl.value).toBe("");
+    expect(component.transfersControl.value).toBe('');
   });
 });
