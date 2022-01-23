@@ -41,8 +41,11 @@ export class CheapestTicketsComponent implements OnInit {
         }))
       )
       .subscribe((state) => {
-        if(state.originInfo.cityCode && state.destinationInfo.cityCode)
+        if(state.originInfo.cityCode && state.destinationInfo.cityCode) {
           this.requestTickets(state)
+        } else {
+          this.isTicketData = false
+        }
       })
 
   }
@@ -102,6 +105,7 @@ const findAirlineInfo = (ticketsArray: any, airlinesArray : any) => {
       }
     })
   })
+  console.log(ticketsArray)
 }
 
 

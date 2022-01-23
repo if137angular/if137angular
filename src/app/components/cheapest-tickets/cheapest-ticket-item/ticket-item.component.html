@@ -1,6 +1,6 @@
 <div class="ticketWrapper">
   <div class="priceInfo">
-    <div class="airlineInfo">
+    <div class="airlineInfo" *ngIf="ticketData.airlineInfo">
       <p>{{ticketData.airlineInfo.name}}</p>
       <div class="airlineLogo">
         <img src="{{ticketData.airlineInfo.logo}}" alt="{{ticketData.airlineInfo.name}}">
