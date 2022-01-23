@@ -200,7 +200,9 @@ export class RequestDataState {
   GetUserGeolocation(
     ctx: StateContext<RequestDataStateModel>,
   ) {
-    return this.flightsInfoService.getIpAddress().pipe(tap((ip: IpShortModel) => {
+    return this.flightsInfoService.getIpAddress()
+      .pipe(
+      tap((ip: IpShortModel) => {
       this.flightsInfoService.getGEOLocation(Object.values(ip)[0])
         .subscribe((userData: IpFullModel) => {
           const state = ctx.getState();
