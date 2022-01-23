@@ -50,9 +50,6 @@ export class CalendarOfPricesComponent implements OnInit {
 
   onFormValueChange() {
     this.store.dispatch(new SetFilter(this.filterForm.value));
-    // this.store
-    //   .select(FlightInfoState.calendarOfPrices)
-    //   .subscribe((state) => (this.calendarData = state));
   }
 
   ngOnInit(): void {
