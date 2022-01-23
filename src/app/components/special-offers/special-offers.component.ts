@@ -15,7 +15,7 @@ import { Subject } from 'rxjs';
 })
 export class SpecialOffersComponent implements OnInit, OnDestroy {
   @Select(RequestDataState.formData)
-  formData$: Observable<any>;
+  formData$: Observable<FormDataModel>;
 
   @Select(FlightInfoState.specialOffers)
   offers$: Observable<any>;
@@ -39,6 +39,7 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
     return new Intl.NumberFormat(language.substring(0, 2), {
       style: 'currency',
       currency: this.currency,
+      minimumFractionDigits: 0,
     }).format(number);
   }
 
@@ -48,12 +49,7 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
     return `${hours}h:${minutes}min`;
   }
 
-  ngOnInit(
-    language = 'en',
-    currency = 'eur',
-    cityOrign: string = 'IEV',
-    cityDestination: string = ''
-  ): void {
+  ngOnInit(): void {
     this.formData$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((formData: FormDataModel) => {
@@ -84,11 +80,9 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
         ? formData.destinationTo.code
         : '',
       language: this.language,
-
       currency: this.currency,
     };
     this.store.dispatch(new GetSpecialOffers(payload));
-
   }
 
   ngOnDestroy() {

@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams,
+  HttpErrorResponse,
+} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import {
   CalendarOfPricesPayload,
@@ -9,8 +14,6 @@ import { TicketsRequestParam } from '../models/cheapest-tickets.model';
 import { map } from 'rxjs/operators';
 import { catchError, retry } from 'rxjs/operators';
 import { GetDestinationPopular } from '../components/city-destination/city-destination.component';
-
-
 
 @Injectable()
 export class FlightsInfoService {
@@ -86,7 +89,6 @@ export class FlightsInfoService {
       .append('currency', ticketsParam.currency)
       .append('token', myToken);
 
-
     return this.http
       .get(baseURL, { headers: myHeadersURL, params: myParamsURL })
       .pipe(
@@ -95,7 +97,7 @@ export class FlightsInfoService {
           originInfo: ticketsParam.originInfo,
           destinationInfo: ticketsParam.destinationInfo,
         }))
-      )
+      );
   }
 
   getFlightPriceTrends(
@@ -129,15 +131,29 @@ export class FlightsInfoService {
       requestOptions
     );
   }
-  getIpAddress() {
+  getIpAddress(): Observable<any> {
     return this.http
-      .get('https://api.ipify.org/?format=json');
-  };
+      .get('https://api.ipify.org/?format=json')
+      .pipe(catchError(this.handleError));
+  }
 
-  getGEOLocation(ip: string) {
-    let url = "https://api.ipgeolocation.io/ipgeo?apiKey=a4503669913f4ef28711027d136d2d68&ip=" + ip;
-    return this.http.get(url);
-  };
+  getGEOLocation(ip: string): Observable<any> {
+    let url =
+      'https://api.ipgeolocation.io/ipgeo?apiKey=a4503669913f4ef28711027d136d2d68&ip=' +
+      ip;
+    return this.http.get(url).pipe(catchError(this.handleError));
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      console.error('An error occurred:', error.error.message);
+    } else {
+      console.error(
+        `Backend returned code ${error.status}, ` + `body was: ${error.error}`
+      );
+    }
+    return throwError('Something bad happened; please try again later.');
+  }
 
   getFlightTicketsForDate(
     codeFrom: string,

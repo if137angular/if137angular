@@ -2,9 +2,11 @@ mat-toolbar {
   justify-content: center;
 
   .toolbar-wrapper {
-    min-width: 1100px;
+    display: flex;
+    max-width: 1110px;
     display: flex;
     align-items: center;
+    flex: 1;
   }
 
   .spacer {

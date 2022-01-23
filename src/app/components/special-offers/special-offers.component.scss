@@ -2,6 +2,7 @@
   display: block;
   max-width: 800px;
   margin: auto;
+
   img {
     width: 100%;
     height: auto;
@@ -9,7 +10,7 @@
 }
 
 .card-group {
-  margin-top: 20px;
+  padding: 20px 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,6 +55,8 @@ h3 {
   }
 
   &__title {
+    padding: 0 10px;
+    text-align: center;
     font-size: 18px;
   }
   &__body {
@@ -64,9 +67,6 @@ h3 {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-    p {
-      text-align: center;
-    }
 
     img {
       display: block;
@@ -79,6 +79,7 @@ h3 {
   &__destination {
     font-size: 18px;
   }
+
   &__departure {
     display: flex;
     align-items: center;
@@ -86,6 +87,7 @@ h3 {
       padding-right: 10px;
     }
   }
+
   &__action {
     display: flex;
     justify-content: space-between;
