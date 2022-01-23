@@ -86,7 +86,7 @@ export interface RequestDataStateModel {
 @Injectable()
 export class RequestDataState {
   constructor(private requestService: RequestDataService,
-              private flightsInfoService: FlightsInfoService) {
+    private flightsInfoService: FlightsInfoService) {
   }
 
   @Selector()
@@ -200,15 +200,15 @@ export class RequestDataState {
   GetUserGeolocation(
     ctx: StateContext<RequestDataStateModel>,
   ) {
-    return this.flightsInfoService.getIpAddress().subscribe((ip: IpShortModel) => {
+    return this.flightsInfoService.getIpAddress().pipe(tap((ip: IpShortModel) => {
       this.flightsInfoService.getGEOLocation(Object.values(ip)[0])
         .subscribe((userData: IpFullModel) => {
           const state = ctx.getState();
           const defaultCity = state.cities.find((city: CitiesModel) => city.name === userData.city) ||
-            {
-              code: 'LWO',
-              name: 'Lviv'
-            };
+          {
+            code: 'LWO',
+            name: 'Lviv'
+          };
           const formData = {
             destinationFrom: {
               code: defaultCity.code,
@@ -228,6 +228,6 @@ export class RequestDataState {
             formData
           });
         });
-    });
+    }));
   }
 }
