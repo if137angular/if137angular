@@ -11,8 +11,8 @@ import { RequestDataService } from 'src/app/services/request-data.service';
 import { appState } from 'src/app/store/appState';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { RequestDataState } from 'src/app/store/request-data.state';
-
 import { CalendarOfPricesComponent } from './calendar-of-prices.component';
+import { CalendarOfPricesLoaded } from 'src/app/store/flight-info.action';
 
 fdescribe('CalendarOfPricesComponent', () => {
   let component: CalendarOfPricesComponent;
@@ -64,20 +64,42 @@ fdescribe('CalendarOfPricesComponent', () => {
   });
 
   it('should create', () => {
-    calendarDataMock.next({
-      loading: false,
-      data: [],
-      currency: 'uah',
-      error: 'string',
-    });
-    formDataMock.next({
-      destinationFrom: {},
-      destinationTo: {},
-      endDate: new Date(),
-      startDate: new Date(),
-      transfers: 'string',
-    });
-    component.ngOnInit();
     expect(component).toBeTruthy();
+  });
+
+  describe('#ngOnInit', () => {
+    beforeEach(() => {
+      calendarDataMock.next({
+        loading: false,
+        data: [],
+        currency: 'uah',
+        error: 'string',
+      });
+      formDataMock.next({
+        destinationFrom: {
+          name: '',
+          code: '',
+        },
+        destinationTo: {
+          name: '',
+          code: '',
+        },
+        endDate: new Date(),
+        startDate: new Date(),
+        transfers: 'string',
+      });
+    });
+    it('should...', () => {
+      expect(storeMock.dispatch).toHaveBeenCalledWith(
+        new CalendarOfPricesLoaded({
+          origin: '',
+          destination: '',
+          originCode: '',
+          destinationCode: '',
+          return_date: '2022-01-22',
+          depart_date: '2022-01-22',
+        })
+      );
+    });
   });
 });

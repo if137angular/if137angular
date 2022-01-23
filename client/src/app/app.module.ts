@@ -29,6 +29,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSliderModule } from '@angular/material/slider';
 
 // Services
 import { RequestDataService } from 'src/app/services/request-data.service';
@@ -90,7 +91,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-
+    MatSliderModule,
     MatSelectModule,
     MatAutocompleteModule,
     MatInputModule,

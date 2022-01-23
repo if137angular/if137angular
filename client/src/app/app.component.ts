@@ -1,32 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import { GetAirports, GetCities, GetCountries } from 'src/app/store/request-data.action';
+import {
+  GetAirports,
+  GetCities,
+  GetCountries,
+  SetUserData,
+} from 'src/app/store/request-data.action';
 import { Store } from '@ngxs/store';
 import { FlightsInfoService } from './services/flights-info.service';
+import { IpFullModel, IpShortModel } from './models/ip.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  ipaddress: string = '';
-
   constructor(
     private store: Store,
-    private visitorsService: FlightsInfoService) {
-  };
+    private visitorsService: FlightsInfoService
+  ) {}
 
   ngOnInit() {
-    this.store.dispatch([new GetCountries(), new GetAirports(), new GetCities()]);
-
-    this.visitorsService.getIpAddress().subscribe(res => {
-
-      this.visitorsService.getGEOLocation(this.ipaddress).subscribe(res => {
-
-        const stringifiedData = JSON.stringify(res);
-        const response = JSON.parse(stringifiedData);
-        console.log(response.city);
-      });
+    this.store.dispatch([
+      new GetCountries(),
+      new GetAirports(),
+      new GetCities(),
+    ]);
+    this.visitorsService.getIpAddress().subscribe((ip: IpShortModel) => {
+      this.visitorsService
+        .getGEOLocation(Object.values(ip)[0])
+        .subscribe((userInfo: IpFullModel) => {
+          console.log(userInfo);
+          this.store.dispatch(new SetUserData(userInfo));
+        });
     });
   }
 }

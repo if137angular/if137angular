@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
@@ -8,6 +8,7 @@ import { CitiesModel } from 'src/app/models/cities.model';
 import { SetFormDate } from 'src/app/store/request-data.action';
 import { FormDataModel } from 'src/app/models/formData.model';
 import { GetLocationModel } from 'src/app/models/GetLocation.model';
+import { IpFullModel } from 'src/app/models/ip.model';
 
 @Component({
   selector: 'app-flight-data-form',
@@ -19,6 +20,7 @@ export class FlightDataFormComponent implements OnInit {
   location: any;
   transfers: string = '';
   minDate: Date = new Date();
+  userData: IpFullModel;
 
   flightDataFormGroup: FormGroup = new FormGroup({
     startDate: new FormControl(),
@@ -32,9 +34,17 @@ export class FlightDataFormComponent implements OnInit {
   @Select(RequestDataState.location) location$: Observable<GetLocationModel[]>;
   @Select(RequestDataState.formData) formData$: Observable<FormDataModel>;
 
-  constructor(private store: Store, private router: Router) {}
+  constructor(
+    private store: Store,
+    private router: Router,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
+    this.store
+      .select(RequestDataState.userData)
+      .subscribe((userInfo) => (this.userData = userInfo));
+
     this.location$.subscribe((location: GetLocationModel[]) => {
       this.location = location;
     });
@@ -44,6 +54,7 @@ export class FlightDataFormComponent implements OnInit {
     });
 
     this.formData$.subscribe((formData: FormDataModel) => {
+      this.cdRef.detectChanges();
       this.flightDataFormGroup.patchValue({
         destinationFrom:
           formData.destinationFrom.name === '' &&
