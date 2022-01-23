@@ -1,0 +1,55 @@
+<div class="filter">
+  Filter
+  <form [formGroup]="filterGroup">
+    <mat-form-field appearance="fill">
+      <mat-label>Flight class</mat-label>
+      <mat-select formControlName="class" (selectionChange)="onFilterChange()">
+        <mat-option [value]="class.value" *ngFor="let class of classOptions">
+          {{ class.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Gate</mat-label>
+      <mat-select formControlName="gate" (selectionChange)="onFilterChange()">
+        <mat-option [value]="gate.value" *ngFor="let gate of gateOptions">
+          {{ gate.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Type of transfers</mat-label>
+      <mat-select
+        formControlName="transfers"
+        (selectionChange)="onFilterChange()"
+      >
+        <mat-option
+          *ngFor="let transfer of transfersOptions"
+          [value]="transfer.value"
+        >
+          {{ transfer.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      Min price
+      <mat-slider
+        formControlName="minPrice"
+        thumbLabel="true"
+        min="1"
+        max="150"
+        (valueChange)="onFilterChange()"
+      ></mat-slider>
+    </div>
+    <div>
+      Max price
+      <mat-slider
+        formControlName="maxPrice"
+        thumbLabel="true"
+        min="1"
+        max="150"
+        (valueChange)="onFilterChange()"
+      ></mat-slider>
+    </div>
+  </form>
+</div>

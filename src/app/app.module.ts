@@ -29,6 +29,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSliderModule } from '@angular/material/slider';
 
 // Services
 import { RequestDataService } from 'src/app/services/request-data.service';
@@ -58,6 +59,7 @@ import { SearchComponent } from './components/search/search.component';
 import { FlightPriceTrendsComponent } from './components/flight-price-trends/flight-price-trends.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { FlightFilterComponent } from './components/flight-filter/flight-filter.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +84,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     SearchComponent,
     FlightPriceTrendsComponent,
     ToolbarComponent,
+    FlightFilterComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,7 +93,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-
+    MatSliderModule,
     MatSelectModule,
     MatAutocompleteModule,
     MatInputModule,
