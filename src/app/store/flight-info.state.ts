@@ -1,38 +1,43 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import * as FlightInfoActions from './flight-info.action';
-import { CalendarOfPricesStateModel } from '../models/calendar-of-prices.model';
+import {
+  CalendarOfPricesModel,
+  CalendarOfPricesStateModel,
+} from '../models/calendar-of-prices.model';
 import { FlightsInfoService } from '../services/flights-info.service';
+import { FilterModel } from '../models/filter.model';
+import filterArray from 'src/utils/filterFunc';
 
 export interface FlightInfoStateModel {
-  calendarOfPrices: CalendarOfPricesStateModel;
+  calendarOfPrices: CalendarOfPricesModel[];
   specialOffers: any; // TODO: create model
+  currency: string;
+  filter: FilterModel;
 }
 
 @State<FlightInfoStateModel>({
   name: 'FlightInfoState',
   defaults: {
-    calendarOfPrices: {
-      loading: false,
-      currency: 'uah',
-      data: [],
-      error: '',
-    },
+    calendarOfPrices: [],
     specialOffers: [],
+    currency: 'uah',
+    filter: {
+      class: null,
+      gate: null,
+      transfers: null,
+      minPrice: null,
+      maxPrice: null,
+    },
   },
 })
 @Injectable()
 export class FlightInfoState {
-  constructor(
-    private flightInfoService: FlightsInfoService,
-    private store: Store
-  ) {}
+  constructor(private flightInfoService: FlightsInfoService) {}
 
   @Selector()
-  static calendarOfPrices(
-    state: FlightInfoStateModel
-  ): CalendarOfPricesStateModel {
-    return state.calendarOfPrices;
+  static calendarOfPrices(state: FlightInfoStateModel): any {
+    return filterArray(state.calendarOfPrices, state.filter);
   }
 
   @Selector()
@@ -40,15 +45,14 @@ export class FlightInfoState {
     return state.specialOffers;
   }
 
-  @Action(FlightInfoActions.CalendarOfPricesRequested)
-  RequestCalendarOfPrices(context: StateContext<FlightInfoStateModel>) {
-    const state = context.getState();
-    context.patchState({
-      calendarOfPrices: {
-        ...state.calendarOfPrices,
-        loading: true,
-      },
-    });
+  @Selector()
+  static currency(state: FlightInfoStateModel): string {
+    return state.currency;
+  }
+
+  @Selector()
+  static filter(state: FlightInfoStateModel): FilterModel {
+    return state.filter;
   }
 
   @Action(FlightInfoActions.CalendarOfPricesLoaded)
@@ -59,33 +63,20 @@ export class FlightInfoState {
     this.flightInfoService
       .RequestGetCalendarOfPrices(payload)
       .subscribe(({ data, currency }) => {
-        const state = context.getState();
         context.patchState({
-          calendarOfPrices: {
-            ...state,
-            loading: false,
-            data,
-            currency,
-          },
+          calendarOfPrices: data,
+          currency,
         });
-      }),
-      (error: string) =>
-        this.store.dispatch(
-          new FlightInfoActions.CalendarOfPricesFailed(error)
-        );
+      });
   }
 
-  @Action(FlightInfoActions.CalendarOfPricesFailed)
-  ErrorCalendarOfPrices(
-    context: StateContext<FlightInfoStateModel>,
-    { payload }: FlightInfoActions.CalendarOfPricesFailed
+  @Action(FlightInfoActions.SetFilter)
+  SetFilter(
+    { patchState }: StateContext<FlightInfoStateModel>,
+    { payload }: FlightInfoActions.SetFilter
   ) {
-    const state = context.getState();
-    context.patchState({
-      calendarOfPrices: {
-        ...state.calendarOfPrices,
-        error: payload,
-      },
+    patchState({
+      filter: payload,
     });
   }
 

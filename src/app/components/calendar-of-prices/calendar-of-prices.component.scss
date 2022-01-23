@@ -1,7 +1,10 @@
 .calendar {
   position: relative;
 }
-
+.calendar-content {
+  display: flex;
+  flex-direction: row;
+}
 .calendar,
 .calendar-loading {
   display: flex;
