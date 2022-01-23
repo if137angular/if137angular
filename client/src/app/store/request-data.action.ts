@@ -44,7 +44,7 @@ export class SetFormDate {
 
 export class SetUserData {
   static readonly type = '[Request] Set User Data from Ip';
-  constructor(public payload: IpFullModel) {}
+  constructor() {}
 }
 
 export type RequestDataActions =

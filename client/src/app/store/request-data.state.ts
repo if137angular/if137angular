@@ -5,8 +5,9 @@ import { tap } from 'rxjs/operators';
 import * as RequestDataActions from './request-data.action';
 import { CitiesModel } from 'src/app/models/cities.model';
 import { FormDataModel } from '../models/formData.model';
-import { SpecialOffersSelectModel } from './../models/special-offers.model';
-import { IpFullModel } from '../models/ip.model';
+import { IpFullModel, IpShortModel } from '../models/ip.model';
+import { FlightsInfoService } from 'src/app/services/flights-info.service';
+import { patch } from "@ngxs/store/operators";
 
 export interface RequestDataStateModel {
   countries: any[];
@@ -32,8 +33,8 @@ export interface RequestDataStateModel {
     languages: [],
     formData: {
       destinationFrom: {
-        name: '',
         code: '',
+        name: '',
       },
       destinationTo: {
         name: '',
@@ -84,7 +85,9 @@ export interface RequestDataStateModel {
 })
 @Injectable()
 export class RequestDataState {
-  constructor(private requestService: RequestDataService) {}
+  constructor(private requestService: RequestDataService,
+              private flightsInfoService: FlightsInfoService) {
+  }
 
   @Selector()
   static countries(state: RequestDataStateModel): any[] {
@@ -194,10 +197,37 @@ export class RequestDataState {
   }
 
   @Action(RequestDataActions.SetUserData)
-  SetUserData(
-    { patchState }: StateContext<RequestDataStateModel>,
-    { payload }: RequestDataActions.SetUserData
+  GetUserGeolocation(
+    ctx: StateContext<RequestDataStateModel>,
   ) {
-    return patchState({ userData: payload });
+    return this.flightsInfoService.getIpAddress().subscribe((ip: IpShortModel) => {
+      this.flightsInfoService.getGEOLocation(Object.values(ip)[0])
+        .subscribe((userData: IpFullModel) => {
+          const state = ctx.getState();
+          const defaultCity = state.cities.find((city: CitiesModel) => city.name === userData.city) ||
+            {
+              code: 'LWO',
+              name: 'Lviv'
+            };
+          const formData = {
+            destinationFrom: {
+              code: defaultCity.code,
+              name: defaultCity.name,
+            },
+            destinationTo: {
+              name: '',
+              code: '',
+            },
+            endDate: new Date(),
+            startDate: new Date(),
+            transfers: '',
+          }
+          ctx.patchState({
+            ...state,
+            userData,
+            formData
+          });
+        });
+    });
   }
 }
