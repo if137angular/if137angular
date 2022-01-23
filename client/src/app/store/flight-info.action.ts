@@ -5,6 +5,11 @@ export class CalendarOfPricesLoaded {
   constructor(public payload: CalendarOfPricesPayload) {}
 }
 
+export class SetFilter {
+  static readonly type = '[FlightInfo] CalendarOfPricesLoaded';
+  constructor(public payload: any) {}
+}
+
 export class GetSpecialOffers {
   static readonly type = '[FlightInfo] Get Special Offers';
   constructor(

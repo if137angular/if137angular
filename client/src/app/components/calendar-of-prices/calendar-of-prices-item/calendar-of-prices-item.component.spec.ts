@@ -9,7 +9,7 @@ import { appState } from 'src/app/store/appState';
 
 import { CalendarOfPricesItemComponent } from './calendar-of-prices-item.component';
 
-fdescribe('CalendarOfPricesItemComponent', () => {
+describe('CalendarOfPricesItemComponent', () => {
   let component: CalendarOfPricesItemComponent;
   let fixture: ComponentFixture<CalendarOfPricesItemComponent>;
   let debugElement: DebugElement;

@@ -8,6 +8,7 @@ export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesModel[];
   specialOffers: any; // TODO: create model
   currency: string;
+  filter: any;
 }
 
 @State<FlightInfoStateModel>({
@@ -16,6 +17,7 @@ export interface FlightInfoStateModel {
     calendarOfPrices: [],
     specialOffers: [],
     currency: 'uah',
+    filter: {},
   },
 })
 @Injectable()
@@ -29,7 +31,12 @@ export class FlightInfoState {
   static calendarOfPrices(
     state: FlightInfoStateModel
   ): CalendarOfPricesModel[] {
-    return state.calendarOfPrices;
+    return state.calendarOfPrices.filter((item) => {
+      if (state.filter.class == undefined) {
+        return true;
+      }
+      return item.number_of_changes === state.filter.class;
+    });
   }
 
   @Selector()
@@ -40,6 +47,11 @@ export class FlightInfoState {
   @Selector()
   static currency(state: FlightInfoStateModel): any {
     return state.currency;
+  }
+
+  @Selector()
+  static filter(state: FlightInfoStateModel): any {
+    return state.filter;
   }
 
   @Action(FlightInfoActions.CalendarOfPricesLoaded)
@@ -55,6 +67,16 @@ export class FlightInfoState {
           currency,
         });
       });
+  }
+
+  @Action(FlightInfoActions.SetFilter)
+  SetFilter(
+    { patchState }: StateContext<FlightInfoStateModel>,
+    { payload }: FlightInfoActions.SetFilter
+  ) {
+    patchState({
+      filter: payload,
+    });
   }
 
   @Action(FlightInfoActions.GetSpecialOffers)
