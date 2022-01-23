@@ -204,7 +204,6 @@ export class RequestDataState {
       this.flightsInfoService.getGEOLocation(Object.values(ip)[0])
         .subscribe((userData: IpFullModel) => {
           const state = ctx.getState();
-        
           const defaultCity = state.cities.find((city: CitiesModel) => city.name === userData.city) ||
           {
             code: 'LWO',
