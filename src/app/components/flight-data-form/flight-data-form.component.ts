@@ -41,10 +41,6 @@ export class FlightDataFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store
-      .select(RequestDataState.userData)
-      .subscribe((userInfo) => (this.userData = userInfo));
-
     this.location$.subscribe((location: GetLocationModel[]) => {
       this.location = location;
     });
@@ -54,16 +50,8 @@ export class FlightDataFormComponent implements OnInit {
     });
 
     this.formData$.subscribe((formData: FormDataModel) => {
-      this.cdRef.detectChanges();
       this.flightDataFormGroup.patchValue({
-        destinationFrom:
-          formData.destinationFrom.name === '' &&
-          !this.router.url.startsWith('/search')
-            ? {
-                code: 'LWO',
-                name: 'Lviv',
-              }
-            : formData.destinationFrom,
+        destinationFrom: formData.destinationFrom,
         destinationTo: formData.destinationTo,
         startDate: formData.startDate,
         endDate: formData.endDate,

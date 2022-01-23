@@ -7,7 +7,6 @@ import {
 } from 'src/app/store/request-data.action';
 import { Store } from '@ngxs/store';
 import { FlightsInfoService } from './services/flights-info.service';
-import { IpFullModel, IpShortModel } from './models/ip.model';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +15,7 @@ import { IpFullModel, IpShortModel } from './models/ip.model';
 })
 export class AppComponent implements OnInit {
   constructor(
-    private store: Store,
-    private visitorsService: FlightsInfoService
+    private store: Store
   ) {}
 
   ngOnInit() {
@@ -25,14 +23,7 @@ export class AppComponent implements OnInit {
       new GetCountries(),
       new GetAirports(),
       new GetCities(),
+      new SetUserData()
     ]);
-    this.visitorsService.getIpAddress().subscribe((ip: IpShortModel) => {
-      this.visitorsService
-        .getGEOLocation(Object.values(ip)[0])
-        .subscribe((userInfo: IpFullModel) => {
-          console.log(userInfo);
-          this.store.dispatch(new SetUserData(userInfo));
-        });
-    });
   }
 }
