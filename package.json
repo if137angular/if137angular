@@ -7,6 +7,8 @@
     "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "server": "cross-env NODE_ENV=production node ./src/server/bin/server.js",
+    "server:dev": "cross-env NODE_ENV=development nodemon ./src/server/bin/server.js",
     "test-dev": "ng test",
     "coverage": "ng test --source-map --code-coverage",
     "test": "ng test --watch=false --browsers=ChromeHeadless",
@@ -34,7 +36,17 @@
     "ngx-skeleton-loader": "^4.0.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "commander": "^8.1.0",
+    "cors": "2.8.5",
+    "cross-env": "7.0.3",
+    "dotenv": "^10.0.0",
+    "express": "4.17.1",
+    "joi": "^17.4.2",
+    "joi-phone-validation": "^1.0.7",
+    "morgan": "1.10.0",
+    "swagger-ui-express": "^4.3.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~13.0.3",
@@ -57,6 +69,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
-    "typescript": "~4.4.3"
+    "typescript": "~4.4.3",
+    "nodemon": "2.0.7"
   }
 }
