@@ -40,7 +40,6 @@ export class CityDestinationComponent implements OnInit {
   cities: DestinationPopular[];
 
   ngOnInit(): void {
-    // const getPopularDestination$
     zip(this.flightInfoService
         .requestPopularDestination("IEV"),
       this.flightInfoService
