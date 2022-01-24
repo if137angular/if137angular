@@ -161,6 +161,32 @@ describe('SpecialOffersComponent', () => {
     });
   });
 
+  describe('#onSelectedLanguageChanged', () => {
+    beforeEach(() => {
+      store.selectSnapshot = jasmine
+        .createSpy('selectSnapshot')
+        .and.returnValue({
+          destinationFrom: {
+            code: 'LWO',
+          },
+          destinationTo: null,
+        });
+    });
+    it('should dispatch GetSpecialOffers with selected language', () => {
+      // arrange / act
+      component.onSelectedLanguageChanged('en');
+      // assert
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new GetSpecialOffers({
+          cityOrigin: 'LWO',
+          cityDestination: '',
+          language: 'en',
+          currency: 'EUR',
+        })
+      );
+    });
+  });
+
   describe('#ngOnInit', () => {
     beforeEach(() => {
       formDataSubject.next({

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { Select } from '@ngxs/store';
@@ -11,7 +11,7 @@ import { GetCurrencies, GetLanguages } from 'src/app/store/request-data.action';
   templateUrl: './special-offers-select.component.html',
   styleUrls: ['./special-offers-select.component.scss']
 })
-export class SpecialOffersSelectComponent implements OnChanges, OnInit {
+export class SpecialOffersSelectComponent implements OnChanges {
   @Input() selectedLanguage: string = '';
   @Output() selectedLanguageChange = new EventEmitter<string>();
   languageControl: FormControl = new FormControl('');
@@ -37,16 +37,13 @@ export class SpecialOffersSelectComponent implements OnChanges, OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.setOption();
-  }
-
   ngOnChanges(): void {
+    this.dispatchOption();
     this.languageControl.setValue(this.selectedLanguage);
     this.currencyControl.setValue(this.selectedCurrency);
   }
 
-  setOption(): void {
+  dispatchOption(): void {
     this.store.dispatch(new GetLanguages());
     this.languages$.subscribe((languages: any) => {
       this.languages = languages;
