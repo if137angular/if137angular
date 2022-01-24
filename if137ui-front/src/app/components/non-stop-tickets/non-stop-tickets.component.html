@@ -1,9 +1,6 @@
 <div class="container">
   <h2 class="non-stop-title">Non Stop Tickets</h2>
-  <button mat-raised-button class="btn-toggle" color="primary" (click)="onToggle()">
-    {{btnName}}
-  </button>
-  <div class="non-stop-tickets-data" *ngIf="div">
+  <div class="non-stop-tickets-data">
     <div
       *ngFor="let item of data.data | keyvalue"
       class="ticket-content__wrapper"

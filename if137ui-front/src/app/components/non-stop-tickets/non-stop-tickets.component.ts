@@ -47,11 +47,4 @@ export class NonStopTicketsComponent implements OnInit {
         });
     });
   }
-
-  onToggle(){
-    this.div = !this.div
-   if (this.div) 
-   this.btnName = 'Close';
-   else this.btnName = 'Open'
-  };
 }
