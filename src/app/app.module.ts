@@ -30,6 +30,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 // Services
 import { RequestDataService } from 'src/app/services/request-data.service';
@@ -114,7 +115,7 @@ import { MapsComponent } from './components/maps/maps.component';
     MatCardModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
-
+    MatProgressBarModule,
     NgxsModule.forRoot(appState, {
       developmentMode: true,
     }),
