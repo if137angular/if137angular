@@ -62,6 +62,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { FlightFilterComponent } from './components/flight-filter/flight-filter.component';
 import { MapsComponent } from './components/maps/maps.component';
+import { LoadingBarComponent } from './components/loading-bar/loading-bar.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { MapsComponent } from './components/maps/maps.component';
     ToolbarComponent,
     FlightFilterComponent,
     MapsComponent,
+    LoadingBarComponent,
   ],
   imports: [
     BrowserModule,
