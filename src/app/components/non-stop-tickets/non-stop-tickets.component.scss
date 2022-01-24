@@ -2,14 +2,16 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-    max-width: 800px;
+  max-width: 580px;
   margin: 30px auto;
   overflow: auto;
   min-height: 60px;
-  padding: 30px;
   border-radius: 5px;
   text-align: center;
-  
+
+  @media screen and(min-width: 980px) {
+    min-width: 980px;
+  }
 }
 
 .forms-non-stop {
@@ -17,21 +19,24 @@
   justify-content: space-around;
 }
 
-.non-stop-tickets-data {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 30px;
- }
-
 .ticket-content__wrapper {
   display: flex;
   justify-content: space-around;
+  box-sizing: border-box;
   border: 1px solid rgb(179, 179, 185);
   border-radius: 20px;
-  min-width: 600px;
-  padding-top: 10px;
+  margin: 10px;
+  padding: 10px;
+  max-width: 540px;
   background-image: url(https://addons-media.operacdn.com/media/CACHE/images/themes/05/144705/1.0-rev1/images/0993404e-79e0-4052-923d-89236e7c102f/ce42ef837a89c852c000eafd63cd0763.jpg);
   // background-color: rgb(243, 236, 245);
+  background-size: cover;
+
+  @media screen and(min-width: 980px) {
+    display: inline-flex;
+
+    width: 470px;
+  }
 }
 
 .ticket__sidecontent {
@@ -41,16 +46,12 @@
   min-height: 40px;
 }
 
-.ticket__maincontainer {
-  margin-left: 50px;
-  }
-
 .ticketet__departure {
   margin-left: 20px;
 }
 
 h3 {
-  font-family:Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: large;
   font-weight: 500;
   color: azure;
@@ -62,38 +63,33 @@ h1 {
   color: azure;
 }
 
-
-
 .ticket-submit-btn {
   box-sizing: border-box;
-	padding: 0 25px;
-	margin: 0 15px 15px 0;
-	outline: none;
-	border: none;
-	border-radius: 50px;
-	height: 46px;
-	line-height: 46px;
-	font-size: 14px;
-	font-weight: 600;
-	text-decoration: none;
-	color: rgb(255, 255, 255);
-	background-color: rgb(78, 4, 112);
-	cursor: pointer;
+  padding: 0 25px;
+  margin: 0 15px 15px 0;
+  outline: none;
+  border: none;
+  border-radius: 50px;
+  height: 46px;
+  line-height: 46px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  background-color: rgb(78, 4, 112);
+  cursor: pointer;
 }
 
-
-.example-form, .example-full-width {
+.example-form,
+.example-full-width {
   min-width: 150px;
   max-width: 500px;
   width: 60%;
-  
 }
-
 
 .mat-raised-button {
   margin-top: 5px;
   height: 40px;
-
 }
 
 .btn-toggle {
@@ -101,4 +97,3 @@ h1 {
   margin-right: 40%;
   border-radius: 10px;
 }
-

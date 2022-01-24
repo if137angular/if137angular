@@ -26,11 +26,10 @@
     align-items: center;
     justify-content: center;
     flex: 1;
-    margin-bottom: 128px;
   }
 
   .form {
-    padding: 1.34375em 20px 0 20px;
+    padding: 1.34375em 10px 0 10px;
     background: rgba(0, 0, 0, 0.3);
     border-radius: 16px;
   }
@@ -41,4 +40,9 @@
     color: #000;
     padding: 8px;
   }
+}
+
+.dropdown {
+  display: flex;
+  align-items: flex-end;
 }
