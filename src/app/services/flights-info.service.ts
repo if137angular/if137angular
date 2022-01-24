@@ -13,7 +13,8 @@ import { GetDestinationPopular } from '../components/city-destination/city-desti
 
 
 @Injectable()
-export class FlightsInfoService {
+export class 
+FlightsInfoService {
   constructor(private http: HttpClient) { }
 
   exampleRequestGetChipTickets(): Observable<any> {
