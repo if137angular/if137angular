@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { FormDataModel } from 'src/app/models/formData.model';
 import { faPlane, faPlaneDeparture, faPlaneArrival, faHryvnia, faMapMarker, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { NonStopInfo } from 'src/app/models/non-stop-tickets.model';
 
 
 
@@ -14,12 +15,10 @@ import { faPlane, faPlaneDeparture, faPlaneArrival, faHryvnia, faMapMarker, faMa
   styleUrls: ['./non-stop-tickets.component.scss'],
 })
 export class NonStopTicketsComponent implements OnInit {
-  data: { data: Record<string, any> };
   formData: any;
+  nonStopInfo: NonStopInfo[] = [];
   cityOrigin: string;
   cityArrival: string;
-  div: boolean = false;
-  btnName: string = 'Open';
   faPlane = faPlane;
   faDeparture = faPlaneDeparture;
   faArrival = faPlaneArrival;
@@ -39,11 +38,14 @@ export class NonStopTicketsComponent implements OnInit {
           formData.destinationTo.code,
           formData.startDate.toISOString().slice(0,7),
           formData.endDate.toISOString().slice(0,7)
-        )
-        .subscribe((response) => {
-          this.data = response;
+        ).
+        pipe(map(response => Object.values(response.data).map((item: any) => (item[0]))))
+
+        .subscribe((response: any) => {
+          this.nonStopInfo = response;
           this.cityOrigin = formData.destinationFrom.name;
           this.cityArrival = formData.destinationTo.name;
+          console.log(this.nonStopInfo)
         });
     });
   }
