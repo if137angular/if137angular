@@ -30,6 +30,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 // Services
 import { RequestDataService } from 'src/app/services/request-data.service';
@@ -60,6 +61,7 @@ import { FlightPriceTrendsComponent } from './components/flight-price-trends/fli
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { FlightFilterComponent } from './components/flight-filter/flight-filter.component';
+import { LoadingBarComponent } from './components/loading-bar/loading-bar.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +87,7 @@ import { FlightFilterComponent } from './components/flight-filter/flight-filter.
     FlightPriceTrendsComponent,
     ToolbarComponent,
     FlightFilterComponent,
+    LoadingBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,7 +115,7 @@ import { FlightFilterComponent } from './components/flight-filter/flight-filter.
     MatCardModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
-
+    MatProgressBarModule,
     NgxsModule.forRoot(appState, {
       developmentMode: true,
     }),

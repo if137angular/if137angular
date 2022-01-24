@@ -25,4 +25,6 @@ export class SetFilter {
   constructor(public payload: FilterModel) {}
 }
 
-export type FlightInfoActions = CalendarOfPricesLoaded;
+export class StartLoading {
+  static readonly type = '[Loading] Start Loading';
+}

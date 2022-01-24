@@ -1,5 +1,5 @@
 export type FilterModel = {
-  class: number | null;
+  flightClass: string | number | null;
   gate: string | null;
   transfers: string | null;
   minPrice: number | null;
