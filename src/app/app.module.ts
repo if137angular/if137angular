@@ -60,6 +60,7 @@ import { FlightPriceTrendsComponent } from './components/flight-price-trends/fli
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { FlightFilterComponent } from './components/flight-filter/flight-filter.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { FlightFilterComponent } from './components/flight-filter/flight-filter.
     FlightPriceTrendsComponent,
     ToolbarComponent,
     FlightFilterComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
