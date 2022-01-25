@@ -14,6 +14,7 @@ export interface FlightInfoStateModel {
   specialOffers: any; // TODO: create model
   currency: string;
   filter: FilterModel;
+  loading: boolean;
 }
 
 @State<FlightInfoStateModel>({
@@ -23,12 +24,13 @@ export interface FlightInfoStateModel {
     specialOffers: [],
     currency: 'uah',
     filter: {
-      class: null,
+      flightClass: null,
       gate: null,
       transfers: null,
       minPrice: null,
       maxPrice: null,
     },
+    loading: false,
   },
 })
 @Injectable()
@@ -42,7 +44,7 @@ export class FlightInfoState {
 
   @Selector()
   static specialOffers(state: FlightInfoStateModel): any {
-    return state.specialOffers;
+    return filterArray(state.specialOffers, state.filter);
   }
 
   @Selector()
@@ -53,6 +55,11 @@ export class FlightInfoState {
   @Selector()
   static filter(state: FlightInfoStateModel): FilterModel {
     return state.filter;
+  }
+
+  @Selector()
+  static loading(state: FlightInfoStateModel): boolean {
+    return state.loading;
   }
 
   @Action(FlightInfoActions.CalendarOfPricesLoaded)
@@ -66,18 +73,9 @@ export class FlightInfoState {
         context.patchState({
           calendarOfPrices: data,
           currency,
+          loading: false,
         });
       });
-  }
-
-  @Action(FlightInfoActions.SetFilter)
-  SetFilter(
-    { patchState }: StateContext<FlightInfoStateModel>,
-    { payload }: FlightInfoActions.SetFilter
-  ) {
-    patchState({
-      filter: payload,
-    });
   }
 
   @Action(FlightInfoActions.GetSpecialOffers)
@@ -95,5 +93,22 @@ export class FlightInfoState {
       .subscribe((specialOffers: { data: any }) => {
         context.patchState({ specialOffers: specialOffers.data });
       });
+  }
+
+  @Action(FlightInfoActions.SetFilter)
+  SetFilter(
+    { patchState }: StateContext<FlightInfoStateModel>,
+    { payload }: FlightInfoActions.SetFilter
+  ) {
+    patchState({
+      filter: payload,
+    });
+  }
+
+  @Action(FlightInfoActions.StartLoading)
+  StartLoading({ patchState }: StateContext<FlightInfoStateModel>) {
+    patchState({
+      loading: true,
+    });
   }
 }

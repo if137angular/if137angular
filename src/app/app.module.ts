@@ -30,6 +30,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 // Services
 import { RequestDataService } from 'src/app/services/request-data.service';
@@ -61,6 +62,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { FlightFilterComponent } from './components/flight-filter/flight-filter.component';
 import { RegisterComponent } from './components/register/register.component';
+import { MapsComponent } from './components/maps/maps.component';
+import { LoadingBarComponent } from './components/loading-bar/loading-bar.component';
+import { AnimatedMapsComponent } from './components/animated-maps/animated-maps.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +91,9 @@ import { RegisterComponent } from './components/register/register.component';
     ToolbarComponent,
     FlightFilterComponent,
     RegisterComponent,
+    MapsComponent,
+    LoadingBarComponent,
+    AnimatedMapsComponent,
   ],
   imports: [
     BrowserModule,
@@ -114,7 +121,7 @@ import { RegisterComponent } from './components/register/register.component';
     MatCardModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
-
+    MatProgressBarModule,
     NgxsModule.forRoot(appState, {
       developmentMode: true,
     }),

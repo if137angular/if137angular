@@ -7,9 +7,10 @@ import {
   forwardRef,
 } from '@angular/core';
 import {
+  AbstractControl,
   ControlValueAccessor,
-  FormControl,
-  NG_VALUE_ACCESSOR,
+  FormControl, NG_VALIDATORS,
+  NG_VALUE_ACCESSOR, ValidationErrors,
 } from '@angular/forms';
 import { CitiesModel } from 'src/app/models/cities.model';
 
@@ -23,6 +24,11 @@ import { CitiesModel } from 'src/app/models/cities.model';
       multi: true,
       useExisting: forwardRef(() => AutocompleteComponent),
     },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: AutocompleteComponent,
+      multi: true,
+    }
   ],
 })
 export class AutocompleteComponent implements OnInit, ControlValueAccessor {
@@ -71,5 +77,12 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
       (item: CitiesModel) => item.name === this.autoCompleteControl.value
     );
     this.onChange(matchedCity);
+  }
+
+  validate({ value }: FormControl) {
+    const isNotValid = !value.code;
+    return isNotValid && {
+      invalid: true
+    }
   }
 }

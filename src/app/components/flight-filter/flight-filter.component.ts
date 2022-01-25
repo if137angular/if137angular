@@ -16,6 +16,10 @@ type OptionModel = {
 export class FlightFilterComponent implements OnInit {
   classOptions: OptionModel[] = [
     {
+      label: 'All',
+      value: 'All',
+    },
+    {
       label: 'Economy class',
       value: 0,
     },
@@ -30,6 +34,10 @@ export class FlightFilterComponent implements OnInit {
   ];
 
   gateOptions: OptionModel[] = [
+    {
+      label: 'All',
+      value: 'All',
+    },
     {
       label: 'Kiwi.com',
       value: 'Kiwi.com',
@@ -60,7 +68,7 @@ export class FlightFilterComponent implements OnInit {
   ];
 
   filterGroup: FormGroup = new FormGroup({
-    class: new FormControl(null),
+    flightClass: new FormControl(null),
     gate: new FormControl(null),
     minPrice: new FormControl(null),
     maxPrice: new FormControl(null),

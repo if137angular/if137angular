@@ -1,33 +1,26 @@
-<div
-  class="calendar-loading"
-  *ngIf="calendarData.length === 0 && formData.origin && formData.destination"
->
-  <ngx-skeleton-loader
-    [ngStyle]="{
-      dispay: 'block'
-    }"
-    count="1"
-    appearance="circle"
-    [theme]="{
-      'border-radius': '5px',
-      width: '100px',
-      height: '100px',
-      border: '1px solid white'
-    }"
-    *ngFor="let n of loadingCardCount"
-  ></ngx-skeleton-loader>
-</div>
-
+<app-loading-bar
+  *ngIf="loading && formData.origin && formData.destination"
+></app-loading-bar>
 <div class="error" *ngIf="!formData.origin || !formData.destination">
   <p>Please choose origin and destination</p>
 </div>
 
-<div
-  class="calendar-content"
-  *ngIf="calendarData.length > 0 && formData.origin && formData.destination"
->
-  <app-flight-filter></app-flight-filter>
-  <div class="calendar">
+<div class="calendar-content">
+  <div
+    class="error"
+    *ngIf="
+      !loading &&
+      calendarData.length === 0 &&
+      formData.origin &&
+      formData.destination
+    "
+  >
+    <p>No tickets</p>
+  </div>
+  <div
+    class="calendar"
+    *ngIf="calendarData.length > 0 && formData.origin && formData.destination"
+  >
     <app-calendar-of-prices-item
       *ngFor="let data of calendarData"
       [data]="data"
