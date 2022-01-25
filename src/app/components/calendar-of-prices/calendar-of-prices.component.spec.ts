@@ -14,7 +14,7 @@ import { RequestDataState } from 'src/app/store/request-data.state';
 import { CalendarOfPricesComponent } from './calendar-of-prices.component';
 import { CalendarOfPricesLoaded } from 'src/app/store/flight-info.action';
 
-fdescribe('CalendarOfPricesComponent', () => {
+describe('CalendarOfPricesComponent', () => {
   let component: CalendarOfPricesComponent;
   let fixture: ComponentFixture<CalendarOfPricesComponent>;
   let debugElement: DebugElement;
