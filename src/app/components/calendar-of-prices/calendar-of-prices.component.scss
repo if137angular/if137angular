@@ -26,3 +26,7 @@
     line-height: 35px;
   }
 }
+
+:host(.calendar-component) {
+  width: 100%;
+}
