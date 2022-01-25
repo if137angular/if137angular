@@ -89,14 +89,15 @@ h3 {
 
     .hover-txt {
       position: absolute;
-      z-index: -99;
       width: max-content;
+      top: -30px;
       opacity: 0;
-      transition: all linear 0.4s;
+      transform: scale(0);
+      transition: opacity ease-in 0.2s, transform ease-in 0.3s;
     }
     &:hover .hover-txt {
       opacity: 1;
-      transform: translate(0px, -50px);
+      transform: scale(1);
     }
 
     &:active {

@@ -28,10 +28,10 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
   constructor(public store: Store) { }
 
   gotToLink(link: any) {
-    // window.open(
-    //   `https://search.jetradar.com/flights/${link}&currency=${this.currency}&locale=${this.language}`,
-    //   '_blank'
-    // );
+    window.open(
+      `https://search.jetradar.com/flights/${link}&currency=${this.currency}&locale=${this.language}`,
+      '_blank'
+    );
   }
 
   getCurrency(number: any) {
