@@ -4,10 +4,15 @@
     <div class="city-destination">
       <div *ngFor="let cities of response | keyvalue">
         <form class="form">
-          <mat-label class="city-destination-label">{{getCityNameByKey(cities.key)}}</mat-label>
-          <mat-select>
+          <mat-label class="city-destination-label">
+            <img
+              src="https://flagcdn.com/w20/{{getCountryCodeByCityCode(cities.key) | lowercase}}.png"
+              width="20"
+              height="4">
+            {{getCityNameByKey(cities.key)}}</mat-label>
+          <mat-select [ngModel]="selectedCities" (ngModelChange)="onChangeObj($event)" name="sel3">
             <div class="cities_info">
-              <mat-option *ngFor="let items of cities.value">
+              <mat-option [value]="items" *ngFor="let items of cities.value">
                 <span>
                      <span class="destination">{{getCityNameByKey(items.origin)}}</span>
                      <mat-icon>trending_flat</mat-icon>
@@ -15,7 +20,7 @@
                      <span class="price"> starting at
                        <b>{{items.price}}$</b>
                      </span>
-                   </span>
+                  </span>
               </mat-option>
             </div>
           </mat-select>
@@ -24,3 +29,5 @@
     </div>
   </div>
 </div>
+
+

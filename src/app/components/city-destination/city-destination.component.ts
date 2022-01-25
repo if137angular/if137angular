@@ -38,6 +38,9 @@ export class CityDestinationComponent implements OnInit {
   items: GetDestinationPopular[] = []
   response: Map<string, DestinationPopular[]> = new Map<string, DestinationPopular[]>();
   cities: DestinationPopular[];
+  selectedDestinstion: string = '';
+  selectedOrigin: string = '';
+  selectedCities:string
 
   ngOnInit(): void {
     zip(this.flightInfoService
@@ -67,4 +70,26 @@ export class CityDestinationComponent implements OnInit {
     const matchedCity = this.store.selectSnapshot(RequestDataState.cities).find((city: CitiesModel) => city.code === cityKey);
     return matchedCity ? matchedCity.name : ''
   }
+
+  getCountryCodeByCityCode(countryKey:string): string {
+    const matchedCountry =  this.store.selectSnapshot(RequestDataState.cities).find((city: CitiesModel) => city.code === countryKey);
+    return matchedCountry? matchedCountry.country_code : ''
+    console.log(matchedCountry)
+  }
+
+
+  onChangeObj(newObj:any) {
+    this.selectedOrigin = this.getCityNameByKey(newObj.origin);
+    console.log(this.selectedOrigin);
+    this.selectedDestinstion = this.getCityNameByKey(newObj.destination);
+    console.log(this.selectedDestinstion);
+    this.selectedCities = `${ this.selectedOrigin} ${this.selectedDestinstion}`;
+    console.log(this.selectedCities)
+    // this.selectedCities = [this.selectedOrigin, this.selectedDestinstion];
+    // console.log(this.selectedCities)
+  }
+
+
+
+
 }

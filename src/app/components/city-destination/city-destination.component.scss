@@ -55,7 +55,8 @@ span {
 }
 
 img {
-  height: 40px;
+  height: 20px;
+  border-radius: 50%;
 }
 
 form {
@@ -65,7 +66,4 @@ form {
   border-radius: 15px;
   background-image: url(https://images.kiwi.com/photos/220x165/non-existing.jpg);
 }
-mat-select{
-  height: 1px;
-  padding-bottom: 3px;
-}
+
