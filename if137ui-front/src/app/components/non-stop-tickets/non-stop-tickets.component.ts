@@ -45,7 +45,6 @@ export class NonStopTicketsComponent implements OnInit {
           this.nonStopInfo = response;
           this.cityOrigin = formData.destinationFrom.name;
           this.cityArrival = formData.destinationTo.name;
-          console.log(this.nonStopInfo)
         });
     });
   }
