@@ -1,0 +1,16 @@
+.data-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 10px;
+
+  button {
+    padding: 9px 64px;
+  }
+}
+
+:host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background: #fff !important;
+}

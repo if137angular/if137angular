@@ -1,9 +1,12 @@
-# If137FlightsInfo!
+# If137FlightsInfo
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.3.
 
 ## Development server
 
-Run `ng serve` for a front server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-Run `npm run start:dev` for an api server. Navigate to `http://localhost:4300/`. The app will automatically reload if you change any of the source files.
+Go to `client` folder and run `ng serve` for the Angular dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+Go to `server` folder and run `npm run start:dev` for an API server. Navigate to `http://localhost:4300/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 

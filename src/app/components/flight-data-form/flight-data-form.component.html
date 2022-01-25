@@ -1,0 +1,24 @@
+<form class="data-form" [formGroup]="flightDataFormGroup">
+  <app-autocomplete formControlName="destinationFrom" label="From"
+    [items]="cities"
+    [class.validation-error]="flightDataFormGroup.controls['destinationFrom'].invalid" ></app-autocomplete>
+  <app-autocomplete formControlName="destinationTo" label="To"
+    [items]="cities"
+    [class.mat-error]="flightDataFormGroup.controls['destinationTo'].invalid"></app-autocomplete>
+
+  <mat-form-field appearance="fill">
+    <mat-label>From / To date range</mat-label>
+    <mat-date-range-input [rangePicker]="picker" [min]="minDate">
+      <input formControlName="startDate" matStartDate placeholder="Start date" />
+      <input formControlName="endDate" matEndDate placeholder="End date" />
+    </mat-date-range-input>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+  </mat-form-field>
+
+  <app-transfers formControlName="transfers"></app-transfers>
+
+  <div>
+    <button [disabled]="flightDataFormGroup.invalid" mat-flat-button type="button" color="warn" (click)="onSubmitForm()">SEARCH</button>
+  </div>
+</form>
