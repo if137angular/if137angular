@@ -64,6 +64,7 @@ import { FlightFilterComponent } from './components/flight-filter/flight-filter.
 import { MapsComponent } from './components/maps/maps.component';
 import { LoadingBarComponent } from './components/loading-bar/loading-bar.component';
 import { AnimatedMapsComponent } from './components/animated-maps/animated-maps.component';
+import { CurrencyDropdownComponent } from './components/currency-dropdown/currency-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { AnimatedMapsComponent } from './components/animated-maps/animated-maps.
     MapsComponent,
     LoadingBarComponent,
     AnimatedMapsComponent,
+    CurrencyDropdownComponent,
   ],
   imports: [
     BrowserModule,
