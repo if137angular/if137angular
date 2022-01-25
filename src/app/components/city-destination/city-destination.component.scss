@@ -2,15 +2,21 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 50px;
 }
 
 .city-destination {
+  margin: 20px;
+  width: 60%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  text-align: center;
 
   &-label {
+    vertical-align: middle;
     color: mediumpurple;
+   font-size: 20px;
   }
 }
 
@@ -29,29 +35,35 @@
 }
 
 .cities_info {
-  background-color: rgb(230, 230, 230);
+  background-color: white;
 }
 
+.form{
+  width: 250px;
+  height: 40px;
+}
+
+
 h1 {
-  font: 900 2em Roboto, "Helvetica Neue", sans-serif;
+  font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
   text-align: center;
   color: white;
-  margin-left: -48px;
-
-  img {
-    height: 40px;
-    vertical-align: middle;
-  }
 }
 
 span {
   color: rgb(159, 106, 175);
 }
 
+img {
+  height: 20px;
+  border-radius: 50%;
+}
+
 form {
-  flex: 1 0 21%;
+ flex: 1 0 21%;
   margin: 5px;
   height: 100px;
   border-radius: 15px;
   background-image: url(https://images.kiwi.com/photos/220x165/non-existing.jpg);
 }
+
