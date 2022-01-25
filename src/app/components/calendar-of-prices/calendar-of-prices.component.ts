@@ -17,6 +17,9 @@ import { RequestDataState } from 'src/app/store/request-data.state';
   selector: 'app-calendar-of-prices',
   templateUrl: './calendar-of-prices.component.html',
   styleUrls: ['./calendar-of-prices.component.scss'],
+  host: {
+    class: 'calendar-component',
+  },
 })
 export class CalendarOfPricesComponent implements OnInit {
   calendarData: CalendarOfPricesModel[];
