@@ -1,5 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SpecialOffersSelectComponent } from './special-offers-select.component';
+import { BrowserModule, By } from '@angular/platform-browser';
+import { AppRoutingModule } from 'src/app/app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgxsModule, Store } from '@ngxs/store';
 import { appState } from 'src/app/store/appState';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
@@ -8,8 +28,10 @@ import { Subject } from 'rxjs';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { RequestDataService } from 'src/app/services/request-data.service';
+import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { GetCurrencies, GetLanguages } from 'src/app/store/request-data.action';
-
+import { Component, Input, Output, EventEmitter, OnChanges, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 describe('SpecialOffersSelectComponent', () => {
   let component: SpecialOffersSelectComponent;
@@ -33,7 +55,29 @@ describe('SpecialOffersSelectComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        DebugElement,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        MatAutocompleteModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        MatTabsModule,
+        MatFormFieldModule,
+        MatTooltipModule,
+        MatIconModule,
+        MatTableModule,
+        MatButtonModule,
+        MatCardModule,
+        MatProgressSpinnerModule,
+        MatToolbarModule,
         NgxsModule.forRoot(appState, {
           developmentMode: true,
         }),
@@ -46,8 +90,7 @@ describe('SpecialOffersSelectComponent', () => {
         { provide: RequestDataService, useValue: requestDataService }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SpecialOffersSelectComponent);
     debugElement = fixture.debugElement;
@@ -66,14 +109,14 @@ describe('SpecialOffersSelectComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('#dispatchOption', () => {
-    it('should dispatch GetLanguages and GetCurrencies with appropriate params', () => {
+  describe('#setOption', () => {
+    it('should set option for GetLanguages and GetCurrencies with appropriate params', () => {
       // arrange
       component.languages.length = 64;
       component.currencies.length = 79;
 
       // act
-      component.dispatchOption();
+      component.setOption();
       // assert
       expect(store.dispatch).toHaveBeenCalledWith(new GetLanguages({
         languages: [].length = 64
@@ -140,4 +183,5 @@ describe('SpecialOffersSelectComponent', () => {
       }))
     })
   })
+
 });
