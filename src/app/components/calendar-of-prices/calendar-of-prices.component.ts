@@ -6,7 +6,10 @@ import {
   CalendarOfPricesPayload,
 } from 'src/app/models/calendar-of-prices.model';
 import { FormDataModel } from 'src/app/models/formData.model';
-import { CalendarOfPricesLoaded } from 'src/app/store/flight-info.action';
+import {
+  CalendarOfPricesLoaded,
+  StartLoading,
+} from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { RequestDataState } from 'src/app/store/request-data.state';
 
@@ -19,6 +22,7 @@ export class CalendarOfPricesComponent implements OnInit {
   calendarData: CalendarOfPricesModel[];
   formData: CalendarOfPricesPayload;
   currency: string;
+  loading: boolean;
   loadingCardCount: number[];
 
   constructor(private store: Store) {
@@ -35,6 +39,10 @@ export class CalendarOfPricesComponent implements OnInit {
       .subscribe((state) => (this.currency = state));
 
     this.store
+      .select(FlightInfoState.loading)
+      .subscribe((state) => (this.loading = state));
+
+    this.store
       .select(RequestDataState.formData)
       .pipe(
         map((state: FormDataModel) => ({
@@ -47,7 +55,10 @@ export class CalendarOfPricesComponent implements OnInit {
         }))
       )
       .subscribe((data: CalendarOfPricesPayload) => {
-        this.store.dispatch(new CalendarOfPricesLoaded(data));
+        this.store.dispatch([
+          new StartLoading(),
+          new CalendarOfPricesLoaded(data),
+        ]);
         this.formData = data;
       });
   }
