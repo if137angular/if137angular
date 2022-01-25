@@ -33,17 +33,18 @@
       </div>
 
       <div class="card__info" (click)="gotToLink(item.link)">
+        <span class="hover-txt">Click for details</span>
         <div class="card__info-item">
           <p class="card__city-from">
             {{ item.origin_name === "" ? item.origin : item.origin_name }}
           </p>
-          <p class="card__date-from">{{ item.departure_at | date }}</p>
+          <p class="card__date">{{ item.departure_at | date }}</p>
         </div>
         <div class="card__info-item">
           <div class="card__line-top">
-            <mat-icon>flight_takeoff</mat-icon>
+            <mat-icon class="card__icon">flight_takeoff</mat-icon>
             <p class="card__duration">{{ getHours(item.duration) }}</p>
-            <mat-icon>flight_land</mat-icon>
+            <mat-icon class="card__icon">flight_land</mat-icon>
           </div>
           <div class="card__line-main"></div>
           <div class="card__line-bottom">
@@ -64,7 +65,7 @@
                 : item.destination_name
             }}
           </p>
-          <p class="card__date-to">
+          <p class="card__date">
             {{ item.departure_at | date }}
           </p>
         </div>

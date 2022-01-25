@@ -28,10 +28,10 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
   constructor(public store: Store) { }
 
   gotToLink(link: any) {
-    window.open(
-      `https://search.jetradar.com/flights/${link}&currency=${this.currency}&locale=${this.language}`,
-      '_blank'
-    );
+    // window.open(
+    //   `https://search.jetradar.com/flights/${link}&currency=${this.currency}&locale=${this.language}`,
+    //   '_blank'
+    // );
   }
 
   getCurrency(number: any) {
@@ -46,7 +46,13 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
   getHours(min: any) {
     let hours = Math.trunc(min / 60);
     let minutes = min % 60;
-    return `${hours}h:${minutes}min`;
+    if (minutes === 0) {
+      return `${hours}h`;
+    }
+    if (hours === 0 && minutes !== 0) {
+      return ` ${minutes}m`;
+    }
+    return `${hours}h:${minutes}m`;
   }
 
   ngOnInit(): void {
