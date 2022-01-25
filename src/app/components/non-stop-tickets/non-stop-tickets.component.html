@@ -15,10 +15,10 @@
         <h3><fa-icon [icon]="faPlane"></fa-icon> Airline: {{item.airline }}</h3>
         <h3>Flight Number {{ item.flight_number }}</h3>
         <div class="ticket__departure">
-          <h3> <fa-icon [icon]="faDeparture"></fa-icon> Departure: {{ item.departure_at |  date: 'medium'}}</h3>
+          <h3> <fa-icon [icon]="faDeparture"></fa-icon> Departure: {{ item.departure_at |  date: 'short'}}</h3>
         </div>
         <div class="ticket__return">
-          <h3><fa-icon [icon]="faArrival"></fa-icon> Return: {{ item.return_at | date: 'medium'}}</h3>
+          <h3><fa-icon [icon]="faArrival"></fa-icon> Return: {{ item.return_at | date: 'short'}}</h3>
         </div>
       </div>
     </div>
