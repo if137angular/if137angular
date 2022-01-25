@@ -44,7 +44,7 @@ export class FlightInfoState {
 
   @Selector()
   static specialOffers(state: FlightInfoStateModel): any {
-    return state.specialOffers;
+    return filterArray(state.specialOffers, state.filter);
   }
 
   @Selector()
