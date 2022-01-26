@@ -5,6 +5,8 @@ import { mergeMap, groupBy, reduce } from 'rxjs/operators';
 import { Store } from "@ngxs/store";
 import { CitiesModel } from "src/app/models/cities.model";
 import { RequestDataState } from "src/app/store/request-data.state";
+import {SetFormDate} from "../../store/request-data.action";
+
 
 export type DestinationPopular = {
   origin: string;
@@ -73,8 +75,7 @@ export class CityDestinationComponent implements OnInit {
 
   getCountryCodeByCityCode(countryKey: string): string {
     const matchedCountry = this.store.selectSnapshot(RequestDataState.cities).find((city: CitiesModel) => city.code === countryKey);
-    return matchedCountry ? matchedCountry.country_code : '';
-    console.log(matchedCountry)
+    return matchedCountry ? matchedCountry.country_code : ''
   }
 
 
@@ -83,11 +84,13 @@ export class CityDestinationComponent implements OnInit {
     console.log(this.selectedOrigin);
     this.selectedDestinstion = this.getCityNameByKey(newObj.destination);
     console.log(this.selectedDestinstion);
-    this.selectedCities = `${this.selectedOrigin} ${this.selectedDestinstion}`;
-    console.log(this.selectedCities)
-    // this.selectedCities = [this.selectedOrigin, this.selectedDestinstion];
-    // console.log(this.selectedCities)
-  }
-
-
+      const formData = {
+        destinationFrom: this.selectedOrigin,
+        destinationTo: this.selectedDestinstion,
+        endDate: new Date(),
+        startDate: new Date(),
+        transfers: null,
+      }
+      this.store.dispatch(new SetFormDate(formData))
+    }
 }
