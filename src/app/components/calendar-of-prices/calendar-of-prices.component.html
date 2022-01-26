@@ -1,33 +1,18 @@
-<app-loading-bar
-  *ngIf="loading && formData.origin && formData.destination"
-></app-loading-bar>
 <div class="error" *ngIf="!formData.origin || !formData.destination">
   <p>Please choose origin and destination</p>
 </div>
 
 <div class="calendar-content">
-  <div
-    class="error"
-    *ngIf="
-      !loading &&
+  <div class="error" *ngIf="
       calendarData.length === 0 &&
       formData.origin &&
       formData.destination
-    "
-  >
+    ">
     <p>No tickets</p>
   </div>
-  <div
-    class="calendar"
-    *ngIf="calendarData.length > 0 && formData.origin && formData.destination"
-  >
-    <app-calendar-of-prices-item
-      *ngFor="let data of calendarData"
-      [data]="data"
-      [currency]="currency"
-      [destination]="formData.destination"
-      [origin]="formData.origin"
-    >
+  <div class="calendar" *ngIf="calendarData.length > 0 && formData.origin && formData.destination">
+    <app-calendar-of-prices-item *ngFor="let data of calendarData" [data]="data" [currency]="currency"
+      [destination]="formData.destination" [origin]="formData.origin">
     </app-calendar-of-prices-item>
   </div>
 </div>

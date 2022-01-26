@@ -34,7 +34,8 @@ export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
     this.formData$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(formData => {
-        this.flightInfoService.getFlightPriceTrends(formData.destinationFrom.code, formData.destinationTo.code, formData.startDate.toISOString().slice(0, 7), formData.endDate.toISOString().slice(0, 7), this.currency).subscribe((response: any) => {
+        this.flightInfoService.getFlightPriceTrends(formData.destinationFrom.code, formData.destinationTo.code, formData.startDate.toISOString().slice(0, 7), formData.endDate.toISOString().slice(0, 7), this.currency)
+        .subscribe((response: any) => {
           this.data = Object.values(response.data);
           this.cityFrom = formData.destinationFrom.name;
           this.cityTo = formData.destinationTo.name;

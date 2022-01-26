@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsModule, Store } from '@ngxs/store';
-import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { Subject } from 'rxjs';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
@@ -41,7 +40,6 @@ describe('CalendarOfPricesComponent', () => {
       imports: [
         BrowserModule,
         AppRoutingModule,
-        NgxSkeletonLoaderModule,
         NgxsModule.forRoot(appState, {
           developmentMode: true,
         }),

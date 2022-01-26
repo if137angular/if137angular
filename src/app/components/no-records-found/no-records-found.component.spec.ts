@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoadingBarComponent } from './loading-bar.component';
+import { NoRecordsFoundComponent } from './no-records-found.component';
 
-describe('LoadingBarComponent', () => {
-  let component: LoadingBarComponent;
-  let fixture: ComponentFixture<LoadingBarComponent>;
+describe('NoRecordsFoundComponent', () => {
+  let component: NoRecordsFoundComponent;
+  let fixture: ComponentFixture<NoRecordsFoundComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoadingBarComponent ]
+      declarations: [ NoRecordsFoundComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoadingBarComponent);
+    fixture = TestBed.createComponent(NoRecordsFoundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

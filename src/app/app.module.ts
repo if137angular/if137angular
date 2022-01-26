@@ -9,9 +9,6 @@ import { NgxsModule } from '@ngxs/store';
 import { appState } from 'src/app/store/appState';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 
-// Other
-import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
-
 // Angular Material
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
@@ -62,7 +59,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { FlightFilterComponent } from './components/flight-filter/flight-filter.component';
 import { MapsComponent } from './components/maps/maps.component';
-import { LoadingBarComponent } from './components/loading-bar/loading-bar.component';
+import { NoRecordsFoundComponent } from './components/no-records-found/no-records-found.component';
 import { AnimatedMapsComponent } from './components/animated-maps/animated-maps.component';
 import { CurrencyDropdownComponent } from './components/currency-dropdown/currency-dropdown.component';
 
@@ -91,7 +88,7 @@ import { CurrencyDropdownComponent } from './components/currency-dropdown/curren
     ToolbarComponent,
     FlightFilterComponent,
     MapsComponent,
-    LoadingBarComponent,
+    NoRecordsFoundComponent,
     AnimatedMapsComponent,
     CurrencyDropdownComponent,
   ],
@@ -127,7 +124,6 @@ import { CurrencyDropdownComponent } from './components/currency-dropdown/curren
     }),
     NgxsLoggerPluginModule.forRoot(),
     FontAwesomeModule,
-    NgxSkeletonLoaderModule,
   ],
   providers: [
     RequestDataService,
