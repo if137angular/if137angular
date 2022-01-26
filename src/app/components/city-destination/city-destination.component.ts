@@ -5,7 +5,7 @@ import { mergeMap, groupBy, reduce } from 'rxjs/operators';
 import { Store } from "@ngxs/store";
 import { CitiesModel } from "src/app/models/cities.model";
 import { RequestDataState } from "src/app/store/request-data.state";
-
+import {SetFormDate} from "../../store/request-data.action";
 
 
 export type DestinationPopular = {
