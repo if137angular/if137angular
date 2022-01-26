@@ -5,6 +5,7 @@ import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';
 import { FlightsInfoService } from '../services/flights-info.service';
 import { FilterModel } from '../models/filter.model';
 import filterArray from 'src/utils/filterFunc';
+import { startOfDay } from 'date-fns';
 
 export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesModel[];
@@ -36,7 +37,27 @@ export class FlightInfoState {
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
-    return filterArray(state.calendarOfPrices, state.filter);
+    // state.calendarOfPrices.map(({ return_date, depart_date }) =>
+    //   console.log(depart_date, return_date)
+    // );
+
+    // console.log(
+    //   state.calendarOfPrices.map(
+    //     ({ depart_date, return_date, value, found_at }) => ({
+    //       start: startOfDay(new Date(found_at)),
+    //       title: `${return_date},${depart_date},${value}`,
+    //     })
+    //   )
+    // );
+    // return filterArray(state.calendarOfPrices, state.filter);
+    return state.calendarOfPrices.map(
+      ({ depart_date, return_date, value, found_at }) => ({
+        // start: startOfDay(new Date(found_at)),
+        start: startOfDay(new Date(depart_date)),
+        // end: startOfDay(new Date(return_date)),
+        title: `${depart_date},${depart_date},${value}`,
+      })
+    );
   }
 
   @Selector()
