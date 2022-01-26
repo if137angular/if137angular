@@ -9,3 +9,11 @@ export interface FlightInfo {
 	price: number;
 	return_at: string;
 }
+
+export type FlightTiketsForDatePayload = {
+	codeFrom: string;
+	codeTo: string;
+	startDate: string;
+	endDate: string;
+	direct: boolean;
+}

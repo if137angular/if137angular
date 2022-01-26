@@ -12,6 +12,7 @@ import filterArray from 'src/utils/filterFunc';
 export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesModel[];
   specialOffers: any; // TODO: create model
+  flightTiketsForDate: any;
   currency: string;
   filter: FilterModel;
   loading: boolean;
@@ -22,6 +23,7 @@ export interface FlightInfoStateModel {
   defaults: {
     calendarOfPrices: [],
     specialOffers: [],
+    flightTiketsForDate: [],
     currency: 'uah',
     filter: {
       flightClass: null,
@@ -77,6 +79,26 @@ export class FlightInfoState {
         });
       });
   }
+// **** Action for my component ***
+  @Action(FlightInfoActions.GetTiketsForSpecialDate)
+  LoadTiketsForSpecialDate(
+    context: StateContext<FlightInfoStateModel>,
+    { payload }: FlightInfoActions.GetTiketsForSpecialDate
+  ) {
+    this.flightInfoService
+      .getFlightTicketsForDate(
+        payload.codeFrom,
+        payload.codeTo,
+        payload.startDate,
+        payload.endDate,
+        payload.direct,
+      )
+    .subscribe((flightTiketsForDate: {data: any}) => {
+      context.patchState({ flightTiketsForDate: flightTiketsForDate.data, loading: false})
+    })
+  }
+
+  // **** End Action for my component ***
 
   @Action(FlightInfoActions.GetSpecialOffers)
   GetSpecialOffers(

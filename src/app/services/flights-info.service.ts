@@ -14,6 +14,7 @@ import { TicketsRequestParam } from '../models/cheapest-tickets.model';
 import { map } from 'rxjs/operators';
 import { catchError, retry } from 'rxjs/operators';
 import { GetDestinationPopular } from '../components/city-destination/city-destination.component';
+import { FlightTiketsForDatePayload } from '../models/flight-tickets-for-date.model';
 
 @Injectable()
 export class FlightsInfoService {
@@ -156,6 +157,13 @@ export class FlightsInfoService {
   }
 
   getFlightTicketsForDate(
+    // {
+    //   codeFrom,
+    //   codeTo,
+    //   startDate,
+    //   endDate,
+    //   direct
+    // }: FlightTiketsForDatePayload
     codeFrom: string,
     codeTo: string,
     startDate: string,
