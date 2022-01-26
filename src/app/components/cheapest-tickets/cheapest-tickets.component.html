@@ -1,11 +1,1 @@
-<div class="wrapper">
-  <div class="ticketsWrapper" *ngIf="ticketsData && isTicketData">
-    <app-ticket-item
-      *ngFor="let ticket of ticketsData"
-      [ticketData]="ticket">
-    </app-ticket-item>
-  </div>
-  <div *ngIf="!isTicketData" class="noFound">
-    <p>Tickets not found</p>
-  </div>
-</div>
+<p>cheapest-tickets works!  {{(loading$ | async)}}</p>

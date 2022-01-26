@@ -22,10 +22,10 @@ export class FlightTicketComponent implements OnInit {
     this.formData = this.store.selectSnapshot(RequestDataState.formData)
   }
 
-  myTime(value: number): string {
+  flightDuration(value: number): string {
     let hours = Math.floor(value / 60);
     let minutes = Math.floor(value % 60);
-    return hours + ' hrs ' + minutes + ' mins';
+    return `${hours} hrs ${minutes} mins`;
   }
 
 }

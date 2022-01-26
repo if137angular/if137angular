@@ -1,0 +1,21 @@
+<div class="dropdown">
+  <div class="dropdown__flag" *ngFor="let currency of currencies">
+    <img
+      *ngIf="selectedOption === currency.code"
+      src="{{ currency.flag }}"
+      alt=""
+    />
+  </div>
+  <mat-form-field class="dropdown__currency">
+    <mat-select class="dropdown__select" [(ngModel)]="selectedOption">
+      <mat-option
+        class="dropdown__option"
+        *ngFor="let currency of currencies"
+        selected="currency.code === 'usd'"
+        [value]="currency.code"
+      >
+        {{ currency.code | uppercase }}
+      </mat-option>
+    </mat-select></mat-form-field
+  >
+</div>
