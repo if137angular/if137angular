@@ -17,12 +17,14 @@ import { RequestDataState } from 'src/app/store/request-data.state';
   selector: 'app-calendar-of-prices',
   templateUrl: './calendar-of-prices.component.html',
   styleUrls: ['./calendar-of-prices.component.scss'],
+  host: {
+    class: 'calendar-component', // TODO fix eslint warning
+  },
 })
 export class CalendarOfPricesComponent implements OnInit {
   calendarData: CalendarOfPricesModel[];
   formData: CalendarOfPricesPayload;
   currency: string;
-  loading: boolean;
   loadingCardCount: number[];
 
   constructor(private store: Store) {
@@ -37,10 +39,6 @@ export class CalendarOfPricesComponent implements OnInit {
     this.store
       .select(FlightInfoState.currency)
       .subscribe((state) => (this.currency = state));
-
-    this.store
-      .select(FlightInfoState.loading)
-      .subscribe((state) => (this.loading = state));
 
     this.store
       .select(RequestDataState.formData)
