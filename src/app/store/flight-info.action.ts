@@ -1,5 +1,9 @@
 import { CalendarOfPricesPayload } from '../models/calendar-of-prices.model';
 import { FilterModel } from '../models/filter.model';
+import { FlightTiketsForDatePayload } from '../models/flight-tickets-for-date.model';
+import {FormDataModel} from "../models/formData.model";
+import {CheapestTicketsResponseModel} from "../models/cheapest-tickets.model";
+
 
 //-- Calendar State Actions --
 
@@ -20,6 +24,16 @@ export class GetSpecialOffers {
   ) {}
 }
 
+// ***** Code for Flight-Tikets-For-Special-Date *******
+
+
+export class GetTiketsForSpecialDate {
+  static readonly type = '[FlightInfo] Get Tikets For Special Date';
+  constructor(public payload: FlightTiketsForDatePayload) {}
+}
+
+// ***** End code Flight-Tikets-For-Special-Price  ******
+
 export class SetFilter {
   static readonly type = '[Filter] Set Filter Data';
   constructor(public payload: FilterModel) {}
@@ -31,4 +45,19 @@ export class StartLoading {
 
 export class StopLoading {
   static readonly type = '[Loading] Stop Loading';
+}
+
+export class CheapestTicketsRequest {
+  static readonly type = '[FlightInfo] Cheapest Tickets Request'
+  constructor(public payload: FormDataModel) {  }
+}
+
+export class CheapestTicketsRequestSuccess {
+  static readonly type = '[FlightInfo] Cheapest Tickets Request Success'
+  constructor(public payload: CheapestTicketsResponseModel) {  }
+}
+
+export class CheapestTicketsRequestFail {
+  static readonly type = '[FlightInfo] Cheapest Tickets Request Fail'
+  constructor(public payload: string) {  }
 }
