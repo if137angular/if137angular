@@ -11,6 +11,7 @@ import { FlightTicketsForSpecialDatesComponent } from './components/flight-ticke
 import { MainComponent } from './components/main/main.component';
 import { SearchComponent } from './components/search/search.component';
 import { FlightPriceTrendsComponent } from './components/flight-price-trends/flight-price-trends.component';
+import { RegisterComponent } from './components/register/register.component';
 
 export const routes: Routes = [
   { path: '', component: MainComponent },
@@ -50,6 +51,7 @@ export const routes: Routes = [
       },
     ],
   },
+  { path: 'register', component: RegisterComponent },
 ];
 
 @NgModule({

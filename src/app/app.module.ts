@@ -65,6 +65,7 @@ import { FlightPriceTrendsComponent } from './components/flight-price-trends/fli
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { FlightFilterComponent } from './components/flight-filter/flight-filter.component';
+import { RegisterComponent } from './components/register/register.component';
 import { MapsComponent } from './components/maps/maps.component';
 import { NoRecordsFoundComponent } from './components/no-records-found/no-records-found.component';
 import { AnimatedMapsComponent } from './components/animated-maps/animated-maps.component';
@@ -94,6 +95,7 @@ import { CurrencyDropdownComponent } from './components/currency-dropdown/curren
     FlightPriceTrendsComponent,
     ToolbarComponent,
     FlightFilterComponent,
+    RegisterComponent,
     MapsComponent,
     NoRecordsFoundComponent,
     AnimatedMapsComponent,

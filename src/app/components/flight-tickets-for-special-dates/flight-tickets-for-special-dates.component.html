@@ -1,3 +1,5 @@
+<app-loading-bar></app-loading-bar>
+
 <div class="container" *ngIf="flightInfo.length > 0; else noRecordsFound">
   <h2 class="title">Flight Tickets For Special Date</h2>
   <div class="wrap">
@@ -8,9 +10,8 @@
   </div>
 </div>
 <ng-template #noRecordsFound>
-  <div class="container">
+  <div class="container1">
     <h1 class="text">Sory, we are not founded tickets.</h1>
     <h3 class="text">Please change the date or location</h3>
   </div>
 </ng-template>
-

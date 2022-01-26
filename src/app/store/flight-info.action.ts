@@ -1,5 +1,6 @@
 import { CalendarOfPricesPayload } from '../models/calendar-of-prices.model';
 import { FilterModel } from '../models/filter.model';
+import { FlightTiketsForDatePayload } from '../models/flight-tickets-for-date.model';
 
 //-- Calendar State Actions --
 
@@ -19,6 +20,16 @@ export class GetSpecialOffers {
     }
   ) {}
 }
+
+// ***** Code for Flight-Tikets-For-Special-Date *******
+
+
+export class GetTiketsForSpecialDate {
+  static readonly type = '[FlightInfo] Get Tikets For Special Date';
+  constructor(public payload: FlightTiketsForDatePayload) {}
+}
+
+// ***** End code Flight-Tikets-For-Special-Price  ******
 
 export class SetFilter {
   static readonly type = '[Filter] Set Filter Data';
