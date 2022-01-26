@@ -1,21 +1,21 @@
 .dropdown {
   display: flex;
-
-  &__select {
+  align-items: center;
+  margin-right: 20px;
+  &__currency {
+    width: 80px;
     margin-left: 15px;
-
+  }
+  &__select {
     font-size: 18px;
-    background-color: transparent;
-    outline: none;
-    border: none;
-    appearance: none;
     color: rgb(255, 255, 255);
   }
   &__option {
-    padding: 10px;
-
     background: rgb(103, 58, 183);
     color: rgb(255, 255, 255);
+    &:hover {
+      background-color: rgb(63, 61, 86);
+    }
   }
 }
 
