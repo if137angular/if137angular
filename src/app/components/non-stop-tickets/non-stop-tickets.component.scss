@@ -13,11 +13,6 @@
   }
 }
 
-.forms-non-stop {
-  display: flex;
-  justify-content: space-around;
-}
-
 .ticket-content__wrapper {
   display: flex;
   justify-content: space-around;
@@ -31,7 +26,6 @@
 
   @media screen and(min-width: 980px) {
     display: inline-flex;
-
     width: 470px;
   }
 }
