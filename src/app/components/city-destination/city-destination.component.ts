@@ -84,13 +84,13 @@ export class CityDestinationComponent implements OnInit {
     console.log(this.selectedOrigin);
     this.selectedDestinstion = this.getCityNameByKey(newObj.destination);
     console.log(this.selectedDestinstion);
-    this.selectedCities = `${ this.selectedOrigin} ${this.selectedDestinstion}`;
-    console.log(this.selectedCities)
-    // this.selectedCities = [this.selectedOrigin, this.selectedDestinstion];
-    // console.log(this.selectedCities)
-  }
-
-
-
-
+      const formData = {
+        destinationFrom: this.selectedOrigin,
+        destinationTo: this.selectedDestinstion,
+        endDate: new Date(),
+        startDate: new Date(),
+        transfers: null,
+      }
+      this.store.dispatch(new SetFormDate(formData))
+    }
 }
