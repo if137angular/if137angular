@@ -19,13 +19,18 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit, OnDestroy 
   formData$: Observable<any> // TODO: type
 
   formData: any;
-  flightInfo: FlightInfo[] = [];
-  // flightInfo: any;
+  flightInfo: FlightInfo[];
+  // flightInfo: any; 
+
   loading: boolean;
 
   constructor(private flightInfoService: FlightsInfoService, private store: Store) { }
 
   ngOnInit(): void {
+    this.store
+      .select(FlightInfoState.flightTiketsForDate)
+      .subscribe((state) => (this.flightInfo = state));
+
     this.store.select(FlightInfoState.loading)
       .subscribe(loading => this.loading = loading);
 

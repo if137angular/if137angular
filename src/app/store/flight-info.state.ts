@@ -50,6 +50,11 @@ export class FlightInfoState {
   }
 
   @Selector()
+  static flightTiketsForDate(state: FlightInfoStateModel): any {
+    return filterArray(state.flightTiketsForDate, state.filter);
+  }
+
+  @Selector()
   static currency(state: FlightInfoStateModel): string {
     return state.currency;
   }

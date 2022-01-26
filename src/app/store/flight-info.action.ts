@@ -23,6 +23,7 @@ export class GetSpecialOffers {
 
 // ***** Code for Flight-Tikets-For-Special-Date *******
 
+
 export class GetTiketsForSpecialDate {
   static readonly type = '[FlightInfo] Get Tikets For Special Date';
   constructor(public payload: FlightTiketsForDatePayload) {}

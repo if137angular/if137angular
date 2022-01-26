@@ -162,7 +162,7 @@ export class FlightsInfoService {
     //   codeTo,
     //   startDate,
     //   endDate,
-    //   direct
+    //   direct 
     // }: FlightTiketsForDatePayload
     codeFrom: string,
     codeTo: string,
