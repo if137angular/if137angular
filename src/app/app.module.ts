@@ -68,6 +68,7 @@ import { FlightFilterComponent } from './components/flight-filter/flight-filter.
 import { MapsComponent } from './components/maps/maps.component';
 import { NoRecordsFoundComponent } from './components/no-records-found/no-records-found.component';
 import { AnimatedMapsComponent } from './components/animated-maps/animated-maps.component';
+import { CurrencyDropdownComponent } from './components/currency-dropdown/currency-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { AnimatedMapsComponent } from './components/animated-maps/animated-maps.
     MapsComponent,
     NoRecordsFoundComponent,
     AnimatedMapsComponent,
+    CurrencyDropdownComponent,
   ],
   imports: [
     CommonModule,
