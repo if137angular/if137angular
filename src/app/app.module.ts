@@ -53,9 +53,9 @@ import { TransfersComponent } from './components/transfers/transfers.component';
 import { FlightTicketsForSpecialDatesComponent } from './components/flight-tickets-for-special-dates/flight-tickets-for-special-dates.component';
 
 import { SpecialOffersSelectComponent } from './components/special-offers/special-offers-select/special-offers-select.component';
-import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
-import { TicketItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/ticket-item.component';
-import { FlightItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/flight-item/flight-item.component';
+import { CheapestTicketsComponentOld} from "./components/cheapest-tickets-old-v/cheapest-tickets.component";
+import { TicketItemComponent} from "./components/cheapest-tickets-old-v/cheapest-ticket-item/ticket-item.component";
+import { FlightItemComponent} from "./components/cheapest-tickets-old-v/cheapest-ticket-item/flight-item/flight-item.component";
 import { CityDestinationComponent } from './components/city-destination/city-destination.component';
 import { FlightTicketComponent } from 'src/app/components/flight-tickets-for-special-dates/flight-ticket/flight-ticket.component';
 
@@ -70,6 +70,8 @@ import { MapsComponent } from './components/maps/maps.component';
 import { NoRecordsFoundComponent } from './components/no-records-found/no-records-found.component';
 import { AnimatedMapsComponent } from './components/animated-maps/animated-maps.component';
 import { CurrencyDropdownComponent } from './components/currency-dropdown/currency-dropdown.component';
+import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
+
 
 @NgModule({
   declarations: [
@@ -84,7 +86,7 @@ import { CurrencyDropdownComponent } from './components/currency-dropdown/curren
     TransfersComponent,
     FlightTicketsForSpecialDatesComponent,
     SpecialOffersSelectComponent,
-    CheapestTicketsComponent,
+    CheapestTicketsComponentOld,
     TicketItemComponent,
     FlightItemComponent,
     AppComponent,
@@ -100,6 +102,7 @@ import { CurrencyDropdownComponent } from './components/currency-dropdown/curren
     NoRecordsFoundComponent,
     AnimatedMapsComponent,
     CurrencyDropdownComponent,
+    CheapestTicketsComponent,
   ],
   imports: [
     CommonModule,
