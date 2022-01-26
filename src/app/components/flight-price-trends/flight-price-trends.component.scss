@@ -1,103 +1,91 @@
-.info-card {
-  color: black;
-  padding: 15px 10px;
-
-  &-title {
-    text-align: center;
-  }
-  &-content {
-    display: flex;
-    margin: 10px;
-  }
+.title{
+  text-align: center;
+  margin: 10px 0;
 }
 
-.flights-card {
-  padding: 0px;
-  width: 100%;
-  height: 250px;
-  margin: 20px 0;
+.tickets{
+  display: flex;
+  flex-wrap: wrap;
+}
 
-  &-container {
+.ticket-info{
+  background-image: url(https://media.istockphoto.com/photos/white-plane-on-the-blue-runway-top-view-and-white-background-minimal-picture-id1297855347?b=1&k=20&m=1297855347&s=170667a&w=0&h=RxFx8vsv0F9jnTmvZP35g-H6ssWqTNCJ6Zx_s2ocz2k=);
+  background-size: cover;
+  background-position: center;
+  width: 650px;
+  margin: auto;
+  margin-bottom: 20px;
+  border-radius: 20px;
+
+  &-content-flight{
     display: flex;
-    width: 100%;
-    height: 100%;
+    justify-content: space-between;
+    width: 35%;
+    align-items: center;
+
+    &-details > span{
+      display: block;
+    }
   }
-  &-leftSide {
-    border-right: 1px solid gray;
+
+  &-content-main{
+    width: 30%;
+    padding: 0 5px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    color: white;
-    background-image: url(https://content.skyscnr.com/m/1b5ed09bdb221f8c/original/Greenland-Airplane-Window-View.jpg);
-    background-position: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.808);
 
-    &-info {
+    &:hover {
+      transition: ease-in-out all 0.2s;
+      background-color: #fff;
+      box-shadow: 0px 0px 15px -3px rgba(34, 60, 80, 0.21);
+      border-radius: 10px;
+    }
+
+    &-destination{
+      text-align: center;
+    }
+
+    &-image{
       display: flex;
       flex-direction: column;
+
+    &-top{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
       align-items: center;
-
-      &-airline {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      &-price {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border-radius: 5px;
-        height: 50px;
-        background-color: rgba($color: #c2bbbb, $alpha: 0.8);
-        padding: 5px;
-        font-size: 12px;
-        color: black;
-        :nth-child(1) {
-          color: rgb(199, 20, 20);
-          font-size: 20px;
-        }
-      }
     }
-  }
 
-  &-rightSide {
-    margin: 10px;
-    width: 100%;
+    &-line{
+      height: 1px;
+      border-top: 3px solid black;
+      margin: -5px 0px;
+    }
 
-    &-img {
+    &-bottom{
       display: flex;
+      flex-direction: row;
       justify-content: space-between;
-      margin-top: -10px;
-      font-size: 12px;
+      align-items: center;
+      padding-top: 5px;
     }
-    &-time {
-      width: 52%;
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
     }
   }
 }
-.plane-img {
-  width: 60%;
-  height: 30%;
-  margin-left: 50px;
-}
-.card-modal {
-  display: none;
-}
-.container {
-  display: flex;
-  max-width: 420px;
-  flex-wrap: wrap;
-  justify-content: space-between;
 
-  @media screen and(min-width: 768px) {
-    max-width: 370px;
-  }
+.price{
+  font-size: 18px;
+  display: block;
+  margin-top: 10px;
 }
-.notFound {
-  color: black;
-  text-align: center;
-  margin-top: 50px;
+
+.offer{
+  display: block;
+  color: red;
+  font-size: 10px;
 }
+
