@@ -7,10 +7,15 @@
   padding: 0 10px;
 
   button {
-    padding: 9px 64px;
+    padding: 8px 64px;
   }
 }
 
 :host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
   background: #fff !important;
+}
+
+.mat-flat-button.mat-warn.mat-button-disabled,
+.mat-flat-button.mat-button-disabled.mat-button-disabled {
+  background: rgba(244, 67, 54, 0.6);
 }

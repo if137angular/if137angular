@@ -10,7 +10,11 @@ import { appState } from 'src/app/store/appState';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 
 // Other
-import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { CommonModule } from '@angular/common';
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Angular Material
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -63,8 +67,9 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { FlightFilterComponent } from './components/flight-filter/flight-filter.component';
 import { RegisterComponent } from './components/register/register.component';
 import { MapsComponent } from './components/maps/maps.component';
-import { LoadingBarComponent } from './components/loading-bar/loading-bar.component';
+import { NoRecordsFoundComponent } from './components/no-records-found/no-records-found.component';
 import { AnimatedMapsComponent } from './components/animated-maps/animated-maps.component';
+import { CurrencyDropdownComponent } from './components/currency-dropdown/currency-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -92,10 +97,18 @@ import { AnimatedMapsComponent } from './components/animated-maps/animated-maps.
     FlightFilterComponent,
     RegisterComponent,
     MapsComponent,
-    LoadingBarComponent,
+    NoRecordsFoundComponent,
     AnimatedMapsComponent,
+    CurrencyDropdownComponent,
   ],
   imports: [
+    CommonModule,
+    NgbModalModule,
+    FlatpickrModule.forRoot(),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -127,7 +140,6 @@ import { AnimatedMapsComponent } from './components/animated-maps/animated-maps.
     }),
     NgxsLoggerPluginModule.forRoot(),
     FontAwesomeModule,
-    NgxSkeletonLoaderModule,
   ],
   providers: [
     RequestDataService,

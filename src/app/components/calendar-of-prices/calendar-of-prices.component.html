@@ -1,4 +1,4 @@
-<app-loading-bar
+<!-- <app-loading-bar
   *ngIf="loading && formData.origin && formData.destination"
 ></app-loading-bar>
 <div class="error" *ngIf="!formData.origin || !formData.destination">
@@ -6,28 +6,64 @@
 </div>
 
 <div class="calendar-content">
-  <div
-    class="error"
-    *ngIf="
-      !loading &&
+  <div class="error" *ngIf="
       calendarData.length === 0 &&
       formData.origin &&
       formData.destination
-    "
-  >
+    ">
     <p>No tickets</p>
   </div>
-  <div
-    class="calendar"
-    *ngIf="calendarData.length > 0 && formData.origin && formData.destination"
-  >
-    <app-calendar-of-prices-item
-      *ngFor="let data of calendarData"
-      [data]="data"
-      [currency]="currency"
-      [destination]="formData.destination"
-      [origin]="formData.origin"
-    >
+  <div class="calendar" *ngIf="calendarData.length > 0 && formData.origin && formData.destination">
+    <app-calendar-of-prices-item *ngFor="let data of calendarData" [data]="data" [currency]="currency"
+      [destination]="formData.destination" [origin]="formData.origin">
     </app-calendar-of-prices-item>
   </div>
+</div> -->
+<div class="row text-center">
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div
+        class="btn btn-primary"
+        mwlCalendarPreviousView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()"
+      >
+        Previous
+      </div>
+      <div
+        class="btn btn-outline-secondary"
+        mwlCalendarToday
+        [(viewDate)]="viewDate"
+      >
+        Today
+      </div>
+      <div
+        class="btn btn-primary"
+        mwlCalendarNextView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()"
+      >
+        Next
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h3>{{ viewDate | calendarDate: view + "ViewTitle":"en" }}</h3>
+  </div>
+</div>
+<br />
+<div [ngSwitch]="view">
+  <mwl-calendar-month-view
+    *ngSwitchCase="CalendarView.Month"
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    [activeDayIsOpen]="activeDayIsOpen"
+    (dayClicked)="dayClicked($event.day)"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)"
+  >
+  </mwl-calendar-month-view>
 </div>

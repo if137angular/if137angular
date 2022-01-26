@@ -63,7 +63,7 @@ export class FlightsInfoService {
     );
   }
 
-  requestGetNonStopTickets(city: string, destination: string): Observable<any> {
+  requestGetNonStopTickets(city: string, destination: string, startDate: string, endDate:string): Observable<any> {
     const headerDict = {
       'x-access-token': '4df3f89d6861e092b8f5d30e3d49cde8',
     };
@@ -72,7 +72,7 @@ export class FlightsInfoService {
       headers: new HttpHeaders(headerDict),
     };
     return this.http.get(
-      `/v1/prices/direct?origin=${city}&destination=${destination}&token=4df3f89d6861e092b8f5d30e3d49cde8`,
+      `/v1/prices/direct?origin=${city}&destination=${destination}&depart_date=${startDate}&return_date=${endDate}&token=4df3f89d6861e092b8f5d30e3d49cde8`,
       requestOptions
     );
   }

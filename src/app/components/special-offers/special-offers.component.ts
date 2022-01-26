@@ -46,7 +46,13 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
   getHours(min: any) {
     let hours = Math.trunc(min / 60);
     let minutes = min % 60;
-    return `${hours}h:${minutes}min`;
+    if (minutes === 0) {
+      return `${hours}h`;
+    }
+    if (hours === 0 && minutes !== 0) {
+      return ` ${minutes}m`;
+    }
+    return `${hours}h:${minutes}m`;
   }
 
   ngOnInit(): void {
