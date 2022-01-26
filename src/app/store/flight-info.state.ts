@@ -48,25 +48,11 @@ export class FlightInfoState {
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
-    // state.calendarOfPrices.map(({ return_date, depart_date }) =>
-    //   console.log(depart_date, return_date)
-    // );
-
-    // console.log(
-    //   state.calendarOfPrices.map(
-    //     ({ depart_date, return_date, value, found_at }) => ({
-    //       start: startOfDay(new Date(found_at)),
-    //       title: `${return_date},${depart_date},${value}`,
-    //     })
-    //   )
-    // );
-    // return filterArray(state.calendarOfPrices, state.filter);
     return state.calendarOfPrices.map(
-      ({depart_date, return_date, value, found_at}) => ({
-        // start: startOfDay(new Date(found_at)),
-        start: startOfDay(new Date(depart_date)),
-        // end: startOfDay(new Date(return_date)),
-        title: `${depart_date},${depart_date},${value}`,
+      ({ depart_date, return_date, value, found_at, gate }) => ({
+        start: startOfDay(new Date(found_at)),
+        title: `Price: ${value} Gate: ${gate} ${depart_date}-${return_date} `,
+
       })
     );
   }
