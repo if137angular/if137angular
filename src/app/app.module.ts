@@ -10,7 +10,6 @@ import { appState } from 'src/app/store/appState';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 
 // Other
-import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { CommonModule } from '@angular/common';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';

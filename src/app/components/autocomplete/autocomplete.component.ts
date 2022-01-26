@@ -1,23 +1,12 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  forwardRef,
-} from '@angular/core';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  FormControl, NG_VALIDATORS,
-  NG_VALUE_ACCESSOR, ValidationErrors,
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, OnInit, Output, } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, } from '@angular/forms';
 import { CitiesModel } from 'src/app/models/cities.model';
 
 @Component({
   selector: 'app-autocomplete',
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
