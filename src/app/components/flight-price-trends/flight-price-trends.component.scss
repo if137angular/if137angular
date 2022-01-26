@@ -3,18 +3,24 @@
   margin: 10px 0;
 }
 
+.tickets{
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .ticket-info{
   background-image: url(https://media.istockphoto.com/photos/white-plane-on-the-blue-runway-top-view-and-white-background-minimal-picture-id1297855347?b=1&k=20&m=1297855347&s=170667a&w=0&h=RxFx8vsv0F9jnTmvZP35g-H6ssWqTNCJ6Zx_s2ocz2k=);
   background-size: cover;
   background-position: center;
-  width: 60%;
+  width: 650px;
   margin: auto;
   margin-bottom: 20px;
+  border-radius: 20px;
 
   &-content-flight{
     display: flex;
     justify-content: space-between;
-    width: 25%;
+    width: 35%;
     align-items: center;
 
     &-details > span{

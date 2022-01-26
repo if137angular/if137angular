@@ -1,6 +1,7 @@
 <mat-form-field appearance="fill">
   <mat-label>{{label}}</mat-label>
-  <input type="text" matInput [matAutocomplete]="auto" [formControl]="autoCompleteControl">
+  <input type="text" matInput [matAutocomplete]="auto" [formControl]="autoCompleteControl" required>
+  <mat-error *ngIf="autoCompleteControl.invalid">Select destination city</mat-error>
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionSelected()">
     <mat-option *ngFor="let item of filteredItems.slice(0, 10)" [value]="item.name">
       {{item.name}}

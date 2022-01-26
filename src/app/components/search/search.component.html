@@ -8,6 +8,10 @@
   </div>
 
   <app-nav></app-nav>
+  <mat-progress-bar *ngIf="loading$ | async" mode="indeterminate"></mat-progress-bar>
 </div>
 
-<router-outlet></router-outlet>
+<div class="search-content">
+  <app-flight-filter></app-flight-filter>
+  <router-outlet></router-outlet>
+</div>

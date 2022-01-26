@@ -9,9 +9,6 @@ import { NgxsModule } from '@ngxs/store';
 import { appState } from 'src/app/store/appState';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 
-// Other
-import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
-
 // Angular Material
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
@@ -64,6 +61,7 @@ import { FlightFilterComponent } from './components/flight-filter/flight-filter.
 import { MapsComponent } from './components/maps/maps.component';
 import { LoadingBarComponent } from './components/loading-bar/loading-bar.component';
 import { NoRecordsFoundComponent } from './components/no-records-found/no-records-found.component';
+import { AnimatedMapsComponent } from './components/animated-maps/animated-maps.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +90,7 @@ import { NoRecordsFoundComponent } from './components/no-records-found/no-record
     MapsComponent,
     LoadingBarComponent,
     NoRecordsFoundComponent,
+    AnimatedMapsComponent,
   ],
   imports: [
     BrowserModule,
@@ -125,7 +124,6 @@ import { NoRecordsFoundComponent } from './components/no-records-found/no-record
     }),
     NgxsLoggerPluginModule.forRoot(),
     FontAwesomeModule,
-    NgxSkeletonLoaderModule,
   ],
   providers: [
     RequestDataService,

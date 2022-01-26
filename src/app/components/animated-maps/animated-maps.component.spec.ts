@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoadingBarComponent } from './loading-bar.component';
+import { AnimatedMapsComponent } from './animated-maps.component';
 
-describe('LoadingBarComponent', () => {
-  let component: LoadingBarComponent;
-  let fixture: ComponentFixture<LoadingBarComponent>;
+describe('AnimatedMapsComponent', () => {
+  let component: AnimatedMapsComponent;
+  let fixture: ComponentFixture<AnimatedMapsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoadingBarComponent ]
+      declarations: [ AnimatedMapsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoadingBarComponent);
+    fixture = TestBed.createComponent(AnimatedMapsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

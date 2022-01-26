@@ -9,13 +9,13 @@
   }
 }
 
-.card-group {
-  padding: 20px 10px;
+.card-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   gap: 30px 50px;
+  color: #1d3557;
 }
 
 p,
@@ -24,138 +24,135 @@ h3 {
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  align-items: space-around;
-  justify-content: space-around;
-  height: 216px;
-  width: 370px;
-  border-radius: 10px;
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    url(https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80);
-
-  border-collapse: separate;
-  background-position: 0 0;
+  display: block;
+  width: 650px;
+  background-image: url(https://media.istockphoto.com/photos/white-plane-on-the-blue-runway-top-view-and-white-background-minimal-picture-id1297855347?b=1&k=20&m=1297855347&s=170667a&w=0&h=RxFx8vsv0F9jnTmvZP35g-H6ssWqTNCJ6Zx_s2ocz2k=);
+  background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  overflow: hidden;
-  color: rgb(255, 255, 255);
-  box-shadow: 0px 0px 8px 4px rgba(73, 73, 73, 0.3);
+  border-radius: 15px;
+  box-shadow: 0px 0px 5px 4px rgba(73, 73, 73, 0.164);
   transition: ease-in-out all 0.2s;
-
+  font-size: 15px;
   &:hover {
-    transform: scale(1.01);
+    transform: scale(1.005);
+    box-shadow: 0px 0px 5px 3px rgba(73, 73, 73, 0.3);
+  }
+
+  &__inner {
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: space-around;
+    justify-content: space-between;
+    padding: 20px;
   }
 
   &__header {
     width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
   }
 
   &__title {
-    padding: 0 10px;
-    text-align: center;
-    font-size: 18px;
+    padding-left: 40px;
+    text-align: left;
+    font-size: 25px;
   }
-  &__body {
+  &__content {
+    min-width: max-content;
+    line-height: 30px;
+  }
+  &__content-item {
     display: flex;
-    justify-content: space-around;
-  }
-  &__logo {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
 
-    img {
-      display: block;
-      width: 25px;
-      height: 25px;
-      padding-right: 10px;
-    }
-  }
-
-  &__destination {
-    font-size: 18px;
-  }
-
-  &__departure {
-    display: flex;
-    align-items: center;
-    img {
-      padding-right: 10px;
-    }
-  }
-
-  &__action {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    align-self: center;
-    width: max-content;
-    height: 45px;
-    border-radius: 7px;
-    background-color: white;
-    color: black;
-    overflow: hidden;
-    a {
-      display: block;
-      position: relative;
-      width: 28px !important;
-      height: 100%;
-      border-radius: 0px 7px 7px 0px;
-      overflow: hidden;
-      cursor: pointer;
-      background: gainsboro;
-      transition: cubic-bezier(0.075, 0.82, 0.165, 1) all 0.7s;
-      &:hover {
-        background: rgba(100, 80, 182, 1);
-        &::after {
-          border-top: 2px solid rgb(255, 255, 255);
-          border-right: 2px solid rgb(255, 255, 255);
-        }
-      }
-      &::after {
-        position: absolute;
-        display: block;
-        top: 50%;
-        left: 42%;
-        content: "";
-        width: 8px;
-        height: 8px;
-        border-top: 2px solid #333;
-        border-right: 2px solid #333;
-        transform: translate(-50%, -50%) rotate(45deg);
-      }
+    p {
+      text-align: center;
+      padding-left: 5px;
+      font-weight: 500;
     }
   }
 
   &__info {
-    width: 100%;
-  }
-  &__price {
-    text-align: center;
-    font-size: 18px;
-    font-weight: 500;
-  }
-  &__duration {
+    position: relative;
+    max-width: 364px;
     display: flex;
-    width: max-content;
-    margin: auto;
-    font-weight: 300;
-    span {
-      font-size: 12px;
+    justify-content: space-around;
+    align-items: center;
+    transition: border-radius ease-in-out 0.2s, box-shadow ease-in-out 0.2s,
+      background-color ease-in-out 0.2s, transform linear 0.08s;
+    cursor: pointer;
+
+    &:hover {
+      border-radius: 10px;
+      box-shadow: 0px 0px 3px 4px rgba(73, 73, 73, 0.164);
+      background-color: #fff;
+    }
+
+    .hover-txt {
+      position: absolute;
+      width: max-content;
+      top: -30px;
+      opacity: 0;
+      transform: scale(0);
+      transition: opacity ease-in 0.2s, transform ease-in 0.3s;
+    }
+    &:hover .hover-txt {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    &:active {
+      transform: scale(0.99);
     }
   }
 
-  &__footer {
-    text-align: center;
-    font-size: 18px;
-    font-weight: 300;
+  &__info-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    p {
+      text-align: center;
+    }
   }
-  &__name {
-    margin-top: 10px;
-    font-size: 14px;
+  &__line-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
+  &__icon {
+    transform: translate(0px, 5px);
+    color: #1d3557;
+  }
+  &__duration {
+    color: #0096c7;
+    font-size: 12px;
+    font-weight: 400;
+  }
+  &__line-main {
+    display: block;
+    width: 200px;
+    height: 2px;
+    background-color: #1d3557;
+  }
+  &__line-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__logo {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 25px;
+    height: 25px;
+  }
+
+  &__date {
+    font-style: italic;
+    font-size: 10px;
+    color: #6c757d;
+  }
+}
+
+.card__info:hover .card__info {
+  opacity: 0;
 }
