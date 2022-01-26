@@ -1,5 +1,7 @@
 import { CalendarOfPricesPayload } from '../models/calendar-of-prices.model';
 import { FilterModel } from '../models/filter.model';
+import {FormDataModel} from "../models/formData.model";
+import {CheapestTicketsResponseModel} from "../models/cheapest-tickets.model";
 
 //-- Calendar State Actions --
 
@@ -27,4 +29,19 @@ export class SetFilter {
 
 export class StartLoading {
   static readonly type = '[Loading] Start Loading';
+}
+
+export class CheapestTicketsRequest {
+  static readonly type = '[FlightInfo] Cheapest Tickets Request'
+  constructor(public payload: FormDataModel) {  }
+}
+
+export class CheapestTicketsRequestSuccess {
+  static readonly type = '[FlightInfo] Cheapest Tickets Request Success'
+  constructor(public payload: CheapestTicketsResponseModel) {  }
+}
+
+export class CheapestTicketsRequestFail {
+  static readonly type = '[FlightInfo] Cheapest Tickets Request Fail'
+  constructor(public payload: string) {  }
 }

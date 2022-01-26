@@ -4,13 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { CalendarOfPricesComponent } from './components/calendar-of-prices/calendar-of-prices.component';
 import { SpecialOffersComponent } from './components/special-offers/special-offers.component';
 import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-tickets.component';
-import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
+import { CheapestTicketsComponentOld} from "./components/cheapest-tickets-old-v/cheapest-tickets.component";
 import { CityDestinationComponent } from './components/city-destination/city-destination.component';
 import { FlightTicketsForSpecialDatesComponent } from './components/flight-tickets-for-special-dates/flight-tickets-for-special-dates.component';
 
 import { MainComponent } from './components/main/main.component';
 import { SearchComponent } from './components/search/search.component';
 import { FlightPriceTrendsComponent } from './components/flight-price-trends/flight-price-trends.component';
+import {CheapestTicketsComponent} from "./components/cheapest-tickets/cheapest-tickets.component";
 
 export const routes: Routes = [
   { path: '', component: MainComponent },

@@ -1,23 +1,26 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   HttpClient,
   HttpHeaders,
   HttpParams,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {
   CalendarOfPricesPayload,
   GetCalendarOfPricesRequestModel,
 } from '../models/calendar-of-prices.model';
-import { TicketsRequestParam } from '../models/cheapest-tickets.model';
-import { map } from 'rxjs/operators';
-import { catchError, retry } from 'rxjs/operators';
-import { GetDestinationPopular } from '../components/city-destination/city-destination.component';
+import {CheapestTicketsResponseModel} from '../models/cheapest-tickets.model';
+import {map} from 'rxjs/operators';
+import {catchError, retry} from 'rxjs/operators';
+import {GetDestinationPopular} from '../components/city-destination/city-destination.component';
+import {FormDataModel} from "../models/formData.model";
+import * as moment from "moment";
 
 @Injectable()
 export class FlightsInfoService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   exampleRequestGetChipTickets(): Observable<any> {
     const headerDict = {
@@ -32,12 +35,13 @@ export class FlightsInfoService {
       requestOptions
     );
   }
+
   RequestGetCalendarOfPrices({
-    originCode,
-    destinationCode,
-    depart_date,
-    return_date,
-  }: CalendarOfPricesPayload): Observable<any> {
+                               originCode,
+                               destinationCode,
+                               depart_date,
+                               return_date,
+                             }: CalendarOfPricesPayload): Observable<any> {
     const headerDict = {
       'x-access-token': '51b362c72de38be9bcfdc31c8339c019',
     };
@@ -51,6 +55,7 @@ export class FlightsInfoService {
       requestOptions
     );
   }
+
   getSpecialOffers(
     cityOrigin: string,
     cityDestination: string,
@@ -100,6 +105,23 @@ export class FlightsInfoService {
       );
   }
 
+  getCheapestTickets(formData: FormDataModel): Observable<CheapestTicketsResponseModel> {
+    const baseURL: string = '/v1/prices/cheap'
+    const token: string = 'f29a4f3a27eb2f3ea190c91cd4e15fa5'
+
+    let headersURL = new HttpHeaders().append('x-access-token', token)
+    let paramsURL = new HttpParams()
+      .append('origin', formData.destinationFrom.code)
+      .append('destination', formData.destinationTo.code)
+      .append('depart_date', moment(formData.startDate).format('YYYY-MM-DD'))
+      .append('return_date', moment(formData.startDate).format('YYYY-MM-DD'))
+      .append('currency', 'USD')
+      .append('token', token);
+
+    return this.http
+      .get<CheapestTicketsResponseModel>(baseURL, {headers: headersURL, params: paramsURL})
+  }
+
   getFlightPriceTrends(
     origin: string,
     destination: string,
@@ -131,6 +153,7 @@ export class FlightsInfoService {
       requestOptions
     );
   }
+
   getIpAddress(): Observable<any> {
     return this.http
       .get('https://api.ipify.org/?format=json')
