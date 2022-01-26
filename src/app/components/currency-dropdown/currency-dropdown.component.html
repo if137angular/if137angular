@@ -1,15 +1,20 @@
-<!-- <select class="currency">
-  <mat-option>USD</mat-option>
-  <mat-option>EUR</mat-option>
-  <mat-option>PLN</mat-option>
-  <mat-option>UAH</mat-option>
-</select> -->
+<div class="dropdown">
+  <div class="dropdown__flag" *ngFor="let currency of currencies">
+    <img
+      *ngIf="selectedOption === currency.code"
+      src="{{ currency.flag }}"
+      alt=""
+    />
+  </div>
 
-<h4>mat-select</h4>
-<mat-form-field>
-  <mat-select [(value)]="selected">
-    <mat-option *ngFor="let state of states" [value]="state">{{
-      state
-    }}</mat-option>
-  </mat-select>
-</mat-form-field>
+  <select class="dropdown__select" [(ngModel)]="selectedOption">
+    <option
+      class="dropdown__option"
+      *ngFor="let currency of currencies"
+      selected="currency.code === 'usd'"
+      [value]="currency.code"
+    >
+      {{ currency.code | uppercase }}
+    </option>
+  </select>
+</div>

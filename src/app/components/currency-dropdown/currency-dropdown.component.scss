@@ -1,3 +1,25 @@
-.currency {
-  background-color: transparent;
+.dropdown {
+  display: flex;
+
+  &__select {
+    margin-left: 15px;
+
+    font-size: 18px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    appearance: none;
+    color: rgb(255, 255, 255);
+  }
+  &__option {
+    padding: 10px;
+
+    background: rgb(103, 58, 183);
+    color: rgb(255, 255, 255);
+  }
+}
+
+img {
+  display: block;
+  width: 50px;
 }

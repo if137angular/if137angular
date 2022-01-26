@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { Store } from '@ngxs/store';
+import { GetCurrencies } from 'src/app/store/request-data.action';
+import { Currency } from 'src/app/models/special-offers.model';
+import { RequestDataState } from 'src/app/store/request-data.state';
+
 
 @Component({
   selector: 'app-currency-dropdown',
@@ -6,65 +13,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./currency-dropdown.component.scss']
 })
 export class CurrencyDropdownComponent implements OnInit {
+  selectedOption: string = 'usd';
 
-  constructor() { }
+  currencies: Currency[] = [];
+  @Select(RequestDataState.currencies) currencies$: Observable<Currency[]>;
+
+  constructor(private store: Store) { }
+
 
   ngOnInit(): void {
-    console.log();
+    this.store.dispatch(new GetCurrencies());
+    this.currencies$.subscribe((currencies: any) => {
+      this.currencies = currencies;
+    });
   }
-  selected = "USD";
-
-  states: string[] = [
-    'Alabama',
-    'Alaska',
-    'Arizona',
-    'Arkansas',
-    'California',
-    'Colorado',
-    'Connecticut',
-    'Delaware',
-    'Florida',
-    'Georgia',
-    'Hawaii',
-    'Idaho',
-    'Illinois',
-    'Indiana',
-    'Iowa',
-    'Kansas',
-    'Kentucky',
-    'Louisiana',
-    'Maine',
-    'Maryland',
-    'Massachusetts',
-    'Michigan',
-    'Minnesota',
-    'Mississippi',
-    'Missouri',
-    'Montana',
-    'Nebraska',
-    'Nevada',
-    'New Hampshire',
-    'New Jersey',
-    'New Mexico',
-    'New York',
-    'North Carolina',
-    'North Dakota',
-    'Ohio',
-    'Oklahoma',
-    'Oregon',
-    'Pennsylvania',
-    'Rhode Island',
-    'South Carolina',
-    'South Dakota',
-    'Tennessee',
-    'Texas',
-    'Utah',
-    'Vermont',
-    'Virginia',
-    'Washington',
-    'West Virginia',
-    'Wisconsin',
-    'Wyoming',
-  ];
-
 }
