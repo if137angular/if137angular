@@ -1,73 +1,76 @@
-<app-special-offers-select
-  [selectedLanguage]="language"
-  [selectedCurrency]="currency"
-  (selectedLanguageChange)="onSelectedLanguageChanged($event)"
-  (selectedCurrencyChange)="onSelectedCurrencyChanged($event)"
-></app-special-offers-select>
-<div
-  class="no-data"
-  *ngIf="(offers$ | async)?.length === 0 && !(offers$ | async)?.loading"
->
-  <img
-    src="https://cdn.dribbble.com/users/2382015/screenshots/6065978/no_result.gif"
-    alt="Sorry! No result found :-( "
-  />
-</div>
-<div class="card-wrap">
-  <div class="card" *ngFor="let item of offers$ | async">
-    <div class="card__inner">
-      <h3 class="card__title">{{ item.title }}</h3>
-      <div class="card__content">
-        <div class="card__content-item">
-          Price:
-          <p class="card__price">{{ getCurrency(item.price) }}</p>
+<div class="special-offers">
+  <app-special-offers-select
+    [selectedLanguage]="language"
+    [selectedCurrency]="currency"
+    (selectedLanguageChange)="onSelectedLanguageChanged($event)"
+    (selectedCurrencyChange)="onSelectedCurrencyChanged($event)"
+  ></app-special-offers-select>
+  <div
+    class="no-data"
+    *ngIf="(offers$ | async)?.length === 0 && !(offers$ | async)?.loading"
+  >
+    <app-no-records-found></app-no-records-found>
+    <img
+      src="https://i.pinimg.com/originals/5d/35/e3/5d35e39988e3a183bdc3a9d2570d20a9.gif"
+      alt="Sorry! No result found :-( "
+    />
+  </div>
+  <div class="card-wrap">
+    <div class="card" *ngFor="let item of offers$ | async">
+      <div class="card__inner">
+        <h3 class="card__title">{{ item.title }}</h3>
+        <div class="card__content">
+          <div class="card__content-item">
+            Price:
+            <p class="card__price">{{ getCurrency(item.price) }}</p>
+          </div>
+          <div class="card__content-item">
+            Airline:
+            <p class="card__airline">{{ item.airline_title }}</p>
+          </div>
+          <div class="card__content-item">
+            Flight number:
+            <p class="card__flight-number">{{ item.flight_number }}</p>
+          </div>
         </div>
-        <div class="card__content-item">
-          Airline:
-          <p class="card__airline">{{ item.airline_title }}</p>
-        </div>
-        <div class="card__content-item">
-          Flight number:
-          <p class="card__flight-number">{{ item.flight_number }}</p>
-        </div>
-      </div>
 
-      <div class="card__info" (click)="gotToLink(item.link)">
-        <span class="hover-txt">Click for details</span>
-        <div class="card__info-item">
-          <p class="card__city-from">
-            {{ item.origin_name === "" ? item.origin : item.origin_name }}
-          </p>
-          <p class="card__date">{{ item.departure_at | date }}</p>
-        </div>
-        <div class="card__info-item">
-          <div class="card__line-top">
-            <mat-icon class="card__icon">flight_takeoff</mat-icon>
-            <p class="card__duration">{{ getHours(item.duration) }}</p>
-            <mat-icon class="card__icon">flight_land</mat-icon>
+        <div class="card__info" (click)="gotToLink(item.link)">
+          <span class="hover-txt">Click for details</span>
+          <div class="card__info-item">
+            <p class="card__city-from">
+              {{ item.origin_name === "" ? item.origin : item.origin_name }}
+            </p>
+            <p class="card__date">{{ item.departure_at | date }}</p>
           </div>
-          <div class="card__line-main"></div>
-          <div class="card__line-bottom">
-            <p class="card__airport-from">{{ item.origin_airport }}</p>
-            <img
-              class="card__logo"
-              src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png"
-              alt="{{ item.airline_title }}"
-            />
-            <p class="card__airport-to">{{ item.destination_airport }}</p>
+          <div class="card__info-item">
+            <div class="card__line-top">
+              <mat-icon class="card__icon">flight_takeoff</mat-icon>
+              <p class="card__duration">{{ getHours(item.duration) }}</p>
+              <mat-icon class="card__icon">flight_land</mat-icon>
+            </div>
+            <div class="card__line-main"></div>
+            <div class="card__line-bottom">
+              <p class="card__airport-from">{{ item.origin_airport }}</p>
+              <img
+                class="card__logo"
+                src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png"
+                alt="{{ item.airline_title }}"
+              />
+              <p class="card__airport-to">{{ item.destination_airport }}</p>
+            </div>
           </div>
-        </div>
-        <div class="card__info-item">
-          <p class="card__city-to">
-            {{
-              item.destination_name === ""
-                ? item.destination
-                : item.destination_name
-            }}
-          </p>
-          <p class="card__date">
-            {{ item.departure_at | date }}
-          </p>
+          <div class="card__info-item">
+            <p class="card__city-to">
+              {{
+                item.destination_name === ""
+                  ? item.destination
+                  : item.destination_name
+              }}
+            </p>
+            <p class="card__date">
+              {{ item.departure_at | date }}
+            </p>
+          </div>
         </div>
       </div>
     </div>

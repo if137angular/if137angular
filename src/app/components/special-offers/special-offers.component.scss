@@ -1,14 +1,21 @@
+.special-offers {
+  width: 100% !important;
+}
 .no-data {
+  position: relative;
   display: block;
   max-width: 800px;
   margin: auto;
 
   img {
+    position: absolute;
+    top: 0;
+    z-index: -3;
+    display: block;
     width: 100%;
     height: auto;
   }
 }
-
 .card-wrap {
   display: flex;
   align-items: center;
