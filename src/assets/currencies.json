@@ -157,11 +157,6 @@
   {
     "code": "ils",
     "name": "Israeli Shekel (ILS)",
-    "flag": ""
-  },
-  {
-    "code": "inr",
-    "name": "Indian Rupee (INR)",
     "flag": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Flag_of_Israel.svg"
   },
   {
@@ -237,11 +232,6 @@
   {
     "code": "mur",
     "name": "Mauritian Rupees (MUR)",
-    "flag": ""
-  },
-  {
-    "code": "mxn",
-    "name": "Mexican peso (MXN)",
     "flag": "https://upload.wikimedia.org/wikipedia/commons/7/77/Flag_of_Mauritius.svg"
   },
   {
@@ -250,23 +240,8 @@
     "flag": "https://upload.wikimedia.org/wikipedia/commons/6/66/Flag_of_Malaysia.svg"
   },
   {
-    "code": "mzn",
-    "name": "Mozambican metical (MZN)",
-    "flag": "https://uk.wikipedia.org/wiki/%D0%A4%D0%B0%D0%B9%D0%BB:Flag_of_Mozambique.svg"
-  },
-  {
     "code": "ngn",
     "name": "Nigerian Naira (NGN)",
-    "flag": ""
-  },
-  {
-    "code": "nok",
-    "name": "Norwegian Krone (NOK)",
-    "flag": ""
-  },
-  {
-    "code": "npr",
-    "name": "Nepalese Rupee (NPR)",
     "flag": "https://upload.wikimedia.org/wikipedia/commons/7/79/Flag_of_Nigeria.svg"
   },
   {
@@ -327,11 +302,6 @@
   {
     "code": "sek",
     "name": "Swedish krona (SEK)",
-    "flag": ""
-  },
-  {
-    "code": "sgd",
-    "name": "Singapore Dollar (SGD)",
     "flag": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Flag_of_Sweden.svg"
   },
   {

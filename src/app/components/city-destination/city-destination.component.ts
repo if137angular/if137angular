@@ -1,16 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FlightsInfoService } from 'src/app/services/flights-info.service';
-import { zip, of } from "rxjs";
-import { mergeMap, groupBy, reduce } from 'rxjs/operators';
-import { Select, Store } from "@ngxs/store";
-import { CitiesModel } from "src/app/models/cities.model";
-import { RequestDataState } from "src/app/store/request-data.state";
-import { SetFormDate } from "../../store/request-data.action";
-import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
-import { GetPopularDestinations } from "src/app/store/flight-info.action";
-import { FlightInfoState } from "src/app/store/flight-info.state";
-import { Observable } from "rxjs";
-import { DOCUMENT } from "@angular/common";
+import { Select, Store } from '@ngxs/store';
+import { CitiesModel } from 'src/app/models/cities.model';
+import { RequestDataState } from 'src/app/store/request-data.state';
+import { SetFormDate } from '../../store/request-data.action';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { GetPopularDestinations } from 'src/app/store/flight-info.action';
+import { FlightInfoState } from 'src/app/store/flight-info.state';
+import { Observable } from 'rxjs';
 
 export type DestinationPopular = {
   origin: string;
@@ -24,7 +20,7 @@ export type DestinationPopular = {
   transfers: number;
   airline: string;
   flight_number: number;
-}
+};
 export type GetDestinationPopular = {
   success: boolean;
   data: Map<string, DestinationPopular>;
@@ -35,59 +31,68 @@ export type GetDestinationPopular = {
 @Component({
   selector: 'app-city-destination',
   templateUrl: './city-destination.component.html',
-  styleUrls: [ './city-destination.component.scss' ]
+  styleUrls: ['./city-destination.component.scss'],
 })
-
 export class CityDestinationComponent implements OnInit {
   @Select(FlightInfoState.popularDestinations)
   popularDestinations$: Observable<Map<string, DestinationPopular[]>>;
 
-  private popularDestinationCities = [ 'IEV', 'LWO', 'DNK', 'ODS' ];
-  constructor(private flightInfoService: FlightsInfoService, private store: Store,
-              @Inject('Window') private window: Window) {
-  }
+  private popularDestinationCities = ['IEV', 'LWO', 'DNK', 'ODS'];
+  constructor(private store: Store, @Inject('Window') private window: Window) {}
 
-  items: GetDestinationPopular[] = []
-  response: Map<string, DestinationPopular[]> = new Map<string, DestinationPopular[]>();
+  items: GetDestinationPopular[] = [];
+  response: Map<string, DestinationPopular[]> = new Map<
+    string,
+    DestinationPopular[]
+  >();
   cities: DestinationPopular[];
   selectedDestinstion: string = '';
   selectedOrigin: string = '';
-  selectedCities: string
+  selectedCities: string;
 
   ngOnInit(): void {
-    this.store.dispatch(new GetPopularDestinations(this.popularDestinationCities));
+    this.store.dispatch(
+      new GetPopularDestinations(this.popularDestinationCities)
+    );
   }
 
   getCityNameByKey(cityKey: string): string {
-    const matchedCity = this.store.selectSnapshot(RequestDataState.cities).find((city: CitiesModel) => city.code === cityKey);
-    return matchedCity ? matchedCity.name : ''
+    const matchedCity = this.store
+      .selectSnapshot(RequestDataState.cities)
+      .find((city: CitiesModel) => city.code === cityKey);
+    return matchedCity ? matchedCity.name : '';
   }
   getCityCode(cityKey: string): string {
-    const matchedCity = this.store.selectSnapshot(RequestDataState.cities).find((city: CitiesModel) => city.code === cityKey);
-    return matchedCity ? matchedCity.code : ''
+    const matchedCity = this.store
+      .selectSnapshot(RequestDataState.cities)
+      .find((city: CitiesModel) => city.code === cityKey);
+    return matchedCity ? matchedCity.code : '';
   }
 
   getCountryCodeByCityCode(countryKey: string): string {
-    const matchedCountry = this.store.selectSnapshot(RequestDataState.cities).find((city: CitiesModel) => city.code === countryKey);
-    return matchedCountry ? matchedCountry.country_code : ''
+    const matchedCountry = this.store
+      .selectSnapshot(RequestDataState.cities)
+      .find((city: CitiesModel) => city.code === countryKey);
+    return matchedCountry ? matchedCountry.country_code : '';
   }
-
 
   selectDestination(selectedDestination: any) {
     this.selectedCities = this.getCityNameByKey(selectedDestination.origin);
-    this.selectedDestinstion = this.getCityCode(selectedDestination.destination);
+    this.selectedDestinstion = this.getCityNameByKey(
+      selectedDestination.destination
+    );
     const formData = {
       destinationFrom: {
         name: this.getCityNameByKey(selectedDestination.origin),
-        code: this.getCityCode(selectedDestination.origin)
+        code: this.getCountryCodeByCityCode(selectedDestination.origin),
       },
       destinationTo: {
         name: this.getCityNameByKey(selectedDestination.destination),
-        code: this.getCityCode(selectedDestination.destination)
+        code: this.getCountryCodeByCityCode(selectedDestination.destination),
       },
       endDate: new Date(),
-      startDate: new Date()
-    }
+      startDate: new Date(),
+    };
     this.store.dispatch(new SetFormDate(formData));
     this.window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }
