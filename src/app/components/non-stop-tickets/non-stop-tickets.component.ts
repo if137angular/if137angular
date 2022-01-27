@@ -6,6 +6,8 @@ import { RequestDataState } from 'src/app/store/request-data.state';
 import { FormDataModel } from 'src/app/models/formData.model';
 import { faPlane, faPlaneDeparture, faPlaneArrival, faHryvnia, faMapMarker, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { NonStopInfo } from 'src/app/models/non-stop-tickets.model';
+import { GetNonStopTickets } from "src/app/store/flight-info.action";
+import { FlightInfoState } from "src/app/store/flight-info.state";
 
 
 
@@ -15,8 +17,6 @@ import { NonStopInfo } from 'src/app/models/non-stop-tickets.model';
   styleUrls: ['./non-stop-tickets.component.scss'],
 })
 export class NonStopTicketsComponent implements OnInit {
-  formData: any;
-  nonStopInfo: NonStopInfo[] = [];
   cityOrigin: string;
   cityArrival: string;
   faPlane = faPlane;
@@ -27,25 +27,16 @@ export class NonStopTicketsComponent implements OnInit {
   faMapAlt = faMapMarkerAlt;
 
   @Select(RequestDataState.formData) formData$: Observable<FormDataModel>;
+  @Select(FlightInfoState.nonStopTickets) nonStopTickets$: Observable<NonStopInfo[]>;
 
-  constructor(private flightsInfoService: FlightsInfoService) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
-   this.formData = this.formData$.subscribe(formData => {
-      this.flightsInfoService
-        .requestGetNonStopTickets(
-          formData.destinationFrom.code,
-          formData.destinationTo.code,
-          formData.startDate.toISOString().slice(0,7),
-          formData.endDate.toISOString().slice(0,7)
-        ).
-        pipe(map(response => Object.values(response.data).map((item: any) => (item[0]))))
-
-        .subscribe((response: any) => {
-          this.nonStopInfo = response;
-          this.cityOrigin = formData.destinationFrom.name;
-          this.cityArrival = formData.destinationTo.name;
-        });
+   this.formData$.subscribe((formData: FormDataModel) => {
+     if (!formData.isFormValid) { return; }
+     this.cityOrigin = formData.destinationFrom.name;
+     this.cityArrival = formData.destinationTo.name;
+     this.store.dispatch(new GetNonStopTickets(formData))
     });
   }
 }

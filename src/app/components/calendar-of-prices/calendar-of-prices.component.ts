@@ -132,7 +132,6 @@ export class CalendarOfPricesComponent {
       )
       .subscribe((data: CalendarOfPricesPayload) => {
         this.store.dispatch([
-          new StartLoading(),
           new CalendarOfPricesLoaded(data),
         ]);
         this.formData = data;

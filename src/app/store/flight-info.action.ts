@@ -24,6 +24,12 @@ export class GetSpecialOffers {
   ) {}
 }
 
+export class GetNonStopTickets {
+  static readonly type = '[FlightInfo] Get Non Stop Tickets';
+  constructor(public formData: FormDataModel) {
+  }
+}
+
 // ***** Code for Flight-Tikets-For-Special-Date *******
 
 

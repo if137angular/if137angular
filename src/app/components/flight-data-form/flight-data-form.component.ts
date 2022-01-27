@@ -12,7 +12,7 @@ import { GetLocationModel } from 'src/app/models/GetLocation.model';
 @Component({
   selector: 'app-flight-data-form',
   templateUrl: './flight-data-form.component.html',
-  styleUrls: ['./flight-data-form.component.scss'],
+  styleUrls: [ './flight-data-form.component.scss' ],
 })
 export class FlightDataFormComponent implements OnInit {
   cities: CitiesModel[] = [];
@@ -23,8 +23,8 @@ export class FlightDataFormComponent implements OnInit {
   flightDataFormGroup: FormGroup = new FormGroup({
     startDate: new FormControl(),
     endDate: new FormControl(),
-    destinationFrom: new FormControl('', Validators.required),
-    destinationTo: new FormControl('', Validators.required),
+    destinationFrom: new FormControl(''),
+    destinationTo: new FormControl(''),
     transfers: new FormControl(),
   });
 
@@ -35,7 +35,8 @@ export class FlightDataFormComponent implements OnInit {
   constructor(
     private store: Store,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.location$.subscribe((location: GetLocationModel[]) => {
@@ -58,10 +59,10 @@ export class FlightDataFormComponent implements OnInit {
   }
 
   onSubmitForm() {
-    this.store.dispatch(new SetFormDate(this.flightDataFormGroup.value));
+    this.store.dispatch(new SetFormDate(Object.assign(this.flightDataFormGroup.value, { isFormValid: this.flightDataFormGroup.valid })));
 
     if (!this.router.url.startsWith('/search')) {
-      this.router.navigate(['/search/special-offers']);
+      this.router.navigate([ '/search/special-offers' ]);
     }
   }
 

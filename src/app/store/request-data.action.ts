@@ -1,4 +1,5 @@
 import { IpFullModel } from '../models/ip.model';
+import { FormDataModel } from "src/app/models/formData.model";
 
 //-- Request State Actions --
 export class GetCountries {
@@ -39,7 +40,7 @@ export class GetLanguages {
 
 export class SetFormDate {
   static readonly type = '[Request] Set Form Data';
-  constructor(public payload: any) {}
+  constructor(public formData: FormDataModel,) {}
 }
 
 export class SetUserData {
