@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { Select, Store } from "@ngxs/store";
 import { CitiesModel } from "src/app/models/cities.model";
 import { RequestDataState } from "src/app/store/request-data.state";
@@ -49,7 +48,9 @@ export class CityDestinationComponent implements OnInit {
     return matchedCity ? matchedCity.name : '';
   }
   getCityCode(cityKey: string): string {
-    const codeOfCity = this.store.selectSnapshot(RequestDataState.cities).find((city: CitiesModel) => city.code === cityKey);
+    const codeOfCity = this.store
+      .selectSnapshot(RequestDataState.cities)
+      .find((city: CitiesModel) => city.code === cityKey);
     return codeOfCity ? codeOfCity.code : ''
   }
 
