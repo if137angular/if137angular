@@ -84,11 +84,11 @@ export class CityDestinationComponent implements OnInit {
     const formData = {
       destinationFrom: {
         name: this.getCityNameByKey(selectedDestination.origin),
-        code: this.getCountryCodeByCityCode(selectedDestination.origin),
+        code: selectedDestination.origin,
       },
       destinationTo: {
         name: this.getCityNameByKey(selectedDestination.destination),
-        code: this.getCountryCodeByCityCode(selectedDestination.destination),
+        code: selectedDestination.destination,
       },
       endDate: new Date(),
       startDate: new Date(),
