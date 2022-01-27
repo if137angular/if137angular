@@ -16,7 +16,7 @@
     <button
       mat-menu-item
       *ngFor="let currency of currencies"
-      (click)="selectedOption = currency.code"
+      (click)="getValue(currency.code)"
     >
       <img [src]="currency.flag" alt="{{ currency.flag }}" />
       <span>{{ currency.code | uppercase }}</span>
