@@ -2,7 +2,7 @@ import { CalendarOfPricesPayload } from '../models/calendar-of-prices.model';
 import { FilterModel } from '../models/filter.model';
 import { FlightTiketsForDatePayload } from '../models/flight-tickets-for-date.model';
 import {FormDataModel} from "../models/formData.model";
-import {CheapestTicketsResponseModel} from "../models/cheapest-tickets.model";
+import {CheapestTicketModel, CheapestTicketsResponseModel} from "../models/cheapest-tickets.model";
 
 
 //-- Calendar State Actions --

@@ -71,6 +71,7 @@ import { NoRecordsFoundComponent } from './components/no-records-found/no-record
 import { AnimatedMapsComponent } from './components/animated-maps/animated-maps.component';
 import { CurrencyDropdownComponent } from './components/currency-dropdown/currency-dropdown.component';
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
+import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/cheapest-ticket-item.component';
 
 
 @NgModule({
@@ -103,6 +104,7 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
     AnimatedMapsComponent,
     CurrencyDropdownComponent,
     CheapestTicketsComponent,
+    CheapestTicketItemComponent,
   ],
   imports: [
     CommonModule,

@@ -8,7 +8,12 @@ import filterArray from 'src/utils/filterFunc';
 import {startOfDay} from 'date-fns';
 
 import {CheapestTicketModel, CheapestTicketsResponseModel, TicketsObjModel} from "../models/cheapest-tickets.model";
-import {CheapestTicketsRequestFail, CheapestTicketsRequestSuccess, StartLoading} from "./flight-info.action";
+import {
+  CheapestTicketsRequestFail,
+  CheapestTicketsRequestSuccess,
+  StartLoading,
+  StopLoading
+} from "./flight-info.action";
 
 
 export interface FlightInfoStateModel {
@@ -19,7 +24,7 @@ export interface FlightInfoStateModel {
   filter: FilterModel;
   loading: boolean;
   cheapestTickets: CheapestTicketModel[] | null,
-  errors: string | null
+  errors: string
 }
 
 @State<FlightInfoStateModel>({
@@ -38,7 +43,7 @@ export interface FlightInfoStateModel {
       maxPrice: null,
     },
     loading: false,
-    errors: null
+    errors: ''
   },
 })
 @Injectable()
@@ -83,8 +88,13 @@ export class FlightInfoState {
   }
 
   @Selector()
-  static cheapestTickets(state: FlightInfoStateModel): any {
-    return state.cheapestTickets;
+  static cheapestTickets(state: FlightInfoStateModel): CheapestTicketModel[] | null {
+    return state.cheapestTickets
+  }
+
+  @Selector()
+  static errors(state: FlightInfoStateModel): string | null {
+    return state.errors
   }
 
   @Action(FlightInfoActions.CalendarOfPricesLoaded)
@@ -179,29 +189,34 @@ export class FlightInfoState {
 
     else this.flightInfoService.getCheapestTickets(payload)
         .subscribe((response: CheapestTicketsResponseModel) => {
-          dispatch(new CheapestTicketsRequestSuccess(response))
+          if(Object.keys(response.data).length == 0) dispatch(
+            new CheapestTicketsRequestFail('There are no tickets in the selected direction')
+          )
+          else dispatch(new CheapestTicketsRequestSuccess(response))
         })
   }
 
   @Action(FlightInfoActions.CheapestTicketsRequestSuccess)
   CheapestTicketsRequestSuccess(
-    {patchState}: StateContext<FlightInfoStateModel>,
+    {patchState, dispatch}: StateContext<FlightInfoStateModel>,
     {payload}: FlightInfoActions.CheapestTicketsRequestSuccess
   ) {
+    dispatch(new StopLoading())
+
     const ticketsObj: TicketsObjModel = Object.values(payload.data)[0]
     patchState({
       cheapestTickets: Object.values(ticketsObj),
-      errors: null,
-      loading: false,
+      errors: '',
       currency: payload.currency
     })
   }
 
   @Action(FlightInfoActions.CheapestTicketsRequestFail)
   CheapestTicketsRequestFail(
-    {patchState}: StateContext<FlightInfoStateModel>,
+    {patchState, dispatch}: StateContext<FlightInfoStateModel>,
     {payload}: FlightInfoActions.CheapestTicketsRequestFail
   ) {
-    patchState({errors: payload, loading: false})
+    dispatch(new StopLoading())
+    patchState({errors: payload})
   }
 }
