@@ -47,7 +47,7 @@ export type GetDestinationPopular = {
   templateUrl: './maps.component.html',
   styleUrls: [ './maps.component.scss' ],
 })
-export class MapsComponent implements AfterViewInit, OnInit {
+export class MapsComponent implements OnInit {
   button: any;
   private root!: am5.Root;
   items: GetDestinationPopular[] = [];
@@ -55,6 +55,7 @@ export class MapsComponent implements AfterViewInit, OnInit {
   originLat: string = '';
   originLon: string = '';
   originCode: string = '';
+  objValues: any;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
@@ -83,16 +84,19 @@ export class MapsComponent implements AfterViewInit, OnInit {
         objValues.forEach((obj: DestinationPopular) => {
           const matchedCity = this.getCityByCode(obj.destination);
           Object.assign(obj, {
-            id: matchedCity ? matchedCity.name : '',
+            id: matchedCity ? matchedCity.name.toLowerCase() : '',
             title: matchedCity ? matchedCity.name : '',
             geometry: {
               type: 'Point',
-              coordinates: matchedCity ? [ matchedCity.coordinates.lat, matchedCity.coordinates.lon ] : []
+              coordinates: matchedCity ? [ matchedCity.coordinates.lon, matchedCity.coordinates.lat ] : []
             },
           })
+          // console.log(matchedCity);
         })
+        
         console.log(objValues);
-
+        this.makeChart(objValues);
+        
 
         // {
         //   id: 'lviv',
@@ -102,11 +106,11 @@ export class MapsComponent implements AfterViewInit, OnInit {
 
         // this.originPointCode = parsedData.data.BCN.origin;
       });
-    const citiesArr = this.store.selectSnapshot(RequestDataState.cities);
-    const asd = citiesArr.filter((item) => item.code === 'LWO');
-    this.originLat = asd[0].coordinates.lat;
-    this.originLon = asd[0].coordinates.lon;
-    this.originCode = asd[0].code;
+    // const citiesArr = this.store.selectSnapshot(RequestDataState.cities);
+    // const asd = citiesArr.filter((item) => item.code === 'LWO');
+    // this.originLat = asd[0].coordinates.lat;
+    // this.originLon = asd[0].coordinates.lon;
+    // this.originCode = asd[0].code;
   }
 
   browserOnly(f: () => void) {
@@ -117,7 +121,10 @@ export class MapsComponent implements AfterViewInit, OnInit {
     }
   }
 
-  ngAfterViewInit() {
+  // ngAfterViewInit() {
+  // }
+
+  makeChart(objValues: any): void {
     this.browserOnly(() => {
       //*
       let root = am5.Root.new('chartdiv');
@@ -333,7 +340,7 @@ export class MapsComponent implements AfterViewInit, OnInit {
         },
       ];
 
-      citySeries.data.setAll(cities);
+      citySeries.data.setAll(objValues);
 
       // Array destinations
       let destinations = [
