@@ -1,25 +1,41 @@
 <div class="container">
-  <div class="non-stop-tickets-data">
+  <div class="non-stop-tickets-data"
+       *ngIf="$any(nonStopTickets$ | async).length !== 0; else noData">
+    ">
     <div
       *ngFor="let item of nonStopTickets$ | async"
       class="ticket-content__wrapper"
     >
       <div class="ticket__sidecontent">
-        <h1> {{ item.price }} <fa-icon [icon]="faHryvnia"></fa-icon></h1>
+        <h1> {{ item.price }}
+          <fa-icon [icon]="faHryvnia"></fa-icon>
+        </h1>
         <button class="ticket-submit-btn">Add</button>
       </div>
 
       <div class="ticket__maincontainer">
-        <h1><fa-icon [icon]="faMapAlt"></fa-icon> {{cityOrigin}} To {{cityArrival}}</h1>
-        <h3><fa-icon [icon]="faPlane"></fa-icon> Airline: {{item.airline }}</h3>
+        <h1>
+          <fa-icon [icon]="faMapAlt"></fa-icon>
+          {{cityOrigin}} To {{cityArrival}}</h1>
+        <h3>
+          <fa-icon [icon]="faPlane"></fa-icon>
+          Airline: {{item.airline }}</h3>
         <h3>Flight Number {{ item.flight_number }}</h3>
         <div class="ticket__departure">
-          <h3> <fa-icon [icon]="faDeparture"></fa-icon> Departure: {{ item.departure_at | date: 'short'}}</h3>
+          <h3>
+            <fa-icon [icon]="faDeparture"></fa-icon>
+            Departure: {{ item.departure_at | date: 'short'}}</h3>
         </div>
         <div class="ticket__return">
-          <h3><fa-icon [icon]="faArrival"></fa-icon> Return: {{ item.return_at | date: 'short'}}</h3>
+          <h3>
+            <fa-icon [icon]="faArrival"></fa-icon>
+            Return: {{ item.return_at | date: 'short'}}</h3>
         </div>
       </div>
     </div>
+
   </div>
+  <ng-template #noData>
+    <app-no-records-found></app-no-records-found>
+  </ng-template>
 </div>

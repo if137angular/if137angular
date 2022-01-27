@@ -62,6 +62,12 @@ export class CityDestinationComponent implements OnInit {
       .find((city: CitiesModel) => city.code === cityKey);
     return matchedCity ? matchedCity.name : '';
   }
+  getCityCode(cityKey: string): string {
+    const matchedCity = this.store
+      .selectSnapshot(RequestDataState.cities)
+      .find((city: CitiesModel) => city.code === cityKey);
+    return matchedCity ? matchedCity.code : '';
+  }
 
   getCountryCodeByCityCode(countryKey: string): string {
     const matchedCountry = this.store
