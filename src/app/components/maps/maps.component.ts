@@ -1,25 +1,72 @@
-import { AfterViewInit, Component, Inject, NgZone, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, OnInit, Component, Inject, NgZone, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-
 import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
+import { Store } from "@ngxs/store";
+// import { CitiesModel } from "src/app/models/cities.model";
+import { RequestDataState } from "src/app/store/request-data.state";
+// import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
+import { FlightsInfoService } from 'src/app/services/flights-info.service';
+// import { any } from '@amcharts/amcharts5/.internal/core/util/Array';
 
-console.log(am5geodata_worldLow);
+export type DestinationPopular = {
+  origin: string;
+  destination: string;
+  departure_at: Date;
+  return_at: Date;
+  expires_at: Date;
+  number_of_changes: number;
+  price: number;
+  found_at: Date;
+  transfers: number;
+  airline: string;
+  flight_number: number;
+}
+
+export type GetDestinationPopular = {
+  success: boolean;
+  data: Map<string, DestinationPopular>;
+  currency: string;
+};
 
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
   styleUrls: ['./maps.component.scss']
 })
-export class MapsComponent implements AfterViewInit {
+
+export class MapsComponent implements AfterViewInit, OnInit {
   button: any;
   private root!: am5.Root;
+  items: GetDestinationPopular[] = []
+  originPointCode: string = ''
+  originLat: string = '';
+  originLon: string = '';
+  originCode: string = '';
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private zone: NgZone) {
+  constructor(@Inject(PLATFORM_ID) private platformId: any, private zone: NgZone, private flightInfoService: FlightsInfoService, private store: Store) {
   }
+
+
+  ngOnInit(): void {
+    const result = this.flightInfoService
+      .requestPopularDestination("LWO").subscribe((res) => {
+        const stringifiedData = JSON.stringify(res)
+        const parsedData = JSON.parse(stringifiedData);
+
+        this.originPointCode = parsedData.data.BCN.origin;
+      })
+    const citiesArr = this.store.selectSnapshot(RequestDataState.cities);
+    const asd = citiesArr.filter(item => item.code === 'LWO');
+    this.originLat = asd[0].coordinates.lat;
+    this.originLon = asd[0].coordinates.lon;
+    this.originCode = asd[0].code;
+  }
+
 
   browserOnly(f: () => void) {
     if (isPlatformBrowser(this.platformId)) {
@@ -138,10 +185,15 @@ export class MapsComponent implements AfterViewInit {
       });
 
       let cities = [
-          {
+        {
+          id: "lviv",
+          title: "Lviv",
+          geometry: { type: "Point", coordinates: [23.955318, 49.816418] },
+        },
+        {
           id: "ivano-frankivsk",
           title: "Ivano-Frankivsk",
-          geometry: { type: "Point", coordinates: [ 24.7097200, 48.9215000] },
+          geometry: { type: "Point", coordinates: [24.7097200, 48.9215000] },
         },
         {
           id: "london",
@@ -221,11 +273,11 @@ export class MapsComponent implements AfterViewInit {
 
       citySeries.data.setAll(cities);
 
-  // Array destinations
-      let destinations = [ "reykjavik", "lisbon", "moscow", "belgrade", "ljublana", "madrid", "stockholm", "bern", "kiev", "new york", "athens"];
-      let originLongitude = 24.7097200;
-      let originLatitude = 48.9215000;
-      
+      // Array destinations
+      let destinations = ["reykjavik", "lisbon", "moscow", "belgrade", "ljublana", "madrid", "stockholm", "bern", "kiev", "new york", "athens"];
+      let originLongitude = this.originLon.toString();
+      let originLatitude = this.originLat.toString();
+
       am5.array.each(destinations, function (did: string) {
         let destinationDataItem: any = citySeries.getDataItemById(did);
         let lineDataItem = lineSeries.pushDataItem({
