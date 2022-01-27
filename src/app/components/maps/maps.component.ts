@@ -18,6 +18,8 @@ import { RequestDataState } from 'src/app/store/request-data.state';
 import { map } from 'rxjs/operators';
 
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
+import { GetCities } from "src/app/store/request-data.action";
+import { CitiesModel } from "src/app/models/cities.model";
 // import { any } from '@amcharts/amcharts5/.internal/core/util/Array';
 
 export type DestinationPopular = {
@@ -43,7 +45,7 @@ export type GetDestinationPopular = {
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
-  styleUrls: ['./maps.component.scss'],
+  styleUrls: [ './maps.component.scss' ],
 })
 export class MapsComponent implements AfterViewInit, OnInit {
   button: any;
@@ -59,16 +61,46 @@ export class MapsComponent implements AfterViewInit, OnInit {
     private zone: NgZone,
     private flightInfoService: FlightsInfoService,
     private store: Store
-  ) {}
+  ) {
+  }
+
+
+  getCityByCode(cityCode: string): CitiesModel {
+    const cities = this.store.selectSnapshot(RequestDataState.cities);
+    const matchedCity = cities.find((city: CitiesModel) => city.code === cityCode
+  )
+    return matchedCity
+  }
 
   ngOnInit(): void {
-    const result = this.flightInfoService
-      .requestPopularDestination('LWO')
-      .subscribe((res) => {
-        const stringifiedData = JSON.stringify(res);
-        const parsedData = JSON.parse(stringifiedData);
+    let result: any;
+    const origin = 'LWO';
+    this.flightInfoService
+      .requestPopularDestination(origin)
+      .subscribe((res: GetDestinationPopular) => {
+        const test: Map<string, DestinationPopular> = res.data;
+        const objValues: DestinationPopular[] = Object.values(test);
+        objValues.forEach((obj: DestinationPopular) => {
+          const matchedCity = this.getCityByCode(obj.destination);
+          Object.assign(obj, {
+            id: matchedCity ? matchedCity.name : '',
+            title: matchedCity ? matchedCity.name : '',
+            geometry: {
+              type: 'Point',
+              coordinates: matchedCity ? [ matchedCity.coordinates.lat, matchedCity.coordinates.lon ] : []
+            },
+          })
+        })
+        console.log(objValues);
 
-        this.originPointCode = parsedData.data.BCN.origin;
+
+        // {
+        //   id: 'lviv',
+        //     title: 'Lviv',
+        //   geometry: { type: 'Point', coordinates: [23.955318, 49.816418] },
+        // }
+
+        // this.originPointCode = parsedData.data.BCN.origin;
       });
     const citiesArr = this.store.selectSnapshot(RequestDataState.cities);
     const asd = citiesArr.filter((item) => item.code === 'LWO');
@@ -89,7 +121,7 @@ export class MapsComponent implements AfterViewInit, OnInit {
     this.browserOnly(() => {
       //*
       let root = am5.Root.new('chartdiv');
-      root.setThemes([am5themes_Animated.new(root)]);
+      root.setThemes([ am5themes_Animated.new(root) ]);
 
       let chart = root.container.children.push(
         am5map.MapChart.new(root, {
@@ -202,102 +234,102 @@ export class MapsComponent implements AfterViewInit, OnInit {
         {
           id: 'lviv',
           title: 'Lviv',
-          geometry: { type: 'Point', coordinates: [23.955318, 49.816418] },
+          geometry: { type: 'Point', coordinates: [ 23.955318, 49.816418 ] },
         },
         {
           id: 'ivano-frankivsk',
           title: 'Ivano-Frankivsk',
-          geometry: { type: 'Point', coordinates: [24.70972, 48.9215] },
+          geometry: { type: 'Point', coordinates: [ 24.70972, 48.9215 ] },
         },
         {
           id: 'london',
           title: 'London',
-          geometry: { type: 'Point', coordinates: [-0.1262, 51.5002] },
+          geometry: { type: 'Point', coordinates: [ -0.1262, 51.5002 ] },
         },
         {
           id: 'brussels',
           title: 'Brussels',
-          geometry: { type: 'Point', coordinates: [4.3676, 50.8371] },
+          geometry: { type: 'Point', coordinates: [ 4.3676, 50.8371 ] },
         },
         {
           id: 'prague',
           title: 'Prague',
-          geometry: { type: 'Point', coordinates: [14.4205, 50.0878] },
+          geometry: { type: 'Point', coordinates: [ 14.4205, 50.0878 ] },
         },
         {
           id: 'athens',
           title: 'Athens',
-          geometry: { type: 'Point', coordinates: [23.7166, 37.9792] },
+          geometry: { type: 'Point', coordinates: [ 23.7166, 37.9792 ] },
         },
         {
           id: 'reykjavik',
           title: 'Reykjavik',
-          geometry: { type: 'Point', coordinates: [-21.8952, 64.1353] },
+          geometry: { type: 'Point', coordinates: [ -21.8952, 64.1353 ] },
         },
         {
           id: 'dublin',
           title: 'Dublin',
-          geometry: { type: 'Point', coordinates: [-6.2675, 53.3441] },
+          geometry: { type: 'Point', coordinates: [ -6.2675, 53.3441 ] },
         },
         {
           id: 'oslo',
           title: 'Oslo',
-          geometry: { type: 'Point', coordinates: [10.7387, 59.9138] },
+          geometry: { type: 'Point', coordinates: [ 10.7387, 59.9138 ] },
         },
         {
           id: 'lisbon',
           title: 'Lisbon',
-          geometry: { type: 'Point', coordinates: [-9.1355, 38.7072] },
+          geometry: { type: 'Point', coordinates: [ -9.1355, 38.7072 ] },
         },
         {
           id: 'moscow',
           title: 'Moscow',
-          geometry: { type: 'Point', coordinates: [37.6176, 55.7558] },
+          geometry: { type: 'Point', coordinates: [ 37.6176, 55.7558 ] },
         },
         {
           id: 'belgrade',
           title: 'Belgrade',
-          geometry: { type: 'Point', coordinates: [20.4781, 44.8048] },
+          geometry: { type: 'Point', coordinates: [ 20.4781, 44.8048 ] },
         },
         {
           id: 'bratislava',
           title: 'Bratislava',
-          geometry: { type: 'Point', coordinates: [17.1547, 48.2116] },
+          geometry: { type: 'Point', coordinates: [ 17.1547, 48.2116 ] },
         },
         {
           id: 'ljublana',
           title: 'Ljubljana',
-          geometry: { type: 'Point', coordinates: [14.506, 46.0514] },
+          geometry: { type: 'Point', coordinates: [ 14.506, 46.0514 ] },
         },
         {
           id: 'madrid',
           title: 'Madrid',
-          geometry: { type: 'Point', coordinates: [-3.7033, 40.4167] },
+          geometry: { type: 'Point', coordinates: [ -3.7033, 40.4167 ] },
         },
         {
           id: 'stockholm',
           title: 'Stockholm',
-          geometry: { type: 'Point', coordinates: [18.0645, 59.3328] },
+          geometry: { type: 'Point', coordinates: [ 18.0645, 59.3328 ] },
         },
         {
           id: 'bern',
           title: 'Bern',
-          geometry: { type: 'Point', coordinates: [7.4481, 46.948] },
+          geometry: { type: 'Point', coordinates: [ 7.4481, 46.948 ] },
         },
         {
           id: 'kiev',
           title: 'Kiev',
-          geometry: { type: 'Point', coordinates: [30.5367, 50.4422] },
+          geometry: { type: 'Point', coordinates: [ 30.5367, 50.4422 ] },
         },
         {
           id: 'paris',
           title: 'Paris',
-          geometry: { type: 'Point', coordinates: [2.351, 48.8567] },
+          geometry: { type: 'Point', coordinates: [ 2.351, 48.8567 ] },
         },
         {
           id: 'new york',
           title: 'New York',
-          geometry: { type: 'Point', coordinates: [-74, 40.43] },
+          geometry: { type: 'Point', coordinates: [ -74, 40.43 ] },
         },
       ];
 
@@ -326,7 +358,7 @@ export class MapsComponent implements AfterViewInit, OnInit {
           geometry: {
             type: 'LineString',
             coordinates: [
-              [originLongitude, originLatitude],
+              [ originLongitude, originLatitude ],
               [
                 destinationDataItem.get('longitude'),
                 destinationDataItem.get('latitude'),
