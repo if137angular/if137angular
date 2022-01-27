@@ -15,7 +15,7 @@ import { CitiesModel } from 'src/app/models/cities.model';
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: AutocompleteComponent,
+      useExisting: forwardRef(() => AutocompleteComponent),
       multi: true,
     }
   ],

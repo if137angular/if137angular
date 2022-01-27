@@ -91,6 +91,6 @@ export class CityDestinationComponent implements OnInit {
         startDate: new Date(),
         transfers: null,
       }
-      this.store.dispatch(new SetFormDate(formData))
+      // this.store.dispatch(new SetFormDate(formData))
     }
 }

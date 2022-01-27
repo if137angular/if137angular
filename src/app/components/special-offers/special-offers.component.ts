@@ -59,6 +59,7 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
     this.formData$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((formData: FormDataModel) => {
+        if (!formData.isFormValid) { return };
         this.dispatchSpecialOffers(formData);
       });
   }

@@ -1,7 +1,7 @@
 <div class="container">
   <div class="non-stop-tickets-data">
     <div
-      *ngFor="let item of nonStopInfo"  
+      *ngFor="let item of nonStopTickets$ | async"
       class="ticket-content__wrapper"
     >
       <div class="ticket__sidecontent">

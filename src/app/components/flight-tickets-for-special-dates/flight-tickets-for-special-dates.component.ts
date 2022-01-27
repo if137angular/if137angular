@@ -20,7 +20,7 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit, OnDestroy 
 
   formData: any;
   flightInfo: FlightInfo[];
-  // flightInfo: any; 
+  // flightInfo: any;
 
   loading: boolean;
 
@@ -44,7 +44,7 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit, OnDestroy 
         direct: formData.transfers  === 'Directly'
       }
 
-      this.store.dispatch([new StartLoading(), new GetTiketsForSpecialDate(payload)])
+      this.store.dispatch([new GetTiketsForSpecialDate(payload)])
         // .subscribe((data: any) => {
         //   this.flightInfo = data
         // })
