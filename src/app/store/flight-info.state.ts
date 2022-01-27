@@ -15,7 +15,7 @@ import { CheapestTicketsRequestFail, CheapestTicketsRequestSuccess, StartLoading
 import {
   DestinationPopular,
   GetDestinationPopular
-} from "src/app/components/city-destination/city-destination.component";
+} from "../models/city-destination.model";
 
 
 export interface FlightInfoStateModel {
