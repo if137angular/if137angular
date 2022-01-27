@@ -8,12 +8,17 @@
 				<div class="ticket-info-content-flight-details">
 					<span> Airline: {{ item.airline }}</span>
 					<span> Flight number: {{ item.flight_number }}</span>
-					<span>Transfers: {{ item.transfers }}</span>
+					<span *ngIf="item.transfers > 0"> <b>Stops: {{ item.transfers }}</b></span>
+					<span *ngIf="item.transfers === 0"><b> Nonstop (direct) </b></span>
 				</div>
 			</div>
 
 			<div class="ticket-info-content-main">
-				<p class="date">Departure: {{ item.departure_at | date : "medium"}}</p>
+				<div class="ticket-info-content-main-departure">
+					<span class="ticket-info-content-main-departure-city"> {{ cityFrom }} </span>
+					<span class="ticket-info-content-main-departure-date"> {{ item.departure_at | date : "MMM,dd" }}, {{
+						item.departure_at | date : "HH:mm" }} </span>
+				</div>
 				<div class="ticket-info-content-main-image">
 					<div class="ticket-info-content-main-image-top">
 						<mat-icon>flight_takeoff</mat-icon>
@@ -25,10 +30,17 @@
 						<span>{{item.destination}}</span>
 					</div>
 				</div>
+				<div class="ticket-info-content-main-return">
+					<span> {{ cityTo }} </span>
+				</div>
 			</div>
 
 			<div class="ticket-info-content-main">
-				<p class="date">Return: {{ item.return_at | date : "medium"}}</p>
+				<div class="ticket-info-content-main-departure">
+					<span class="ticket-info-content-main-departure-city"> {{ cityTo }} </span>
+					<span class="ticket-info-content-main-departure-date"> {{ item.return_at | date : "MMM,dd" }}, {{
+						item.return_at | date : "HH:mm" }} </span>
+				</div>
 				<div class="ticket-info-content-main-image">
 					<div class="ticket-info-content-main-image-top">
 						<mat-icon>flight_takeoff</mat-icon>
@@ -39,6 +51,9 @@
 						<span>{{item.destination}}</span>
 						<span>{{item.origin}}</span>
 					</div>
+				</div>
+				<div class="ticket-info-content-main-return">
+					<span> {{ cityFrom }} </span>
 				</div>
 			</div>
 
