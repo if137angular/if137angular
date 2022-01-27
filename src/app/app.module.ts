@@ -70,6 +70,7 @@ import { MapsComponent } from './components/maps/maps.component';
 import { NoRecordsFoundComponent } from './components/no-records-found/no-records-found.component';
 import { CurrencyDropdownComponent } from './components/currency-dropdown/currency-dropdown.component';
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
+import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/cheapest-ticket-item.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
     NoRecordsFoundComponent,
     CurrencyDropdownComponent,
     CheapestTicketsComponent,
+    CheapestTicketItemComponent,
   ],
   imports: [
     CommonModule,
