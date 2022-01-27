@@ -267,7 +267,9 @@ export class FlightInfoState {
     ).subscribe((popularDestinations: any) => {
       const response: Map<string, DestinationPopular[]> = new Map<string, DestinationPopular[]>();
       Object.keys(popularDestinations).forEach((key: string) => {
+        if (popularDestinations[key].length > 3) {
         response.set(key, popularDestinations[key])
+      }
       })
       patchState({ popularDestinations: response, loading: false });
     })

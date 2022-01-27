@@ -41,7 +41,7 @@ export class CityDestinationComponent implements OnInit {
   @Select(FlightInfoState.popularDestinations)
   popularDestinations$: Observable<Map<string, DestinationPopular[]>>;
 
-  private popularDestinationCities = [ 'IEV', 'LWO']; //, 'DNK', 'ODS'
+  private popularDestinationCities = [ 'IEV', 'LWO', 'DNK', 'ODS'];
 
   constructor(private flightInfoService: FlightsInfoService, private store: Store) {
   }
