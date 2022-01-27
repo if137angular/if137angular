@@ -19,6 +19,8 @@ export class NonStopTicketsComponent implements OnInit {
   nonStopInfo: NonStopInfo[] = [];
   cityOrigin: string;
   cityArrival: string;
+  cityOriginCode: string;
+  cityArrivalCode: string;
   faPlane = faPlane;
   faDeparture = faPlaneDeparture;
   faArrival = faPlaneArrival;
@@ -45,6 +47,9 @@ export class NonStopTicketsComponent implements OnInit {
           this.nonStopInfo = response;
           this.cityOrigin = formData.destinationFrom.name;
           this.cityArrival = formData.destinationTo.name;
+          this.cityOriginCode = formData.destinationFrom.code;
+          this.cityArrivalCode = formData.destinationTo.code;
+          console.log(this.nonStopInfo);
         });
     });
   }
