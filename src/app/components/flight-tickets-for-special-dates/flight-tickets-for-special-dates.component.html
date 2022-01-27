@@ -8,10 +8,8 @@
       [flightInfo]="info"
       ></app-flight-ticket>
   </div>
+
 </div>
 <ng-template #noRecordsFound>
-  <div class="container1">
-    <h1 class="text">Sory, we are not founded tickets.</h1>
-    <h3 class="text">Please change the date or location</h3>
-  </div>
+  <app-no-records-found></app-no-records-found>
 </ng-template>
