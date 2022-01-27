@@ -6,20 +6,17 @@
           <img src="https://flagcdn.com/w40/{{getCountryCodeByCityCode(cities.key) | lowercase}}.png">
           {{getCityNameByKey(cities.key)}}
         </mat-label>
-        <div class="class">
-          <div>
-            <mat-select [ngModel]="selectedCities" (ngModelChange)="onChangeObj($event)" name="sel3">
-              <mat-option class="option" [value]="items" *ngFor="let items of cities.value">
-                <span class="destination">{{getCityNameByKey(items.origin)}}</span>
-                <mat-icon>trending_flat</mat-icon>
-                <span>{{getCityNameByKey(items.destination)}}</span>
-                <span class="price"> starting at
-                  <b>{{items.price}}$</b>
-                </span>
-              </mat-option>
-            </mat-select>
-          </div>
-        </div>
+
+        <mat-select [ngModel]="selectedCities" (ngModelChange)="onChangeObj($event)" name="sel3">
+          <mat-option class="option" [value]="items" *ngFor="let items of cities.value">
+            <span class="origin">{{getCityNameByKey(items.origin)}}</span>
+            <mat-icon>trending_flat</mat-icon>
+            <span class="destination">{{getCityNameByKey(items.destination)}}</span>
+            <span class="price"> starting at
+              <b>{{items.price}}$</b>
+            </span>
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
   </div>
