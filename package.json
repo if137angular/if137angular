@@ -8,7 +8,7 @@
     "serve": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development --delete-output-path false",
-    "server": "nodemon ./src/server",
+    "server": "nodemon ./src/server --watch ./src/server",
     "test": "ng test --watch false --browsers ChromeHeadless",
     "test:dev": "ng test",
     "coverage": "ng test --source-map --code-coverage",

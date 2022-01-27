@@ -20,7 +20,7 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit, OnDestroy 
 
   formData: any;
   flightInfo: FlightInfo[];
-  // flightInfo: any; 
+  // flightInfo: any;
 
   loading: boolean;
 
@@ -48,7 +48,6 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit, OnDestroy 
         .subscribe((data: any) => {
           this.flightInfo = data
         })
-        console.log('*****flightinfo', this.flightInfo)
     });
   }
 

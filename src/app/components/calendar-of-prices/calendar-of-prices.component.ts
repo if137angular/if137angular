@@ -91,39 +91,13 @@ import {
   CalendarView,
 } from 'angular-calendar';
 
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3',
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF',
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA',
-  },
-};
-
 @Component({
   selector: 'app-calendar-of-prices',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    `
-      h3 {
-        margin: 0 0 10px;
-      }
-
-      pre {
-        background-color: #f5f5f5;
-        padding: 15px;
-      }
-    `,
-  ],
+  styleUrls: ['./calendar-of-prices.component.scss'],
   templateUrl: './calendar-of-prices.component.html',
 })
-export class CalendarOfPricesComponent {
+export class CalendarOfPricesComponent implements OnInit {
   calendarData: CalendarOfPricesModel[];
   formData: CalendarOfPricesPayload;
   currency: string;
@@ -158,7 +132,6 @@ export class CalendarOfPricesComponent {
       )
       .subscribe((data: CalendarOfPricesPayload) => {
         this.store.dispatch([
-          new StartLoading(),
           new CalendarOfPricesLoaded(data),
         ]);
         this.formData = data;

@@ -1,5 +1,18 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, OnInit, Output, } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import { CitiesModel } from 'src/app/models/cities.model';
 
 @Component({
@@ -15,9 +28,9 @@ import { CitiesModel } from 'src/app/models/cities.model';
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: AutocompleteComponent,
+      useExisting: forwardRef(() => AutocompleteComponent),
       multi: true,
-    }
+    },
   ],
 })
 export class AutocompleteComponent implements OnInit, ControlValueAccessor {
@@ -70,8 +83,10 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
 
   validate({ value }: FormControl) {
     const isNotValid = !value.code;
-    return isNotValid && {
-      invalid: true
-    }
+    return (
+      isNotValid && {
+        invalid: true,
+      }
+    );
   }
 }

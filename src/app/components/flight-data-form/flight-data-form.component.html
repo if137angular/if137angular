@@ -1,10 +1,8 @@
 <form class="data-form" [formGroup]="flightDataFormGroup">
   <app-autocomplete formControlName="destinationFrom" label="From"
-    [items]="cities"
-    [class.validation-error]="flightDataFormGroup.controls['destinationFrom'].invalid" ></app-autocomplete>
+    [items]="cities"></app-autocomplete>
   <app-autocomplete formControlName="destinationTo" label="To"
-    [items]="cities"
-    [class.mat-error]="flightDataFormGroup.controls['destinationTo'].invalid"></app-autocomplete>
+    [items]="cities"></app-autocomplete>
 
   <mat-form-field appearance="fill">
     <mat-label>From / To date range</mat-label>
