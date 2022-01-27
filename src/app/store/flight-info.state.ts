@@ -212,9 +212,9 @@ export class FlightInfoState {
     { patchState }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.CheapestTicketsRequestSuccess
   ) {
-    const ticketsObj: TicketsObjModel = Object.values(payload.data)[0]
+    const ticketsObj: TicketsObjModel = Object.values(payload.data)[0];
     patchState({
-      cheapestTickets: Object.values(ticketsObj),
+      cheapestTickets: ticketsObj ? Object.values(ticketsObj) : [],
       errors: null,
       loading: false,
       currency: payload.currency
@@ -234,7 +234,7 @@ export class FlightInfoState {
     { patchState }: StateContext<FlightInfoStateModel>,
     { formData }: FlightInfoActions.GetNonStopTickets
   ) {
-    patchState({ loading: true })
+    patchState({ loading: true });
     return this.flightInfoService.requestGetNonStopTickets(
       formData.destinationFrom.code,
       formData.destinationTo.code,
@@ -242,7 +242,9 @@ export class FlightInfoState {
       formData.endDate.toISOString().slice(0, 7)
     ).subscribe((response: any) => {
       const nonStopTickets: any = Object.values(response.data)[0];
-      patchState({ nonStopTickets: Object.values(nonStopTickets), loading: false })
+      patchState({
+        nonStopTickets: nonStopTickets ? Object.values(nonStopTickets) : [], loading: false
+      })
     })
   }
 
@@ -268,8 +270,8 @@ export class FlightInfoState {
       const response: Map<string, DestinationPopular[]> = new Map<string, DestinationPopular[]>();
       Object.keys(popularDestinations).forEach((key: string) => {
         if (popularDestinations[key].length > 3) {
-        response.set(key, popularDestinations[key])
-      }
+          response.set(key, popularDestinations[key])
+        }
       })
       patchState({ popularDestinations: response, loading: false });
     })

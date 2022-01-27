@@ -1,21 +1,18 @@
 <div class="dropdown">
-  <div class="dropdown__flag" *ngFor="let currency of currencies">
-    <img
-      *ngIf="selectedOption === currency.code"
-      src="{{ currency.flag }}"
-      alt=""
-    />
-  </div>
-  <mat-form-field class="dropdown__currency">
-    <mat-select class="dropdown__select" [(ngModel)]="selectedOption">
-      <mat-option
-        class="dropdown__option"
-        *ngFor="let currency of currencies"
-        selected="currency.code === 'usd'"
-        [value]="currency.code"
-      >
-        {{ currency.code | uppercase }}
-      </mat-option>
-    </mat-select></mat-form-field
-  >
+  <button mat-button [matMenuTriggerFor]="menu">
+    <div *ngFor="let currency of currencies$ | async" style="display: inline;">
+      <div *ngIf="selectedOption === currency.code" style="display: flex; align-items: center;">
+        <img [src]="currency.flag" alt="" />
+        {{selectedOption | uppercase}}
+        <mat-icon>arrow_drop_down</mat-icon>
+      </div>
+    </div>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item *ngFor="let currency of currencies$ | async" (click)="selectedOption = currency.code">
+      <img [src]="currency.flag" alt="" />
+      <span>{{currency.code | uppercase}}</span>
+    </button>
+  </mat-menu>
 </div>
