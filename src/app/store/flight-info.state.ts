@@ -6,9 +6,16 @@ import { FlightsInfoService } from '../services/flights-info.service';
 import { FilterModel } from '../models/filter.model';
 import filterArray from 'src/utils/filterFunc';
 import { startOfDay } from 'date-fns';
+import { from, of } from 'rxjs';
+import { mergeMap, toArray, mapTo, groupBy, reduce, tap, scan, map, mergeAll, flatMap } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 import { CheapestTicketModel, CheapestTicketsResponseModel, TicketsObjModel } from "../models/cheapest-tickets.model";
 import { CheapestTicketsRequestFail, CheapestTicketsRequestSuccess, StartLoading } from "./flight-info.action";
+import {
+  DestinationPopular,
+  GetDestinationPopular
+} from "src/app/components/city-destination/city-destination.component";
 
 
 export interface FlightInfoStateModel {
@@ -16,6 +23,7 @@ export interface FlightInfoStateModel {
   specialOffers: any; // TODO: create model;
   nonStopTickets: any // TODO: create model
   flightTiketsForDate: any;
+  popularDestinations: Map<string, DestinationPopular[]>,
   currency: string;
   filter: FilterModel;
   loading: boolean;
@@ -31,6 +39,7 @@ export interface FlightInfoStateModel {
     flightTiketsForDate: [],
     cheapestTickets: null,
     nonStopTickets: [],
+    popularDestinations: new Map<string, DestinationPopular[]>(),
     currency: 'uah',
     filter: {
       flightClass: null,
@@ -68,9 +77,15 @@ export class FlightInfoState {
   static flightTiketsForDate(state: FlightInfoStateModel): any {
     return filterArray(state.flightTiketsForDate, state.filter);
   }
+
   @Selector()
   static nonStopTickets(state: FlightInfoStateModel): any {
     return filterArray(state.nonStopTickets, state.filter);
+  }
+
+  @Selector()
+  static popularDestinations(state: FlightInfoStateModel): any {
+    return state.popularDestinations;
   }
 
   @Selector()
@@ -227,7 +242,34 @@ export class FlightInfoState {
       formData.endDate.toISOString().slice(0, 7)
     ).subscribe((response: any) => {
       const nonStopTickets: any = Object.values(response.data)[0];
-        patchState({ nonStopTickets: Object.values(nonStopTickets), loading: false })
+      patchState({ nonStopTickets: Object.values(nonStopTickets), loading: false })
+    })
+  }
+
+  @Action(FlightInfoActions.GetPopularDestinations)
+  GetPopularDestinations(
+    { patchState }: StateContext<FlightInfoStateModel>,
+    payload: FlightInfoActions.GetPopularDestinations) {
+    patchState({
+      loading: true,
+    });
+    from(payload.payload).pipe(
+      mergeMap((cityCode: string) => this.flightInfoService.requestPopularDestination(cityCode)),
+      toArray(),
+      mergeMap((response: GetDestinationPopular[]) => of(response).pipe(
+        map((res: GetDestinationPopular[]) =>
+          res.map((r: GetDestinationPopular) => Object.values(r.data))
+        ),
+        map((r: any) => _.flattenDeep(r)),
+        map((r: any) => _.groupBy(r, (item) => item.destination)),
+        )
+      )
+    ).subscribe((popularDestinations: any) => {
+      const response: Map<string, DestinationPopular[]> = new Map<string, DestinationPopular[]>();
+      Object.keys(popularDestinations).forEach((key: string) => {
+        response.set(key, popularDestinations[key])
       })
+      patchState({ popularDestinations: response, loading: false });
+    })
   }
 }
