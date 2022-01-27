@@ -44,11 +44,10 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit, OnDestroy 
         direct: formData.transfers  === 'Directly'
       }
 
-      this.store.dispatch([new GetTiketsForSpecialDate(payload)])
-        // .subscribe((data: any) => {
-        //   this.flightInfo = data
-        // })
-        console.log('*****flightinfo', this.flightInfo)
+      this.store.dispatch([new StartLoading(), new GetTiketsForSpecialDate(payload)])
+        .subscribe((data: any) => {
+          this.flightInfo = data
+        })
     });
   }
 
