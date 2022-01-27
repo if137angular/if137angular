@@ -6,7 +6,9 @@ import {FormDataModel} from '../../models/formData.model';
 import {CheapestTicketsRequest} from '../../store/flight-info.action';
 import {FlightInfoState} from '../../store/flight-info.state';
 import {CheapestTicketModel} from '../../models/cheapest-tickets.model';
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
   selector: 'app-cheapest-tickets',
   templateUrl: './cheapest-tickets.component.html',
@@ -20,7 +22,7 @@ export class CheapestTicketsComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit(): void {
-    this.formData$.subscribe(((formData: FormDataModel) => {
+    this.formData$.pipe(untilDestroyed(this)).subscribe(((formData: FormDataModel) => {
       if (!formData.isFormValid) { return; }
       this.store.dispatch(new CheapestTicketsRequest(formData))
     }))

@@ -5,7 +5,9 @@ import {Select, Store} from "@ngxs/store";
 import {RequestDataState} from "../../store/request-data.state";
 import {FormDataModel} from "../../models/formData.model";
 import * as moment from 'moment';
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
   selector: 'app-cheapest-tickets-old',
   templateUrl: './cheapest-tickets.component.html',
@@ -25,6 +27,7 @@ export class CheapestTicketsComponentOld implements OnInit {
   ngOnInit() {
     this.store
       .select(RequestDataState.formData)
+      .pipe(untilDestroyed(this))
       .pipe(
         map((state: FormDataModel) => ({
           originInfo: {

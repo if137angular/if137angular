@@ -5,8 +5,9 @@ import { Store } from '@ngxs/store';
 import { GetCurrencies } from 'src/app/store/request-data.action';
 import { Currency } from 'src/app/models/special-offers.model';
 import { RequestDataState } from 'src/app/store/request-data.state';
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 
-
+@UntilDestroy()
 @Component({
   selector: 'app-currency-dropdown',
   templateUrl: './currency-dropdown.component.html',
@@ -23,7 +24,7 @@ export class CurrencyDropdownComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(new GetCurrencies());
-    this.currencies$.subscribe((currencies: any) => {
+    this.currencies$.pipe(untilDestroyed(this)).subscribe((currencies: any) => {
       this.currencies = currencies;
     });
   }
