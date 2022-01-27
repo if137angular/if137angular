@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { NgxsModule } from '@ngxs/store';
 import { appState } from 'src/app/store/appState';
@@ -53,7 +52,7 @@ import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-
 import { TransfersComponent } from './components/transfers/transfers.component';
 import { FlightTicketsForSpecialDatesComponent } from './components/flight-tickets-for-special-dates/flight-tickets-for-special-dates.component';
 
-import { SpecialOffersSelectComponent } from './components/special-offers/special-offers-select/special-offers-select.component';
+
 import { CheapestTicketsComponentOld } from './components/cheapest-tickets-old-v/cheapest-tickets.component';
 import { TicketItemComponent } from './components/cheapest-tickets-old-v/cheapest-ticket-item/ticket-item.component';
 import { FlightItemComponent } from './components/cheapest-tickets-old-v/cheapest-ticket-item/flight-item/flight-item.component';
@@ -84,7 +83,6 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
     NonStopTicketsComponent,
     TransfersComponent,
     FlightTicketsForSpecialDatesComponent,
-    SpecialOffersSelectComponent,
     CheapestTicketsComponentOld,
     TicketItemComponent,
     FlightItemComponent,
@@ -156,4 +154,4 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
