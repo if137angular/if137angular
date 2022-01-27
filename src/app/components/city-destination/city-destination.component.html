@@ -1,6 +1,6 @@
 <div class="container">
   <div class="city-destination">
-    <div *ngFor="let cities of response | keyvalue">
+    <div *ngFor="let cities of (popularDestinations$ | async) | keyvalue">
       <mat-form-field appearance="fill">
         <mat-label class="city-destination-label">
           <img src="https://flagcdn.com/w40/{{getCountryCodeByCityCode(cities.key) | lowercase}}.png">
@@ -8,7 +8,7 @@
         </mat-label>
         <div class="class">
           <div>
-            <mat-select [ngModel]="selectedCities" (ngModelChange)="onChangeObj($event)" name="sel3">
+            <mat-select [ngModel]="selectedCities" (ngModelChange)="selectDestination($event)" name="sel3">
               <mat-option class="option" [value]="items" *ngFor="let items of cities.value">
                 <span class="destination">{{getCityNameByKey(items.origin)}}</span>
                 <mat-icon>trending_flat</mat-icon>
