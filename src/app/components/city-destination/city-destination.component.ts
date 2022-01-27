@@ -1,12 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { zip, of } from "rxjs";
 import { mergeMap, groupBy, reduce } from 'rxjs/operators';
-import { Store } from "@ngxs/store";
+import { Select, Store } from "@ngxs/store";
 import { CitiesModel } from "src/app/models/cities.model";
 import { RequestDataState } from "src/app/store/request-data.state";
-import {SetFormDate} from "../../store/request-data.action";
-import { UntilDestroy } from "@ngneat/until-destroy";
+import { SetFormDate } from "../../store/request-data.action";
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { GetPopularDestinations } from "src/app/store/flight-info.action";
+import { FlightInfoState } from "src/app/store/flight-info.state";
+import { Observable } from "rxjs";
+import { DOCUMENT } from "@angular/common";
 
 export type DestinationPopular = {
   origin: string;
@@ -27,6 +31,7 @@ export type GetDestinationPopular = {
   currency: string;
 };
 
+@UntilDestroy()
 @Component({
   selector: 'app-city-destination',
   templateUrl: './city-destination.component.html',
@@ -34,7 +39,12 @@ export type GetDestinationPopular = {
 })
 
 export class CityDestinationComponent implements OnInit {
-  constructor(private flightInfoService: FlightsInfoService, private store: Store) {
+  @Select(FlightInfoState.popularDestinations)
+  popularDestinations$: Observable<Map<string, DestinationPopular[]>>;
+
+  private popularDestinationCities = [ 'IEV', 'LWO', 'DNK', 'ODS' ];
+  constructor(private flightInfoService: FlightsInfoService, private store: Store,
+              @Inject('Window') private window: Window) {
   }
 
   items: GetDestinationPopular[] = []
@@ -45,27 +55,7 @@ export class CityDestinationComponent implements OnInit {
   selectedCities: string
 
   ngOnInit(): void {
-    zip(this.flightInfoService
-        .requestPopularDestination("IEV"),
-      this.flightInfoService
-        .requestPopularDestination("LWO"),
-      this.flightInfoService
-        .requestPopularDestination("DNK"),
-      this.flightInfoService
-        .requestPopularDestination("ODS"))
-      .subscribe(([ data1, data2, data3, data4 ]) => {
-
-        this.cities = [ ...Object.values(data1.data), ...Object.values(data2.data), ...Object.values(data3.data), ...Object.values(data4.data), ];
-        of(...this.cities).pipe(
-          groupBy(p => p.destination),
-          mergeMap((group$) => group$.pipe(reduce((acc: DestinationPopular[], cur) => [ ...acc, cur ], [])))
-        )
-          .subscribe(items => {
-            if (items.length > 3) {
-              this.response.set(items[0].destination, items)
-            }
-          });
-      })
+    this.store.dispatch(new GetPopularDestinations(this.popularDestinationCities));
   }
 
   getCityNameByKey(cityKey: string): string {
@@ -79,18 +69,22 @@ export class CityDestinationComponent implements OnInit {
   }
 
 
-  onChangeObj(newObj: any) {
-    this.selectedOrigin = this.getCityNameByKey(newObj.origin);
-    console.log(this.selectedOrigin);
-    this.selectedDestinstion = this.getCityNameByKey(newObj.destination);
-    console.log(this.selectedDestinstion);
-      const formData = {
-        destinationFrom: this.selectedOrigin,
-        destinationTo: this.selectedDestinstion,
-        endDate: new Date(),
-        startDate: new Date(),
-        transfers: null,
-      }
-      // this.store.dispatch(new SetFormDate(formData))
+  selectDestination(selectedDestination: any) {
+    this.selectedCities = this.getCityNameByKey(selectedDestination.origin);
+    this.selectedDestinstion = this.getCityNameByKey(selectedDestination.destination);
+    const formData = {
+      destinationFrom: {
+        name: this.getCityNameByKey(selectedDestination.origin),
+        code: this.getCountryCodeByCityCode(selectedDestination.origin)
+      },
+      destinationTo: {
+        name: this.getCityNameByKey(selectedDestination.destination),
+        code: this.getCountryCodeByCityCode(selectedDestination.destination)
+      },
+      endDate: new Date(),
+      startDate: new Date()
     }
+    this.store.dispatch(new SetFormDate(formData));
+    this.window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }
 }
