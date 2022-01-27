@@ -149,6 +149,7 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
       provide: LOCALE_ID,
       useValue: 'en-GB',
     },
+    { provide: 'Window',  useValue: window }
   ],
   bootstrap: [AppComponent],
 })
