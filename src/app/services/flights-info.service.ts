@@ -12,12 +12,11 @@ import {
 } from '../models/calendar-of-prices.model';
 import { map } from 'rxjs/operators';
 import { catchError, retry } from 'rxjs/operators';
-import { GetDestinationPopular } from '../components/city-destination/city-destination.component';
 import { FlightTiketsForDatePayload } from '../models/flight-tickets-for-date.model';
 import {CheapestTicketsResponseModel} from '../models/cheapest-tickets.model';
 import {FormDataModel} from "../models/formData.model";
 import * as moment from "moment";
-
+import {GetDestinationPopular} from "../models/city-destination.model";
 
 @Injectable()
 export class FlightsInfoService {

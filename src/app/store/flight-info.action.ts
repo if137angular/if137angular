@@ -24,12 +24,25 @@ export class GetSpecialOffers {
   ) {}
 }
 
+export class GetNonStopTickets {
+  static readonly type = '[FlightInfo] Get Non Stop Tickets';
+  constructor(public formData: FormDataModel) {
+  }
+}
+
 // ***** Code for Flight-Tikets-For-Special-Date *******
 
 
 export class GetTiketsForSpecialDate {
   static readonly type = '[FlightInfo] Get Tikets For Special Date';
   constructor(public payload: FlightTiketsForDatePayload) {}
+}
+
+export class GetPopularDestinations {
+  static readonly type = '[FlightInfo] Get Popular Destinations';
+  constructor(
+    public payload: string[]
+  ) {}
 }
 
 // ***** End code Flight-Tikets-For-Special-Price  ******

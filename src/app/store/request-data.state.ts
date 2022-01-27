@@ -191,9 +191,9 @@ export class RequestDataState {
   @Action(RequestDataActions.SetFormDate)
   SetFormData(
     { patchState }: StateContext<RequestDataStateModel>,
-    { payload }: RequestDataActions.SetFormDate
+    { formData }: RequestDataActions.SetFormDate
   ) {
-    return patchState({ formData: payload });
+    return patchState({ formData });
   }
 
   @Action(RequestDataActions.SetUserData)

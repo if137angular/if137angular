@@ -1,7 +1,9 @@
 <div class="container">
-  <div class="non-stop-tickets-data">
+  <div class="non-stop-tickets-data"
+       *ngIf="$any(nonStopTickets$ | async).length !== 0; else noData">
+    ">
     <div
-      *ngFor="let item of nonStopInfo"  
+      *ngFor="let item of nonStopTickets$ | async"
       class="ticket-content__wrapper"
     >
         <h1>{{cityOrigin}} to {{cityArrival}}</h1>
@@ -49,9 +51,11 @@
         </div>
 
       </div>
-  
+    </div>
+
   </div>
+  <ng-template #noData>
+    <app-no-records-found></app-no-records-found>
+  </ng-template>
 </div>
-<div *ngIf="nonStopInfo.length === 0">
-	<app-no-records-found></app-no-records-found>
-</div>
+

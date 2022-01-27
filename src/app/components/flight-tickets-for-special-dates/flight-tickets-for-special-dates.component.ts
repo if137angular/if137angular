@@ -7,20 +7,20 @@ import { RequestDataState } from 'src/app/store/request-data.state';
 import { FlightInfo } from 'src/app/models/flight-tickets-for-date.model';
 import { GetTiketsForSpecialDate, StartLoading } from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 
-
+@UntilDestroy()
 @Component({
   selector: 'app-flight-tickets-for-special-dates',
   templateUrl: './flight-tickets-for-special-dates.component.html',
   styleUrls: ['./flight-tickets-for-special-dates.component.scss']
 })
-export class FlightTicketsForSpecialDatesComponent implements OnInit, OnDestroy {
+export class FlightTicketsForSpecialDatesComponent implements OnInit {
   @Select(RequestDataState.formData)
   formData$: Observable<any> // TODO: type
 
-  formData: any;
   flightInfo: FlightInfo[];
-  // flightInfo: any; 
+  // flightInfo: any;
 
   loading: boolean;
 
@@ -29,13 +29,14 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit, OnDestroy 
   ngOnInit(): void {
     this.store
       .select(FlightInfoState.flightTiketsForDate)
+      .pipe(untilDestroyed(this))
       .subscribe((state) => (this.flightInfo = state));
 
     this.store.select(FlightInfoState.loading)
+      .pipe(untilDestroyed(this))
       .subscribe(loading => this.loading = loading);
 
-    this.formData = this.formData$.subscribe(formData => {
-
+    this.formData$.pipe(untilDestroyed(this)).subscribe(formData => {
       const payload = {
         codeFrom: formData.destinationFrom.code,
         codeTo: formData.destinationTo.code,
@@ -45,15 +46,9 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit, OnDestroy 
       }
 
       this.store.dispatch([new StartLoading(), new GetTiketsForSpecialDate(payload)])
-        // .subscribe((data: any) => {
-        //   this.flightInfo = data
-        // })
-        console.log('*****flightinfo', this.flightInfo)
+        .subscribe((data: any) => {
+          this.flightInfo = data
+        })
     });
   }
-
-  ngOnDestroy(): void {
-      this.formData.unsubscribe()
-  }
-
 }

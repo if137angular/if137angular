@@ -9,10 +9,11 @@
 }
 
 .ticket-info{
-  background-image: url(https://media.istockphoto.com/photos/white-plane-on-the-blue-runway-top-view-and-white-background-minimal-picture-id1297855347?b=1&k=20&m=1297855347&s=170667a&w=0&h=RxFx8vsv0F9jnTmvZP35g-H6ssWqTNCJ6Zx_s2ocz2k=);
+  background-image: url(../../../assets/card-background.jpg);
   background-size: cover;
   background-position: center;
-  width: 650px;
+  width: 610px;
+  height: 250px;
   margin: auto;
   margin-bottom: 20px;
   border-radius: 20px;
@@ -29,14 +30,39 @@
   }
 
   &-content-main{
-    width: 30%;
+    width: 47%;
     padding: 0 5px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-top: 10px;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.808);
+
+    &-departure{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      &-city{
+        font-size: 18px;
+        font-weight: 500;
+      }
+
+      &-date{
+        font-style: italic;
+        font-size: 10px;
+        color: #6c757d;
+      }
+    }
+
+    &-return{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      font-weight: 500;
+    }
 
     &:hover {
       transition: ease-in-out all 0.2s;
@@ -52,6 +78,7 @@
     &-image{
       display: flex;
       flex-direction: column;
+      width: 60%;
 
     &-top{
       display: flex;
@@ -77,6 +104,7 @@
   }
 }
 
+
 .price{
   font-size: 18px;
   display: block;
@@ -88,4 +116,3 @@
   color: red;
   font-size: 10px;
 }
-

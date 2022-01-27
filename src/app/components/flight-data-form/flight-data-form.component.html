@@ -1,10 +1,6 @@
 <form class="data-form" [formGroup]="flightDataFormGroup">
-  <app-autocomplete formControlName="destinationFrom" label="From"
-    [items]="cities"
-    [class.validation-error]="flightDataFormGroup.controls['destinationFrom'].invalid" ></app-autocomplete>
-  <app-autocomplete formControlName="destinationTo" label="To"
-    [items]="cities"
-    [class.mat-error]="flightDataFormGroup.controls['destinationTo'].invalid"></app-autocomplete>
+  <app-autocomplete formControlName="destinationFrom" label="From" [items]="cities"></app-autocomplete>
+  <app-autocomplete formControlName="destinationTo" label="To" [items]="cities"></app-autocomplete>
 
   <mat-form-field appearance="fill">
     <mat-label>From / To date range</mat-label>
@@ -19,6 +15,7 @@
   <app-transfers formControlName="transfers"></app-transfers>
 
   <div>
-    <button [disabled]="flightDataFormGroup.invalid" mat-flat-button type="button" color="warn" (click)="onSubmitForm()">SEARCH</button>
+    <button [disabled]="flightDataFormGroup.invalid" mat-flat-button type="button" color="warn"
+      (click)="onSubmitForm()">SEARCH</button>
   </div>
 </form>

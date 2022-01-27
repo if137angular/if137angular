@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { NgxsModule } from '@ngxs/store';
 import { appState } from 'src/app/store/appState';
@@ -35,6 +34,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatMenuModule } from '@angular/material/menu';
 
 // Services
 import { RequestDataService } from 'src/app/services/request-data.service';
@@ -52,10 +52,10 @@ import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-
 import { TransfersComponent } from './components/transfers/transfers.component';
 import { FlightTicketsForSpecialDatesComponent } from './components/flight-tickets-for-special-dates/flight-tickets-for-special-dates.component';
 
-import { SpecialOffersSelectComponent } from './components/special-offers/special-offers-select/special-offers-select.component';
-import { CheapestTicketsComponentOld} from "./components/cheapest-tickets-old-v/cheapest-tickets.component";
-import { TicketItemComponent} from "./components/cheapest-tickets-old-v/cheapest-ticket-item/ticket-item.component";
-import { FlightItemComponent} from "./components/cheapest-tickets-old-v/cheapest-ticket-item/flight-item/flight-item.component";
+
+import { CheapestTicketsComponentOld } from './components/cheapest-tickets-old-v/cheapest-tickets.component';
+import { TicketItemComponent } from './components/cheapest-tickets-old-v/cheapest-ticket-item/ticket-item.component';
+import { FlightItemComponent } from './components/cheapest-tickets-old-v/cheapest-ticket-item/flight-item/flight-item.component';
 import { CityDestinationComponent } from './components/city-destination/city-destination.component';
 import { FlightTicketComponent } from 'src/app/components/flight-tickets-for-special-dates/flight-ticket/flight-ticket.component';
 
@@ -68,10 +68,8 @@ import { FlightFilterComponent } from './components/flight-filter/flight-filter.
 import { RegisterComponent } from './components/register/register.component';
 import { MapsComponent } from './components/maps/maps.component';
 import { NoRecordsFoundComponent } from './components/no-records-found/no-records-found.component';
-import { AnimatedMapsComponent } from './components/animated-maps/animated-maps.component';
 import { CurrencyDropdownComponent } from './components/currency-dropdown/currency-dropdown.component';
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
-
 
 @NgModule({
   declarations: [
@@ -85,7 +83,6 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
     NonStopTicketsComponent,
     TransfersComponent,
     FlightTicketsForSpecialDatesComponent,
-    SpecialOffersSelectComponent,
     CheapestTicketsComponentOld,
     TicketItemComponent,
     FlightItemComponent,
@@ -100,7 +97,6 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
     RegisterComponent,
     MapsComponent,
     NoRecordsFoundComponent,
-    AnimatedMapsComponent,
     CurrencyDropdownComponent,
     CheapestTicketsComponent,
   ],
@@ -118,6 +114,7 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+
     MatSliderModule,
     MatSelectModule,
     MatAutocompleteModule,
@@ -138,6 +135,8 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
     MatProgressSpinnerModule,
     MatToolbarModule,
     MatProgressBarModule,
+    MatMenuModule,
+
     NgxsModule.forRoot(appState, {
       developmentMode: true,
     }),
@@ -151,7 +150,8 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
       provide: LOCALE_ID,
       useValue: 'en-GB',
     },
+    { provide: 'Window', useValue: window },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
