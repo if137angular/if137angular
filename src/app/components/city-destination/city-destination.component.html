@@ -1,12 +1,10 @@
-<h1>Popular Destination</h1>
+<h1 class="mat-display-1">Popular Destinations</h1>
 <div class="container">
   <div class="city-destination">
     <div *ngFor="let cities of response | keyvalue">
       <mat-form-field appearance="fill">
         <mat-label class="city-destination-label">
-          <img
-            src="https://flagcdn.com/w20/{{getCountryCodeByCityCode(cities.key) | lowercase}}.png"
-            width="20"
+          <img src="https://flagcdn.com/w20/{{getCountryCodeByCityCode(cities.key) | lowercase}}.png" width="20"
             height="4">
           {{getCityNameByKey(cities.key)}}
         </mat-label>
@@ -18,8 +16,8 @@
                 <mat-icon>trending_flat</mat-icon>
                 <span>{{getCityNameByKey(items.destination)}}</span>
                 <span class="price"> starting at
-                       <b>{{items.price}}$</b>
-              </span>
+                  <b>{{items.price}}$</b>
+                </span>
               </mat-option>
             </mat-select>
           </div>
