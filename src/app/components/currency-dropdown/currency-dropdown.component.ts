@@ -24,7 +24,6 @@ export class CurrencyDropdownComponent implements OnInit {
     this.store.dispatch(new GetCurrencies());
     this.currencies$.subscribe((currency: CurrencyDropdownModel[]) => {
       this.currencies = currency;
-      console.log("TTTTTTTTTTTESSSSSSSSS", currency)
     })
   }
 }
