@@ -29,6 +29,6 @@ export class CurrencyDropdownComponent implements OnInit {
 
   getValue(data: string): void {
     this.selectedOption = data
-    console.log("Test value:", this.selectedOption)
+    // console.log("Test value:", this.selectedOption)
   }
 }
