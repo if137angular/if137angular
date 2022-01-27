@@ -5,7 +5,6 @@
 }
 
 .city-destination {
-  margin: 20px;
   width: 60%;
   display: flex;
   justify-content: center;
@@ -13,36 +12,32 @@
   text-align: center;
 
   &-label {
-    color: mediumpurple;
-    font-size: 20px;
+    color: #673ab7;
+    font-size: 1.1rem;
   }
 }
 
 .option {
-  color: mediumpurple;
+  color: #673ab7;
 }
 
 .price {
-  font-size: 11px;
+  font-size: 12px;
   float: right;
-  margin-right: 15px;
+}
+
+.origin {
+  margin-right: 8px;
 }
 
 .destination {
-  margin-right: 5px;
-}
-
-h1.mat-display-1 {
-  font-weight: bold;
-  text-align: center;
-  color: white;
-  margin-bottom: 32px;
+  margin-left: 8px;
 }
 
 mat-form-field {
   margin: 4px;
   border-radius: 16px;
-  background-image: url(https://images.kiwi.com/photos/220x165/non-existing.jpg);
+  background-image: url("https://images.kiwi.com/photos/220x165/non-existing.jpg");
 }
 
 ::ng-deep .city-destination {
@@ -59,10 +54,15 @@ mat-form-field {
   }
 }
 
+.mat-option .mat-icon {
+  margin-right: 0;
+}
+
 img {
-  margin-left: 15px;
-  margin-right: 15px;
-  height: 20px;
+  margin-left: 16px;
+  margin-right: 16px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
 }
 

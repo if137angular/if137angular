@@ -38,6 +38,13 @@ export class GetTiketsForSpecialDate {
   constructor(public payload: FlightTiketsForDatePayload) {}
 }
 
+export class GetPopularDestinations {
+  static readonly type = '[FlightInfo] Get Popular Destinations';
+  constructor(
+    public payload: string[]
+  ) {}
+}
+
 // ***** End code Flight-Tikets-For-Special-Price  ******
 
 export class SetFilter {
