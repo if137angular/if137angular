@@ -8,9 +8,10 @@ import { faPlane, faPlaneDeparture, faPlaneArrival, faHryvnia, faMapMarker, faMa
 import { NonStopInfo } from 'src/app/models/non-stop-tickets.model';
 import { GetNonStopTickets } from "src/app/store/flight-info.action";
 import { FlightInfoState } from "src/app/store/flight-info.state";
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 
 
-
+@UntilDestroy()
 @Component({
   selector: 'app-non-stop-tickets',
   templateUrl: './non-stop-tickets.component.html',
@@ -32,7 +33,7 @@ export class NonStopTicketsComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-   this.formData$.subscribe((formData: FormDataModel) => {
+   this.formData$.pipe(untilDestroyed(this)).subscribe((formData: FormDataModel) => {
      if (!formData.isFormValid) { return; }
      this.cityOrigin = formData.destinationFrom.name;
      this.cityArrival = formData.destinationTo.name;

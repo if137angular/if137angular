@@ -6,7 +6,7 @@ import { Store } from "@ngxs/store";
 import { CitiesModel } from "src/app/models/cities.model";
 import { RequestDataState } from "src/app/store/request-data.state";
 import {SetFormDate} from "../../store/request-data.action";
-
+import { UntilDestroy } from "@ngneat/until-destroy";
 
 export type DestinationPopular = {
   origin: string;

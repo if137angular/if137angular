@@ -90,7 +90,9 @@ import {
   CalendarEventTimesChangedEvent,
   CalendarView,
 } from 'angular-calendar';
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
   selector: 'app-calendar-of-prices',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -112,14 +114,17 @@ export class CalendarOfPricesComponent {
   ngOnInit(): void {
     this.store
       .select(FlightInfoState.calendarOfPrices)
+      .pipe(untilDestroyed(this))
       .subscribe((state) => (this.events = state));
 
     this.store
       .select(FlightInfoState.currency)
+      .pipe(untilDestroyed(this))
       .subscribe((state) => (this.currency = state));
 
     this.store
       .select(RequestDataState.formData)
+      .pipe(untilDestroyed(this))
       .pipe(
         map((state: FormDataModel) => ({
           origin: state.destinationFrom.name,
