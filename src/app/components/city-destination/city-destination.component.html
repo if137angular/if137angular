@@ -1,11 +1,9 @@
-<h1 class="mat-display-1">Popular Destinations</h1>
 <div class="container">
   <div class="city-destination">
     <div *ngFor="let cities of (popularDestinations$ | async) | keyvalue">
       <mat-form-field appearance="fill">
         <mat-label class="city-destination-label">
-          <img src="https://flagcdn.com/w20/{{getCountryCodeByCityCode(cities.key) | lowercase}}.png" width="20"
-            height="4">
+          <img src="https://flagcdn.com/w40/{{getCountryCodeByCityCode(cities.key) | lowercase}}.png">
           {{getCityNameByKey(cities.key)}}
         </mat-label>
         <div class="class">
