@@ -1,31 +1,16 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
-import { CitiesModel } from 'src/app/models/cities.model';
-import { RequestDataState } from 'src/app/store/request-data.state';
-import { SetFormDate } from '../../store/request-data.action';
-import { UntilDestroy } from '@ngneat/until-destroy';
-import { GetPopularDestinations } from 'src/app/store/flight-info.action';
-import { FlightInfoState } from 'src/app/store/flight-info.state';
-import { Observable } from 'rxjs';
+import { FlightsInfoService } from 'src/app/services/flights-info.service';
+import { Select, Store } from "@ngxs/store";
+import { CitiesModel } from "src/app/models/cities.model";
+import { RequestDataState } from "src/app/store/request-data.state";
+import { SetFormDate } from "../../store/request-data.action";
+import { UntilDestroy } from "@ngneat/until-destroy";
+import { GetPopularDestinations } from "src/app/store/flight-info.action";
+import { FlightInfoState } from "src/app/store/flight-info.state";
+import { Observable } from "rxjs";
+import {GetDestinationPopular,DestinationPopular} from "../../models/city-destination.model";
 
-export type DestinationPopular = {
-  origin: string;
-  destination: string;
-  departure_at: Date;
-  return_at: Date;
-  expires_at: Date;
-  number_of_changes: number;
-  price: number;
-  found_at: Date;
-  transfers: number;
-  airline: string;
-  flight_number: number;
-};
-export type GetDestinationPopular = {
-  success: boolean;
-  data: Map<string, DestinationPopular>;
-  currency: string;
-};
+
 
 @UntilDestroy()
 @Component({
@@ -33,6 +18,7 @@ export type GetDestinationPopular = {
   templateUrl: './city-destination.component.html',
   styleUrls: ['./city-destination.component.scss'],
 })
+
 export class CityDestinationComponent implements OnInit {
   @Select(FlightInfoState.popularDestinations)
   popularDestinations$: Observable<Map<string, DestinationPopular[]>>;
@@ -63,10 +49,8 @@ export class CityDestinationComponent implements OnInit {
     return matchedCity ? matchedCity.name : '';
   }
   getCityCode(cityKey: string): string {
-    const matchedCity = this.store
-      .selectSnapshot(RequestDataState.cities)
-      .find((city: CitiesModel) => city.code === cityKey);
-    return matchedCity ? matchedCity.code : '';
+    const codeOfCity = this.store.selectSnapshot(RequestDataState.cities).find((city: CitiesModel) => city.code === cityKey);
+    return codeOfCity ? codeOfCity.code : ''
   }
 
   getCountryCodeByCityCode(countryKey: string): string {
@@ -78,21 +62,19 @@ export class CityDestinationComponent implements OnInit {
 
   selectDestination(selectedDestination: any) {
     this.selectedCities = this.getCityNameByKey(selectedDestination.origin);
-    this.selectedDestinstion = this.getCityNameByKey(
-      selectedDestination.destination
-    );
+    this.selectedDestinstion = this.getCityCode(selectedDestination.destination);
     const formData = {
       destinationFrom: {
         name: this.getCityNameByKey(selectedDestination.origin),
-        code: selectedDestination.origin,
+        code: this.getCityCode(selectedDestination.origin)
       },
       destinationTo: {
         name: this.getCityNameByKey(selectedDestination.destination),
-        code: selectedDestination.destination,
+        code: this.getCityCode(selectedDestination.destination)
       },
       endDate: new Date(),
-      startDate: new Date(),
-    };
+      startDate: new Date()
+    }
     this.store.dispatch(new SetFormDate(formData));
     this.window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }
