@@ -83,6 +83,7 @@ import {
   addHours,
 } from 'date-fns';
 import { Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,
@@ -124,8 +125,9 @@ export class CalendarOfPricesComponent implements OnInit {
 
     this.store
       .select(RequestDataState.formData)
-      .pipe(untilDestroyed(this))
       .pipe(
+        untilDestroyed(this),
+        filter((state: any) => state.isFormValid),
         map((state: FormDataModel) => ({
           origin: state.destinationFrom.name,
           destination: state.destinationTo.name,
