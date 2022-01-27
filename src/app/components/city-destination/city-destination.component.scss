@@ -13,7 +13,7 @@
 
   &-label {
     color: #673ab7;
-    font-size: 20px;
+    font-size: 1.1rem;
   }
 }
 
@@ -22,19 +22,22 @@
 }
 
 .price {
-  font-size: 11px;
+  font-size: 12px;
   float: right;
-  margin-right: 15px;
+}
+
+.origin {
+  margin-right: 8px;
 }
 
 .destination {
-  margin-right: 5px;
+  margin-left: 8px;
 }
 
 mat-form-field {
   margin: 4px;
   border-radius: 16px;
-  background-image: url(https://images.kiwi.com/photos/220x165/non-existing.jpg);
+  background-image: url("https://images.kiwi.com/photos/220x165/non-existing.jpg");
 }
 
 ::ng-deep .city-destination {
@@ -49,6 +52,10 @@ mat-form-field {
   .mat-form-field-appearance-fill .mat-form-field-infix {
     padding: 0.5em 0 1em 0;
   }
+}
+
+.mat-option .mat-icon {
+  margin-right: 0;
 }
 
 img {

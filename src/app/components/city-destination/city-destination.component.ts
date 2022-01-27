@@ -62,6 +62,10 @@ export class CityDestinationComponent implements OnInit {
     const matchedCity = this.store.selectSnapshot(RequestDataState.cities).find((city: CitiesModel) => city.code === cityKey);
     return matchedCity ? matchedCity.name : ''
   }
+  getCityCode(cityKey: string): string {
+    const matchedCity = this.store.selectSnapshot(RequestDataState.cities).find((city: CitiesModel) => city.code === cityKey);
+    return matchedCity ? matchedCity.code : ''
+  }
 
   getCountryCodeByCityCode(countryKey: string): string {
     const matchedCountry = this.store.selectSnapshot(RequestDataState.cities).find((city: CitiesModel) => city.code === countryKey);
@@ -71,15 +75,15 @@ export class CityDestinationComponent implements OnInit {
 
   selectDestination(selectedDestination: any) {
     this.selectedCities = this.getCityNameByKey(selectedDestination.origin);
-    this.selectedDestinstion = this.getCityNameByKey(selectedDestination.destination);
+    this.selectedDestinstion = this.getCityCode(selectedDestination.destination);
     const formData = {
       destinationFrom: {
         name: this.getCityNameByKey(selectedDestination.origin),
-        code: selectedDestination.origin
+        code: this.getCityCode(selectedDestination.origin)
       },
       destinationTo: {
         name: this.getCityNameByKey(selectedDestination.destination),
-        code: selectedDestination.destination
+        code: this.getCityCode(selectedDestination.destination)
       },
       endDate: new Date(),
       startDate: new Date()
