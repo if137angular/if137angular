@@ -28,11 +28,11 @@ export const routes: Routes = [
         component: NonStopTicketsComponent,
         data: { tab: 'Non Stop Tickets' },
       },
-      // {
-      //   path: 'cheapest-tickets',
-      //   component: CheapestTicketsComponent,
-      //   data: { tab: 'Cheapest Tickets' },
-      // },
+      {
+        path: 'cheapest-tickets',
+        component: CheapestTicketsComponent,
+        data: { tab: 'Cheapest Tickets' },
+      },
       {
         path: 'special-offers',
         component: SpecialOffersComponent,

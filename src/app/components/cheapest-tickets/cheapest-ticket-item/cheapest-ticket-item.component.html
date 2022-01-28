@@ -1,1 +1,63 @@
-<p>{{ticket.price}}</p>
+<div class="ticketContainer">
+  <div class="airlineContainer">
+    <div class="airlineLogo" *ngIf="airlineInfo">
+      <img src="{{airlineInfo.logo}}" alt="Airline Logo"/>
+    </div>
+    <div class="airlineInfo">
+      <p *ngIf="airlineInfo; else airlineId">Airline: {{airlineInfo.name}}</p>
+      <ng-template #airlineId>
+        <p>Airline: {{ticket.airline}}</p>
+      </ng-template>
+      <p>Flight number: {{ticket.flight_number}}</p>
+    </div>
+  </div>
+  <div class="priceInfo">
+    <p>Price: {{ticket.price}} USD</p>
+    <p class="warning">The offer valid untill {{expiresDate}}</p>
+  </div>
+  <div class="flightInfo">
+    <div class="departureFrom">
+      <div class="departureInfo">
+        <p>{{departTime}}</p>
+        <p class="nameCity">{{formData.destinationFrom.name}}</p>
+        <p>{{departDate}}</p>
+      </div>
+      <div class="flightIcon">
+        <div class="flightIconTop">
+          <mat-icon>flight_takeoff</mat-icon>
+          <mat-icon>flight_land</mat-icon>
+        </div>
+        <div class="flightIconMiddle"></div>
+        <div class="flightIconBottom">
+          <p class="cityCode">{{formData.destinationFrom.code}}</p>
+          <p class="cityCode">{{formData.destinationTo.code}}</p>
+        </div>
+      </div>
+      <div class="departureInfo">
+        <p class="nameCity">{{formData.destinationTo.name}}</p>
+      </div>
+    </div>
+    <div class="departureFrom">
+      <div class="departureInfo">
+        <p>{{returnTime}}</p>
+        <p class="nameCity">{{formData.destinationTo.name}}</p>
+        <p>{{returnDate}}</p>
+      </div>
+      <div class="flightIcon">
+        <div class="flightIconTop">
+          <mat-icon>flight_takeoff</mat-icon>
+          <mat-icon>flight_land</mat-icon>
+        </div>
+        <div class="flightIconMiddle"></div>
+        <div class="flightIconBottom">
+          <p class="cityCode">{{formData.destinationTo.code}}</p>
+          <p class="cityCode">{{formData.destinationFrom.code}}</p>
+        </div>
+      </div>
+      <div class="departureInfo">
+        <p class="nameCity">{{formData.destinationFrom.name}}</p>
+      </div>
+    </div>
+  </div>
+
+</div>

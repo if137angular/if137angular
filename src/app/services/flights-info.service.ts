@@ -95,30 +95,6 @@ export class FlightsInfoService {
     );
   }
 
-  requestCheapestTickets(ticketsParam: any): Observable<any> {
-    const baseURL: string = '/v1/prices/cheap';
-    const myToken: string = 'f29a4f3a27eb2f3ea190c91cd4e15fa5';
-    let myHeadersURL = new HttpHeaders().append('x-access-token', myToken);
-    const currency = this.store.selectSnapshot(RequestDataState.currency);
-
-    let myParamsURL = new HttpParams()
-      .append('origin', ticketsParam.originInfo.cityCode)
-      .append('destination', ticketsParam.destinationInfo.cityCode)
-      .append('depart_date', ticketsParam.departDate)
-      .append('return_date', ticketsParam.returnDate)
-      .append('currency', currency)
-      .append('token', myToken);
-
-    return this.http
-      .get(baseURL, { headers: myHeadersURL, params: myParamsURL })
-      .pipe(
-        map((response) => ({
-          ...response,
-          originInfo: ticketsParam.originInfo,
-          destinationInfo: ticketsParam.destinationInfo,
-        }))
-      );
-  }
 
   getCheapestTickets(
     formData: FormDataModel
