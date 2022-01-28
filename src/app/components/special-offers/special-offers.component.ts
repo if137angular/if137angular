@@ -69,7 +69,11 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
       cityOrigin: formData.destinationFrom
         ? formData.destinationFrom.code
         : this.cityOrigin,
-      cityDestination: '',
+      cityDestination:
+        // formData.destinationTo
+        //   ? formData.destinationTo.code
+        //   : 
+        '',
       language: this.language,
       currency: this.currency,
     };
