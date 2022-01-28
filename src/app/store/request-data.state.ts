@@ -194,16 +194,6 @@ export class RequestDataState {
     patchState({ currency: payload.currency })
   }
 
-
-  @Action(RequestDataActions.GetLanguages)
-  GetLanguagesData({ patchState }: StateContext<RequestDataStateModel>) {
-    return this.requestService.getLanguagesData().pipe(
-      tap((languages: any[]) => {
-        patchState({ languages });
-      })
-    );
-  }
-
   @Action(RequestDataActions.SetFormDate)
   SetFormData(
     { patchState }: StateContext<RequestDataStateModel>,
