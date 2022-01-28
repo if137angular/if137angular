@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   OnInit,
   Component,
   Inject,
@@ -12,15 +11,10 @@ import * as am5map from '@amcharts/amcharts5/map';
 import am5geodata_worldLow from '@amcharts/amcharts5-geodata/worldLow';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import { Store } from '@ngxs/store';
-// import { CitiesModel } from "src/app/models/cities.model";
 import { RequestDataState } from 'src/app/store/request-data.state';
-// import { filter, map } from 'rxjs/operators';
-import { map } from 'rxjs/operators';
 
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
-import { GetCities } from "src/app/store/request-data.action";
 import { CitiesModel } from "src/app/models/cities.model";
-// import { any } from '@amcharts/amcharts5/.internal/core/util/Array';
 
 export type DestinationPopular = {
   origin: string;
@@ -45,17 +39,18 @@ export type GetDestinationPopular = {
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
-  styleUrls: [ './maps.component.scss' ],
+  styleUrls: ['./maps.component.scss'],
 })
 export class MapsComponent implements OnInit {
   button: any;
   private root!: am5.Root;
   items: GetDestinationPopular[] = [];
   originPointCode: string = '';
-  originLat: string = '';
-  originLon: string = '';
+  originLat: string;
+  originLon: string;
   originCode: string = '';
   objValues: any;
+  matchedOriginCity: any;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
@@ -65,16 +60,13 @@ export class MapsComponent implements OnInit {
   ) {
   }
 
-
   getCityByCode(cityCode: string): CitiesModel {
     const cities = this.store.selectSnapshot(RequestDataState.cities);
-    const matchedCity = cities.find((city: CitiesModel) => city.code === cityCode
-  )
+    const matchedCity = cities.find((city: CitiesModel) => city.code === cityCode)
     return matchedCity
   }
 
   ngOnInit(): void {
-    let result: any;
     const origin = 'LWO';
     this.flightInfoService
       .requestPopularDestination(origin)
@@ -88,29 +80,20 @@ export class MapsComponent implements OnInit {
             title: matchedCity ? matchedCity.name : '',
             geometry: {
               type: 'Point',
-              coordinates: matchedCity ? [ matchedCity.coordinates.lon, matchedCity.coordinates.lat ] : []
+              coordinates: matchedCity ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat] : []
             },
           })
-          // console.log(matchedCity);
         })
-        
-        console.log(objValues);
+
         this.makeChart(objValues);
-        
-
-        // {
-        //   id: 'lviv',
-        //     title: 'Lviv',
-        //   geometry: { type: 'Point', coordinates: [23.955318, 49.816418] },
-        // }
-
-        // this.originPointCode = parsedData.data.BCN.origin;
       });
-    // const citiesArr = this.store.selectSnapshot(RequestDataState.cities);
-    // const asd = citiesArr.filter((item) => item.code === 'LWO');
-    // this.originLat = asd[0].coordinates.lat;
-    // this.originLon = asd[0].coordinates.lon;
-    // this.originCode = asd[0].code;
+    
+    const citiesArr = this.store.selectSnapshot(RequestDataState.cities);
+    const asd = citiesArr.filter(item => item.code === 'LWO');
+
+    this.originLat = asd[0].coordinates.lat;
+    this.originLon = asd[0].coordinates.lon;
+    this.originCode = asd[0].code;
   }
 
   browserOnly(f: () => void) {
@@ -121,14 +104,10 @@ export class MapsComponent implements OnInit {
     }
   }
 
-  // ngAfterViewInit() {
-  // }
-
   makeChart(objValues: any): void {
     this.browserOnly(() => {
-      //*
       let root = am5.Root.new('chartdiv');
-      root.setThemes([ am5themes_Animated.new(root) ]);
+      root.setThemes([am5themes_Animated.new(root)]);
 
       let chart = root.container.children.push(
         am5map.MapChart.new(root, {
@@ -146,40 +125,9 @@ export class MapsComponent implements OnInit {
         })
       );
 
-      // cont.children.push(
-      //   am5.Label.new(root, {
-      //     centerY: am5.p50,
-      //     text: 'Map',
-      //   })
-      // );
-
-      // let switchButton = cont.children.push(am5.Button.new(root, {
-      //   themeTags: ["switch"],
-      //   centerY: am5.p50,
-      //   icon: am5.Circle.new(root, {
-      //     themeTags: ["icon"]
-      //   })
-      // }));
-
-      // switchButton.on("active", function () {
-      //   if (!switchButton.get("active")) {
       chart.set('projection', am5map.geoMercator());
       chart.set('panX', 'translateX');
       chart.set('panY', 'translateY');
-      //   }
-      //   else {
-      //     chart.set("projection", am5map.geoOrthographic());
-      //     chart.set("panX", "rotateX");
-      //     chart.set("panY", "rotateY");
-      //   }
-      // });
-
-      // cont.children.push(
-      //   am5.Label.new(root, {
-      //     centerY: am5.p50,
-      //     text: 'Globe',
-      //   })
-      // );
 
       let polygonSeries = chart.series.push(
         am5map.MapPolygonSeries.new(root, {
@@ -241,120 +189,22 @@ export class MapsComponent implements OnInit {
         {
           id: 'lviv',
           title: 'Lviv',
-          geometry: { type: 'Point', coordinates: [ 23.955318, 49.816418 ] },
+          geometry: { type: 'Point', coordinates: [23.955318, 49.816418] },
         },
-        {
-          id: 'ivano-frankivsk',
-          title: 'Ivano-Frankivsk',
-          geometry: { type: 'Point', coordinates: [ 24.70972, 48.9215 ] },
-        },
-        {
-          id: 'london',
-          title: 'London',
-          geometry: { type: 'Point', coordinates: [ -0.1262, 51.5002 ] },
-        },
-        {
-          id: 'brussels',
-          title: 'Brussels',
-          geometry: { type: 'Point', coordinates: [ 4.3676, 50.8371 ] },
-        },
-        {
-          id: 'prague',
-          title: 'Prague',
-          geometry: { type: 'Point', coordinates: [ 14.4205, 50.0878 ] },
-        },
-        {
-          id: 'athens',
-          title: 'Athens',
-          geometry: { type: 'Point', coordinates: [ 23.7166, 37.9792 ] },
-        },
-        {
-          id: 'reykjavik',
-          title: 'Reykjavik',
-          geometry: { type: 'Point', coordinates: [ -21.8952, 64.1353 ] },
-        },
-        {
-          id: 'dublin',
-          title: 'Dublin',
-          geometry: { type: 'Point', coordinates: [ -6.2675, 53.3441 ] },
-        },
-        {
-          id: 'oslo',
-          title: 'Oslo',
-          geometry: { type: 'Point', coordinates: [ 10.7387, 59.9138 ] },
-        },
-        {
-          id: 'lisbon',
-          title: 'Lisbon',
-          geometry: { type: 'Point', coordinates: [ -9.1355, 38.7072 ] },
-        },
-        {
-          id: 'moscow',
-          title: 'Moscow',
-          geometry: { type: 'Point', coordinates: [ 37.6176, 55.7558 ] },
-        },
-        {
-          id: 'belgrade',
-          title: 'Belgrade',
-          geometry: { type: 'Point', coordinates: [ 20.4781, 44.8048 ] },
-        },
-        {
-          id: 'bratislava',
-          title: 'Bratislava',
-          geometry: { type: 'Point', coordinates: [ 17.1547, 48.2116 ] },
-        },
-        {
-          id: 'ljublana',
-          title: 'Ljubljana',
-          geometry: { type: 'Point', coordinates: [ 14.506, 46.0514 ] },
-        },
-        {
-          id: 'madrid',
-          title: 'Madrid',
-          geometry: { type: 'Point', coordinates: [ -3.7033, 40.4167 ] },
-        },
-        {
-          id: 'stockholm',
-          title: 'Stockholm',
-          geometry: { type: 'Point', coordinates: [ 18.0645, 59.3328 ] },
-        },
-        {
-          id: 'bern',
-          title: 'Bern',
-          geometry: { type: 'Point', coordinates: [ 7.4481, 46.948 ] },
-        },
-        {
-          id: 'kiev',
-          title: 'Kiev',
-          geometry: { type: 'Point', coordinates: [ 30.5367, 50.4422 ] },
-        },
-        {
-          id: 'paris',
-          title: 'Paris',
-          geometry: { type: 'Point', coordinates: [ 2.351, 48.8567 ] },
-        },
-        {
-          id: 'new york',
-          title: 'New York',
-          geometry: { type: 'Point', coordinates: [ -74, 40.43 ] },
-        },
+        ...objValues,
       ];
 
-      citySeries.data.setAll(objValues);
+      const arrOfId = objValues.map((item: any) => {
+        let array = [];
+        const id = item.id;
+        array.push(id);
+        return array
+      })
 
-      // Array destinations
+      citySeries.data.setAll(cities);
+
       let destinations = [
-        'reykjavik',
-        'lisbon',
-        'moscow',
-        'belgrade',
-        'ljublana',
-        'madrid',
-        'stockholm',
-        'bern',
-        'kiev',
-        'new york',
-        'athens',
+        ...arrOfId,
       ];
       let originLongitude = this.originLon.toString();
       let originLatitude = this.originLat.toString();
@@ -365,7 +215,7 @@ export class MapsComponent implements OnInit {
           geometry: {
             type: 'LineString',
             coordinates: [
-              [ originLongitude, originLatitude ],
+              [originLongitude, originLatitude],
               [
                 destinationDataItem.get('longitude'),
                 destinationDataItem.get('latitude'),
@@ -386,8 +236,6 @@ export class MapsComponent implements OnInit {
       });
 
       chart.appear(1000, 100);
-
-      //*
     });
   }
 }
