@@ -1,21 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { FormDataModel } from 'src/app/models/formData.model';
 import { FlightPriceTrends } from 'src/app/models/flight-price-trends.model';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { GetFlightPriceTrends } from 'src/app/store/flight-info.action';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-flight-price-trends',
   templateUrl: './flight-price-trends.component.html',
   styleUrls: ['./flight-price-trends.component.scss'],
 })
-export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
+export class FlightPriceTrendsComponent implements OnInit {
   @Select(RequestDataState.formData)
   formData$: Observable<FormDataModel>;
 
@@ -25,7 +24,6 @@ export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
   cityTo: string;
   loading: boolean;
 
-  private unsubscribe$ = new Subject<null>();
   constructor(private store: Store) {}
 
   ngOnInit(): void {
@@ -35,20 +33,22 @@ export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
   getData() {
     this.store
       .select(FlightInfoState.flightPriceTrends)
+      .pipe(untilDestroyed(this))
       .subscribe((state) => (this.data = state));
 
     this.store
       .select(FlightInfoState.loading)
+      .pipe(untilDestroyed(this))
       .subscribe((loading) => (this.loading = loading));
 
-    this.formData$.pipe(takeUntil(this.unsubscribe$)).subscribe((formData) => {
+    this.formData$.pipe(untilDestroyed(this)).subscribe((formData) => {
       const payload = {
         origin: formData.destinationFrom.code,
         destination: formData.destinationTo.code,
         departDate: formData.startDate.toISOString().slice(0, 7),
         returnDate: formData.endDate.toISOString().slice(0, 7),
       };
-      // this.store.dispatch([new GetFlightPriceTrends(payload)]);
+      this.store.dispatch([new GetFlightPriceTrends(payload)]);
 
       this.cityFrom = formData.destinationFrom.name;
       this.cityTo = formData.destinationTo.name;
@@ -83,10 +83,5 @@ export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
     }
 
     this.data = newArray;
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next(null);
-    this.unsubscribe$.complete();
   }
 }
