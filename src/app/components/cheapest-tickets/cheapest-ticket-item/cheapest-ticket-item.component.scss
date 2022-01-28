@@ -1,0 +1,65 @@
+.ticketContainer {
+  max-width: 700px;
+  background: url("/assets/card-background.jpg") center / cover no-repeat ;
+  margin: 0 auto 30px;
+  border-radius: 20px;
+  padding: 20px 20px 20px 40px;
+  .airlineContainer {
+    display: flex;
+    align-items: center;
+    .airlineLogo {
+      max-width: 50px;
+      margin-right: 20px;
+      img{ width: 100% }
+    }
+    .airlineInfo > p {
+      margin: 0;
+      font-size: 15px;
+    }
+  }
+  .priceInfo {
+    margin-top: 15px;
+    font-size: 20px;
+    & > p { margin: 0 }
+    .warning {
+      margin-top: 5px;
+      font-size: 15px;
+      color: #e53935;
+    }
+  }
+  .flightInfo {
+    margin-top: 20px;
+
+    .departureFrom {
+      &:first-child { margin-bottom: 20px; }
+      display: flex;
+      align-items: center;
+      max-width: 300px;
+
+      .departureInfo {
+        text-align: center;
+        & > p {
+          margin: 3px 0;
+          font-size: 15px;
+        }
+        .nameCity { font-size: 22px; }
+      }
+
+      .flightIcon {
+        margin: 0 20px;
+        flex-grow: 1;
+        .flightIconTop, .flightIconBottom {
+          display: flex;
+          justify-content: space-between;
+          font-size: 15px;
+        }
+        .flightIconMiddle {
+          border-top: 1px black solid;
+          margin-top: -4px;
+          margin-bottom: 4px;
+        }
+      }
+    }
+  }
+}
+

@@ -53,9 +53,6 @@ import { TransfersComponent } from './components/transfers/transfers.component';
 import { FlightTicketsForSpecialDatesComponent } from './components/flight-tickets-for-special-dates/flight-tickets-for-special-dates.component';
 
 
-import { CheapestTicketsComponentOld } from './components/cheapest-tickets-old-v/cheapest-tickets.component';
-import { TicketItemComponent } from './components/cheapest-tickets-old-v/cheapest-ticket-item/ticket-item.component';
-import { FlightItemComponent } from './components/cheapest-tickets-old-v/cheapest-ticket-item/flight-item/flight-item.component';
 import { CityDestinationComponent } from './components/city-destination/city-destination.component';
 import { FlightTicketComponent } from 'src/app/components/flight-tickets-for-special-dates/flight-ticket/flight-ticket.component';
 
@@ -84,9 +81,6 @@ import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheap
     NonStopTicketsComponent,
     TransfersComponent,
     FlightTicketsForSpecialDatesComponent,
-    CheapestTicketsComponentOld,
-    TicketItemComponent,
-    FlightItemComponent,
     AppComponent,
     CityDestinationComponent,
     FlightTicketComponent,
