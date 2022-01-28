@@ -15,7 +15,7 @@ export class CurrencyDropdownComponent implements OnInit {
   @Select(RequestDataState.currencies) currencies$: Observable<
     CurrencyDropdownModel[]
   >;
-  selectedOption: string = 'usd';
+  selectedOption: string = 'uah';
 
   constructor(private store: Store) { }
 
