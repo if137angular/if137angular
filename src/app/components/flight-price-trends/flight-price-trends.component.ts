@@ -3,7 +3,10 @@ import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { FormDataModel } from 'src/app/models/formData.model';
-import { FlightPriceTrends } from 'src/app/models/flight-price-trends.model';
+import {
+  FlightPriceTrends,
+  FlightPriceTrendsRequest,
+} from 'src/app/models/flight-price-trends.model';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { GetFlightPriceTrends } from 'src/app/store/flight-info.action';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -18,11 +21,14 @@ export class FlightPriceTrendsComponent implements OnInit {
   @Select(RequestDataState.formData)
   formData$: Observable<FormDataModel>;
 
+  @Select(FlightInfoState.flightPriceTrends)
+  flightPriceTrends$: Observable<FlightPriceTrendsRequest>;
+
   data: any = [];
   currency: string = 'USD';
   cityFrom: string;
   cityTo: string;
-  loading: boolean;
+  transfers: string;
 
   constructor(private store: Store) {}
 
@@ -31,15 +37,15 @@ export class FlightPriceTrendsComponent implements OnInit {
   }
 
   getData() {
-    this.store
-      .select(FlightInfoState.flightPriceTrends)
-      .pipe(untilDestroyed(this))
-      .subscribe((state) => (this.data = state));
+    this.flightPriceTrends$.pipe(untilDestroyed(this)).subscribe((state) => {
+      this.data = state;
 
-    this.store
-      .select(FlightInfoState.loading)
-      .pipe(untilDestroyed(this))
-      .subscribe((loading) => (this.loading = loading));
+      if (this.transfers === 'Directly') {
+        this.getDirectlyFlights(this.data);
+      } else if (this.transfers === 'Transfers') {
+        this.getFlightsWithTransfers(this.data);
+      }
+    });
 
     this.formData$.pipe(untilDestroyed(this)).subscribe((formData) => {
       const payload = {
@@ -52,12 +58,7 @@ export class FlightPriceTrendsComponent implements OnInit {
 
       this.cityFrom = formData.destinationFrom.name;
       this.cityTo = formData.destinationTo.name;
-
-      if (formData.transfers === 'Directly') {
-        this.getDirectlyFlights(this.data);
-      } else if (formData.transfers === 'Transfers') {
-        this.getFlightsWithTransfers(this.data);
-      }
+      this.transfers = formData.transfers ?? 'All';
     });
   }
 
