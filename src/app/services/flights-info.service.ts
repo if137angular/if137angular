@@ -85,7 +85,9 @@ export class FlightsInfoService {
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
     };
-    const currencyFromStore = this.store.selectSnapshot(RequestDataState.currency);
+    const currencyFromStore = this.store.selectSnapshot(
+      RequestDataState.currency
+    );
 
     return this.http.get(
       `/v1/prices/direct?origin=${city}&destination=${destination}&depart_date=${startDate}&return_date=${endDate}&currency=${currencyFromStore}&token=4df3f89d6861e092b8f5d30e3d49cde8`,

@@ -1,19 +1,18 @@
 export interface FlightPriceTrends {
-    "airline": string,
-    "departure_at": string,
-    "destination": string,
-    "expires_at": string,
-    "flight_number": number,
-    "origin": string,
-    "price": number,
-    "return_at": string,
-    "transfers": number,
+  airline: string;
+  departure_at: string;
+  destination: string;
+  expires_at: string;
+  flight_number: number;
+  origin: string;
+  price: number;
+  return_at: string;
+  transfers: number;
 }
 
-export interface FlightPriceTrendsRequest{
-    origin: string,
-    destination: string,
-    departDate: string,
-    returnDate: string
+export interface FlightPriceTrendsRequest {
+  origin: string;
+  destination: string;
+  departDate: string;
+  returnDate: string;
 }
-  

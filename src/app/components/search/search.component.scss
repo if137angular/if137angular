@@ -17,15 +17,18 @@
 .ticketsWrapper {
   width: calc(100% - 300px);
 }
+.calendarWrapper {
+  display: flex;
+  justify-content: center;
+}
 
-@media(max-width: 800px) {
+@media (max-width: 800px) {
   .search-content {
     display: block;
   }
 
-  .filterWrapper,.ticketsWrapper {
+  .filterWrapper,
+  .ticketsWrapper {
     width: 100%;
   }
 }
-
-

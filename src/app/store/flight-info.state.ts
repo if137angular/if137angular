@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import * as FlightInfoActions from './flight-info.action';
 import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';
@@ -108,7 +108,6 @@ export class FlightInfoState {
   static flightPriceTrends(state: FlightInfoStateModel): any {
     return filterArray(state.flightPriceTrends, state.filter);
   }
-  
   @Selector()
   static popularDestinations(state: FlightInfoStateModel): any {
     return state.popularDestinations;
@@ -214,12 +213,12 @@ export class FlightInfoState {
         payload.origin,
         payload.destination,
         payload.departDate,
-        payload.returnDate,
+        payload.returnDate
       )
       .subscribe((response) => {
         const data = Object.values(response.data);
-        context.patchState({ flightPriceTrends: data, loading: false })
-      })
+        context.patchState({ flightPriceTrends: data, loading: false });
+      });
   }
 
   @Action(FlightInfoActions.SetFilter)
