@@ -7,6 +7,13 @@ mat-toolbar {
     display: flex;
     align-items: center;
     flex: 1;
+
+    a {
+      text-decoration: none;
+      color: #fff;
+      display: flex;
+      align-items: center;
+    }
   }
 
   .spacer {

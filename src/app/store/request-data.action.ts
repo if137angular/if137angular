@@ -33,7 +33,7 @@ export class GetCurrencies {
 }
 
 export class SetCurrency {
-  static readonly type = '[Request] Get Selected By User Currency';
+  static readonly type = '[Request] Set Selected By User Currency';
   constructor(public currency: string) {}
 }
 
