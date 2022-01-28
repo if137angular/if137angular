@@ -16,6 +16,7 @@ export interface RequestDataStateModel {
   airports: any[];
   airlines: any[];
   currencies: any[];
+  currency: string;
   languages: any[];
   formData: FormDataModel;
   userData: IpFullModel;
@@ -30,6 +31,7 @@ export interface RequestDataStateModel {
     airports: [],
     airlines: [],
     currencies: [],
+    currency: 'USD',
     languages: [],
     formData: {
       destinationFrom: {
@@ -120,6 +122,11 @@ export class RequestDataState {
   }
 
   @Selector()
+  static currency(state: RequestDataStateModel): string {
+    return state.currency;
+  }
+
+  @Selector()
   static languages(state: RequestDataStateModel): any[] {
     return state.languages;
   }
@@ -179,6 +186,15 @@ export class RequestDataState {
     );
   }
 
+  @Action(RequestDataActions.SetCurrency)
+  GetCurrencyData(
+    { patchState }: StateContext<RequestDataStateModel>,
+    payload: RequestDataActions.SetCurrency
+  ) {
+    patchState({ currency: payload.currency })
+  }
+
+
   @Action(RequestDataActions.GetLanguages)
   GetLanguagesData({ patchState }: StateContext<RequestDataStateModel>) {
     return this.requestService.getLanguagesData().pipe(
@@ -201,34 +217,34 @@ export class RequestDataState {
     ctx: StateContext<RequestDataStateModel>,
   ) {
     return this.flightsInfoService.getIpAddress().pipe(tap((ip: IpShortModel) => {
-      this.flightsInfoService.getGEOLocation(Object.values(ip)[0])
-        .subscribe((userData: IpFullModel) => {
-          const state = ctx.getState();
-          const defaultCity = state.cities.find((city: CitiesModel) => city.name === userData.city) ||
-            {
-              code: 'LWO',
-              name: 'Lviv'
-            };
-          const formData = {
-            destinationFrom: {
-              code: defaultCity.code,
-              name: defaultCity.name,
-            },
-            destinationTo: {
-              name: '',
-              code: '',
-            },
-            endDate: new Date(),
-            startDate: new Date(),
-            transfers: '',
-          }
-          ctx.patchState({
-            ...state,
-            userData,
-            formData
-           });
+        this.flightsInfoService.getGEOLocation(Object.values(ip)[0])
+          .subscribe((userData: IpFullModel) => {
+            const state = ctx.getState();
+            const defaultCity = state.cities.find((city: CitiesModel) => city.name === userData.city) ||
+              {
+                code: 'LWO',
+                name: 'Lviv'
+              };
+            const formData = {
+              destinationFrom: {
+                code: defaultCity.code,
+                name: defaultCity.name,
+              },
+              destinationTo: {
+                name: '',
+                code: '',
+              },
+              endDate: new Date(),
+              startDate: new Date(),
+              transfers: '',
+            }
+            ctx.patchState({
+              ...state,
+              userData,
+              formData
             });
-        })
-      );
+          });
+      })
+    );
   }
 }

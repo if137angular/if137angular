@@ -33,6 +33,11 @@ export class GetCurrencies {
   constructor(public payload: any = null) {}
 }
 
+export class SetCurrency {
+  static readonly type = '[Request] Get Selected By User Currency';
+  constructor(public currency: string) {}
+}
+
 export class GetLanguages {
   static readonly type = '[Request] Get All Languages Data';
   constructor(public payload: any = null) {}
