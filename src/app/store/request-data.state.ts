@@ -7,7 +7,6 @@ import { CitiesModel } from 'src/app/models/cities.model';
 import { FormDataModel } from '../models/formData.model';
 import { IpFullModel, IpShortModel } from '../models/ip.model';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
-import { patch } from "@ngxs/store/operators";
 
 export interface RequestDataStateModel {
   countries: any[];
@@ -87,9 +86,10 @@ export interface RequestDataStateModel {
 })
 @Injectable()
 export class RequestDataState {
-  constructor(private requestService: RequestDataService,
-              private flightsInfoService: FlightsInfoService) {
-  }
+  constructor(
+    private requestService: RequestDataService,
+    private flightsInfoService: FlightsInfoService
+  ) {}
 
   @Selector()
   static countries(state: RequestDataStateModel): any[] {
