@@ -44,7 +44,7 @@ export class GetPopularDestinations {
 // ***** End code Flight-Tikets-For-Special-Price  ******
 
 export class GetFlightPriceTrends {
-  static readonly type = '[FlightInfo] Get Tikets For Special Date';
+  static readonly type = '[FlightInfo] Get Flight Price Trends';
   constructor(public payload: FlightPriceTrendsRequest) {}
 }
 
