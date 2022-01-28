@@ -1,4 +1,3 @@
-
 export interface CheapestTicketsResponseModel {
   currency: string
   data: DestinationFromTicketsModel
@@ -21,6 +20,14 @@ export interface CheapestTicketModel {
   price: number
   return_at: string
 }
+
+export interface AirlineModel {
+  'id': string,
+  'lcc': string,
+  'name': string,
+  'logo': string
+}
+
 
 
 

@@ -1,5 +1,4 @@
-import { IpFullModel } from '../models/ip.model';
-import { FormDataModel } from "src/app/models/formData.model";
+import { FormDataModel } from 'src/app/models/formData.model';
 
 //-- Request State Actions --
 export class GetCountries {
@@ -33,6 +32,11 @@ export class GetCurrencies {
   constructor(public payload: any = null) {}
 }
 
+export class SetCurrency {
+  static readonly type = '[Request] Get Selected By User Currency';
+  constructor(public currency: string) {}
+}
+
 export class GetLanguages {
   static readonly type = '[Request] Get All Languages Data';
   constructor(public payload: any = null) {}
@@ -40,7 +44,7 @@ export class GetLanguages {
 
 export class SetFormDate {
   static readonly type = '[Request] Set Form Data';
-  constructor(public formData: FormDataModel,) {}
+  constructor(public formData: FormDataModel) {}
 }
 
 export class SetUserData {
@@ -54,5 +58,4 @@ export type RequestDataActions =
   | GetAirports
   | GetAirlines
   | GetCurrencies
-  | GetLanguages
   | SetUserData;
