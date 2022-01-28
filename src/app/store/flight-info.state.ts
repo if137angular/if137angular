@@ -10,12 +10,21 @@ import { from, of } from 'rxjs';
 import { mergeMap, toArray, mapTo, groupBy, reduce, tap, scan, map, mergeAll, flatMap } from 'rxjs/operators';
 import * as _ from 'lodash';
 
+
 import { CheapestTicketModel, CheapestTicketsResponseModel, TicketsObjModel } from "../models/cheapest-tickets.model";
-import { CheapestTicketsRequestFail, CheapestTicketsRequestSuccess, StartLoading } from "./flight-info.action";
+
 import {
   DestinationPopular,
   GetDestinationPopular
-} from "src/app/components/city-destination/city-destination.component";
+} from "../models/city-destination.model";
+
+import {
+  CheapestTicketsRequestFail,
+  CheapestTicketsRequestSuccess,
+  StartLoading,
+  StopLoading
+} from "./flight-info.action";
+
 
 
 export interface FlightInfoStateModel {
@@ -28,7 +37,7 @@ export interface FlightInfoStateModel {
   filter: FilterModel;
   loading: boolean;
   cheapestTickets: CheapestTicketModel[] | null,
-  errors: string | null
+  errors: string
 }
 
 @State<FlightInfoStateModel>({
@@ -49,7 +58,7 @@ export interface FlightInfoStateModel {
       maxPrice: null,
     },
     loading: false,
-    errors: null
+    errors: ''
   },
 })
 @Injectable()
@@ -104,8 +113,13 @@ export class FlightInfoState {
   }
 
   @Selector()
-  static cheapestTickets(state: FlightInfoStateModel): any {
-    return state.cheapestTickets;
+  static cheapestTickets(state: FlightInfoStateModel): CheapestTicketModel[] | null {
+    return state.cheapestTickets
+  }
+
+  @Selector()
+  static errors(state: FlightInfoStateModel): string | null {
+    return state.errors
   }
 
   @Action(FlightInfoActions.CalendarOfPricesLoaded)
@@ -203,30 +217,35 @@ export class FlightInfoState {
 
     else this.flightInfoService.getCheapestTickets(payload)
         .subscribe((response: CheapestTicketsResponseModel) => {
-          dispatch(new CheapestTicketsRequestSuccess(response))
+          if(Object.keys(response.data).length == 0) dispatch(
+            new CheapestTicketsRequestFail('There are no tickets in the selected direction')
+          )
+          else dispatch(new CheapestTicketsRequestSuccess(response))
         })
   }
 
   @Action(FlightInfoActions.CheapestTicketsRequestSuccess)
   CheapestTicketsRequestSuccess(
-    { patchState }: StateContext<FlightInfoStateModel>,
-    { payload }: FlightInfoActions.CheapestTicketsRequestSuccess
+    {patchState, dispatch}: StateContext<FlightInfoStateModel>,
+    {payload}: FlightInfoActions.CheapestTicketsRequestSuccess
   ) {
-    const ticketsObj: TicketsObjModel = Object.values(payload.data)[0];
+    dispatch(new StopLoading())
+
+    const ticketsObj: TicketsObjModel = Object.values(payload.data)[0]
     patchState({
-      cheapestTickets: ticketsObj ? Object.values(ticketsObj) : [],
-      errors: null,
-      loading: false,
+      cheapestTickets: Object.values(ticketsObj),
+      errors: '',
       currency: payload.currency
     })
   }
 
   @Action(FlightInfoActions.CheapestTicketsRequestFail)
   CheapestTicketsRequestFail(
-    { patchState }: StateContext<FlightInfoStateModel>,
-    { payload }: FlightInfoActions.CheapestTicketsRequestFail
+    {patchState, dispatch}: StateContext<FlightInfoStateModel>,
+    {payload}: FlightInfoActions.CheapestTicketsRequestFail
   ) {
-    patchState({ errors: payload, loading: false })
+    dispatch(new StopLoading())
+    patchState({errors: payload})
   }
 
   @Action(FlightInfoActions.GetNonStopTickets)
@@ -259,11 +278,11 @@ export class FlightInfoState {
       mergeMap((cityCode: string) => this.flightInfoService.requestPopularDestination(cityCode)),
       toArray(),
       mergeMap((response: GetDestinationPopular[]) => of(response).pipe(
-        map((res: GetDestinationPopular[]) =>
-          res.map((r: GetDestinationPopular) => Object.values(r.data))
-        ),
-        map((r: any) => _.flattenDeep(r)),
-        map((r: any) => _.groupBy(r, (item) => item.destination)),
+          map((res: GetDestinationPopular[]) =>
+            res.map((r: GetDestinationPopular) => Object.values(r.data))
+          ),
+          map((r: any) => _.flattenDeep(r)),
+          map((r: any) => _.groupBy(r, (item) => item.destination)),
         )
       )
     ).subscribe((popularDestinations: any) => {
@@ -273,7 +292,7 @@ export class FlightInfoState {
           response.set(key, popularDestinations[key])
         }
       })
-      patchState({ popularDestinations: response, loading: false });
+      patchState({popularDestinations: response, loading: false});
     })
   }
 }

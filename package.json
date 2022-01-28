@@ -17,6 +17,7 @@
   "dependencies": {
     "@amcharts/amcharts5": "^5.1.0",
     "@amcharts/amcharts5-geodata": "^5.0.2",
+    "@angular-devkit/schematics": "^13.2.0",
     "@angular/animations": "~13.0.0",
     "@angular/cdk": "^13.1.1",
     "@angular/common": "~13.0.0",
@@ -55,7 +56,7 @@
     "@angular-eslint/builder": "13.0.1",
     "@angular-eslint/eslint-plugin": "13.0.1",
     "@angular-eslint/eslint-plugin-template": "13.0.1",
-    "@angular-eslint/schematics": "13.0.1",
+    "@angular-eslint/schematics": "^13.0.1",
     "@angular-eslint/template-parser": "13.0.1",
     "@angular/cli": "~13.0.3",
     "@angular/compiler-cli": "~13.0.0",

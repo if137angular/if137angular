@@ -1,5 +1,14 @@
 .notFound {
+  position: relative;
   color: black;
   text-align: center;
   margin-top: 50px;
+  img {
+    position: absolute;
+    top: -20px;
+    display: block;
+    width: 100%;
+    height: auto;
+    z-index: -3;
+  }
 }
