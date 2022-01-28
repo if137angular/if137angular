@@ -2,7 +2,7 @@
   <button mat-button [matMenuTriggerFor]="menu">
     <div *ngFor="let currency of currencies$ | async" style="display: inline">
       <div *ngIf="selectedOption === currency.code" style="display: flex; align-items: center">
-        <img [src]="currency.flag" alt="" />
+        <img src="https://flagcdn.com/w40/{{currency.code.slice(0, 2)}}.png" alt="">
         {{ selectedOption | uppercase }}
         <mat-icon>arrow_drop_down</mat-icon>
       </div>
@@ -11,7 +11,7 @@
 
   <mat-menu #menu="matMenu">
     <button mat-menu-item *ngFor="let currency of currencies$ | async" (click)="setValue(currency.code)">
-      <img [src]="currency.flag" alt="{{ currency.flag }}" />
+      <img src="https://flagcdn.com/w40/{{currency.code.slice(0, 2)}}.png" alt="">
       <span>{{ currency.code | uppercase }}</span>
     </button>
   </mat-menu>
