@@ -85,7 +85,9 @@ export class FlightsInfoService {
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
     };
-    const currencyFromStore = this.store.selectSnapshot(RequestDataState.currency);
+    const currencyFromStore = this.store.selectSnapshot(
+      RequestDataState.currency
+    );
 
     return this.http.get(
       `/v1/prices/direct?origin=${city}&destination=${destination}&depart_date=${startDate}&return_date=${endDate}&currency=${currencyFromStore}&token=4df3f89d6861e092b8f5d30e3d49cde8`,
@@ -160,11 +162,7 @@ export class FlightsInfoService {
     );
 
     return this.http.get(
-<<<<<<< HEAD
-      `/v1/prices/calendar?origin=${origin}&destination=${destination}&departure_date=${departDate}&return_date=${returnDate}&currency=USD&calendar_type=departure_date&token=14bd9a873621d433eb0d10b3a2a7cceb`,
-=======
       `/v1/prices/calendar?origin=${origin}&destination=${destination}&departure_date=${departDate}&return_date=${returnDate}&currency=${currencyFromStore}&calendar_type=departure_date&token=14bd9a873621d433eb0d10b3a2a7cceb`,
->>>>>>> ad23a116ea166872f5b0dbb179669fd25dd0981f
       requestOptions
     );
   }
