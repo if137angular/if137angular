@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import * as FlightInfoActions from './flight-info.action';
 import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';

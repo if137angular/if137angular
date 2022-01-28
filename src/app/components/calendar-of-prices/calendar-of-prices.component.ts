@@ -1,4 +1,4 @@
-import { OnInit } from '@angular/core';
+import { ChangeDetectorRef, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { map } from 'rxjs';
 import {
@@ -91,7 +91,7 @@ import {
   CalendarEventTimesChangedEvent,
   CalendarView,
 } from 'angular-calendar';
-import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
@@ -106,9 +106,7 @@ export class CalendarOfPricesComponent implements OnInit {
   currency: string;
   loadingCardCount: number[];
 
-  constructor(private store: Store, private modal: NgbModal) {
-    this.loadingCardCount = Array(36).map((n) => n);
-  }
+  constructor(private store: Store, private cdRef: ChangeDetectorRef) {}
 
   events: any[];
 
@@ -138,11 +136,11 @@ export class CalendarOfPricesComponent implements OnInit {
         }))
       )
       .subscribe((data: CalendarOfPricesPayload) => {
-        this.store.dispatch([
-          new CalendarOfPricesLoaded(data),
-        ]);
+        this.store.dispatch([new CalendarOfPricesLoaded(data)]);
         this.formData = data;
       });
+
+    this.cdRef.detectChanges();
   }
 
   view: CalendarView = CalendarView.Month;
