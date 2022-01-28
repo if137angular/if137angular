@@ -128,8 +128,7 @@ export class FlightsInfoService {
     origin: string,
     destination: string,
     departDate: string,
-    returnDate: string,
-    currency: string
+    returnDate: string
   ): Observable<any> {
     const headerDict = {
       'x-access-token': '14bd9a873621d433eb0d10b3a2a7cceb',
@@ -138,7 +137,7 @@ export class FlightsInfoService {
       headers: new HttpHeaders(headerDict),
     };
     return this.http.get(
-      `/v1/prices/calendar?origin=${origin}&destination=${destination}&departure_date=${departDate}&return_date=${returnDate}&currency=${currency}&calendar_type=departure_date&token=14bd9a873621d433eb0d10b3a2a7cceb`,
+      `/v1/prices/calendar?origin=${origin}&destination=${destination}&departure_date=${departDate}&return_date=${returnDate}&currency=USD&calendar_type=departure_date&token=14bd9a873621d433eb0d10b3a2a7cceb`,
       requestOptions
     );
   }

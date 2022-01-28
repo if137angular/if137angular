@@ -3,6 +3,7 @@ import { FilterModel } from '../models/filter.model';
 import { FlightTiketsForDatePayload } from '../models/flight-tickets-for-date.model';
 import {FormDataModel} from "../models/formData.model";
 import {CheapestTicketsResponseModel} from "../models/cheapest-tickets.model";
+import { FlightPriceTrendsRequest } from '../models/flight-price-trends.model';
 
 
 //-- Calendar State Actions --
@@ -24,6 +25,12 @@ export class GetSpecialOffers {
   ) {}
 }
 
+export class GetNonStopTickets {
+  static readonly type = '[FlightInfo] Get Non Stop Tickets';
+  constructor(public formData: FormDataModel) {
+  }
+}
+
 // ***** Code for Flight-Tikets-For-Special-Date *******
 
 
@@ -33,6 +40,12 @@ export class GetTiketsForSpecialDate {
 }
 
 // ***** End code Flight-Tikets-For-Special-Price  ******
+
+export class GetFlightPriceTrends {
+  static readonly type = '[FlightInfo] Get Tikets For Special Date';
+  constructor(public payload: FlightPriceTrendsRequest) {}
+}
+
 
 export class SetFilter {
   static readonly type = '[Filter] Set Filter Data';

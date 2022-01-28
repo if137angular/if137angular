@@ -1,20 +1,22 @@
-import {Injectable} from '@angular/core';
-import {Action, Selector, State, StateContext} from '@ngxs/store';
+import { Injectable } from '@angular/core';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
 import * as FlightInfoActions from './flight-info.action';
-import {CalendarOfPricesModel} from '../models/calendar-of-prices.model';
-import {FlightsInfoService} from '../services/flights-info.service';
-import {FilterModel} from '../models/filter.model';
+import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';
+import { FlightsInfoService } from '../services/flights-info.service';
+import { FilterModel } from '../models/filter.model';
 import filterArray from 'src/utils/filterFunc';
-import {startOfDay} from 'date-fns';
+import { startOfDay } from 'date-fns';
 
-import {CheapestTicketModel, CheapestTicketsResponseModel, TicketsObjModel} from "../models/cheapest-tickets.model";
-import {CheapestTicketsRequestFail, CheapestTicketsRequestSuccess, StartLoading} from "./flight-info.action";
+import { CheapestTicketModel, CheapestTicketsResponseModel, TicketsObjModel } from "../models/cheapest-tickets.model";
+import { CheapestTicketsRequestFail, CheapestTicketsRequestSuccess, StartLoading } from "./flight-info.action";
 
 
 export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesModel[];
-  specialOffers: any; // TODO: create model
+  specialOffers: any; // TODO: create model;
+  nonStopTickets: any // TODO: create model
   flightTiketsForDate: any;
+  flightPriceTrends: any;
   currency: string;
   filter: FilterModel;
   loading: boolean;
@@ -29,6 +31,8 @@ export interface FlightInfoStateModel {
     specialOffers: [],
     flightTiketsForDate: [],
     cheapestTickets: null,
+    nonStopTickets: [],
+    flightPriceTrends: [],
     currency: 'uah',
     filter: {
       flightClass: null,
@@ -66,6 +70,15 @@ export class FlightInfoState {
   static flightTiketsForDate(state: FlightInfoStateModel): any {
     return filterArray(state.flightTiketsForDate, state.filter);
   }
+  @Selector()
+  static nonStopTickets(state: FlightInfoStateModel): any {
+    return filterArray(state.nonStopTickets, state.filter);
+  }
+
+  @Selector()
+  static flightPriceTrends(state: FlightInfoStateModel): any {
+    return filterArray(state.flightPriceTrends, state.filter);
+  }
 
   @Selector()
   static currency(state: FlightInfoStateModel): string {
@@ -90,11 +103,12 @@ export class FlightInfoState {
   @Action(FlightInfoActions.CalendarOfPricesLoaded)
   LoadCalendarOfPrices(
     context: StateContext<FlightInfoStateModel>,
-    {payload}: FlightInfoActions.CalendarOfPricesLoaded
+    { payload }: FlightInfoActions.CalendarOfPricesLoaded
   ) {
+    context.patchState({ loading: true });
     this.flightInfoService
       .RequestGetCalendarOfPrices(payload)
-      .subscribe(({data, currency}) => {
+      .subscribe(({ data, currency }) => {
         context.patchState({
           calendarOfPrices: data,
           currency,
@@ -107,8 +121,9 @@ export class FlightInfoState {
   @Action(FlightInfoActions.GetTiketsForSpecialDate)
   LoadTiketsForSpecialDate(
     context: StateContext<FlightInfoStateModel>,
-    {payload}: FlightInfoActions.GetTiketsForSpecialDate
+    { payload }: FlightInfoActions.GetTiketsForSpecialDate
   ) {
+    context.patchState({ loading: true });
     this.flightInfoService
       .getFlightTicketsForDate(
         payload.codeFrom,
@@ -118,7 +133,7 @@ export class FlightInfoState {
         payload.direct,
       )
       .subscribe((flightTiketsForDate: { data: any }) => {
-        context.patchState({flightTiketsForDate: flightTiketsForDate.data, loading: false})
+        context.patchState({ flightTiketsForDate: flightTiketsForDate.data, loading: false })
       })
   }
 
@@ -127,8 +142,9 @@ export class FlightInfoState {
   @Action(FlightInfoActions.GetSpecialOffers)
   GetSpecialOffers(
     context: StateContext<FlightInfoStateModel>,
-    {payload}: FlightInfoActions.GetSpecialOffers
+    { payload }: FlightInfoActions.GetSpecialOffers
   ) {
+    context.patchState({ loading: true });
     this.flightInfoService
       .getSpecialOffers(
         payload.cityOrigin,
@@ -137,14 +153,33 @@ export class FlightInfoState {
         payload.currency
       )
       .subscribe((specialOffers: { data: any }) => {
-        context.patchState({specialOffers: specialOffers.data});
+        context.patchState({ specialOffers: specialOffers.data, loading: false });
       });
+  }
+
+  @Action(FlightInfoActions.GetFlightPriceTrends)
+  GetFlightPriceTrends(
+    context: StateContext<FlightInfoStateModel>,
+    { payload }: FlightInfoActions.GetFlightPriceTrends
+  ) {
+    context.patchState({ loading: true });
+    this.flightInfoService
+      .getFlightPriceTrends(
+        payload.origin,
+        payload.destination,
+        payload.departDate,
+        payload.returnDate,
+      )
+      .subscribe((response) => {
+        const data = Object.values(response.data);
+        context.patchState({ flightPriceTrends: data, loading: false })
+      })
   }
 
   @Action(FlightInfoActions.SetFilter)
   SetFilter(
-    {patchState}: StateContext<FlightInfoStateModel>,
-    {payload}: FlightInfoActions.SetFilter
+    { patchState }: StateContext<FlightInfoStateModel>,
+    { payload }: FlightInfoActions.SetFilter
   ) {
     patchState({
       filter: payload,
@@ -152,14 +187,14 @@ export class FlightInfoState {
   }
 
   @Action(FlightInfoActions.StartLoading)
-  StartLoading({patchState}: StateContext<FlightInfoStateModel>) {
+  StartLoading({ patchState }: StateContext<FlightInfoStateModel>) {
     patchState({
       loading: true,
     });
   }
 
   @Action(FlightInfoActions.StopLoading)
-  StopLoading({patchState}: StateContext<FlightInfoStateModel>) {
+  StopLoading({ patchState }: StateContext<FlightInfoStateModel>) {
     patchState({
       loading: false,
     });
@@ -167,10 +202,10 @@ export class FlightInfoState {
 
   @Action(FlightInfoActions.CheapestTicketsRequest)
   CheapestTicketsRequest(
-    {patchState, dispatch}: StateContext<FlightInfoStateModel>,
-    {payload}: FlightInfoActions.CheapestTicketsRequest
+    { patchState, dispatch }: StateContext<FlightInfoStateModel>,
+    { payload }: FlightInfoActions.CheapestTicketsRequest
   ) {
-    dispatch(new StartLoading())
+    dispatch(new StartLoading());
 
     if (!payload.destinationFrom.code)
       dispatch(new CheapestTicketsRequestFail('No destination from city'))
@@ -185,8 +220,8 @@ export class FlightInfoState {
 
   @Action(FlightInfoActions.CheapestTicketsRequestSuccess)
   CheapestTicketsRequestSuccess(
-    {patchState}: StateContext<FlightInfoStateModel>,
-    {payload}: FlightInfoActions.CheapestTicketsRequestSuccess
+    { patchState }: StateContext<FlightInfoStateModel>,
+    { payload }: FlightInfoActions.CheapestTicketsRequestSuccess
   ) {
     const ticketsObj: TicketsObjModel = Object.values(payload.data)[0]
     patchState({
@@ -199,9 +234,26 @@ export class FlightInfoState {
 
   @Action(FlightInfoActions.CheapestTicketsRequestFail)
   CheapestTicketsRequestFail(
-    {patchState}: StateContext<FlightInfoStateModel>,
-    {payload}: FlightInfoActions.CheapestTicketsRequestFail
+    { patchState }: StateContext<FlightInfoStateModel>,
+    { payload }: FlightInfoActions.CheapestTicketsRequestFail
   ) {
-    patchState({errors: payload, loading: false})
+    patchState({ errors: payload, loading: false })
+  }
+
+  @Action(FlightInfoActions.GetNonStopTickets)
+  GetNonStopTickets(
+    { patchState }: StateContext<FlightInfoStateModel>,
+    { formData }: FlightInfoActions.GetNonStopTickets
+  ) {
+    patchState({ loading: true })
+    return this.flightInfoService.requestGetNonStopTickets(
+      formData.destinationFrom.code,
+      formData.destinationTo.code,
+      formData.startDate.toISOString().slice(0, 7),
+      formData.endDate.toISOString().slice(0, 7)
+    ).subscribe((response: any) => {
+      const nonStopTickets: any = Object.values(response.data)[0];
+        patchState({ nonStopTickets: Object.values(nonStopTickets), loading: false })
+      })
   }
 }

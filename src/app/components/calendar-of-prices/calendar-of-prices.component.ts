@@ -97,7 +97,7 @@ import {
   styleUrls: ['./calendar-of-prices.component.scss'],
   templateUrl: './calendar-of-prices.component.html',
 })
-export class CalendarOfPricesComponent {
+export class CalendarOfPricesComponent implements OnInit {
   calendarData: CalendarOfPricesModel[];
   formData: CalendarOfPricesPayload;
   currency: string;
@@ -132,7 +132,6 @@ export class CalendarOfPricesComponent {
       )
       .subscribe((data: CalendarOfPricesPayload) => {
         this.store.dispatch([
-          new StartLoading(),
           new CalendarOfPricesLoaded(data),
         ]);
         this.formData = data;

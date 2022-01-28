@@ -68,7 +68,6 @@ import { FlightFilterComponent } from './components/flight-filter/flight-filter.
 import { RegisterComponent } from './components/register/register.component';
 import { MapsComponent } from './components/maps/maps.component';
 import { NoRecordsFoundComponent } from './components/no-records-found/no-records-found.component';
-import { AnimatedMapsComponent } from './components/animated-maps/animated-maps.component';
 import { CurrencyDropdownComponent } from './components/currency-dropdown/currency-dropdown.component';
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
 
@@ -100,7 +99,6 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
     RegisterComponent,
     MapsComponent,
     NoRecordsFoundComponent,
-    AnimatedMapsComponent,
     CurrencyDropdownComponent,
     CheapestTicketsComponent,
   ],

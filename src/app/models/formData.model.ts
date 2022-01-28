@@ -4,6 +4,7 @@ export type FormDataModel = {
   endDate: Date;
   startDate: Date;
   transfers: string;
+  isFormValid?: boolean
 };
 
 export type FormDestinationModel = {
