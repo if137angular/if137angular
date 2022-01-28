@@ -1,15 +1,15 @@
-.title{
+.title {
   text-align: center;
   margin: 10px 0;
 }
 
-.tickets{
+.tickets {
   display: flex;
   flex-wrap: wrap;
 }
 
-.ticket-info{
-  background-image: url(../../../assets/card-background.jpg);
+.ticket-info {
+  background-image: url("^/assets/card-background.jpg");
   background-size: cover;
   background-position: center;
   width: 610px;
@@ -18,18 +18,18 @@
   margin-bottom: 20px;
   border-radius: 20px;
 
-  &-content-flight{
+  &-content-flight {
     display: flex;
     justify-content: space-between;
     width: 35%;
     align-items: center;
 
-    &-details > span{
+    &-details > span {
       display: block;
     }
   }
 
-  &-content-main{
+  &-content-main {
     width: 47%;
     padding: 0 5px;
     display: flex;
@@ -38,25 +38,25 @@
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.808);
 
-    &-departure{
+    &-departure {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
 
-      &-city{
+      &-city {
         font-size: 18px;
         font-weight: 500;
       }
 
-      &-date{
+      &-date {
         font-style: italic;
         font-size: 10px;
         color: #6c757d;
       }
     }
 
-    &-return{
+    &-return {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -71,47 +71,46 @@
       border-radius: 10px;
     }
 
-    &-destination{
+    &-destination {
       text-align: center;
     }
 
-    &-image{
+    &-image {
       display: flex;
       flex-direction: column;
       width: 60%;
 
-    &-top{
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
+      &-top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-    &-line{
-      height: 1px;
-      border-top: 3px solid black;
-      margin: -5px 0px;
-    }
+      &-line {
+        height: 1px;
+        border-top: 3px solid black;
+        margin: -5px 0px;
+      }
 
-    &-bottom{
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 5px;
-    }
+      &-bottom {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 5px;
+      }
     }
   }
 }
 
-
-.price{
+.price {
   font-size: 18px;
   display: block;
   margin-top: 10px;
 }
 
-.offer{
+.offer {
   display: block;
   color: red;
   font-size: 10px;
