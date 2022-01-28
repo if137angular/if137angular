@@ -15,15 +15,14 @@ import * as moment from "moment";
 })
 export class CheapestTicketsComponent implements OnInit {
 
-  @Select(RequestDataState.formData) formData$: Observable<FormDataModel>
-  @Select(FlightInfoState.loading) loading$: Observable<boolean>
-  @Select(FlightInfoState.currency) currency$: Observable<string>
-  @Select(FlightInfoState.cheapestTickets) cheapestTickets$: Observable<Array<CheapestTicketModel> | null>
-  @Select(FlightInfoState.errors) errors$: Observable<string>
+  @Select(RequestDataState.formData) formData$: Observable<FormDataModel>;
+  @Select(FlightInfoState.loading) loading$: Observable<boolean>;
+  @Select(FlightInfoState.currency) currency$: Observable<string>;
+  @Select(FlightInfoState.cheapestTickets) cheapestTickets$: Observable<Array<CheapestTicketModel> | null>;
+  @Select(FlightInfoState.errors) errors$: Observable<string>;
 
-
-  cheapestTicketsArr: CheapestTicketModel[]
-  formData: FormDataModel
+  cheapestTicketsArr: CheapestTicketModel[];
+  formData: FormDataModel;
   sortModes: { sortBy: string, value: string }[] = [
     {sortBy: 'priceIncrease', value: 'Price Increase'},
     {sortBy: 'priceDecrease', value: 'Price Decrease'},
@@ -37,8 +36,8 @@ export class CheapestTicketsComponent implements OnInit {
   ngOnInit(): void {
 
     this.formData$.subscribe(((formData: FormDataModel) => {
-      this.formData = formData
-      this.store.dispatch(new CheapestTicketsRequest(formData))
+      this.formData = formData;
+      this.store.dispatch(new CheapestTicketsRequest(formData));
     }))
 
     this.cheapestTickets$.subscribe((cheapestTickets: CheapestTicketModel[] | null) => {

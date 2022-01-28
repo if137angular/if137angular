@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
-import { GetCurrencies } from 'src/app/store/request-data.action';
+import { GetCurrencies, SetCurrency } from 'src/app/store/request-data.action';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { CurrencyDropdownModel } from 'src/app/models/Currency-dropdown.model';
 
@@ -25,5 +25,6 @@ export class CurrencyDropdownComponent implements OnInit {
 
   setValue(data: string): void {
     this.selectedOption = data;
+    this.store.dispatch(new SetCurrency(data));
   }
 }
