@@ -9,3 +9,23 @@
 .search-content {
   display: flex;
 }
+
+.filterWrapper {
+  width: 300px;
+}
+
+.ticketsWrapper {
+  width: calc(100% - 300px);
+}
+
+@media(max-width: 800px) {
+  .search-content {
+    display: block;
+  }
+
+  .filterWrapper,.ticketsWrapper {
+    width: 100%;
+  }
+}
+
+

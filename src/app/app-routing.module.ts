@@ -27,11 +27,6 @@ export const routes: Routes = [
         data: { tab: 'Special Offers' },
       },
       {
-        path: 'calendar',
-        component: CalendarOfPricesComponent,
-        data: { tab: 'Calendar of prices' },
-      },
-      {
         path: 'non-stop-tickets',
         component: NonStopTicketsComponent,
         data: { tab: 'Non Stop Tickets' },
