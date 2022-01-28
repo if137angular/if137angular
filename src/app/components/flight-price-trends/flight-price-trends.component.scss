@@ -5,7 +5,10 @@
 
 .tickets {
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
+  gap: 50px 50px;
 }
 
 .ticket-info {
@@ -14,9 +17,8 @@
   background-position: center;
   width: 610px;
   height: 250px;
-  margin: auto;
-  margin: 20px 10px;
   border-radius: 20px;
+  box-shadow: 0px 0px 5px 4px rgba(73, 73, 73, 0.164);
 
   &-content-flight {
     display: flex;

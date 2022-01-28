@@ -1,4 +1,10 @@
-*,h1,h2,h3,h4,h5, p {
+*,
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -7,7 +13,7 @@
 .wrap__tikcet {
   width: 650px;
   border-radius: 15px;
-  margin: 30px auto;
+  margin: auto;
   background-image: url("^/assets/card-background.jpg");
   background-position: center;
   background-size: cover;
@@ -53,7 +59,7 @@
       text-align: center;
     }
   }
-  &-date, 
+  &-date,
   &-time {
     font-style: italic;
     font-size: 10px;
