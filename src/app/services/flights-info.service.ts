@@ -1,27 +1,25 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   HttpClient,
   HttpHeaders,
   HttpParams,
   HttpErrorResponse,
 } from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import {
   CalendarOfPricesPayload,
   GetCalendarOfPricesRequestModel,
 } from '../models/calendar-of-prices.model';
 import { map } from 'rxjs/operators';
-import { catchError, retry } from 'rxjs/operators';
-import { FlightTiketsForDatePayload } from '../models/flight-tickets-for-date.model';
-import {CheapestTicketsResponseModel} from '../models/cheapest-tickets.model';
-import {FormDataModel} from "../models/formData.model";
-import * as moment from "moment";
-import {GetDestinationPopular} from "../models/city-destination.model";
+import { catchError } from 'rxjs/operators';
+import { CheapestTicketsResponseModel } from '../models/cheapest-tickets.model';
+import { FormDataModel } from '../models/formData.model';
+import * as moment from 'moment';
+import { GetDestinationPopular } from '../models/city-destination.model';
 
 @Injectable()
 export class FlightsInfoService {
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   exampleRequestGetChipTickets(): Observable<any> {
     const headerDict = {
@@ -38,11 +36,11 @@ export class FlightsInfoService {
   }
 
   RequestGetCalendarOfPrices({
-                               originCode,
-                               destinationCode,
-                               depart_date,
-                               return_date,
-                             }: CalendarOfPricesPayload): Observable<any> {
+    originCode,
+    destinationCode,
+    depart_date,
+    return_date,
+  }: CalendarOfPricesPayload): Observable<any> {
     const headerDict = {
       'x-access-token': '51b362c72de38be9bcfdc31c8339c019',
     };
@@ -68,7 +66,12 @@ export class FlightsInfoService {
     );
   }
 
-  requestGetNonStopTickets(city: string, destination: string, startDate: string, endDate:string): Observable<any> {
+  requestGetNonStopTickets(
+    city: string,
+    destination: string,
+    startDate: string,
+    endDate: string
+  ): Observable<any> {
     const headerDict = {
       'x-access-token': '4df3f89d6861e092b8f5d30e3d49cde8',
     };
@@ -106,11 +109,13 @@ export class FlightsInfoService {
       );
   }
 
-  getCheapestTickets(formData: FormDataModel): Observable<CheapestTicketsResponseModel> {
-    const baseURL: string = '/v1/prices/cheap'
-    const token: string = 'f29a4f3a27eb2f3ea190c91cd4e15fa5'
+  getCheapestTickets(
+    formData: FormDataModel
+  ): Observable<CheapestTicketsResponseModel> {
+    const baseURL: string = '/v1/prices/cheap';
+    const token: string = 'f29a4f3a27eb2f3ea190c91cd4e15fa5';
 
-    let headersURL = new HttpHeaders().append('x-access-token', token)
+    let headersURL = new HttpHeaders().append('x-access-token', token);
     let paramsURL = new HttpParams()
       .append('origin', formData.destinationFrom.code)
       .append('destination', formData.destinationTo.code)
@@ -119,8 +124,10 @@ export class FlightsInfoService {
       .append('currency', 'USD')
       .append('token', token);
 
-    return this.http
-      .get<CheapestTicketsResponseModel>(baseURL, {headers: headersURL, params: paramsURL})
+    return this.http.get<CheapestTicketsResponseModel>(baseURL, {
+      headers: headersURL,
+      params: paramsURL,
+    });
   }
 
   getFlightPriceTrends(
@@ -162,9 +169,7 @@ export class FlightsInfoService {
   }
 
   getGEOLocation(ip: string): Observable<any> {
-    let url =
-      'https://api.ipgeolocation.io/ipgeo?apiKey=a4503669913f4ef28711027d136d2d68&ip=' +
-      ip;
+    let url = `https://api.ipgeolocation.io/ipgeo?apiKey=a4503669913f4ef28711027d136d2d68&ip=${ip}`;
     return this.http.get(url).pipe(catchError(this.handleError));
   }
 
@@ -180,13 +185,6 @@ export class FlightsInfoService {
   }
 
   getFlightTicketsForDate(
-    // {
-    //   codeFrom,
-    //   codeTo,
-    //   startDate,
-    //   endDate,
-    //   direct
-    // }: FlightTiketsForDatePayload
     codeFrom: string,
     codeTo: string,
     startDate: string,

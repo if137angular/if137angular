@@ -12,23 +12,18 @@ import { CurrencyDropdownModel } from 'src/app/models/Currency-dropdown.model';
   styleUrls: ['./currency-dropdown.component.scss'],
 })
 export class CurrencyDropdownComponent implements OnInit {
-  @Select(RequestDataState.currencies) currencies$: Observable<CurrencyDropdownModel[]>;
+  @Select(RequestDataState.currencies) currencies$: Observable<
+    CurrencyDropdownModel[]
+  >;
   selectedOption: string = 'uah';
 
-  constructor(private store: Store) { }
-
-  currencies: CurrencyDropdownModel[] = []
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.store.dispatch(new GetCurrencies());
-    this.currencies$.subscribe((currency: CurrencyDropdownModel[]) => {
-      this.currencies = currency;
-
-    })
   }
 
-  getValue(data: string): void {
-    this.selectedOption = data
-    // console.log("Test value:", this.selectedOption)
+  setValue(data: string): void {
+    this.selectedOption = data;
   }
 }
