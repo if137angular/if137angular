@@ -44,11 +44,8 @@ export interface FlightInfoStateModel {
   specialOffers: any; // TODO: create model;
   nonStopTickets: any; // TODO: create model
   flightTiketsForDate: any;
-<<<<<<< HEAD
   flightPriceTrends: any;
-=======
   popularDestinations: Map<string, DestinationPopular[]>;
->>>>>>> ad23a116ea166872f5b0dbb179669fd25dd0981f
   currency: string;
   filter: FilterModel;
   loading: boolean;
@@ -64,11 +61,8 @@ export interface FlightInfoStateModel {
     flightTiketsForDate: [],
     cheapestTickets: null,
     nonStopTickets: [],
-<<<<<<< HEAD
     flightPriceTrends: [],
-=======
     popularDestinations: new Map<string, DestinationPopular[]>(),
->>>>>>> ad23a116ea166872f5b0dbb179669fd25dd0981f
     currency: 'uah',
     filter: {
       flightClass: null,
@@ -111,13 +105,13 @@ export class FlightInfoState {
   }
 
   @Selector()
-<<<<<<< HEAD
   static flightPriceTrends(state: FlightInfoStateModel): any {
     return filterArray(state.flightPriceTrends, state.filter);
-=======
+  }
+  
+  @Selector()
   static popularDestinations(state: FlightInfoStateModel): any {
     return state.popularDestinations;
->>>>>>> ad23a116ea166872f5b0dbb179669fd25dd0981f
   }
 
   @Selector()

@@ -37,7 +37,6 @@ export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
   }
 
   getData() {
-<<<<<<< HEAD
     this.store
       .select(FlightInfoState.flightPriceTrends)
       .subscribe((state) => (this.data = state));
@@ -56,18 +55,6 @@ export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
         }
         this.store.dispatch([new GetFlightPriceTrends(payload)]);
 
-=======
-    this.formData$.pipe(takeUntil(this.unsubscribe$)).subscribe((formData) => {
-      this.flightInfoService
-        .getFlightPriceTrends(
-          formData.destinationFrom.code,
-          formData.destinationTo.code,
-          formData.startDate.toISOString().slice(0, 7),
-          formData.endDate.toISOString().slice(0, 7)
-        )
-        .subscribe((response: any) => {
-          this.data = Object.values(response.data);
->>>>>>> ad23a116ea166872f5b0dbb179669fd25dd0981f
           this.cityFrom = formData.destinationFrom.name;
           this.cityTo = formData.destinationTo.name;
           if (formData.transfers === 'Directly') {
@@ -75,7 +62,6 @@ export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
           }
           if (formData.transfers === 'Transfers') {
             this.getFlightsWithTransfers(this.data);
-<<<<<<< HEAD
           };
 
          
@@ -84,12 +70,6 @@ export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
         
       }
           
-=======
-          }
-        });
-    });
-  }
->>>>>>> ad23a116ea166872f5b0dbb179669fd25dd0981f
 
   getDirectlyFlights(data: FlightPriceTrends[]) {
     const newArray: FlightPriceTrends[] = [];
