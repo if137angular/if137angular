@@ -16,7 +16,6 @@ export interface RequestDataStateModel {
   airlines: any[];
   currencies: any[];
   currency: string;
-  languages: any[];
   formData: FormDataModel;
   userData: IpFullModel;
 }
@@ -31,7 +30,6 @@ export interface RequestDataStateModel {
     airlines: [],
     currencies: [],
     currency: 'USD',
-    languages: [],
     formData: {
       destinationFrom: {
         code: '',
@@ -127,11 +125,6 @@ export class RequestDataState {
   }
 
   @Selector()
-  static languages(state: RequestDataStateModel): any[] {
-    return state.languages;
-  }
-
-  @Selector()
   static formData(state: RequestDataStateModel): any {
     return state.formData;
   }
@@ -191,7 +184,7 @@ export class RequestDataState {
     { patchState }: StateContext<RequestDataStateModel>,
     payload: RequestDataActions.SetCurrency
   ) {
-    patchState({ currency: payload.currency })
+    patchState({ currency: payload.currency });
   }
 
   @Action(RequestDataActions.SetFormDate)
@@ -203,18 +196,21 @@ export class RequestDataState {
   }
 
   @Action(RequestDataActions.SetUserData)
-  GetUserGeolocation(
-    ctx: StateContext<RequestDataStateModel>,
-  ) {
-    return this.flightsInfoService.getIpAddress().pipe(tap((ip: IpShortModel) => {
-        this.flightsInfoService.getGEOLocation(Object.values(ip)[0])
+  GetUserGeolocation(ctx: StateContext<RequestDataStateModel>) {
+    return this.flightsInfoService.getIpAddress().pipe(
+      tap((ip: IpShortModel) => {
+        this.flightsInfoService
+          .getGEOLocation(Object.values(ip)[0])
           .subscribe((userData: IpFullModel) => {
             const state = ctx.getState();
-            const defaultCity = state.cities.find((city: CitiesModel) => city.name === userData.city) ||
-              {
-                code: 'LWO',
-                name: 'Lviv'
-              };
+
+            const defaultCity = state.cities.find(
+              (city: CitiesModel) => city.name === userData.city
+            ) || {
+              code: 'LWO',
+              name: 'Lviv',
+            };
+
             const formData = {
               destinationFrom: {
                 code: defaultCity.code,
@@ -226,12 +222,13 @@ export class RequestDataState {
               },
               endDate: new Date(),
               startDate: new Date(),
-              transfers: '',
-            }
+              transfers: 'All',
+            };
+
             ctx.patchState({
               ...state,
               userData,
-              formData
+              formData,
             });
           });
       })

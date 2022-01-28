@@ -8,11 +8,10 @@ import { FlightPriceTrends } from 'src/app/models/flight-price-trends.model';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-
 @Component({
   selector: 'app-flight-price-trends',
   templateUrl: './flight-price-trends.component.html',
-  styleUrls: ['./flight-price-trends.component.scss']
+  styleUrls: ['./flight-price-trends.component.scss'],
 })
 export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
   @Select(RequestDataState.formData)
@@ -24,29 +23,36 @@ export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
   cityTo: string;
 
   private unsubscribe$ = new Subject<null>();
-  constructor(private flightInfoService: FlightsInfoService, private store: Store) { }
+  constructor(
+    private flightInfoService: FlightsInfoService,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
-    this.getData()
+    this.getData();
   }
 
   getData() {
-    this.formData$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(formData => {
-        this.flightInfoService.getFlightPriceTrends(formData.destinationFrom.code, formData.destinationTo.code, formData.startDate.toISOString().slice(0, 7), formData.endDate.toISOString().slice(0, 7), this.currency)
+    this.formData$.pipe(takeUntil(this.unsubscribe$)).subscribe((formData) => {
+      this.flightInfoService
+        .getFlightPriceTrends(
+          formData.destinationFrom.code,
+          formData.destinationTo.code,
+          formData.startDate.toISOString().slice(0, 7),
+          formData.endDate.toISOString().slice(0, 7)
+        )
         .subscribe((response: any) => {
           this.data = Object.values(response.data);
           this.cityFrom = formData.destinationFrom.name;
           this.cityTo = formData.destinationTo.name;
-          if (formData.transfers === "Directly") {
+          if (formData.transfers === 'Directly') {
             this.getDirectlyFlights(this.data);
-          };
-          if (formData.transfers === "Transfers") {
+          }
+          if (formData.transfers === 'Transfers') {
             this.getFlightsWithTransfers(this.data);
-          };
+          }
         });
-      })
+    });
   }
 
   getDirectlyFlights(data: FlightPriceTrends[]) {
@@ -74,4 +80,3 @@ export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 }
-

@@ -16,13 +16,12 @@ import { CheapestTicketsResponseModel } from '../models/cheapest-tickets.model';
 import { FormDataModel } from '../models/formData.model';
 import * as moment from 'moment';
 import { GetDestinationPopular } from '../models/city-destination.model';
-import { Store } from "@ngxs/store";
-import { RequestDataState, RequestDataStateModel } from "src/app/store/request-data.state";
+import { Store } from '@ngxs/store';
+import { RequestDataState } from 'src/app/store/request-data.state';
 
 @Injectable()
 export class FlightsInfoService {
-  constructor(private http: HttpClient, private store: Store) {
-  }
+  constructor(private http: HttpClient, private store: Store) {}
 
   exampleRequestGetChipTickets(): Observable<any> {
     const headerDict = {
@@ -62,10 +61,11 @@ export class FlightsInfoService {
   getSpecialOffers(
     cityOrigin: string,
     cityDestination: string,
-    locale: string,
-    currency: string
+    locale: string
   ): Observable<any> {
-    const currencyFromStore = this.store.selectSnapshot(RequestDataState.currency);
+    const currencyFromStore = this.store.selectSnapshot(
+      RequestDataState.currency
+    );
 
     return this.http.get<any>(
       `/aviasales/v3/get_special_offers?origin=${cityOrigin}&destination=${cityDestination}&locale=${locale}&currency=${currencyFromStore}&token=b482025a8bf39817b6b6f219686b4799`
@@ -118,9 +118,11 @@ export class FlightsInfoService {
       );
   }
 
-  getCheapestTickets(formData: FormDataModel): Observable<CheapestTicketsResponseModel> {
-    const baseURL: string = '/v1/prices/cheap'
-    const token: string = 'f29a4f3a27eb2f3ea190c91cd4e15fa5'
+  getCheapestTickets(
+    formData: FormDataModel
+  ): Observable<CheapestTicketsResponseModel> {
+    const baseURL: string = '/v1/prices/cheap';
+    const token: string = 'f29a4f3a27eb2f3ea190c91cd4e15fa5';
     const currency = this.store.selectSnapshot(RequestDataState.currency);
 
     let headersURL = new HttpHeaders().append('x-access-token', token);
@@ -129,7 +131,10 @@ export class FlightsInfoService {
       .append('destination', formData.destinationTo.code)
       .append('depart_date', moment(formData.startDate).format('YYYY-MM-DD'))
       .append('return_date', moment(formData.startDate).format('YYYY-MM-DD'))
-      .append('currency', ['EUR', 'USD', 'RUB'].includes(currency) ? currency : 'USD')
+      .append(
+        'currency',
+        ['EUR', 'USD', 'RUB'].includes(currency) ? currency : 'USD'
+      )
       .append('token', token);
 
     return this.http.get<CheapestTicketsResponseModel>(baseURL, {
@@ -142,8 +147,7 @@ export class FlightsInfoService {
     origin: string,
     destination: string,
     departDate: string,
-    returnDate: string,
-    currency: string
+    returnDate: string
   ): Observable<any> {
     const headerDict = {
       'x-access-token': '14bd9a873621d433eb0d10b3a2a7cceb',
@@ -151,7 +155,9 @@ export class FlightsInfoService {
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
     };
-    const currencyFromStore = this.store.selectSnapshot(RequestDataState.currency);
+    const currencyFromStore = this.store.selectSnapshot(
+      RequestDataState.currency
+    );
 
     return this.http.get(
       `/v1/prices/calendar?origin=${origin}&destination=${destination}&departure_date=${departDate}&return_date=${returnDate}&currency=${currencyFromStore}&calendar_type=departure_date&token=14bd9a873621d433eb0d10b3a2a7cceb`,
@@ -207,7 +213,9 @@ export class FlightsInfoService {
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
     };
-    const currencyFromStore = this.store.selectSnapshot(RequestDataState.currency);
+    const currencyFromStore = this.store.selectSnapshot(
+      RequestDataState.currency
+    );
 
     return this.http.get(
       `/aviasales/v3/prices_for_dates?origin=${codeFrom}&destination=${codeTo}&departure_at=${startDate}&return_at=${endDate}&unique=false&sorting=price&direct=${direct}&currency=${currencyFromStore}&limit=15&page=1&one_way=true&token=d077e8cd07cd09cedc63a920f064b1ab`,
@@ -223,7 +231,9 @@ export class FlightsInfoService {
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
     };
-    const currencyFromStore = this.store.selectSnapshot(RequestDataState.currency);
+    const currencyFromStore = this.store.selectSnapshot(
+      RequestDataState.currency
+    );
 
     return this.http.get<GetDestinationPopular>(
       `/v1/city-directions?origin=${origin}&currency=${currencyFromStore}&token=fd45945b3cf27c0f371a6a177e5c8adc`,
