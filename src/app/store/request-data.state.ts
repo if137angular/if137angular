@@ -29,7 +29,7 @@ export interface RequestDataStateModel {
     airports: [],
     airlines: [],
     currencies: [],
-    currency: 'USD',
+    currency: 'uah',
     formData: {
       destinationFrom: {
         code: '',
@@ -180,7 +180,7 @@ export class RequestDataState {
   }
 
   @Action(RequestDataActions.SetCurrency)
-  GetCurrencyData(
+  SetCurrencyData(
     { patchState }: StateContext<RequestDataStateModel>,
     payload: RequestDataActions.SetCurrency
   ) {
