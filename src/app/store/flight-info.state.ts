@@ -44,7 +44,11 @@ export interface FlightInfoStateModel {
   specialOffers: any; // TODO: create model;
   nonStopTickets: any; // TODO: create model
   flightTiketsForDate: any;
+<<<<<<< HEAD
+  flightPriceTrends: any;
+=======
   popularDestinations: Map<string, DestinationPopular[]>;
+>>>>>>> ad23a116ea166872f5b0dbb179669fd25dd0981f
   currency: string;
   filter: FilterModel;
   loading: boolean;
@@ -60,7 +64,11 @@ export interface FlightInfoStateModel {
     flightTiketsForDate: [],
     cheapestTickets: null,
     nonStopTickets: [],
+<<<<<<< HEAD
+    flightPriceTrends: [],
+=======
     popularDestinations: new Map<string, DestinationPopular[]>(),
+>>>>>>> ad23a116ea166872f5b0dbb179669fd25dd0981f
     currency: 'uah',
     filter: {
       flightClass: null,
@@ -103,8 +111,13 @@ export class FlightInfoState {
   }
 
   @Selector()
+<<<<<<< HEAD
+  static flightPriceTrends(state: FlightInfoStateModel): any {
+    return filterArray(state.flightPriceTrends, state.filter);
+=======
   static popularDestinations(state: FlightInfoStateModel): any {
     return state.popularDestinations;
+>>>>>>> ad23a116ea166872f5b0dbb179669fd25dd0981f
   }
 
   @Selector()
@@ -194,6 +207,25 @@ export class FlightInfoState {
           loading: false,
         });
       });
+  }
+
+  @Action(FlightInfoActions.GetFlightPriceTrends)
+  GetFlightPriceTrends(
+    context: StateContext<FlightInfoStateModel>,
+    { payload }: FlightInfoActions.GetFlightPriceTrends
+  ) {
+    context.patchState({ loading: true });
+    this.flightInfoService
+      .getFlightPriceTrends(
+        payload.origin,
+        payload.destination,
+        payload.departDate,
+        payload.returnDate,
+      )
+      .subscribe((response) => {
+        const data = Object.values(response.data);
+        context.patchState({ flightPriceTrends: data, loading: false })
+      })
   }
 
   @Action(FlightInfoActions.SetFilter)

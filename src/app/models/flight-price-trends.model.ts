@@ -9,4 +9,11 @@ export interface FlightPriceTrends {
     "return_at": string,
     "transfers": number,
 }
+
+export interface FlightPriceTrendsRequest{
+    origin: string,
+    destination: string,
+    departDate: string,
+    returnDate: string
+}
   

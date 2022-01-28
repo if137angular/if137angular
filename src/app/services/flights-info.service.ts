@@ -160,7 +160,11 @@ export class FlightsInfoService {
     );
 
     return this.http.get(
+<<<<<<< HEAD
+      `/v1/prices/calendar?origin=${origin}&destination=${destination}&departure_date=${departDate}&return_date=${returnDate}&currency=USD&calendar_type=departure_date&token=14bd9a873621d433eb0d10b3a2a7cceb`,
+=======
       `/v1/prices/calendar?origin=${origin}&destination=${destination}&departure_date=${departDate}&return_date=${returnDate}&currency=${currencyFromStore}&calendar_type=departure_date&token=14bd9a873621d433eb0d10b3a2a7cceb`,
+>>>>>>> ad23a116ea166872f5b0dbb179669fd25dd0981f
       requestOptions
     );
   }

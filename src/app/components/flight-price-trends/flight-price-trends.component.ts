@@ -7,20 +7,24 @@ import { FormDataModel } from 'src/app/models/formData.model';
 import { FlightPriceTrends } from 'src/app/models/flight-price-trends.model';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { FlightInfoState } from 'src/app/store/flight-info.state';
+import { GetFlightPriceTrends} from 'src/app/store/flight-info.action';
 
 @Component({
   selector: 'app-flight-price-trends',
   templateUrl: './flight-price-trends.component.html',
   styleUrls: ['./flight-price-trends.component.scss'],
 })
+
 export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
   @Select(RequestDataState.formData)
   formData$: Observable<FormDataModel>;
 
-  data: FlightPriceTrends[] = [];
+  data: any= [];
   currency: string = 'USD';
   cityFrom: string;
   cityTo: string;
+  loading: boolean;
 
   private unsubscribe$ = new Subject<null>();
   constructor(
@@ -33,6 +37,26 @@ export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
   }
 
   getData() {
+<<<<<<< HEAD
+    this.store
+      .select(FlightInfoState.flightPriceTrends)
+      .subscribe((state) => (this.data = state));
+
+      this.store.select(FlightInfoState.loading)
+      .subscribe(loading => this.loading = loading);
+
+    this.formData$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(formData => {
+        const payload = {
+          origin: formData.destinationFrom.code,
+          destination: formData.destinationTo.code,
+          departDate: formData.startDate.toISOString().slice(0, 7),
+          returnDate: formData.endDate.toISOString().slice(0, 7)
+        }
+        this.store.dispatch([new GetFlightPriceTrends(payload)]);
+
+=======
     this.formData$.pipe(takeUntil(this.unsubscribe$)).subscribe((formData) => {
       this.flightInfoService
         .getFlightPriceTrends(
@@ -43,6 +67,7 @@ export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
         )
         .subscribe((response: any) => {
           this.data = Object.values(response.data);
+>>>>>>> ad23a116ea166872f5b0dbb179669fd25dd0981f
           this.cityFrom = formData.destinationFrom.name;
           this.cityTo = formData.destinationTo.name;
           if (formData.transfers === 'Directly') {
@@ -50,10 +75,21 @@ export class FlightPriceTrendsComponent implements OnInit, OnDestroy {
           }
           if (formData.transfers === 'Transfers') {
             this.getFlightsWithTransfers(this.data);
+<<<<<<< HEAD
+          };
+
+         
+        });
+
+        
+      }
+          
+=======
           }
         });
     });
   }
+>>>>>>> ad23a116ea166872f5b0dbb179669fd25dd0981f
 
   getDirectlyFlights(data: FlightPriceTrends[]) {
     const newArray: FlightPriceTrends[] = [];
