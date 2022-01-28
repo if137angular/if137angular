@@ -6,7 +6,6 @@ import {
   SetUserData,
 } from 'src/app/store/request-data.action';
 import { Store } from '@ngxs/store';
-import { FlightsInfoService } from './services/flights-info.service';
 
 @Component({
   selector: 'app-root',
@@ -14,16 +13,14 @@ import { FlightsInfoService } from './services/flights-info.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private store: Store
-  ) {}
+  constructor(private store: Store) {}
 
   ngOnInit() {
     this.store.dispatch([
       new GetCountries(),
       new GetAirports(),
       new GetCities(),
-      new SetUserData()
+      new SetUserData(),
     ]);
   }
 }
