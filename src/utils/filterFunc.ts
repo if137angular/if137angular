@@ -1,9 +1,12 @@
+import { any } from '@amcharts/amcharts5/.internal/core/util/Array';
+import { values } from 'lodash';
 import { CalendarOfPricesModel } from 'src/app/models/calendar-of-prices.model';
 import { FilterModel } from 'src/app/models/filter.model';
+import { UniversalComponentModel } from 'src/app/models/Universal-component.model';
 
 //FIXME: optimize
 const filterArray = (
-  array: CalendarOfPricesModel[],
+  array: UniversalComponentModel[],
   { flightClass, minPrice, maxPrice, transfers, gate }: FilterModel
 ) => {
   let copy = [...array];
@@ -19,15 +22,42 @@ const filterArray = (
   if (gate !== null && gate !== 'All') {
     copy = copy.filter(({ gate: flightGate }) => flightGate === gate);
   }
-  if (minPrice && maxPrice) {
-    copy = copy.filter(({ value }) => value >= minPrice && value <= maxPrice);
-  }
-  if (minPrice) {
-    copy = copy.filter(({ value }) => value >= minPrice);
-  }
-  if (maxPrice) {
-    copy = copy.filter(({ value }) => value <= maxPrice);
-  }
+
+  copy.forEach((item: any) => {
+    let keys = Object.keys(item)
+    keys.forEach((key: string) => {
+      if (key === 'value') {
+
+        if (minPrice && maxPrice) {
+          copy = copy.filter(({ value }) => value >= minPrice && value <= maxPrice);
+        }
+        if (minPrice) {
+          copy = copy.filter(({ value }) => value >= minPrice);
+        }
+        if (maxPrice) {
+          copy = copy.filter(({ value }) => value <= maxPrice);
+        }
+
+      }
+
+      if (key === 'price') {
+        if (minPrice && maxPrice) {
+          copy = copy.filter(({ price }) => price >= minPrice && price <= maxPrice);
+        }
+
+        if (minPrice) {
+          copy = copy.filter(({ price }) => price >= minPrice);
+        }
+        if (maxPrice) {
+          copy = copy.filter(({ price }) => price <= maxPrice);
+        }
+      }
+    })
+
+  })
+
+
+
 
   return copy;
 };
