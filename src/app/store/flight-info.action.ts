@@ -2,8 +2,12 @@ import { CalendarOfPricesPayload } from '../models/calendar-of-prices.model';
 import { FilterModel } from '../models/filter.model';
 import { FlightTiketsForDatePayload } from '../models/flight-tickets-for-date.model';
 import {FormDataModel} from "../models/formData.model";
+<<<<<<< HEAD
 import {CheapestTicketsResponseModel} from "../models/cheapest-tickets.model";
 import { FlightPriceTrendsRequest } from '../models/flight-price-trends.model';
+=======
+import {CheapestTicketModel, CheapestTicketsResponseModel} from "../models/cheapest-tickets.model";
+>>>>>>> ad23a116ea166872f5b0dbb179669fd25dd0981f
 
 
 //-- Calendar State Actions --
@@ -37,6 +41,13 @@ export class GetNonStopTickets {
 export class GetTiketsForSpecialDate {
   static readonly type = '[FlightInfo] Get Tikets For Special Date';
   constructor(public payload: FlightTiketsForDatePayload) {}
+}
+
+export class GetPopularDestinations {
+  static readonly type = '[FlightInfo] Get Popular Destinations';
+  constructor(
+    public payload: string[]
+  ) {}
 }
 
 // ***** End code Flight-Tikets-For-Special-Price  ******

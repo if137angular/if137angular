@@ -83,6 +83,7 @@ import {
   addHours,
 } from 'date-fns';
 import { Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,
@@ -90,7 +91,9 @@ import {
   CalendarEventTimesChangedEvent,
   CalendarView,
 } from 'angular-calendar';
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
   selector: 'app-calendar-of-prices',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -112,15 +115,19 @@ export class CalendarOfPricesComponent implements OnInit {
   ngOnInit(): void {
     this.store
       .select(FlightInfoState.calendarOfPrices)
+      .pipe(untilDestroyed(this))
       .subscribe((state) => (this.events = state));
 
     this.store
       .select(FlightInfoState.currency)
+      .pipe(untilDestroyed(this))
       .subscribe((state) => (this.currency = state));
 
     this.store
       .select(RequestDataState.formData)
       .pipe(
+        untilDestroyed(this),
+        filter((state: any) => state.isFormValid),
         map((state: FormDataModel) => ({
           origin: state.destinationFrom.name,
           destination: state.destinationTo.name,

@@ -7,7 +7,6 @@ import { CitiesModel } from 'src/app/models/cities.model';
 import { FormDataModel } from '../models/formData.model';
 import { IpFullModel, IpShortModel } from '../models/ip.model';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
-import { patch } from "@ngxs/store/operators";
 
 export interface RequestDataStateModel {
   countries: any[];
@@ -16,7 +15,7 @@ export interface RequestDataStateModel {
   airports: any[];
   airlines: any[];
   currencies: any[];
-  languages: any[];
+  currency: string;
   formData: FormDataModel;
   userData: IpFullModel;
 }
@@ -30,7 +29,7 @@ export interface RequestDataStateModel {
     airports: [],
     airlines: [],
     currencies: [],
-    languages: [],
+    currency: 'USD',
     formData: {
       destinationFrom: {
         code: '',
@@ -85,9 +84,10 @@ export interface RequestDataStateModel {
 })
 @Injectable()
 export class RequestDataState {
-  constructor(private requestService: RequestDataService,
-              private flightsInfoService: FlightsInfoService) {
-  }
+  constructor(
+    private requestService: RequestDataService,
+    private flightsInfoService: FlightsInfoService
+  ) {}
 
   @Selector()
   static countries(state: RequestDataStateModel): any[] {
@@ -120,8 +120,8 @@ export class RequestDataState {
   }
 
   @Selector()
-  static languages(state: RequestDataStateModel): any[] {
-    return state.languages;
+  static currency(state: RequestDataStateModel): string {
+    return state.currency;
   }
 
   @Selector()
@@ -179,13 +179,12 @@ export class RequestDataState {
     );
   }
 
-  @Action(RequestDataActions.GetLanguages)
-  GetLanguagesData({ patchState }: StateContext<RequestDataStateModel>) {
-    return this.requestService.getLanguagesData().pipe(
-      tap((languages: any[]) => {
-        patchState({ languages });
-      })
-    );
+  @Action(RequestDataActions.SetCurrency)
+  GetCurrencyData(
+    { patchState }: StateContext<RequestDataStateModel>,
+    payload: RequestDataActions.SetCurrency
+  ) {
+    patchState({ currency: payload.currency });
   }
 
   @Action(RequestDataActions.SetFormDate)
@@ -197,38 +196,42 @@ export class RequestDataState {
   }
 
   @Action(RequestDataActions.SetUserData)
-  GetUserGeolocation(
-    ctx: StateContext<RequestDataStateModel>,
-  ) {
-    return this.flightsInfoService.getIpAddress().pipe(tap((ip: IpShortModel) => {
-      this.flightsInfoService.getGEOLocation(Object.values(ip)[0])
-        .subscribe((userData: IpFullModel) => {
-          const state = ctx.getState();
-          const defaultCity = state.cities.find((city: CitiesModel) => city.name === userData.city) ||
-            {
+  GetUserGeolocation(ctx: StateContext<RequestDataStateModel>) {
+    return this.flightsInfoService.getIpAddress().pipe(
+      tap((ip: IpShortModel) => {
+        this.flightsInfoService
+          .getGEOLocation(Object.values(ip)[0])
+          .subscribe((userData: IpFullModel) => {
+            const state = ctx.getState();
+
+            const defaultCity = state.cities.find(
+              (city: CitiesModel) => city.name === userData.city
+            ) || {
               code: 'LWO',
-              name: 'Lviv'
+              name: 'Lviv',
             };
-          const formData = {
-            destinationFrom: {
-              code: defaultCity.code,
-              name: defaultCity.name,
-            },
-            destinationTo: {
-              name: '',
-              code: '',
-            },
-            endDate: new Date(),
-            startDate: new Date(),
-            transfers: '',
-          }
-          ctx.patchState({
-            ...state,
-            userData,
-            formData
-           });
+
+            const formData = {
+              destinationFrom: {
+                code: defaultCity.code,
+                name: defaultCity.name,
+              },
+              destinationTo: {
+                name: '',
+                code: '',
+              },
+              endDate: new Date(),
+              startDate: new Date(),
+              transfers: 'All',
+            };
+
+            ctx.patchState({
+              ...state,
+              userData,
+              formData,
             });
-        })
-      );
+          });
+      })
+    );
   }
 }

@@ -1,45 +1,84 @@
 <div class="wrap__tikcet">
-  <div class="price">
-    <h3 class="price-title">{{flightInfo.price}}$</h3>
-  </div>
-  <div class="info__flight">
-    <div class="info__flight-header">
-      <img class="info__flight-header-img"
-        src="https://images.kiwi.com/airlines/64/{{flightInfo.airline}}.png"
-        alt="{{flightInfo.airline}}"
-      >
-      <p class="info__flight-header-duration">
-        Flight duration: {{flightDuration(flightInfo.duration)}}
-      </p>
+  <h3 class="title">
+    {{formData.destinationFrom.name}} - {{formData.destinationTo.name}}
+    / {{formData.destinationTo.name}} - {{formData.destinationFrom.name}}
+  </h3>
+  <div class="card__content">
+    <div class="card__content-item">
+      Price: <p class="card__price">{{flightInfo.price}}$</p>
     </div>
-    <div class="info__flight-body">
-      <div class="info__date">
-        <h3 class="info__date-city">
-          {{formData.destinationFrom.name}} - {{formData.destinationTo.name}}
-        </h3>
-        <h3 class="info__date-info">
-          <span class="info__date-info-span">time:</span>
-          {{flightInfo.departure_at | date: 'shortTime'}}
-        </h3>
-        <h3 class="info__date-info">
-          <span class="info__date-info-span">data:</span>
-          {{flightInfo.departure_at | date}}
-        </h3>
-      </div>
-      <hr class="hr">
-      <div class="info__date">
-        <h3 class="info__date-city">
-          {{formData.destinationTo.name}} - {{formData.destinationFrom.name}}
-        </h3>
-        <h3 class="info__date-info">
-          <span class="info__date-info-span">time:</span>
-          {{flightInfo.return_at | date: 'shortTime'}}
-        </h3>
-        <h3 class="info__date-info">
-          <span class="info__date-info-span">data:</span>
-          {{flightInfo.return_at | date}}
-        </h3>
-      </div>
+    <div class="card__content-item">
+      Airline:
+      <p class="card__airline">{{ flightInfo.airline }}</p>
+    </div>
+    <div class="card__content-item">
+      Flight number:
+      <p class="card__flight-number">{{ flightInfo.flight_number }}</p>
     </div>
   </div>
-</div>
+
+  <div class="card__info">
+    <div class="card__info-item">
+      <p class="card__info-city">{{formData.destinationFrom.name}} - {{formData.destinationTo.name}}</p>
+      <p class="card__info-date">{{flightInfo.departure_at | date}}</p>
+      <p class="card__info-time">{{flightInfo.departure_at | date: 'shortTime'}}</p>
+    </div>
+
+    <div class="card__info-item">
+      <div class="card__line-top">
+        <mat-icon class="card__icon">flight_takeoff</mat-icon>
+        <p class="card__duration">{{ flightDuration(flightInfo.duration) }}</p>
+        <mat-icon class="card__icon">flight_land</mat-icon>
+      </div>
+      <div class="card__line-main"></div>
+      <div class="card__line-bottom">
+        <p class="card__airport-from">{{ flightInfo.origin }}</p>
+        <img
+          class="card__logo"
+          src="https://images.kiwi.com/airlines/64/{{ flightInfo.airline }}.png"
+          alt="{{ flightInfo.airline }}"
+        />
+        <p class="card__airport-to">{{ flightInfo.destination }}</p>
+      </div>
+    </div>
+
+    <div class="card__info-item">
+      <p class="card__info-city">{{formData.destinationTo.name}} - {{formData.destinationFrom.name}}</p>
+      <p class="card__info-date">{{flightInfo.return_at | date}}</p>
+      <p class="card__info-time">{{flightInfo.return_at | date: 'shortTime'}}</p>
+    </div>
+  </div>
+
+  <!--  -->
+  <!-- <div class="card__info">
+    <div class="card__info-item">
+      <p class="card__info-city">{{formData.destinationTo.name}}</p>
+      <p class="card__info-date">{{flightInfo.return_at | date}}</p>
+      <p class="card__info-time">{{flightInfo.return_at | date: 'shortTime'}}</p>
+    </div>
+
+    <div class="card__info-item">
+      <div class="card__line-top">
+        <mat-icon class="card__icon">flight_takeoff</mat-icon>
+        <p class="card__duration">{{ flightDuration(flightInfo.duration) }}</p>
+        <mat-icon class="card__icon">flight_land</mat-icon>
+      </div>
+      <div class="card__line-main"></div>
+      <div class="card__line-bottom">
+        <p class="card__airport-from">{{ flightInfo.destination }}</p>
+        <img
+          class="card__logo"
+          src="https://images.kiwi.com/airlines/64/{{ flightInfo.airline }}.png"
+          alt="{{ flightInfo.airline }}"
+        />
+        <p class="card__airport-to">{{ flightInfo.origin }}</p>
+      </div>
+    </div>
+
+    <div class="card__info-item">
+      <p class="card__info-city">{{formData.destinationFrom.name}}</p>
+      <p class="card__info-date">{{flightInfo.return_at | date}}</p>
+      <p class="card__info-time"></p>
+    </div>
+  </div> -->
+

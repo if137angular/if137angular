@@ -64,28 +64,12 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
       });
   }
 
-  onSelectedLanguageChanged(language: string) {
-    this.language = language;
-    this.dispatchSpecialOffers(
-      this.store.selectSnapshot(RequestDataState.formData)
-    );
-  }
-
-  onSelectedCurrencyChanged(currency: string) {
-    this.currency = currency;
-    this.dispatchSpecialOffers(
-      this.store.selectSnapshot(RequestDataState.formData)
-    );
-  }
-
   dispatchSpecialOffers(formData: FormDataModel): void {
     const payload = {
       cityOrigin: formData.destinationFrom
         ? formData.destinationFrom.code
         : this.cityOrigin,
-      cityDestination: formData.destinationTo
-        ? formData.destinationTo.code
-        : '',
+      cityDestination: '',
       language: this.language,
       currency: this.currency,
     };

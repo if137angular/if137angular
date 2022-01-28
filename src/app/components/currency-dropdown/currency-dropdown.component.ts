@@ -2,29 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
-import { GetCurrencies } from 'src/app/store/request-data.action';
-import { Currency } from 'src/app/models/special-offers.model';
+import { GetCurrencies, SetCurrency } from 'src/app/store/request-data.action';
 import { RequestDataState } from 'src/app/store/request-data.state';
-
+import { CurrencyDropdownModel } from 'src/app/models/Currency-dropdown.model';
 
 @Component({
   selector: 'app-currency-dropdown',
   templateUrl: './currency-dropdown.component.html',
-  styleUrls: ['./currency-dropdown.component.scss']
+  styleUrls: ['./currency-dropdown.component.scss'],
 })
 export class CurrencyDropdownComponent implements OnInit {
-  selectedOption: string = 'usd';
+  @Select(RequestDataState.currencies) currencies$: Observable<
+    CurrencyDropdownModel[]
+  >;
+  selectedOption: string = 'uah';
 
-  currencies: Currency[] = [];
-  @Select(RequestDataState.currencies) currencies$: Observable<Currency[]>;
-
-  constructor(private store: Store) { }
-
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.store.dispatch(new GetCurrencies());
-    this.currencies$.subscribe((currencies: any) => {
-      this.currencies = currencies;
-    });
+  }
+
+  setValue(data: string): void {
+    this.selectedOption = data;
+    this.store.dispatch(new SetCurrency(data));
   }
 }

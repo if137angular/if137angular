@@ -1,12 +1,10 @@
-import { Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import * as countriesData from '../../assets/countries.json';
 import * as citiesData from '../../assets/cities.json';
 import * as airportsData from '../../assets/airports.json';
 import * as airlinesData from '../../assets/airlines.json';
 import * as currenciesData from '../../assets/currencies.json';
-import * as languagesData from '../../assets/languages.json';
 
 @Injectable()
 export class RequestDataService {
@@ -26,10 +24,6 @@ export class RequestDataService {
 
   getCurrenciesData(): Observable<any> {
     return of(Array.from(currenciesData));
-  }
-
-  getLanguagesData(): Observable<any> {
-    return of(Array.from(languagesData));
   }
 
   getAirlinesData(): Observable<any> {

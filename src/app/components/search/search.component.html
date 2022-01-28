@@ -12,6 +12,13 @@
 </div>
 
 <div class="search-content">
-  <app-flight-filter></app-flight-filter>
-  <router-outlet></router-outlet>
+  <div class="filterWrapper">
+    <app-flight-filter></app-flight-filter>
+    <div class="calenderWrapper">
+      <app-calendar-of-prices></app-calendar-of-prices>
+    </div>
+  </div>
+  <div class="ticketsWrapper">
+    <router-outlet></router-outlet>
+  </div>
 </div>

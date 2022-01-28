@@ -1,25 +1,19 @@
 .dropdown {
   display: flex;
   align-items: center;
-  margin-right: 20px;
-  &__currency {
-    width: 80px;
-    margin-left: 15px;
-  }
-  &__select {
-    font-size: 18px;
-    color: rgb(255, 255, 255);
-  }
-  &__option {
-    background: rgb(103, 58, 183);
-    color: rgb(255, 255, 255);
-    &:hover {
-      background-color: rgb(63, 61, 86);
-    }
+
+  button {
+    display: flex;
+    align-items: center;
   }
 }
 
+::ng-deep .mat-menu-item {
+  display: flex !important;
+  align-items: center;
+}
+
 img {
-  display: block;
-  width: 50px;
+  width: 32px;
+  margin-right: 8px;
 }
