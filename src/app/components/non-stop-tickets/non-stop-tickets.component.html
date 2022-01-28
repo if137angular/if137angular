@@ -8,7 +8,7 @@
         <h1>{{cityOrigin}} to {{cityArrival}}</h1>
 
       <div class="content-info-block">
-        <p class="content-info"> Price: {{ item.price / 78 | currency: 'USD' : 'symbol' }}</p>
+        <p class="content-info"> Price: {{ item.price | currency }}</p>
         <p class="content-info"> Airline: <img
           class="card-logo"
           src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png"
@@ -48,8 +48,9 @@
             {{ item.return_at | date: 'mediumDate'}}
           </p>
         </div>
-
+  
       </div>
+      <p class="expires"> <span class="expires_style">Expires:</span> {{ item.expires_at | date: 'medium' }}</p>
     </div>
 
   </div>
