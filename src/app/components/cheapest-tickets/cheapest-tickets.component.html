@@ -8,7 +8,7 @@
     <div class="sortWrapper">
       <mat-form-field appearance="fill">
         <mat-label>Sort by</mat-label>
-        <mat-select (selectionChange)="sortTickets($event.value)">
+        <mat-select (selectionChange)="sortTickets($event.value)" [(value)]="selected">
           <mat-option *ngFor="let mode of sortModes" [value]="mode.sortBy">
             {{mode.value}}
           </mat-option>
@@ -25,5 +25,6 @@
     </div>
 
   </div>
+
 </div>
 

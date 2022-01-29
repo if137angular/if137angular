@@ -6,6 +6,9 @@
   padding: 0 0 100px;
   .cheapestTicketsWrapper {
     margin-top: 30px;
+    display: grid;
+    grid-template-columns: minmax(auto, 600px) minmax(auto, 600px);
+    justify-content: center;
   }
 
   .error {
@@ -13,3 +16,16 @@
     margin: 0 auto;
   }
 }
+
+@media(max-width: 1550px)  {
+  .componentWrapper {
+    .cheapestTicketsWrapper {
+      grid-template-columns: minmax(auto, 600px);
+    }
+  }
+}
+
+@media(max-width: 800px) {
+  .componentWrapper { margin-top: 50px; }
+}
+

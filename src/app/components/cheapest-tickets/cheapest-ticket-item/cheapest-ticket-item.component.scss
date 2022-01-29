@@ -1,7 +1,6 @@
 .ticketContainer {
-  max-width: 700px;
   background: url("/assets/card-background.jpg") center / cover no-repeat ;
-  margin: 0 auto 30px;
+  margin: 0 10px 30px;
   border-radius: 20px;
   padding: 20px 20px 20px 40px;
   .airlineContainer {
@@ -62,4 +61,11 @@
     }
   }
 }
+//
+//@media(max-width: 1200px)  {
+//  .ticketContainer {
+//    width: initial;
+//    max-width: 600px;
+//  }
+//}
 
