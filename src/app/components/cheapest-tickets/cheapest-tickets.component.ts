@@ -32,8 +32,6 @@ export class CheapestTicketsComponent implements OnInit {
     { sortBy: 'timeDecrease', value: 'Time Decrease' },
   ];
 
-
-
   constructor(private store: Store) {}
 
   ngOnInit(): void {
