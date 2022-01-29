@@ -32,17 +32,6 @@ export class CheapestTicketsComponent implements OnInit {
     { sortBy: 'timeDecrease', value: 'Time Decrease' },
   ];
 
-  // ticket: CheapestTicketModel = {
-  //   price: 111,
-  //   departure_at: 'December 17, 1995 03:24:00',
-  //   return_at: 'December 17, 1995 03:24:00',
-  //   expires_at: 'December 17, 1995 03:24:00',
-  //   flight_number: 111,
-  //   airline: 'airline'
-  // }
-
-
-
   constructor(private store: Store) {}
 
   ngOnInit(): void {
