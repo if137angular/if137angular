@@ -1,15 +1,17 @@
+// Common
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { NgxsModule } from '@ngxs/store';
 import { appState } from 'src/app/store/appState';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { environment } from 'src/environments/environment';
 
 // Other
-import { CommonModule } from '@angular/common';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -51,7 +53,6 @@ import { SpecialOffersComponent } from './components/special-offers/special-offe
 import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-tickets.component';
 import { TransfersComponent } from './components/transfers/transfers.component';
 import { FlightTicketsForSpecialDatesComponent } from './components/flight-tickets-for-special-dates/flight-tickets-for-special-dates.component';
-
 
 import { CityDestinationComponent } from './components/city-destination/city-destination.component';
 import { FlightTicketComponent } from 'src/app/components/flight-tickets-for-special-dates/flight-ticket/flight-ticket.component';
@@ -97,20 +98,18 @@ import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheap
     CheapestTicketItemComponent,
   ],
   imports: [
+    // Common
     CommonModule,
-    NgbModalModule,
-    FlatpickrModule.forRoot(),
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-    }),
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxsModule.forRoot(appState, { developmentMode: !environment.production }),
+    NgxsLoggerPluginModule.forRoot(),
 
+    // Angular Material
     MatSliderModule,
     MatSelectModule,
     MatAutocompleteModule,
@@ -133,11 +132,14 @@ import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheap
     MatProgressBarModule,
     MatMenuModule,
 
-    NgxsModule.forRoot(appState, {
-      developmentMode: true,
-    }),
-    NgxsLoggerPluginModule.forRoot(),
+    // Other
     FontAwesomeModule,
+    NgbModalModule,
+    FlatpickrModule.forRoot(),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [
     RequestDataService,
@@ -146,8 +148,11 @@ import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheap
       provide: LOCALE_ID,
       useValue: 'en-GB',
     },
-    { provide: 'Window', useValue: window },
+    {
+      provide: 'Window',
+      useValue: window,
+    },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
