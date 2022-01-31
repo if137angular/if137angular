@@ -49,7 +49,7 @@ export interface FlightInfoStateModel {
   currency: string;
   filter: FilterModel;
   loading: boolean;
-  cheapestTickets: CheapestTicketModel[] | null;
+  cheapestTickets: any;
   errors: string;
 }
 
@@ -59,7 +59,7 @@ export interface FlightInfoStateModel {
     calendarOfPrices: [],
     specialOffers: [],
     flightTiketsForDate: [],
-    cheapestTickets: null,
+    cheapestTickets: [],
     nonStopTickets: [],
     flightPriceTrends: [],
     popularDestinations: new Map<string, DestinationPopular[]>(),
@@ -129,10 +129,8 @@ export class FlightInfoState {
   }
 
   @Selector()
-  static cheapestTickets(
-    state: FlightInfoStateModel
-  ): CheapestTicketModel[] | null {
-    return state.cheapestTickets;
+  static cheapestTickets(state: FlightInfoStateModel): any {
+    return filterArray(state.cheapestTickets, state.filter)
   }
 
   @Selector()

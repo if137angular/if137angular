@@ -1,1 +1,36 @@
+.sortWrapper {
+  text-align: center;
+}
+
+.componentWrapper {
+  padding: 0 0 100px;
+  .cheapestTicketsWrapper {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .error {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+}
+
+:host ::ng-deep app-cheapest-ticket-item {
+  width: 620px;
+}
+
+@media(max-width: 1200px)  {
+  .componentWrapper {
+    .cheapestTicketsWrapper {
+      display: block;
+    }
+  }
+
+  :host ::ng-deep app-cheapest-ticket-item {
+    max-width: 620px;
+  }
+
+}
 
