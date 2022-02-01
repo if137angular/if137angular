@@ -5,10 +5,18 @@
   >
     <app-no-records-found></app-no-records-found>
   </div>
-  <div class="card-wrap">
-    <div class="card" *ngFor="let item of offers$ | async">
+  <div class="card-group">
+    <div
+      class="card"
+      *ngFor="let item of offers$ | async"
+      [ngClass]="{
+        highlighted: item.destination_name === destinationCity
+      }"
+    >
       <div class="card__inner">
-        <h3 class="card__title">{{ item.title }}</h3>
+        <h3 class="card__title">
+          {{ item.title }}
+        </h3>
         <div class="card__content">
           <div class="card__content-item">
             Price:

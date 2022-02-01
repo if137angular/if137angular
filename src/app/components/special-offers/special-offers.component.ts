@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { FormDataModel } from 'src/app/models/formData.model';
 import { GetSpecialOffers } from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -23,6 +23,8 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
   language: string = 'en';
   currency: string = 'usd';
   cityOrigin: string = 'IEV';
+  destinationCity: string;
+  offers: any = [];
 
   private unsubscribe$ = new Subject<null>();
   constructor(public store: Store) { }
@@ -56,13 +58,28 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.offers$.pipe(takeUntil(this.unsubscribe$)).subscribe((offers: any) => {
+      this.offers = offers;
+    })
+
+    this.setFirstCard();
     this.formData$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((formData: FormDataModel) => {
         if (!formData.isFormValid) { return };
         this.dispatchSpecialOffers(formData);
+        this.destinationCity = formData.destinationTo.name;
       });
   }
+
+  setFirstCard(): void {
+    this.offers.forEach((el: any) => {
+      if (el.destination_name === 'Warsaw') {
+        this.offers.unshift(el);
+      }
+    });
+  }
+
 
   dispatchSpecialOffers(formData: FormDataModel): void {
     const payload = {
