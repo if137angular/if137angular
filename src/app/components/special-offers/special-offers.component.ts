@@ -23,6 +23,7 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
   language: string = 'en';
   currency: string = 'usd';
   cityOrigin: string = 'IEV';
+  destinationCity: string;
 
   private unsubscribe$ = new Subject<null>();
   constructor(public store: Store) { }
@@ -61,6 +62,7 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
       .subscribe((formData: FormDataModel) => {
         if (!formData.isFormValid) { return };
         this.dispatchSpecialOffers(formData);
+        this.destinationCity = formData.destinationTo.name;
       });
   }
 
