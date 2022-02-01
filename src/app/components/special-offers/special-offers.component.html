@@ -8,7 +8,7 @@
   <div class="card-group">
     <div
       class="card"
-      *ngFor="let item of offers$ | async"
+      *ngFor="let item of offers$ | async | sort: destinationCity"
       [ngClass]="{
         highlighted: item.destination_name === destinationCity
       }"

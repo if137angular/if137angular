@@ -69,6 +69,7 @@ import { NoRecordsFoundComponent } from './components/no-records-found/no-record
 import { CurrencyDropdownComponent } from './components/currency-dropdown/currency-dropdown.component';
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
 import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/cheapest-ticket-item.component';
+import { SortPipe } from 'src/utils/sort.pipe';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheap
     CurrencyDropdownComponent,
     CheapestTicketsComponent,
     CheapestTicketItemComponent,
+    SortPipe,
   ],
   imports: [
     // Common
@@ -155,4 +157,4 @@ import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheap
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
