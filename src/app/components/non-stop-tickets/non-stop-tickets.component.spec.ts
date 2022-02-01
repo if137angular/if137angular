@@ -13,7 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DebugElement } from '@angular/core';
-import { GetSpecialOffers } from 'src/app/store/flight-info.action';
+
 
 
 describe('NonStopTicketsComponent', () => {

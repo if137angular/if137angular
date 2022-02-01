@@ -10,6 +10,7 @@ import { FlightInfoState } from "src/app/store/flight-info.state";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 
 
+
 @UntilDestroy()
 @Component({
   selector: 'app-non-stop-tickets',
@@ -42,5 +43,5 @@ export class NonStopTicketsComponent implements OnInit {
      this.cityArrivalCode = formData.destinationTo.code
      this.store.dispatch(new GetNonStopTickets(formData))
     });
-  }
+ }
 }
