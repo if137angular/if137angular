@@ -77,7 +77,7 @@ export interface FlightInfoStateModel {
 })
 @Injectable()
 export class FlightInfoState {
-  constructor(private flightInfoService: FlightsInfoService) {}
+  constructor(private flightInfoService: FlightsInfoService) { }
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
@@ -191,7 +191,9 @@ export class FlightInfoState {
       .getSpecialOffers(
         payload.cityOrigin,
         payload.cityDestination,
-        payload.language
+        payload.language,
+        payload.currency
+
       )
       .subscribe((specialOffers: { data: any }) => {
         context.patchState({

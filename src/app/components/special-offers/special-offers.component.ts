@@ -1,13 +1,15 @@
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { Select, Store } from '@ngxs/store';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormDataModel } from 'src/app/models/formData.model';
 import { GetSpecialOffers } from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-special-offers',
   templateUrl: './special-offers.component.html',
@@ -20,8 +22,11 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
   @Select(FlightInfoState.specialOffers)
   offers$: Observable<any>;
 
+  @Select(RequestDataState.currency)
+  selectedCurrency$: Observable<any>;
+
   language: string = 'en';
-  currency: string = 'usd';
+  currency: string = 'uah';
   cityOrigin: string = 'IEV';
   destinationCity: string;
 
@@ -36,6 +41,12 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
   }
 
   getCurrency(number: any) {
+    this.selectedCurrency$
+      .pipe(untilDestroyed(this))
+      .subscribe((selectedCurrency) => {
+        this.currency = selectedCurrency;
+      });
+
     let language = this.language;
     return new Intl.NumberFormat(language.substring(0, 2), {
       style: 'currency',

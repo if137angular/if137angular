@@ -21,7 +21,9 @@ import { RequestDataState } from 'src/app/store/request-data.state';
 
 @Injectable()
 export class FlightsInfoService {
-  constructor(private http: HttpClient, private store: Store) {}
+  constructor(private http: HttpClient, private store: Store) {
+
+  }
 
   exampleRequestGetChipTickets(): Observable<any> {
     const headerDict = {
@@ -58,12 +60,14 @@ export class FlightsInfoService {
     );
   }
 
+
   getSpecialOffers(
     cityOrigin: string,
     cityDestination: string,
-    locale: string
+    locale: string,
+    currencyFromStore: string
   ): Observable<any> {
-    const currencyFromStore = this.store.selectSnapshot(
+    currencyFromStore = this.store.selectSnapshot(
       RequestDataState.currency
     );
 
