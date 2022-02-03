@@ -4,4 +4,5 @@ export type FilterModel = {
   transfers: string | null;
   minPrice: number | null;
   maxPrice: number | null;
+  priceRange?: number[];
 };

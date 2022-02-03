@@ -13,14 +13,9 @@
     </ng-container>
 
     <div>
-      Min price
-      <mat-slider formControlName="minPrice" thumbLabel="true" min="1" max="150" (valueChange)="onFilterChange()">
-      </mat-slider>
-    </div>
-    <div>
-      Max price
-      <mat-slider formControlName="maxPrice" thumbLabel="true" min="1" max="150" (valueChange)="onFilterChange()">
-      </mat-slider>
+      <b>Price range</b>
+      <mtx-slider formControlName="priceRange" thumbLabel="true" [min]="minPrice" [max]="maxPrice"
+        (valueChange)="onFilterChange()"></mtx-slider>
     </div>
   </form>
 </div>

@@ -34,9 +34,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSliderModule } from '@angular/material/slider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSliderModule } from '@angular/material/slider';
+import { MtxSliderModule } from '@ng-matero/extensions/slider';
 
 // Services
 import { RequestDataService } from 'src/app/services/request-data.service';
@@ -110,7 +111,6 @@ import { SortPipe } from 'src/utils/sort.pipe';
     NgxsLoggerPluginModule.forRoot(),
 
     // Angular Material
-    MatSliderModule,
     MatSelectModule,
     MatAutocompleteModule,
     MatInputModule,
@@ -131,6 +131,8 @@ import { SortPipe } from 'src/utils/sort.pipe';
     MatToolbarModule,
     MatProgressBarModule,
     MatMenuModule,
+    MatSliderModule,
+    MtxSliderModule,
 
     // Other
     FontAwesomeModule,
