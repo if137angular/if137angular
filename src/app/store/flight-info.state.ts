@@ -1,28 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
-import * as FlightInfoActions from './flight-info.action';
-import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';
-import { FlightsInfoService } from '../services/flights-info.service';
-import { FilterModel } from '../models/filter.model';
-import filterArray from 'src/utils/filterFunc';
 import { startOfDay } from 'date-fns';
 import { from, of } from 'rxjs';
-import {
-  mergeMap,
-  toArray,
-  mapTo,
-  groupBy,
-  reduce,
-  tap,
-  scan,
-  map,
-  mergeAll,
-  flatMap,
-} from 'rxjs/operators';
+import { mergeMap, toArray, map } from 'rxjs/operators';
 import * as _ from 'lodash';
 
+import { RequestDataState } from './request-data.state';
+import * as FlightInfoActions from './flight-info.action';
+import { FlightsInfoService } from '../services/flights-info.service';
+import filterArray from 'src/utils/filterFunc';
+
 import {
-  CheapestTicketModel,
   CheapestTicketsResponseModel,
   TicketsObjModel,
 } from '../models/cheapest-tickets.model';
@@ -39,12 +27,12 @@ import {
   StartLoading,
   StopLoading,
 } from './flight-info.action';
+
 import { FlightPriceTrends } from 'src/app/models/flight-price-trends.model';
+import { FilterModel } from '../models/filter.model';
 import { FilterConfigModel } from 'src/app/models/filter-config.model';
-import { RequestDataState } from './request-data.state';
 import { CitiesModel } from '../models/cities.model';
-import { any } from '@amcharts/amcharts5/.internal/core/util/Array';
-import { values } from 'lodash';
+import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';
 
 export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesModel[];
