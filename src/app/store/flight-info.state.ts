@@ -55,13 +55,7 @@ export interface FlightInfoStateModel {
   popularDestinations: Map<CityInfo, DestinationPopular[]>;
   currency: string;
   filter: FilterModel;
-  filterConfig: {
-    maxPrice: number;
-    minPrice: number;
-    showAirline: boolean;
-    showExpires: boolean;
-    showDestination: boolean;
-  };
+  filterConfig: FilterConfigModel;
   loading: boolean;
   cheapestTickets: any;
   errors: string;
@@ -88,9 +82,9 @@ export interface FlightInfoStateModel {
     filterConfig: {
       maxPrice: 150,
       minPrice: 1,
-      showAirline: false,
-      showExpires: false,
-      showDestination: false,
+      airline: false,
+      expires: false,
+      destination: false,
     },
     loading: false,
     errors: '',
@@ -256,9 +250,12 @@ export class FlightInfoState {
               data,
               (flightPriceTrend: FlightPriceTrends) => flightPriceTrend.price
             )?.price || 1,
-          showAirline: true,
-          showExpires: true,
-          showDestination: true,
+          airline: true,
+          expires: true,
+          destination: true,
+          // For test, change to your elements
+          flightClass: true,
+          gate: true,
         };
         context.patchState({
           flightPriceTrends: data,
