@@ -6,7 +6,6 @@ import { GetCurrencies, SetCurrency } from 'src/app/store/request-data.action';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { CurrencyDropdownModel } from 'src/app/models/Currency-dropdown.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-
 @UntilDestroy()
 @Component({
   selector: 'app-currency-dropdown',
@@ -22,7 +21,7 @@ export class CurrencyDropdownComponent implements OnInit {
 
   selectedOption: string = 'uah';
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
     this.store.dispatch(new GetCurrencies());
@@ -38,4 +37,5 @@ export class CurrencyDropdownComponent implements OnInit {
     this.selectedOption = data;
     this.store.dispatch(new SetCurrency(data));
   }
+
 }
