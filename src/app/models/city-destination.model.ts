@@ -1,6 +1,9 @@
 export type DestinationPopular = {
   origin: string;
+  originName: string;
   destination: string;
+  destinationName: string;
+  countryCode: string;
   departure_at: Date;
   return_at: Date;
   expires_at: Date;
@@ -16,3 +19,7 @@ export type GetDestinationPopular = {
   data: Map<string, DestinationPopular>;
   currency: string;
 };
+export type CityInfo = {
+  cityName: string;
+  countryCode: string;
+}
