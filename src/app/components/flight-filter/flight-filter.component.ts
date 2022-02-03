@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Store } from '@ngxs/store';
+import { Store, Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
 import { SetFilter } from 'src/app/store/flight-info.action';
+import { FlightInfoState } from 'src/app/store/flight-info.state';
 
-type OptionModel = {
+type filterElementsModel = {
+  formControlName: string;
   label: string;
-  value: number | string | null;
+  options: string[];
 };
 
 @Component({
@@ -13,66 +16,34 @@ type OptionModel = {
   templateUrl: './flight-filter.component.html',
   styleUrls: ['./flight-filter.component.scss'],
 })
-export class FlightFilterComponent implements OnInit {
-  classOptions: OptionModel[] = [
-    {
-      label: 'All',
-      value: 'All',
-    },
-    {
-      label: 'Economy class',
-      value: 0,
-    },
-    {
-      label: 'Business class',
-      value: 1,
-    },
-    {
-      label: 'First class',
-      value: 2,
-    },
-  ];
+export class FlightFilterComponent {
+  @Select(FlightInfoState.filterConfig)
+  filterConfig$: Observable<any>;
 
-  gateOptions: OptionModel[] = [
+  filterElements: filterElementsModel[] = [
     {
-      label: 'All',
-      value: 'All',
+      formControlName: 'flightClass',
+      label: 'Flight Class',
+      options: ['All', 'Economy class', 'Business class', 'First class'],
     },
     {
-      label: 'Kiwi.com',
-      value: 'Kiwi.com',
+      formControlName: 'gate',
+      label: 'Gate',
+      options: ['All', 'Kiwi.com', 'Aviakassa', 'Tickets.ua'],
     },
     {
-      label: 'Aviakassa',
-      value: 'Aviakassa',
-    },
-    {
-      label: 'Tickets.ua',
-      value: 'Tickets.ua',
-    },
-  ];
-
-  transfersOptions: OptionModel[] = [
-    {
-      label: 'All',
-      value: 'All',
-    },
-    {
-      label: 'Directly',
-      value: 'Directly',
-    },
-    {
+      formControlName: 'transfers',
       label: 'Transfers',
-      value: 'Transfers',
+      options: ['All', 'Directly', 'Transfers'],
     },
   ];
 
   filterGroup: FormGroup = new FormGroup({
     flightClass: new FormControl(null),
     gate: new FormControl(null),
+    transfers: new FormControl(null),
     minPrice: new FormControl(null),
     maxPrice: new FormControl(null),
-    transfers: new FormControl(null),
   });
 
   constructor(public store: Store) {}
@@ -80,6 +51,4 @@ export class FlightFilterComponent implements OnInit {
   onFilterChange() {
     this.store.dispatch(new SetFilter(this.filterGroup.value));
   }
-
-  ngOnInit(): void {}
 }
