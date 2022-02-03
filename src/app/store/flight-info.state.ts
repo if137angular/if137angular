@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import * as FlightInfoActions from './flight-info.action';
 import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';
 import { FlightsInfoService } from '../services/flights-info.service';
@@ -30,6 +30,7 @@ import {
 import {
   DestinationPopular,
   GetDestinationPopular,
+  CityInfo,
 } from '../models/city-destination.model';
 
 import {
@@ -40,6 +41,10 @@ import {
 } from './flight-info.action';
 import { FlightPriceTrends } from 'src/app/models/flight-price-trends.model';
 import { FilterConfigModel } from 'src/app/models/filter-config.model';
+import { RequestDataState } from './request-data.state';
+import { CitiesModel } from '../models/cities.model';
+import { any } from '@amcharts/amcharts5/.internal/core/util/Array';
+import { values } from 'lodash';
 
 export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesModel[];
@@ -47,7 +52,7 @@ export interface FlightInfoStateModel {
   nonStopTickets: any; // TODO: create model
   flightTiketsForDate: any;
   flightPriceTrends: any;
-  popularDestinations: Map<string, DestinationPopular[]>;
+  popularDestinations: Map<CityInfo, DestinationPopular[]>;
   currency: string;
   filter: FilterModel;
   filterConfig: {
@@ -71,7 +76,7 @@ export interface FlightInfoStateModel {
     cheapestTickets: [],
     nonStopTickets: [],
     flightPriceTrends: [],
-    popularDestinations: new Map<string, DestinationPopular[]>(),
+    popularDestinations: new Map<CityInfo, DestinationPopular[]>(),
     currency: 'uah',
     filter: {
       flightClass: null,
@@ -93,7 +98,10 @@ export interface FlightInfoStateModel {
 })
 @Injectable()
 export class FlightInfoState {
-  constructor(private flightInfoService: FlightsInfoService) {}
+  constructor(
+    private flightInfoService: FlightsInfoService,
+    private store: Store
+  ) {}
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
@@ -380,16 +388,38 @@ export class FlightInfoState {
         )
       )
       .subscribe((popularDestinations: any) => {
-        const response: Map<string, DestinationPopular[]> = new Map<
-          string,
+        const response: Map<CityInfo, DestinationPopular[]> = new Map<
+          CityInfo,
           DestinationPopular[]
         >();
         Object.keys(popularDestinations).forEach((key: string) => {
           if (popularDestinations[key].length > 3) {
-            response.set(key, popularDestinations[key]);
+            popularDestinations[key].forEach((item: DestinationPopular) => {
+              item.originName = this.getCityNameByKey(item.origin);
+              item.destinationName = this.getCityNameByKey(item.destination);
+            });
+            const cityInfo: CityInfo = {
+              cityName: this.getCityNameByKey(key),
+              countryCode: this.getCountryCodeByCityCode(key),
+            };
+            response.set(cityInfo, popularDestinations[key]);
           }
         });
         patchState({ popularDestinations: response, loading: false });
       });
+  }
+
+  getCityNameByKey(cityKey: string) {
+    const matchedCity = this.store
+      .selectSnapshot(RequestDataState.cities)
+      .find((city: CitiesModel) => city.code === cityKey);
+    return matchedCity ? matchedCity.name : '';
+  }
+
+  getCountryCodeByCityCode(countryKey: string): string {
+    const matchedCountry = this.store
+      .selectSnapshot(RequestDataState.cities)
+      .find((city: CitiesModel) => city.code === countryKey);
+    return matchedCountry ? matchedCountry.country_code : '';
   }
 }
