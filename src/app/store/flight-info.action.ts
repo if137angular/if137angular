@@ -29,8 +29,6 @@ export class GetNonStopTickets {
   constructor(public formData: FormDataModel) {}
 }
 
-// ***** Code for Flight-Tikets-For-Special-Date *******
-
 export class GetTiketsForSpecialDate {
   static readonly type = '[FlightInfo] Get Tikets For Special Date';
   constructor(public payload: FlightTiketsForDatePayload) {}
@@ -40,8 +38,6 @@ export class GetPopularDestinations {
   static readonly type = '[FlightInfo] Get Popular Destinations';
   constructor(public payload: string[]) {}
 }
-
-// ***** End code Flight-Tikets-For-Special-Price  ******
 
 export class GetFlightPriceTrends {
   static readonly type = '[FlightInfo] Get Flight Price Trends';

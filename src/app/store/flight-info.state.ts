@@ -38,12 +38,15 @@ import {
   StartLoading,
   StopLoading,
 } from './flight-info.action';
+import { UniversalComponentModel } from '../models/Universal-component.model';
 
 export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesModel[];
   specialOffers: any; // TODO: create model;
   nonStopTickets: any; // TODO: create model
+  // flightTiketsForDate: UniversalComponentModel[];
   flightTiketsForDate: any;
+
   flightPriceTrends: any;
   popularDestinations: Map<string, DestinationPopular[]>;
   currency: string;
@@ -156,7 +159,6 @@ export class FlightInfoState {
       });
   }
 
-  // **** Action for my component ***
   @Action(FlightInfoActions.GetTiketsForSpecialDate)
   LoadTiketsForSpecialDate(
     context: StateContext<FlightInfoStateModel>,
@@ -169,7 +171,8 @@ export class FlightInfoState {
         payload.codeTo,
         payload.startDate,
         payload.endDate,
-        payload.direct
+        payload.direct,
+        payload.currency
       )
       .subscribe((flightTiketsForDate: { data: any }) => {
         context.patchState({
@@ -178,8 +181,6 @@ export class FlightInfoState {
         });
       });
   }
-
-  // **** End Action for my component ***
 
   @Action(FlightInfoActions.GetSpecialOffers)
   GetSpecialOffers(

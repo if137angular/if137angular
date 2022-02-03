@@ -41,6 +41,7 @@ import { MatMenuModule } from '@angular/material/menu';
 // Services
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
+import { FilterPriceService } from './services/filter-price.service';
 
 // Components
 import { AppComponent } from './app.component';
@@ -144,6 +145,7 @@ import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheap
   providers: [
     RequestDataService,
     FlightsInfoService,
+    FilterPriceService,
     {
       provide: LOCALE_ID,
       useValue: 'en-GB',

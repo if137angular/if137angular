@@ -183,7 +183,8 @@ export class FlightsInfoService {
     codeTo: string,
     startDate: string,
     endDate: string,
-    direct: boolean
+    direct: boolean,
+    currency: string
   ): Observable<any> {
     const headerDict = {
       'x-access-token': 'd077e8cd07cd09cedc63a920f064b1ab',
@@ -191,12 +192,12 @@ export class FlightsInfoService {
     const requestOptions = {
       headers: new HttpHeaders(headerDict),
     };
-    const currencyFromStore = this.store.selectSnapshot(
-      RequestDataState.currency
-    );
+    // const currencyFromStore = this.store.selectSnapshot(
+    //   RequestDataState.currency
+    // );
 
     return this.http.get(
-      `/aviasales/v3/prices_for_dates?origin=${codeFrom}&destination=${codeTo}&departure_at=${startDate}&return_at=${endDate}&unique=false&sorting=price&direct=${direct}&currency=${currencyFromStore}&limit=15&page=1&one_way=true&token=d077e8cd07cd09cedc63a920f064b1ab`,
+      `/aviasales/v3/prices_for_dates?origin=${codeFrom}&destination=${codeTo}&departure_at=${startDate}&return_at=${endDate}&unique=false&sorting=price&direct=${direct}&currency=${currency}&limit=15&page=1&one_way=true&token=d077e8cd07cd09cedc63a920f064b1ab`,
       requestOptions
     );
   }

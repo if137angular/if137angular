@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Store } from '@ngxs/store';
 import { SetFilter } from 'src/app/store/flight-info.action';
+import { RequestDataState } from 'src/app/store/request-data.state';
 
 type OptionModel = {
   label: string;
   value: number | string | null;
 };
 
+@UntilDestroy()
 @Component({
   selector: 'app-flight-filter',
   templateUrl: './flight-filter.component.html',
@@ -81,5 +84,10 @@ export class FlightFilterComponent implements OnInit {
     this.store.dispatch(new SetFilter(this.filterGroup.value));
   }
 
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    this.store.select(RequestDataState.currency)
+    .pipe(untilDestroyed(this))
+    .subscribe((currency: string) => console.log("*****Curency", currency));
+  }
 }
