@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import * as FlightInfoActions from './flight-info.action';
 import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';
@@ -38,6 +38,8 @@ import {
   StartLoading,
   StopLoading,
 } from './flight-info.action';
+import { FlightPriceTrends } from "src/app/models/flight-price-trends.model";
+import { FilterConfigModel } from "src/app/models/filter-config.model";
 
 export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesModel[];
@@ -48,6 +50,13 @@ export interface FlightInfoStateModel {
   popularDestinations: Map<string, DestinationPopular[]>;
   currency: string;
   filter: FilterModel;
+  filterConfig: {
+    maxPrice: number,
+    minPrice: number,
+    showAirline: boolean,
+    showExpires: boolean,
+    showDestination: boolean
+  },
   loading: boolean;
   cheapestTickets: any;
   errors: string;
@@ -71,6 +80,13 @@ export interface FlightInfoStateModel {
       minPrice: null,
       maxPrice: null,
     },
+    filterConfig: {
+      maxPrice: 150,
+      minPrice: 1,
+      showAirline: false,
+      showExpires: false,
+      showDestination: false
+    },
     loading: false,
     errors: '',
   },
@@ -83,7 +99,7 @@ export class FlightInfoState {
   static calendarOfPrices(state: FlightInfoStateModel): any {
     return state.calendarOfPrices.map(
       ({ depart_date, return_date, value, found_at, gate }) => ({
-        start: startOfDay(new Date(found_at)),
+        start: startOfDay(new Date(depart_date)),
         title: `Price: ${value} Gate: ${gate} ${depart_date}-${return_date} `,
       })
     );
@@ -122,6 +138,10 @@ export class FlightInfoState {
   static filter(state: FlightInfoStateModel): FilterModel {
     return state.filter;
   }
+  @Selector()
+  static filterConfig(state: FlightInfoStateModel): FilterConfigModel {
+    return state.filterConfig;
+  }
 
   @Selector()
   static loading(state: FlightInfoStateModel): boolean {
@@ -130,7 +150,7 @@ export class FlightInfoState {
 
   @Selector()
   static cheapestTickets(state: FlightInfoStateModel): any {
-    return filterArray(state.cheapestTickets, state.filter)
+    return filterArray(state.cheapestTickets, state.filter);
   }
 
   @Selector()
@@ -214,8 +234,15 @@ export class FlightInfoState {
         payload.returnDate
       )
       .subscribe((response) => {
-        const data = Object.values(response.data);
-        context.patchState({ flightPriceTrends: data, loading: false });
+        const data: any = Object.values(response.data);
+        const filterConfig: FilterConfigModel = {
+          maxPrice: _.maxBy(data, (flightPriceTrend: FlightPriceTrends) => flightPriceTrend.price)?.price || 150,
+          minPrice: _.minBy(data, (flightPriceTrend: FlightPriceTrends) => flightPriceTrend.price)?.price || 1,
+          showAirline: true,
+          showExpires: true,
+          showDestination: true
+        }
+        context.patchState({ flightPriceTrends: data, loading: false, filterConfig });
       });
   }
 
