@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Angular Material
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -47,7 +47,6 @@ import { AppComponent } from './app.component';
 import { FlightDataFormComponent } from './components/flight-data-form/flight-data-form.component';
 import { NavComponent } from './components/nav/nav.component';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
-import { CalendarOfPricesItemComponent } from './components/calendar-of-prices/calendar-of-prices-item/calendar-of-prices-item.component';
 import { CalendarOfPricesComponent } from './components/calendar-of-prices/calendar-of-prices.component';
 import { SpecialOffersComponent } from './components/special-offers/special-offers.component';
 import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-tickets.component';
@@ -77,7 +76,6 @@ import { SortPipe } from 'src/utils/sort.pipe';
     FlightDataFormComponent,
     AutocompleteComponent,
     CalendarOfPricesComponent,
-    CalendarOfPricesItemComponent,
     NavComponent,
     SpecialOffersComponent,
     NonStopTicketsComponent,
@@ -142,6 +140,7 @@ import { SortPipe } from 'src/utils/sort.pipe';
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    NgbModule,
   ],
   providers: [
     RequestDataService,
@@ -157,4 +156,4 @@ import { SortPipe } from 'src/utils/sort.pipe';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
