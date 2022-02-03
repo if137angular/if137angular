@@ -65,17 +65,16 @@ export class FlightsInfoService {
   getCheapestTickets(
     formData: FormDataModel
   ): Observable<CheapestTicketsResponseModel> {
-    const currency = this.store.selectSnapshot(RequestDataState.currency);
+    const currencyFromStore = this.store.selectSnapshot(
+      RequestDataState.currency
+    );
 
     let paramsURL = new HttpParams()
       .append('origin', formData.destinationFrom.code)
       .append('destination', formData.destinationTo.code)
       .append('depart_date', moment(formData.startDate).format('YYYY-MM-DD'))
       .append('return_date', moment(formData.startDate).format('YYYY-MM-DD'))
-      .append(
-        'currency',
-        ['EUR', 'USD', 'RUB'].includes(currency) ? currency : 'USD'
-      );
+      .append('currency', currencyFromStore);
 
     return this.http.get<CheapestTicketsResponseModel>('/v1/prices/cheap', {
       params: paramsURL,

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { SetFilter } from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 type filterElementsModel = {
   formControlName: string;
@@ -11,14 +12,17 @@ type filterElementsModel = {
   options: string[];
 };
 
+@UntilDestroy()
 @Component({
   selector: 'app-flight-filter',
   templateUrl: './flight-filter.component.html',
   styleUrls: ['./flight-filter.component.scss'],
 })
-export class FlightFilterComponent {
-  @Select(FlightInfoState.filterConfig)
-  filterConfig$: Observable<any>;
+export class FlightFilterComponent implements OnInit {
+  @Select(FlightInfoState.filterConfig) filterConfig$: Observable<any>;
+
+  minPrice: number = 0;
+  maxPrice: number = 0;
 
   filterElements: filterElementsModel[] = [
     {
@@ -42,13 +46,29 @@ export class FlightFilterComponent {
     flightClass: new FormControl(null),
     gate: new FormControl(null),
     transfers: new FormControl(null),
-    minPrice: new FormControl(null),
-    maxPrice: new FormControl(null),
+    priceRange: new FormControl(null),
   });
 
   constructor(public store: Store) {}
 
+  ngOnInit(): void {
+    this.filterConfig$.pipe(untilDestroyed(this)).subscribe((filterConfig) => {
+      this.minPrice = filterConfig.minPrice;
+      this.maxPrice = filterConfig.maxPrice;
+
+      this.filterGroup.patchValue({
+        priceRange: [this.minPrice, this.maxPrice],
+      });
+    });
+  }
+
   onFilterChange() {
-    this.store.dispatch(new SetFilter(this.filterGroup.value));
+    const [minPrice, maxPrice] = this.filterGroup.value.priceRange;
+
+    this.store.dispatch(
+      new SetFilter(
+        Object.assign(this.filterGroup.value, { minPrice, maxPrice })
+      )
+    );
   }
 }
