@@ -38,8 +38,8 @@ import {
   StartLoading,
   StopLoading,
 } from './flight-info.action';
-import { FlightPriceTrends } from "src/app/models/flight-price-trends.model";
-import { FilterConfigModel } from "src/app/models/filter-config.model";
+import { FlightPriceTrends } from 'src/app/models/flight-price-trends.model';
+import { FilterConfigModel } from 'src/app/models/filter-config.model';
 
 export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesModel[];
@@ -51,12 +51,12 @@ export interface FlightInfoStateModel {
   currency: string;
   filter: FilterModel;
   filterConfig: {
-    maxPrice: number,
-    minPrice: number,
-    showAirline: boolean,
-    showExpires: boolean,
-    showDestination: boolean
-  },
+    maxPrice: number;
+    minPrice: number;
+    showAirline: boolean;
+    showExpires: boolean;
+    showDestination: boolean;
+  };
   loading: boolean;
   cheapestTickets: any;
   errors: string;
@@ -85,7 +85,7 @@ export interface FlightInfoStateModel {
       minPrice: 1,
       showAirline: false,
       showExpires: false,
-      showDestination: false
+      showDestination: false,
     },
     loading: false,
     errors: '',
@@ -93,7 +93,7 @@ export interface FlightInfoStateModel {
 })
 @Injectable()
 export class FlightInfoState {
-  constructor(private flightInfoService: FlightsInfoService) { }
+  constructor(private flightInfoService: FlightsInfoService) {}
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
@@ -213,7 +213,6 @@ export class FlightInfoState {
         payload.cityDestination,
         payload.language,
         payload.currency
-
       )
       .subscribe((specialOffers: { data: any }) => {
         context.patchState({
@@ -239,13 +238,25 @@ export class FlightInfoState {
       .subscribe((response) => {
         const data: any = Object.values(response.data);
         const filterConfig: FilterConfigModel = {
-          maxPrice: _.maxBy(data, (flightPriceTrend: FlightPriceTrends) => flightPriceTrend.price)?.price || 150,
-          minPrice: _.minBy(data, (flightPriceTrend: FlightPriceTrends) => flightPriceTrend.price)?.price || 1,
+          maxPrice:
+            _.maxBy(
+              data,
+              (flightPriceTrend: FlightPriceTrends) => flightPriceTrend.price
+            )?.price || 150,
+          minPrice:
+            _.minBy(
+              data,
+              (flightPriceTrend: FlightPriceTrends) => flightPriceTrend.price
+            )?.price || 1,
           showAirline: true,
           showExpires: true,
-          showDestination: true
-        }
-        context.patchState({ flightPriceTrends: data, loading: false, filterConfig });
+          showDestination: true,
+        };
+        context.patchState({
+          flightPriceTrends: data,
+          loading: false,
+          filterConfig,
+        });
       });
   }
 

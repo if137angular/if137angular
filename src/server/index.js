@@ -15,6 +15,9 @@ app.use(
     target: "https://api.travelpayouts.com",
     changeOrigin: true,
     followRedirects: true,
+    pathRewrite: {
+      "/*$": "&token=b482025a8bf39817b6b6f219686b4799",
+    },
   })
 );
 
