@@ -22,6 +22,7 @@ export class NonStopTicketsComponent implements OnInit {
   cityArrival: string;
   cityOriginCode: string;
   cityArrivalCode: string;
+  currency: string = 'UAH';
   faPlane = faPlane;
   faDeparture = faPlaneDeparture;
   faArrival = faPlaneArrival;

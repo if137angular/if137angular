@@ -30,7 +30,7 @@ export interface RequestDataStateModel {
     airports: [],
     airlines: [],
     currencies: [],
-    currency: 'USD',
+    currency: 'UAH',
     languages: [],
     formData: {
       destinationFrom: {
