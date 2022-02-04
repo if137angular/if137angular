@@ -33,6 +33,7 @@ import { FilterModel } from '../models/filter.model';
 import { FilterConfigModel } from 'src/app/models/filter-config.model';
 import { CitiesModel } from '../models/cities.model';
 import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';
+import { FlightInfo } from '../models/flight-tickets-for-date.model';
 
 export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesModel[];
@@ -182,12 +183,31 @@ export class FlightInfoState {
         payload.endDate,
         payload.direct,
       )
-      .subscribe((flightTiketsForDate: { data: any }) => {
+      .subscribe((response) => {
+        const data: any = Object.values(response.data);
+        const filterConfig: FilterConfigModel = {
+          maxPrice: 
+            _.maxBy(
+              data,
+              (flightTiketsForDate: FlightInfo) => flightTiketsForDate.price
+            )?.price || 150,
+          minPrice: 
+            _.minBy(
+              data,
+              (flightTiketsForDate: FlightInfo) => flightTiketsForDate.price
+            )?.price || 1,
+          expires: false,
+          destination: true,
+          airline: true,
+          flightClass: false,
+          gate: false,
+        }
         context.patchState({
-          flightTiketsForDate: flightTiketsForDate.data,
+          flightTiketsForDate: data,
           loading: false,
-        });
-      });
+          filterConfig,
+        })
+      })
   }
 
   @Action(FlightInfoActions.GetSpecialOffers)

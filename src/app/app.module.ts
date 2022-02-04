@@ -42,7 +42,6 @@ import { MtxSliderModule } from '@ng-matero/extensions/slider';
 // Services
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
-import { FilterPriceService } from './services/filter-price.service';
 
 // Components
 import { AppComponent } from './app.component';
@@ -148,7 +147,6 @@ import { SortPipe } from 'src/utils/sort.pipe';
   providers: [
     RequestDataService,
     FlightsInfoService,
-    FilterPriceService,
     {
       provide: LOCALE_ID,
       useValue: 'en-GB',
