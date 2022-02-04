@@ -12,6 +12,7 @@ import { FlightsInfoService } from '../services/flights-info.service';
 import filterArray from 'src/utils/filterFunc';
 
 import {
+  CheapestTicketModel,
   CheapestTicketsResponseModel,
   TicketsObjModel,
 } from '../models/cheapest-tickets.model';
@@ -195,12 +196,12 @@ export class FlightInfoState {
       .subscribe((response) => {
         const data: any = Object.values(response.data);
         const filterConfig: FilterConfigModel = {
-          maxPrice: 
+          maxPrice:
             _.maxBy(
               data,
               (flightTiketsForDate: FlightInfo) => flightTiketsForDate.price
             )?.price || 150,
-          minPrice: 
+          minPrice:
             _.minBy(
               data,
               (flightTiketsForDate: FlightInfo) => flightTiketsForDate.price
@@ -343,11 +344,7 @@ export class FlightInfoState {
         .getCheapestTickets(payload)
         .subscribe((response: CheapestTicketsResponseModel) => {
           if (Object.keys(response.data).length == 0)
-            dispatch(
-              new CheapestTicketsRequestFail(
-                'There are no tickets in the selected direction'
-              )
-            );
+            dispatch(new CheapestTicketsRequestFail('There are no tickets in the selected direction'));
           else dispatch(new CheapestTicketsRequestSuccess(response));
         });
   }
@@ -357,14 +354,33 @@ export class FlightInfoState {
     { patchState, dispatch }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.CheapestTicketsRequestSuccess
   ) {
-    dispatch(new StopLoading());
-
     const ticketsObj: TicketsObjModel = Object.values(payload.data)[0];
+    const ticketsArray: CheapestTicketModel[] = Object.values(ticketsObj)
+    const filterConfig: FilterConfigModel = {
+      maxPrice:
+        _.maxBy(
+          ticketsArray,
+          (cheapestTickets: CheapestTicketModel) => cheapestTickets.price
+        )?.price || 150,
+      minPrice:
+        _.minBy(
+          ticketsArray,
+          (cheapestTickets: CheapestTicketModel) => cheapestTickets.price
+        )?.price || 1,
+      expires: true,
+      destination: true,
+      airline: true,
+      flightClass: false,
+      gate: false,
+    }
+
     patchState({
-      cheapestTickets: Object.values(ticketsObj),
+      cheapestTickets: ticketsArray,
       errors: '',
-      currency: payload.currency,
+      filterConfig,
     });
+
+    dispatch(new StopLoading());
   }
 
   @Action(FlightInfoActions.CheapestTicketsRequestFail)
