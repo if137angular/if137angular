@@ -4,7 +4,6 @@ import { startOfDay } from 'date-fns';
 import { from, of } from 'rxjs';
 import { mergeMap, toArray, map } from 'rxjs/operators';
 import * as _ from 'lodash';
-import { SetCurrency } from './request-data.action';
 
 import { RequestDataState } from './request-data.state';
 import * as FlightInfoActions from './flight-info.action';
@@ -46,7 +45,6 @@ export interface FlightInfoStateModel {
 
   flightPriceTrends: any;
   popularDestinations: Map<CityInfo, DestinationPopular[]>;
-  currency: string;
   filter: FilterModel;
   filterConfig: FilterConfigModel;
   loading: boolean;
@@ -64,7 +62,6 @@ export interface FlightInfoStateModel {
     nonStopTickets: [],
     flightPriceTrends: [],
     popularDestinations: new Map<CityInfo, DestinationPopular[]>(),
-    currency: 'uah',
     filter: {
       flightClass: null,
       gate: null,
@@ -88,16 +85,11 @@ export class FlightInfoState {
   constructor(
     private flightInfoService: FlightsInfoService,
     private store: Store
-  ) { }
+  ) {}
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
-    return state.calendarOfPrices.map(
-      ({ depart_date, return_date, value, found_at, gate }) => ({
-        start: startOfDay(new Date(depart_date)),
-        title: `Price: ${value}${state.currency.toUpperCase()} Gate: ${gate} ${depart_date}-${return_date} `,
-      })
-    );
+    return state.calendarOfPrices;
   }
 
   @Selector()
@@ -126,11 +118,6 @@ export class FlightInfoState {
   }
 
   @Selector()
-  static currency(state: FlightInfoStateModel): string {
-    return state.currency;
-  }
-
-  @Selector()
   static filter(state: FlightInfoStateModel): FilterModel {
     return state.filter;
   }
@@ -154,14 +141,6 @@ export class FlightInfoState {
     return state.errors;
   }
 
-  @Action(SetCurrency)
-  SetCurrency(
-    { patchState }: StateContext<FlightInfoStateModel>,
-    { currency }: SetCurrency
-  ) {
-    patchState({ currency });
-  }
-
   @Action(FlightInfoActions.CalendarOfPricesLoaded)
   LoadCalendarOfPrices(
     context: StateContext<FlightInfoStateModel>,
@@ -170,10 +149,9 @@ export class FlightInfoState {
     context.patchState({ loading: true });
     this.flightInfoService
       .RequestGetCalendarOfPrices(payload)
-      .subscribe(({ data, currency }) => {
+      .subscribe(({ data }) => {
         context.patchState({
           calendarOfPrices: data,
-          currency,
           loading: false,
         });
       });
@@ -191,7 +169,7 @@ export class FlightInfoState {
         payload.codeTo,
         payload.startDate,
         payload.endDate,
-        payload.direct,
+        payload.direct
       )
       .subscribe((response) => {
         const data: any = Object.values(response.data);
@@ -211,13 +189,13 @@ export class FlightInfoState {
           airline: true,
           flightClass: false,
           gate: false,
-        }
+        };
         context.patchState({
           flightTiketsForDate: data,
           loading: false,
           filterConfig,
-        })
-      })
+        });
+      });
   }
 
   @Action(FlightInfoActions.GetSpecialOffers)
@@ -234,19 +212,14 @@ export class FlightInfoState {
         payload.currency
       )
       .subscribe((response) => {
-
         const data: any = Object.values(response.data);
         const filterConfig: FilterConfigModel = {
           maxPrice:
-            _.maxBy(
-              data,
-              (specialOffers: any) => specialOffers.price
-            )?.price || 150,
+            _.maxBy(data, (specialOffers: any) => specialOffers.price)?.price ||
+            150,
           minPrice:
-            _.minBy(
-              data,
-              (specialOffers: any) => specialOffers.price
-            )?.price || 1,
+            _.minBy(data, (specialOffers: any) => specialOffers.price)?.price ||
+            1,
           airline: true,
           expires: true,
           destination: true,
@@ -260,7 +233,6 @@ export class FlightInfoState {
           filterConfig,
         });
       });
-
   }
 
   @Action(FlightInfoActions.GetFlightPriceTrends)
@@ -344,7 +316,11 @@ export class FlightInfoState {
         .getCheapestTickets(payload)
         .subscribe((response: CheapestTicketsResponseModel) => {
           if (Object.keys(response.data).length == 0)
-            dispatch(new CheapestTicketsRequestFail('There are no tickets in the selected direction'));
+            dispatch(
+              new CheapestTicketsRequestFail(
+                'There are no tickets in the selected direction'
+              )
+            );
           else dispatch(new CheapestTicketsRequestSuccess(response));
         });
   }
@@ -355,7 +331,7 @@ export class FlightInfoState {
     { payload }: FlightInfoActions.CheapestTicketsRequestSuccess
   ) {
     const ticketsObj: TicketsObjModel = Object.values(payload.data)[0];
-    const ticketsArray: CheapestTicketModel[] = Object.values(ticketsObj)
+    const ticketsArray: CheapestTicketModel[] = Object.values(ticketsObj);
     const filterConfig: FilterConfigModel = {
       maxPrice:
         _.maxBy(
@@ -372,7 +348,7 @@ export class FlightInfoState {
       airline: true,
       flightClass: false,
       gate: false,
-    }
+    };
 
     patchState({
       cheapestTickets: ticketsArray,
