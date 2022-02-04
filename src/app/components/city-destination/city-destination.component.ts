@@ -10,6 +10,7 @@ import {
   DestinationPopular,
   CityInfo,
 } from '../../models/city-destination.model';
+import {RequestDataState} from "../../store/request-data.state";
 
 @UntilDestroy()
 @Component({
@@ -33,12 +34,27 @@ export class CityDestinationComponent implements OnInit {
   selectedDestinstion: string = '';
   selectedOrigin: string = '';
   selectedCities: string;
+  language: string = 'en';
+  currency: string = 'uah';
 
   ngOnInit(): void {
     this.store.dispatch(
       new GetPopularDestinations(this.popularDestinationCities)
     );
+    this.currency = this.store.selectSnapshot(RequestDataState.currency);
   }
+
+
+  getCurrency(number: any) {
+    let language = this.language;
+    return new Intl.NumberFormat(language.substring(0, 2), {
+      style: 'currency',
+      currency: this.currency,
+      minimumFractionDigits: 0,
+    }).format(number);
+  }
+
+
   selectDestination(selectedDestination: DestinationPopular) {
     this.selectedCities = selectedDestination.originName;
     this.selectedDestinstion = selectedDestination.destination;
