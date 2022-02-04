@@ -14,6 +14,7 @@ export class FlightTicketComponent implements OnInit {
   formData: any;
 
   @Input() flightInfo: FlightInfo;
+  @Input() currency: string;
 
   constructor(private store: Store) {
   }

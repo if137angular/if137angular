@@ -8,24 +8,32 @@
 
 .search-content {
   display: flex;
+  gap: 50px;
+  padding: 50px;
 }
 
 .filterWrapper {
   width: 300px;
+  height: max-content;
+  box-shadow: 0px 0px 5px 4px rgba(73, 73, 73, 0.164);
+  border-radius: 15px;
 }
 
 .ticketsWrapper {
   width: calc(100% - 300px);
 }
+.calendarWrapper {
+  display: flex;
+  justify-content: center;
+}
 
-@media(max-width: 800px) {
+@media (max-width: 800px) {
   .search-content {
     display: block;
   }
 
-  .filterWrapper,.ticketsWrapper {
+  .filterWrapper,
+  .ticketsWrapper {
     width: 100%;
   }
 }
-
-

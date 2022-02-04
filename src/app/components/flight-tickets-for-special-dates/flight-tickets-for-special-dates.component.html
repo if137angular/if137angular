@@ -1,11 +1,11 @@
 <!--<app-loading-bar></app-loading-bar>-->
 
 <div class="container" *ngIf="flightInfo.length > 0; else noRecordsFound">
-  <h2 class="title">Flight Tickets For Special Date</h2>
   <div class="wrap">
     <app-flight-ticket
       *ngFor="let info of flightInfo"
       [flightInfo]="info"
+      [currency]="currency"
       ></app-flight-ticket>
   </div>
 

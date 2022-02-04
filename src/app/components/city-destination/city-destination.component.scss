@@ -5,11 +5,10 @@
 }
 
 .city-destination {
-  width: 60%;
+  max-width: 1050px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  text-align: center;
 
   &-label {
     color: #673ab7;

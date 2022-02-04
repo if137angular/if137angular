@@ -1,9 +1,9 @@
 import { CalendarOfPricesPayload } from '../models/calendar-of-prices.model';
 import { FilterModel } from '../models/filter.model';
 import { FlightTiketsForDatePayload } from '../models/flight-tickets-for-date.model';
-import {FormDataModel} from "../models/formData.model";
-import {CheapestTicketModel, CheapestTicketsResponseModel} from "../models/cheapest-tickets.model";
-
+import { FormDataModel } from '../models/formData.model';
+import { CheapestTicketsResponseModel } from '../models/cheapest-tickets.model';
+import { FlightPriceTrendsRequest } from '../models/flight-price-trends.model';
 
 //-- Calendar State Actions --
 
@@ -26,12 +26,8 @@ export class GetSpecialOffers {
 
 export class GetNonStopTickets {
   static readonly type = '[FlightInfo] Get Non Stop Tickets';
-  constructor(public formData: FormDataModel) {
-  }
+  constructor(public formData: FormDataModel) {}
 }
-
-// ***** Code for Flight-Tikets-For-Special-Date *******
-
 
 export class GetTiketsForSpecialDate {
   static readonly type = '[FlightInfo] Get Tikets For Special Date';
@@ -40,12 +36,13 @@ export class GetTiketsForSpecialDate {
 
 export class GetPopularDestinations {
   static readonly type = '[FlightInfo] Get Popular Destinations';
-  constructor(
-    public payload: string[]
-  ) {}
+  constructor(public payload: string[]) {}
 }
 
-// ***** End code Flight-Tikets-For-Special-Price  ******
+export class GetFlightPriceTrends {
+  static readonly type = '[FlightInfo] Get Flight Price Trends';
+  constructor(public payload: FlightPriceTrendsRequest) {}
+}
 
 export class SetFilter {
   static readonly type = '[Filter] Set Filter Data';
@@ -61,16 +58,16 @@ export class StopLoading {
 }
 
 export class CheapestTicketsRequest {
-  static readonly type = '[FlightInfo] Cheapest Tickets Request'
-  constructor(public payload: FormDataModel) {  }
+  static readonly type = '[FlightInfo] Cheapest Tickets Request';
+  constructor(public payload: FormDataModel) {}
 }
 
 export class CheapestTicketsRequestSuccess {
-  static readonly type = '[FlightInfo] Cheapest Tickets Request Success'
-  constructor(public payload: CheapestTicketsResponseModel) {  }
+  static readonly type = '[FlightInfo] Cheapest Tickets Request Success';
+  constructor(public payload: CheapestTicketsResponseModel) {}
 }
 
 export class CheapestTicketsRequestFail {
-  static readonly type = '[FlightInfo] Cheapest Tickets Request Fail'
-  constructor(public payload: string) {  }
+  static readonly type = '[FlightInfo] Cheapest Tickets Request Fail';
+  constructor(public payload: string) {}
 }

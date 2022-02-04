@@ -1,11 +1,11 @@
-.container {
-  // background-color: #ccc;
-  background-color: rgb(206, 206, 206, 0);
-  padding-bottom: 30px;
+.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 50px 50px;
 }
-.container1 {
-  margin-top: 50px;
-}
+
 .title {
   font-size: 1.8rem;
   font-weight: 500;

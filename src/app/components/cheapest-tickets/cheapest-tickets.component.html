@@ -1,23 +1,29 @@
 
-<div class="cheapestTicketsWrapper">
+<div class="componentWrapper">
+  <div *ngIf="errors$ | async" class="error">
+    <app-no-records-found></app-no-records-found>
+  </div>
 
-  <div *ngIf="errors$ | async" class="error"><p>{{errors$ | async}}</p></div>
   <div *ngIf="(errors$ | async) === '' && cheapestTicketsArr">
+    <div class="sortWrapper">
+      <mat-form-field appearance="fill">
+        <mat-label>Sort by</mat-label>
+        <mat-select (selectionChange)="sortTickets($event.value)" [(value)]="selected">
+          <mat-option *ngFor="let mode of sortModes" [value]="mode.sortBy">
+            {{mode.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Sort by</mat-label>
-      <mat-select (selectionChange)="sortTickets($event.value)">
-        <mat-option *ngFor="let mode of sortModes" [value]="mode.sortBy">
-          {{mode.value}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div class="cheapestTicketsWrapper">
+      <app-cheapest-ticket-item
+        *ngFor="let ticket of cheapestTicketsArr"
+        [ticket]="ticket"
+        [formData]="formData">
+      </app-cheapest-ticket-item>
+    </div>
 
-    <app-cheapest-ticket-item
-      *ngFor="let ticket of cheapestTicketsArr"
-      [ticket]="ticket"
-      [formData]="formData">
-    </app-cheapest-ticket-item>
   </div>
 </div>
 

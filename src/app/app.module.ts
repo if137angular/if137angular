@@ -1,19 +1,21 @@
+// Common
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { NgxsModule } from '@ngxs/store';
 import { appState } from 'src/app/store/appState';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { environment } from 'src/environments/environment';
 
 // Other
-import { CommonModule } from '@angular/common';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Angular Material
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -32,9 +34,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSliderModule } from '@angular/material/slider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSliderModule } from '@angular/material/slider';
+import { MtxSliderModule } from '@ng-matero/extensions/slider';
 
 // Services
 import { RequestDataService } from 'src/app/services/request-data.service';
@@ -45,17 +48,12 @@ import { AppComponent } from './app.component';
 import { FlightDataFormComponent } from './components/flight-data-form/flight-data-form.component';
 import { NavComponent } from './components/nav/nav.component';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
-import { CalendarOfPricesItemComponent } from './components/calendar-of-prices/calendar-of-prices-item/calendar-of-prices-item.component';
 import { CalendarOfPricesComponent } from './components/calendar-of-prices/calendar-of-prices.component';
 import { SpecialOffersComponent } from './components/special-offers/special-offers.component';
 import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-tickets.component';
 import { TransfersComponent } from './components/transfers/transfers.component';
 import { FlightTicketsForSpecialDatesComponent } from './components/flight-tickets-for-special-dates/flight-tickets-for-special-dates.component';
 
-
-import { CheapestTicketsComponentOld } from './components/cheapest-tickets-old-v/cheapest-tickets.component';
-import { TicketItemComponent } from './components/cheapest-tickets-old-v/cheapest-ticket-item/ticket-item.component';
-import { FlightItemComponent } from './components/cheapest-tickets-old-v/cheapest-ticket-item/flight-item/flight-item.component';
 import { CityDestinationComponent } from './components/city-destination/city-destination.component';
 import { FlightTicketComponent } from 'src/app/components/flight-tickets-for-special-dates/flight-ticket/flight-ticket.component';
 
@@ -72,6 +70,7 @@ import { CurrencyDropdownComponent } from './components/currency-dropdown/curren
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
 import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/cheapest-ticket-item.component';
 import { UserLocationComponent } from './components/user-location/user-location.component';
+import { SortPipe } from 'src/utils/sort.pipe';
 
 @NgModule({
   declarations: [
@@ -79,15 +78,11 @@ import { UserLocationComponent } from './components/user-location/user-location.
     FlightDataFormComponent,
     AutocompleteComponent,
     CalendarOfPricesComponent,
-    CalendarOfPricesItemComponent,
     NavComponent,
     SpecialOffersComponent,
     NonStopTicketsComponent,
     TransfersComponent,
     FlightTicketsForSpecialDatesComponent,
-    CheapestTicketsComponentOld,
-    TicketItemComponent,
-    FlightItemComponent,
     AppComponent,
     CityDestinationComponent,
     FlightTicketComponent,
@@ -103,23 +98,21 @@ import { UserLocationComponent } from './components/user-location/user-location.
     CheapestTicketsComponent,
     CheapestTicketItemComponent,
     UserLocationComponent,
+    SortPipe,
   ],
   imports: [
+    // Common
     CommonModule,
-    NgbModalModule,
-    FlatpickrModule.forRoot(),
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-    }),
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxsModule.forRoot(appState, { developmentMode: !environment.production }),
+    NgxsLoggerPluginModule.forRoot(),
 
-    MatSliderModule,
+    // Angular Material
     MatSelectModule,
     MatAutocompleteModule,
     MatInputModule,
@@ -140,12 +133,18 @@ import { UserLocationComponent } from './components/user-location/user-location.
     MatToolbarModule,
     MatProgressBarModule,
     MatMenuModule,
+    MatSliderModule,
+    MtxSliderModule,
 
-    NgxsModule.forRoot(appState, {
-      developmentMode: true,
-    }),
-    NgxsLoggerPluginModule.forRoot(),
+    // Other
     FontAwesomeModule,
+    NgbModalModule,
+    FlatpickrModule.forRoot(),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
+    NgbModule,
   ],
   providers: [
     RequestDataService,
@@ -154,8 +153,11 @@ import { UserLocationComponent } from './components/user-location/user-location.
       provide: LOCALE_ID,
       useValue: 'en-GB',
     },
-    { provide: 'Window', useValue: window },
+    {
+      provide: 'Window',
+      useValue: window,
+    },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

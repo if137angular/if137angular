@@ -1,36 +1,3 @@
-// .calendar {
-//   position: relative;
-// }
-// .calendar-content {
-//   display: flex;
-//   flex-direction: row;
-// }
-// .calendar,
-// .calendar-loading {
-//   display: flex;
-//   flex-direction: row;
-//   flex-wrap: wrap;
-//   justify-content: center;
-//   gap: 15px;
-//   padding: 15px 10px;
-// }
-
-// .error {
-//   margin-top: 45px;
-//   text-align: center;
-//   flex: 1 0 auto;
-
-//   p {
-//     color: #fb3640;
-//     font-size: 25px;
-//     line-height: 35px;
-//   }
-// }
-
-// :host(.calendar-component) {
-//   width: 100%;
-// }
-
 @charset "UTF-8";
 .cal-month-view .cal-header {
   text-align: center;
@@ -709,7 +676,3 @@
 .current-date {
   text-align: center;
 }
-
-// .mat-button {
-//   font-size: 10px;
-// }

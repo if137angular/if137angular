@@ -3,15 +3,15 @@
     <div *ngFor="let cities of (popularDestinations$ | async) | keyvalue">
       <mat-form-field appearance="fill">
         <mat-label class="city-destination-label">
-          <img src="https://flagcdn.com/w40/{{getCountryCodeByCityCode(cities.key) | lowercase}}.png">
-          {{getCityNameByKey(cities.key)}}
+          <img src="https://flagcdn.com/w40/{{cities.key.countryCode | lowercase}}.png">
+          {{cities.key.cityName}}
         </mat-label>
 
         <mat-select [ngModel]="selectedCities" (ngModelChange)="selectDestination($event)" name="sel3">
           <mat-option class="option" [value]="items" *ngFor="let items of cities.value">
-            <span class="origin">{{getCityNameByKey(items.origin)}}</span>
+            <span class="origin">{{items.originName}}</span>
             <mat-icon>trending_flat</mat-icon>
-            <span class="destination">{{getCityNameByKey(items.destination)}}</span>
+            <span class="destination">{{items.destinationName}}</span>
             <span class="price">starting at <b>{{items.price}}$</b></span>
           </mat-option>
         </mat-select>
