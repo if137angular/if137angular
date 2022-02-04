@@ -6,7 +6,6 @@ import { GetCurrencies, SetCurrency } from 'src/app/store/request-data.action';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { CurrencyDropdownModel } from 'src/app/models/Currency-dropdown.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { SetCurrencyInfo } from 'src/app/store/flight-info.action';
 
 @UntilDestroy()
 @Component({
@@ -36,6 +35,6 @@ export class CurrencyDropdownComponent implements OnInit {
   }
 
   setValue(data: string): void {
-    this.store.dispatch([new SetCurrency(data), new SetCurrencyInfo(data)]);
+    this.store.dispatch(new SetCurrency(data));
   }
 }

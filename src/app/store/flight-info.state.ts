@@ -4,6 +4,7 @@ import { startOfDay } from 'date-fns';
 import { from, of } from 'rxjs';
 import { mergeMap, toArray, map } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { SetCurrency } from './request-data.action';
 
 import { RequestDataState } from './request-data.state';
 import * as FlightInfoActions from './flight-info.action';
@@ -149,12 +150,12 @@ export class FlightInfoState {
     return state.errors;
   }
 
-  @Action(FlightInfoActions.SetCurrencyInfo)
+  @Action(SetCurrency)
   SetCurrency(
     { patchState }: StateContext<FlightInfoStateModel>,
-    { payload }: FlightInfoActions.SetCurrencyInfo
+    { currency }: SetCurrency
   ) {
-    patchState({ currency: payload });
+    patchState({ currency });
   }
 
   @Action(FlightInfoActions.CalendarOfPricesLoaded)
