@@ -7,7 +7,10 @@ import {
 } from 'src/app/models/calendar-of-prices.model';
 import { FormDataModel } from 'src/app/models/formData.model';
 import { CalendarOfPricesLoaded } from 'src/app/store/flight-info.action';
-import { FlightInfoState } from 'src/app/store/flight-info.state';
+import {
+  FlightInfoState,
+  FlightInfoStateModel,
+} from 'src/app/store/flight-info.state';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import {
   Component,
@@ -15,7 +18,7 @@ import {
   ViewChild,
   TemplateRef,
 } from '@angular/core';
-import { isSameDay, isSameMonth } from 'date-fns';
+import { isSameDay, isSameMonth, startOfDay } from 'date-fns';
 import { Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -49,8 +52,17 @@ export class CalendarOfPricesComponent implements OnInit {
     this.store
       .select(FlightInfoState.calendarOfPrices)
       .pipe(untilDestroyed(this))
-      .subscribe((state) => {
-        this.events = state;
+      .subscribe((state: CalendarOfPricesModel[]) => {
+        const currencyFromStore = this.store.selectSnapshot(
+          RequestDataState.currency
+        );
+
+        this.events = state.map(
+          ({ depart_date, return_date, value, found_at, gate }) => ({
+            start: startOfDay(new Date(depart_date)),
+            title: `Price: ${value}${currencyFromStore.toUpperCase()} Gate: ${gate} ${depart_date}-${return_date} `,
+          })
+        );
         this.cdRef.detectChanges();
       });
 

@@ -3,6 +3,7 @@ export type DestinationPopular = {
   originName: string;
   destination: string;
   destinationName: string;
+  currencyCode:string;
   countryCode: string;
   departure_at: Date;
   return_at: Date;

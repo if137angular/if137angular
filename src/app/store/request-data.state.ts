@@ -87,7 +87,7 @@ export class RequestDataState {
   constructor(
     private requestService: RequestDataService,
     private flightsInfoService: FlightsInfoService
-  ) { }
+  ) {}
 
   @Selector()
   static countries(state: RequestDataStateModel): any[] {

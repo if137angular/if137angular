@@ -8,7 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { NgxsModule } from '@ngxs/store';
 import { appState } from 'src/app/store/appState';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+// import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { environment } from 'src/environments/environment';
 
 // Other
@@ -111,7 +112,8 @@ import { CalendarDialogComponent } from './components/calendar-of-prices/calenda
     FormsModule,
     ReactiveFormsModule,
     NgxsModule.forRoot(appState, { developmentMode: !environment.production }),
-    NgxsLoggerPluginModule.forRoot(),
+    // NgxsLoggerPluginModule.forRoot({ disabled: environment.production }),
+    NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
 
     // Angular Material
     MatSelectModule,
