@@ -90,7 +90,7 @@ export class FlightInfoState {
     return state.calendarOfPrices.map(
       ({ depart_date, return_date, value, found_at, gate }) => ({
         start: startOfDay(new Date(depart_date)),
-        title: `Price: ${value} Gate: ${gate} ${depart_date}-${return_date} `,
+        title: `Price: ${value}${state.currency.toUpperCase()} Gate: ${gate} ${depart_date}-${return_date} `,
       })
     );
   }
@@ -147,6 +147,14 @@ export class FlightInfoState {
   @Selector()
   static errors(state: FlightInfoStateModel): string | null {
     return state.errors;
+  }
+
+  @Action(FlightInfoActions.SetCurrencyInfo)
+  SetCurrency(
+    { patchState }: StateContext<FlightInfoStateModel>,
+    { payload }: FlightInfoActions.SetCurrencyInfo
+  ) {
+    patchState({ currency: payload });
   }
 
   @Action(FlightInfoActions.CalendarOfPricesLoaded)

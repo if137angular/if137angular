@@ -12,6 +12,11 @@ export class CalendarOfPricesLoaded {
   constructor(public payload: CalendarOfPricesPayload) {}
 }
 
+export class SetCurrencyInfo {
+  static readonly type = '[FlightInfo] SetCurrency';
+  constructor(public payload: string) {}
+}
+
 export class GetSpecialOffers {
   static readonly type = '[FlightInfo] Get Special Offers';
   constructor(
