@@ -1,4 +1,4 @@
-export interface FlightInfo {
+export type FlightInfo = {
 	loading: boolean;
 	airline: string;
 	departure_at: string;
@@ -16,4 +16,17 @@ export type FlightTiketsForDatePayload = {
 	startDate: string;
 	endDate: string;
 	direct: boolean;
+}
+
+export type Destinations = {
+	code: string;
+	name: string;
+}
+
+export type TicketsType = {
+	destinationFrom: Destinations;
+	destinationTo: Destinations;
+	endDate: Date;
+	startDate: Date;
+	transfers: string;
 }

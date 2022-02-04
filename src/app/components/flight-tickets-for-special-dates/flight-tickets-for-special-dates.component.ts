@@ -2,9 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
-import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { RequestDataState } from 'src/app/store/request-data.state';
-import { FlightInfo } from 'src/app/models/flight-tickets-for-date.model';
+import { FlightInfo, TicketsType } from 'src/app/models/flight-tickets-for-date.model';
 import { GetTiketsForSpecialDate, StartLoading } from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
@@ -17,14 +16,14 @@ import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 })
 export class FlightTicketsForSpecialDatesComponent implements OnInit {
   @Select(RequestDataState.formData)
-  formData$: Observable<any> // TODO: type
+  formData$: Observable<TicketsType>
 
   flightInfo: FlightInfo[];
-  // flightInfo: any;
+  currency: string;
 
   loading: boolean;
 
-  constructor(private flightInfoService: FlightsInfoService, private store: Store) { }
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
     this.store
@@ -44,11 +43,15 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
         endDate: formData.endDate.toISOString().slice(0, 10),
         direct: formData.transfers  === 'Directly'
       }
-
       this.store.dispatch([new StartLoading(), new GetTiketsForSpecialDate(payload)])
         .subscribe((data: any) => {
           this.flightInfo = data
         })
-    });
+    
+      this.store.select(RequestDataState.currency)
+      .pipe(untilDestroyed(this))
+      .subscribe((currency: string) => this.currency = currency.toUpperCase())
+
+    })
   }
 }

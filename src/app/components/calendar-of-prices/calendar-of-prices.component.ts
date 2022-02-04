@@ -50,7 +50,10 @@ export class CalendarOfPricesComponent implements OnInit {
     this.store
       .select(FlightInfoState.calendarOfPrices)
       .pipe(untilDestroyed(this))
-      .subscribe((state) => (this.events = state));
+      .subscribe((state) => {
+        this.events = state;
+        this.cdRef.detectChanges();
+      });
 
     this.store
       .select(RequestDataState.formData)
