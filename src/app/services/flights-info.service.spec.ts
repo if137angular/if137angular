@@ -7,25 +7,29 @@ describe('FlightsInfoService', () => {
   let storeMock: any;
   beforeEach(() => {
     httpMock = {
-      get: jasmine.createSpy('get')
+      get: jasmine.createSpy('get'),
     };
     storeMock = {
-      selectSnapshot: jasmine.createSpy('selectSnapshot')
-        .withArgs(RequestDataState.currency).and.returnValue('USD'),
-    }
+      selectSnapshot: jasmine
+        .createSpy('selectSnapshot')
+        .withArgs(RequestDataState.currency)
+        .and.returnValue('USD'),
+    };
     service = new FlightsInfoService(httpMock, storeMock);
-  })
+  });
 
   describe('#getSpecialOffers', () => {
     it('should call http with appropriate params', () => {
       // arrange
-      storeMock.selectSnapshot = jasmine.createSpy('selectSnapshot').and.returnValue('USD');
-      const expectedParams = '/aviasales/v3/get_special_offers?origin=LVO&destination=WAW&locale=EN&currency=USD&token=b482025a8bf39817b6b6f219686b4799';
+      storeMock.selectSnapshot = jasmine
+        .createSpy('selectSnapshot')
+        .and.returnValue('USD');
+      const expectedParams =
+        '/aviasales/v3/get_special_offers?origin=LWO&destination=WAW&locale=EN&currency=USD';
       // act
-      service.getSpecialOffers('LVO', 'WAW', 'EN');
+      service.getSpecialOffers('LWO', 'WAW', 'EN', 'USD');
       // assert
-      expect(httpMock.get)
-        .toHaveBeenCalledWith(expectedParams)
-    })
-  })
-})
+      expect(httpMock.get).toHaveBeenCalledWith(expectedParams);
+    });
+  });
+});

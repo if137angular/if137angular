@@ -1,64 +1,21 @@
 <div class="filter">
-  <p>Filter</p>
+  <h3>Filter</h3>
   <form [formGroup]="filterGroup">
-    <div>
-      <mat-form-field appearance="fill">
-        <mat-label>Flight class</mat-label>
-        <mat-select
-          formControlName="flightClass"
-          (selectionChange)="onFilterChange()"
-        >
-          <mat-option [value]="class.value" *ngFor="let class of classOptions">
-            {{ class.label }}
+    <ng-container *ngFor="let filterElement of filterElements">
+      <mat-form-field appearance="fill" *ngIf="(filterConfig$ | async)[filterElement.formControlName]">
+        <mat-label>{{filterElement.label}}</mat-label>
+        <mat-select [formControlName]="filterElement.formControlName" (selectionChange)="onFilterChange()">
+          <mat-option *ngFor="let option of filterElement.options" [value]="option">
+            {{ option }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
+    </ng-container>
+
     <div>
-      <mat-form-field appearance="fill">
-        <mat-label>Gate</mat-label>
-        <mat-select formControlName="gate" (selectionChange)="onFilterChange()">
-          <mat-option [value]="gate.value" *ngFor="let gate of gateOptions">
-            {{ gate.label }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field appearance="fill">
-        <mat-label>Type of transfers</mat-label>
-        <mat-select
-          formControlName="transfers"
-          (selectionChange)="onFilterChange()"
-        >
-          <mat-option
-            *ngFor="let transfer of transfersOptions"
-            [value]="transfer.value"
-          >
-            {{ transfer.label }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div>
-      Min price
-      <mat-slider
-        formControlName="minPrice"
-        thumbLabel="true"
-        min="1"
-        max="150"
-        (valueChange)="onFilterChange()"
-      ></mat-slider>
-    </div>
-    <div>
-      Max price
-      <mat-slider
-        formControlName="maxPrice"
-        thumbLabel="true"
-        min="1"
-        max="150"
-        (valueChange)="onFilterChange()"
-      ></mat-slider>
+      <b>Price range</b>
+      <mtx-slider formControlName="priceRange" thumbLabel="true" [min]="minPrice" [max]="maxPrice"
+        (valueChange)="onFilterChange()"></mtx-slider>
     </div>
   </form>
 </div>

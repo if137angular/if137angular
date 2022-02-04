@@ -5,3 +5,26 @@
   text-align: center;
   margin: 0 auto;
 }
+
+.mtx-slider-horizontal {
+  flex: 1;
+  display: flex;
+}
+
+::ng-deep {
+  .mtx-slider-thumb,
+  .mtx-slider-track-fill,
+  .mtx-slider-thumb-label {
+    background-color: red !important;
+  }
+
+  .mtx-slider-track-background {
+    background: #bdbdbd;
+  }
+
+  .mtx-slider-thumb-label-text {
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+  }
+}

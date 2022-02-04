@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Store } from '@ngxs/store';
-import { FilterModel } from 'src/app/models/filter.model';
+import { Store, Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
 import { SetFilter } from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
-import { RequestDataState } from 'src/app/store/request-data.state';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
-type OptionModel = {
+type filterElementsModel = {
+  formControlName: string;
   label: string;
-  value: number | string | null;
+  options: string[];
 };
 
 @UntilDestroy()
@@ -19,72 +19,56 @@ type OptionModel = {
   styleUrls: ['./flight-filter.component.scss'],
 })
 export class FlightFilterComponent implements OnInit {
-  classOptions: OptionModel[] = [
-    {
-      label: 'All',
-      value: 'All',
-    },
-    {
-      label: 'Economy class',
-      value: 0,
-    },
-    {
-      label: 'Business class',
-      value: 1,
-    },
-    {
-      label: 'First class',
-      value: 2,
-    },
-  ];
+  @Select(FlightInfoState.filterConfig) filterConfig$: Observable<any>;
 
-  gateOptions: OptionModel[] = [
-    {
-      label: 'All',
-      value: 'All',
-    },
-    {
-      label: 'Kiwi.com',
-      value: 'Kiwi.com',
-    },
-    {
-      label: 'Aviakassa',
-      value: 'Aviakassa',
-    },
-    {
-      label: 'Tickets.ua',
-      value: 'Tickets.ua',
-    },
-  ];
+  minPrice: number = 0;
+  maxPrice: number = 0;
 
-  transfersOptions: OptionModel[] = [
+  filterElements: filterElementsModel[] = [
     {
-      label: 'All',
-      value: 'All',
+      formControlName: 'flightClass',
+      label: 'Flight Class',
+      options: ['All', 'Economy class', 'Business class', 'First class'],
     },
     {
-      label: 'Directly',
-      value: 'Directly',
+      formControlName: 'gate',
+      label: 'Gate',
+      options: ['All', 'Kiwi.com', 'Aviakassa', 'Tickets.ua'],
     },
     {
+      formControlName: 'transfers',
       label: 'Transfers',
-      value: 'Transfers',
+      options: ['All', 'Directly', 'Transfers'],
     },
   ];
 
   filterGroup: FormGroup = new FormGroup({
     flightClass: new FormControl(null),
     gate: new FormControl(null),
-    minPrice: new FormControl(null),
-    maxPrice: new FormControl(null),
     transfers: new FormControl(null),
+    priceRange: new FormControl(null),
   });
 
   constructor(public store: Store) {}
 
-  onFilterChange() {
-    this.store.dispatch(new SetFilter(this.filterGroup.value));
+  ngOnInit(): void {
+    this.filterConfig$.pipe(untilDestroyed(this)).subscribe((filterConfig) => {
+      this.minPrice = filterConfig.minPrice;
+      this.maxPrice = filterConfig.maxPrice;
+
+      this.filterGroup.patchValue({
+        priceRange: [this.minPrice, this.maxPrice],
+      });
+    });
   }
 
-  ngOnInit(): void {}
+  onFilterChange() {
+    const [minPrice, maxPrice] = this.filterGroup.value.priceRange;
+
+    this.store.dispatch(
+      new SetFilter(
+        Object.assign(this.filterGroup.value, { minPrice, maxPrice })
+      )
+    );
+  }
 }

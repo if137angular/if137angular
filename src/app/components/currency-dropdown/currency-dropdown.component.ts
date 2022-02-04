@@ -35,7 +35,6 @@ export class CurrencyDropdownComponent implements OnInit {
   }
 
   setValue(data: string): void {
-    this.selectedOption = data;
     this.store.dispatch(new SetCurrency(data));
   }
 }

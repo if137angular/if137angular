@@ -1,7 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { CitiesModel } from 'src/app/models/cities.model';
-import { RequestDataState } from 'src/app/store/request-data.state';
 import { SetFormDate } from '../../store/request-data.action';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { GetPopularDestinations } from 'src/app/store/flight-info.action';
@@ -10,6 +8,7 @@ import { Observable } from 'rxjs';
 import {
   GetDestinationPopular,
   DestinationPopular,
+  CityInfo,
 } from '../../models/city-destination.model';
 
 @UntilDestroy()
@@ -20,14 +19,14 @@ import {
 })
 export class CityDestinationComponent implements OnInit {
   @Select(FlightInfoState.popularDestinations)
-  popularDestinations$: Observable<Map<string, DestinationPopular[]>>;
+  popularDestinations$: Observable<Map<CityInfo, DestinationPopular[]>>;
 
   private popularDestinationCities = ['IEV', 'LWO', 'DNK', 'ODS'];
   constructor(private store: Store, @Inject('Window') private window: Window) {}
 
   items: GetDestinationPopular[] = [];
-  response: Map<string, DestinationPopular[]> = new Map<
-    string,
+  response: Map<CityInfo, DestinationPopular[]> = new Map<
+    CityInfo,
     DestinationPopular[]
   >();
   cities: DestinationPopular[];
@@ -40,40 +39,17 @@ export class CityDestinationComponent implements OnInit {
       new GetPopularDestinations(this.popularDestinationCities)
     );
   }
-
-  getCityNameByKey(cityKey: string): string {
-    const matchedCity = this.store
-      .selectSnapshot(RequestDataState.cities)
-      .find((city: CitiesModel) => city.code === cityKey);
-    return matchedCity ? matchedCity.name : '';
-  }
-  getCityCode(cityKey: string): string {
-    const codeOfCity = this.store
-      .selectSnapshot(RequestDataState.cities)
-      .find((city: CitiesModel) => city.code === cityKey);
-    return codeOfCity ? codeOfCity.code : '';
-  }
-
-  getCountryCodeByCityCode(countryKey: string): string {
-    const matchedCountry = this.store
-      .selectSnapshot(RequestDataState.cities)
-      .find((city: CitiesModel) => city.code === countryKey);
-    return matchedCountry ? matchedCountry.country_code : '';
-  }
-
-  selectDestination(selectedDestination: any) {
-    this.selectedCities = this.getCityNameByKey(selectedDestination.origin);
-    this.selectedDestinstion = this.getCityCode(
-      selectedDestination.destination
-    );
+  selectDestination(selectedDestination: DestinationPopular) {
+    this.selectedCities = selectedDestination.originName;
+    this.selectedDestinstion = selectedDestination.destination;
     const formData = {
       destinationFrom: {
-        name: this.getCityNameByKey(selectedDestination.origin),
-        code: this.getCityCode(selectedDestination.origin),
+        name: selectedDestination.originName,
+        code: selectedDestination.origin,
       },
       destinationTo: {
-        name: this.getCityNameByKey(selectedDestination.destination),
-        code: this.getCityCode(selectedDestination.destination),
+        name: selectedDestination.destinationName,
+        code: selectedDestination.destination,
       },
       endDate: new Date(),
       startDate: new Date(),

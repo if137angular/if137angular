@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Observable, skip } from 'rxjs';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { CitiesModel } from 'src/app/models/cities.model';
 import { SetFormDate } from 'src/app/store/request-data.action';
@@ -33,6 +33,7 @@ export class FlightDataFormComponent implements OnInit {
   @Select(RequestDataState.cities) cities$: Observable<CitiesModel[]>;
   @Select(RequestDataState.location) location$: Observable<GetLocationModel[]>;
   @Select(RequestDataState.formData) formData$: Observable<FormDataModel>;
+  @Select(RequestDataState.currency) selectedCurrency$: Observable<any>;
 
   constructor(private store: Store, private router: Router) {}
 
@@ -48,6 +49,16 @@ export class FlightDataFormComponent implements OnInit {
       .subscribe((cities: CitiesModel[]) => {
         this.cities = cities;
       });
+
+    this.selectedCurrency$.pipe(untilDestroyed(this), skip(1)).subscribe(() => {
+      this.store.dispatch(
+        new SetFormDate(
+          Object.assign(this.flightDataFormGroup.value, {
+            isFormValid: this.flightDataFormGroup.valid,
+          })
+        )
+      );
+    });
 
     this.formData$
       .pipe(untilDestroyed(this))
