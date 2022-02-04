@@ -41,8 +41,7 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
         codeTo: formData.destinationTo.code,
         startDate: formData.startDate.toISOString().slice(0, 10),
         endDate: formData.endDate.toISOString().slice(0, 10),
-        direct: formData.transfers  === 'Directly',
-        currency: this.currency
+        direct: formData.transfers  === 'Directly'
       }
       this.store.dispatch([new StartLoading(), new GetTiketsForSpecialDate(payload)])
         .subscribe((data: any) => {

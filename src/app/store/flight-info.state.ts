@@ -192,7 +192,6 @@ export class FlightInfoState {
         payload.startDate,
         payload.endDate,
         payload.direct,
-        payload.currency
       )
       .subscribe((flightTiketsForDate: { data: any }) => {
         context.patchState({
