@@ -4,6 +4,7 @@ import { startOfDay } from 'date-fns';
 import { from, of } from 'rxjs';
 import { mergeMap, toArray, map } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { SetCurrency } from './request-data.action';
 
 import { RequestDataState } from './request-data.state';
 import * as FlightInfoActions from './flight-info.action';
@@ -93,7 +94,7 @@ export class FlightInfoState {
     return state.calendarOfPrices.map(
       ({ depart_date, return_date, value, found_at, gate }) => ({
         start: startOfDay(new Date(depart_date)),
-        title: `Price: ${value} Gate: ${gate} ${depart_date}-${return_date} `,
+        title: `Price: ${value}${state.currency.toUpperCase()} Gate: ${gate} ${depart_date}-${return_date} `,
       })
     );
   }
@@ -150,6 +151,14 @@ export class FlightInfoState {
   @Selector()
   static errors(state: FlightInfoStateModel): string | null {
     return state.errors;
+  }
+
+  @Action(SetCurrency)
+  SetCurrency(
+    { patchState }: StateContext<FlightInfoStateModel>,
+    { currency }: SetCurrency
+  ) {
+    patchState({ currency });
   }
 
   @Action(FlightInfoActions.CalendarOfPricesLoaded)
