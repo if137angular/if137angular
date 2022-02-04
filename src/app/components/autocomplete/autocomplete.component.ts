@@ -51,7 +51,7 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
       this.filteredItems =
         value !== ''
           ? this.items.filter((city: CitiesModel) =>
-              city.name.toLowerCase().startsWith(value.toLowerCase())
+              city.name.toLowerCase().includes(value.toLowerCase())
             )
           : [];
 

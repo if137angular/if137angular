@@ -1,19 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CheapestTicketsComponent } from './cheapest-tickets.component';
 
-describe('CheapestTicketsComponent', () => {
-  let component: CheapestTicketsComponent;
-  let fixture: ComponentFixture<CheapestTicketsComponent>;
+import { CalendarDialogComponent } from './calendar-dialog.component';
+
+describe('CalendarDialogComponent', () => {
+  let component: CalendarDialogComponent;
+  let fixture: ComponentFixture<CalendarDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CheapestTicketsComponent ]
+      declarations: [ CalendarDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CheapestTicketsComponent);
+    fixture = TestBed.createComponent(CalendarDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

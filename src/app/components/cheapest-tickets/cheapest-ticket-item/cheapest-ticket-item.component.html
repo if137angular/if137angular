@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="priceInfo">
-    <p>Price: {{ticket.price}} USD</p>
+    <p>Price: {{ticket.price}} {{(currency$ | async)?.toUpperCase()}}</p>
     <p class="warning">The offer valid untill {{expiresDate}}</p>
   </div>
   <div class="flightInfo">

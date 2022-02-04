@@ -3,7 +3,6 @@
   <div *ngIf="errors$ | async" class="error">
     <app-no-records-found></app-no-records-found>
   </div>
-
   <div *ngIf="(errors$ | async) === '' && cheapestTicketsArr">
     <div class="sortWrapper">
       <mat-form-field appearance="fill">
