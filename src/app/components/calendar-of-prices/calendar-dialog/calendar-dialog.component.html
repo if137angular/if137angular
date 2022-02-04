@@ -1,0 +1,56 @@
+<div class="card">
+  <div class="card__inner">
+    <h3 class="card__title">Ticket info</h3>
+    <div class="card__content">
+      <div class="card__content-item">
+        Price:
+        <p class="card__price">
+          {{ data.value }} {{ data.currency?.toUpperCase() }}
+        </p>
+      </div>
+      <div class="card__content-item">
+        Gate:
+        <p class="card__airline">{{ data.gate }}</p>
+      </div>
+      <div class="card__content-item">
+        Number of changes:
+        <p class="card__flight-number">
+          {{ data.number_of_changes === 0 ? "Direct" : "Transfers" }}
+        </p>
+      </div>
+      <div class="card__content-item">
+        Trip class:
+        <p class="card__flight-number">{{ getFlightClass(data.trip_class) }}</p>
+      </div>
+    </div>
+    <div class="card__info">
+      <div class="card__info-item">
+        <p class="card__city-from">
+          {{ data.origin }}
+        </p>
+        <p class="card__date">{{ data.depart_date | date }}</p>
+      </div>
+      <div class="card__info-item">
+        <div class="card__line-top">
+          <mat-icon class="card__icon">flight_takeoff</mat-icon>
+          <p class="card__duration">{{ getHours(data.duration) }}</p>
+          <mat-icon class="card__icon">flight_land</mat-icon>
+        </div>
+        <div class="card__line-main"></div>
+        <div class="card__line-bottom">
+          <p class="card__airport-from">{{ data.originCode }}</p>
+          <p class="card__distance">{{ data.distance }}km</p>
+          <p class="card__airport-to">{{ data.destinationCode }}</p>
+        </div>
+      </div>
+      <div class="card__info-item">
+        <p class="card__city-to">
+          {{ data.destination }}
+        </p>
+        <p class="card__date">
+          {{ data.return_date | date }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

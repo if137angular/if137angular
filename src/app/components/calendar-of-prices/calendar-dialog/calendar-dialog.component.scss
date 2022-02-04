@@ -1,0 +1,140 @@
+p,
+h3 {
+  margin: 0;
+}
+
+.card {
+  display: block;
+  width: 650px;
+  background-image: url("^/assets/card-background.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 15px;
+  box-shadow: 0px 0px 5px 4px rgba(73, 73, 73, 0.164);
+  transition: ease-in-out all 0.2s;
+  font-size: 15px;
+
+  &__inner {
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: space-around;
+    justify-content: space-between;
+    padding: 20px;
+  }
+
+  &__header {
+    width: 100%;
+  }
+
+  &__title {
+    padding-left: 40px;
+    text-align: left;
+    font-size: 25px;
+  }
+  &__content {
+    min-width: max-content;
+    line-height: 30px;
+  }
+  &__content-item {
+    display: flex;
+
+    p {
+      text-align: center;
+      padding-left: 5px;
+      font-weight: 500;
+    }
+  }
+
+  &__info {
+    position: relative;
+    max-width: 364px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    transition: border-radius ease-in-out 0.2s, box-shadow ease-in-out 0.2s,
+      background-color ease-in-out 0.2s, transform linear 0.08s;
+    cursor: pointer;
+
+    &:hover {
+      border-radius: 10px;
+      box-shadow: 0px 0px 3px 4px rgba(73, 73, 73, 0.164);
+      background-color: #fff;
+    }
+
+    .hover-txt {
+      position: absolute;
+      width: max-content;
+      top: -30px;
+      opacity: 0;
+      transform: scale(0);
+      transition: opacity ease-in 0.2s, transform ease-in 0.3s;
+    }
+    &:hover .hover-txt {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    &:active {
+      transform: scale(0.99);
+    }
+  }
+
+  &__info-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    p {
+      text-align: center;
+    }
+  }
+  &__line-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__icon {
+    transform: translate(0px, 5px);
+    color: #1d3557;
+  }
+  &__duration {
+    color: #0096c7;
+    font-size: 12px;
+    font-weight: 400;
+  }
+  &__distance {
+    color: #0096c7;
+    font-size: 12px;
+    font-weight: 400;
+  }
+  &__line-main {
+    display: block;
+    width: 200px;
+    height: 2px;
+    background-color: #1d3557;
+  }
+  &__line-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 5px;
+  }
+
+  &__logo {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 25px;
+    height: 25px;
+  }
+
+  &__date {
+    font-style: italic;
+    font-size: 10px;
+    color: #6c757d;
+  }
+}
+
+.card__info:hover .card__info {
+  opacity: 0;
+}

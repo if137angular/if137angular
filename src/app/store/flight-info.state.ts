@@ -88,12 +88,14 @@ export class FlightInfoState {
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
-    return state.calendarOfPrices.map(
-      ({ depart_date, return_date, value, found_at, gate }) => ({
-        start: startOfDay(new Date(depart_date)),
-        title: `Price: ${value}${state.currency.toUpperCase()} Gate: ${gate} ${depart_date}-${return_date} `,
-      })
-    );
+    return state.calendarOfPrices.map(({ depart_date, value, ...item }) => ({
+      start: startOfDay(new Date(depart_date)),
+      title: `Price: ${value} ${state.currency.toUpperCase()}`,
+      currency: state.currency,
+      depart_date,
+      value,
+      ...item,
+    }));
   }
 
   @Selector()
