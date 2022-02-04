@@ -4,6 +4,7 @@ import { startOfDay } from 'date-fns';
 import { from, of } from 'rxjs';
 import { mergeMap, toArray, map } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { SetCurrency } from './request-data.action';
 
 import { RequestDataState } from './request-data.state';
 import * as FlightInfoActions from './flight-info.action';
@@ -33,12 +34,15 @@ import { FilterModel } from '../models/filter.model';
 import { FilterConfigModel } from 'src/app/models/filter-config.model';
 import { CitiesModel } from '../models/cities.model';
 import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';
+import { FlightInfo } from '../models/flight-tickets-for-date.model';
 
 export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesModel[];
   specialOffers: any; // TODO: create model;
   nonStopTickets: any; // TODO: create model
+  // flightTiketsForDate: UniversalComponentModel[];
   flightTiketsForDate: any;
+
   flightPriceTrends: any;
   popularDestinations: Map<CityInfo, DestinationPopular[]>;
   currency: string;
@@ -90,7 +94,7 @@ export class FlightInfoState {
     return state.calendarOfPrices.map(
       ({ depart_date, return_date, value, found_at, gate }) => ({
         start: startOfDay(new Date(depart_date)),
-        title: `Price: ${value} Gate: ${gate} ${depart_date}-${return_date} `,
+        title: `Price: ${value}${state.currency.toUpperCase()} Gate: ${gate} ${depart_date}-${return_date} `,
       })
     );
   }
@@ -149,6 +153,14 @@ export class FlightInfoState {
     return state.errors;
   }
 
+  @Action(SetCurrency)
+  SetCurrency(
+    { patchState }: StateContext<FlightInfoStateModel>,
+    { currency }: SetCurrency
+  ) {
+    patchState({ currency });
+  }
+
   @Action(FlightInfoActions.CalendarOfPricesLoaded)
   LoadCalendarOfPrices(
     context: StateContext<FlightInfoStateModel>,
@@ -166,7 +178,6 @@ export class FlightInfoState {
       });
   }
 
-  // **** Action for my component ***
   @Action(FlightInfoActions.GetTiketsForSpecialDate)
   LoadTiketsForSpecialDate(
     context: StateContext<FlightInfoStateModel>,
@@ -179,17 +190,34 @@ export class FlightInfoState {
         payload.codeTo,
         payload.startDate,
         payload.endDate,
-        payload.direct
+        payload.direct,
       )
-      .subscribe((flightTiketsForDate: { data: any }) => {
+      .subscribe((response) => {
+        const data: any = Object.values(response.data);
+        const filterConfig: FilterConfigModel = {
+          maxPrice: 
+            _.maxBy(
+              data,
+              (flightTiketsForDate: FlightInfo) => flightTiketsForDate.price
+            )?.price || 150,
+          minPrice: 
+            _.minBy(
+              data,
+              (flightTiketsForDate: FlightInfo) => flightTiketsForDate.price
+            )?.price || 1,
+          expires: false,
+          destination: true,
+          airline: true,
+          flightClass: false,
+          gate: false,
+        }
         context.patchState({
-          flightTiketsForDate: flightTiketsForDate.data,
+          flightTiketsForDate: data,
           loading: false,
-        });
-      });
+          filterConfig,
+        })
+      })
   }
-
-  // **** End Action for my component ***
 
   @Action(FlightInfoActions.GetSpecialOffers)
   GetSpecialOffers(
