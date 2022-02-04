@@ -35,6 +35,7 @@ import { FilterConfigModel } from 'src/app/models/filter-config.model';
 import { CitiesModel } from '../models/cities.model';
 import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';
 import { FlightInfo } from '../models/flight-tickets-for-date.model';
+import { SetCurrency } from './request-data.action';
 
 export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesModel[];
@@ -50,6 +51,7 @@ export interface FlightInfoStateModel {
   loading: boolean;
   cheapestTickets: any;
   errors: string;
+  currency: string;
 }
 
 @State<FlightInfoStateModel>({
@@ -78,6 +80,7 @@ export interface FlightInfoStateModel {
     },
     loading: false,
     errors: '',
+    currency: 'uah',
   },
 })
 @Injectable()
@@ -89,7 +92,13 @@ export class FlightInfoState {
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
-    return state.calendarOfPrices;
+    return state.calendarOfPrices.map(({ value, depart_date, ...item }) => ({
+      start: startOfDay(new Date(depart_date)),
+      title: `Price: ${value} ${state.currency.toUpperCase()}`,
+      currency: state.currency,
+      value,
+      ...item,
+    }));
   }
 
   @Selector()
@@ -139,6 +148,14 @@ export class FlightInfoState {
   @Selector()
   static errors(state: FlightInfoStateModel): string | null {
     return state.errors;
+  }
+
+  @Action(SetCurrency)
+  SetCurrency(
+    { patchState }: StateContext<FlightInfoStateModel>,
+    { currency }: SetCurrency
+  ) {
+    patchState({ currency });
   }
 
   @Action(FlightInfoActions.CalendarOfPricesLoaded)

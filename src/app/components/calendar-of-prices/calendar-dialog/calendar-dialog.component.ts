@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
   CalendarOfPricesModel,
@@ -10,13 +10,11 @@ import {
   templateUrl: './calendar-dialog.component.html',
   styleUrls: ['./calendar-dialog.component.scss'],
 })
-export class CalendarDialogComponent implements OnInit {
+export class CalendarDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: CalendarOfPricesModel & CalendarOfPricesPayload
   ) {}
-
-  ngOnInit(): void {}
 
   getHours(minutes: number): string {
     let hours = Math.floor(minutes / 60);

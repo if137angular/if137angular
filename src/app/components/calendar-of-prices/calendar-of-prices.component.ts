@@ -9,22 +9,12 @@ import { FormDataModel } from 'src/app/models/formData.model';
 import { CalendarOfPricesLoaded } from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { RequestDataState } from 'src/app/store/request-data.state';
-import {
-  Component,
-  ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef,
-} from '@angular/core';
-import { isSameDay, isSameMonth, startOfDay } from 'date-fns';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { isSameDay, isSameMonth } from 'date-fns';
 import { Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  CalendarEvent,
-  CalendarEventTimesChangedEvent,
-  CalendarView,
-} from 'angular-calendar';
+import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CalendarDialogComponent } from './calendar-dialog/calendar-dialog.component';
 
@@ -37,7 +27,7 @@ import { CalendarDialogComponent } from './calendar-dialog/calendar-dialog.compo
 })
 export class CalendarOfPricesComponent implements OnInit {
   formData: CalendarOfPricesPayload;
-  events: CalendarEvent<CalendarOfPricesModel>[];
+  events: any[];
 
   constructor(
     private store: Store,
@@ -50,16 +40,7 @@ export class CalendarOfPricesComponent implements OnInit {
       .select(FlightInfoState.calendarOfPrices)
       .pipe(untilDestroyed(this))
       .subscribe((state: CalendarOfPricesModel[]) => {
-        const currencyFromStore = this.store.selectSnapshot(
-          RequestDataState.currency
-        );
-
-        this.events = state.map(
-          ({ depart_date, return_date, value, found_at, gate }) => ({
-            start: startOfDay(new Date(depart_date)),
-            title: `Price: ${value}${currencyFromStore.toUpperCase()} Gate: ${gate} ${depart_date}-${return_date} `,
-          })
-        );
+        this.events = state;
         this.cdRef.detectChanges();
       });
 
@@ -89,11 +70,6 @@ export class CalendarOfPricesComponent implements OnInit {
 
   viewDate: Date = new Date();
 
-  modalData: {
-    action: string;
-    event: any;
-  };
-
   refresh = new Subject<void>();
 
   activeDayIsOpen: boolean = true;
@@ -112,7 +88,7 @@ export class CalendarOfPricesComponent implements OnInit {
     }
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
+  handleEvent(event: CalendarEvent): void {
     this.dialog.open(CalendarDialogComponent, {
       data: {
         ...event,
