@@ -52,6 +52,7 @@ export interface FlightInfoStateModel {
   loading: boolean;
   cheapestTickets: any;
   errors: string;
+
 }
 
 @State<FlightInfoStateModel>({
@@ -443,11 +444,13 @@ export class FlightInfoState {
           CityInfo,
           DestinationPopular[]
         >();
+        this.currency = this.store.selectSnapshot(RequestDataState.currency);
         Object.keys(popularDestinations).forEach((key: string) => {
           if (popularDestinations[key].length > 3) {
             popularDestinations[key].forEach((item: DestinationPopular) => {
               item.originName = this.getCityNameByKey(item.origin);
               item.destinationName = this.getCityNameByKey(item.destination);
+              item.currencyCode = this.getCurrency(item.price)
             });
             const cityInfo: CityInfo = {
               cityName: this.getCityNameByKey(key),
@@ -473,4 +476,17 @@ export class FlightInfoState {
       .find((city: CitiesModel) => city.code === countryKey);
     return matchedCountry ? matchedCountry.country_code : '';
   }
+
+  language: string = 'en';
+  currency: string = 'uah';
+
+  getCurrency(number: any) {
+    let language = this.language;
+    return new Intl.NumberFormat(language.substring(0, 2), {
+      style: 'currency',
+      currency: this.currency,
+      minimumFractionDigits: 0,
+    }).format(number);
+  }
+
 }
