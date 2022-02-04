@@ -1,7 +1,5 @@
 import { Component, Inject, NgZone, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Store } from '@ngxs/store';
-import { RequestDataState } from 'src/app/store/request-data.state';
 
 import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
@@ -19,7 +17,7 @@ import am4geodata from "@amcharts/amcharts5-geodata/data/countries2";
 export class CovidMapComponent {
   id: string = "UA"
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private zone: NgZone , private store: Store) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: any, private zone: NgZone , ) { }
 
   browserOnly(f: () => void) {
     if (isPlatformBrowser(this.platformId)) {
@@ -31,12 +29,10 @@ export class CovidMapComponent {
 
   ngAfterViewInit() {
     this.browserOnly(() => {
-      // const coutriesArr = this.store.selectSnapshot(RequestDataState.cities);
-  
-
+      
         let groupData = [
           {
-            "name": "High level of desease",
+            "name": "High level of disease",
             "data": [
               { "id": "AT", "joined": "1995" },
               { "id": "IE", "joined": "1973" },
@@ -52,11 +48,10 @@ export class CovidMapComponent {
               { "id": "BE", "joined": "1957" },
               { "id": "LU", "joined": "1957" },
               { "id": "NL", "joined": "1957" },
-              { "id": "PT", "joined": "1986" },
-              { "id": this.id, "joined": "1986" }
+              { "id": "PT", "joined": "1986" }
             ]
           }, {
-            "name": "Medium level ",
+            "name": "Medium level of disease ",
             "data": [
               { "id": "LT", "joined": "2004" },
               { "id": "LV", "joined": "2004" },
@@ -70,7 +65,7 @@ export class CovidMapComponent {
               { "id": "PL", "joined": "2004" }
             ]
           }, {
-            "name": "Low",
+            "name": "Low level of disease",
             "data": [
               { "id": "RO", "joined": "2007" },
               { "id": "BG", "joined": "2007" },
@@ -84,6 +79,10 @@ export class CovidMapComponent {
           }
         ];
 
+        const arr = () => {
+          groupData[0].data.unshift({"id": "UA", "joined": "25"})
+        }
+        arr()
 
       // Create root and chart
       let root = am5.Root.new("chartdiv");
@@ -157,7 +156,7 @@ export class CovidMapComponent {
 
 
         polygonSeries.mapPolygons.template.setAll({
-          tooltipText: "[bold]{name}[/]\nMember since {joined}",
+          tooltipText: "[bold]{name}[/]\nconfirmed {joined}",
           interactive: true,
           fill: color,
           strokeWidth: 2
