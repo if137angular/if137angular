@@ -7,10 +7,7 @@ import {
 } from 'src/app/models/calendar-of-prices.model';
 import { FormDataModel } from 'src/app/models/formData.model';
 import { CalendarOfPricesLoaded } from 'src/app/store/flight-info.action';
-import {
-  FlightInfoState,
-  FlightInfoStateModel,
-} from 'src/app/store/flight-info.state';
+import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import {
   Component,
