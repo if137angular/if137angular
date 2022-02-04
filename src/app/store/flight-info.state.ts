@@ -87,7 +87,7 @@ export class FlightInfoState {
   constructor(
     private flightInfoService: FlightsInfoService,
     private store: Store
-  ) {}
+  ) { }
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
@@ -232,12 +232,34 @@ export class FlightInfoState {
         payload.language,
         payload.currency
       )
-      .subscribe((specialOffers: { data: any }) => {
+      .subscribe((response) => {
+
+        const data: any = Object.values(response.data);
+        const filterConfig: FilterConfigModel = {
+          maxPrice:
+            _.maxBy(
+              data,
+              (specialOffers: any) => specialOffers.price
+            )?.price || 150,
+          minPrice:
+            _.minBy(
+              data,
+              (specialOffers: any) => specialOffers.price
+            )?.price || 1,
+          airline: true,
+          expires: true,
+          destination: true,
+          // For test, change to your elements
+          flightClass: false,
+          gate: false,
+        };
         context.patchState({
-          specialOffers: specialOffers.data,
+          specialOffers: data,
           loading: false,
+          filterConfig,
         });
       });
+
   }
 
   @Action(FlightInfoActions.GetFlightPriceTrends)
