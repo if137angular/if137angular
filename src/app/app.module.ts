@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Angular Material
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -34,9 +34,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSliderModule } from '@angular/material/slider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSliderModule } from '@angular/material/slider';
+import { MtxSliderModule } from '@ng-matero/extensions/slider';
 
 // Services
 import { RequestDataService } from 'src/app/services/request-data.service';
@@ -47,7 +48,6 @@ import { AppComponent } from './app.component';
 import { FlightDataFormComponent } from './components/flight-data-form/flight-data-form.component';
 import { NavComponent } from './components/nav/nav.component';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
-import { CalendarOfPricesItemComponent } from './components/calendar-of-prices/calendar-of-prices-item/calendar-of-prices-item.component';
 import { CalendarOfPricesComponent } from './components/calendar-of-prices/calendar-of-prices.component';
 import { SpecialOffersComponent } from './components/special-offers/special-offers.component';
 import { NonStopTicketsComponent } from './components/non-stop-tickets/non-stop-tickets.component';
@@ -77,7 +77,6 @@ import { SortPipe } from 'src/utils/sort.pipe';
     FlightDataFormComponent,
     AutocompleteComponent,
     CalendarOfPricesComponent,
-    CalendarOfPricesItemComponent,
     NavComponent,
     SpecialOffersComponent,
     NonStopTicketsComponent,
@@ -112,7 +111,6 @@ import { SortPipe } from 'src/utils/sort.pipe';
     NgxsLoggerPluginModule.forRoot(),
 
     // Angular Material
-    MatSliderModule,
     MatSelectModule,
     MatAutocompleteModule,
     MatInputModule,
@@ -133,6 +131,8 @@ import { SortPipe } from 'src/utils/sort.pipe';
     MatToolbarModule,
     MatProgressBarModule,
     MatMenuModule,
+    MatSliderModule,
+    MtxSliderModule,
 
     // Other
     FontAwesomeModule,
@@ -142,6 +142,7 @@ import { SortPipe } from 'src/utils/sort.pipe';
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    NgbModule,
   ],
   providers: [
     RequestDataService,
@@ -157,4 +158,4 @@ import { SortPipe } from 'src/utils/sort.pipe';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

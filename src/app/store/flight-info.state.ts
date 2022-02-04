@@ -1,28 +1,16 @@
-import { ChangeDetectorRef, Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
-import * as FlightInfoActions from './flight-info.action';
-import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';
-import { FlightsInfoService } from '../services/flights-info.service';
-import { FilterModel } from '../models/filter.model';
-import filterArray from 'src/utils/filterFunc';
+import { Injectable } from '@angular/core';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { startOfDay } from 'date-fns';
 import { from, of } from 'rxjs';
-import {
-  mergeMap,
-  toArray,
-  mapTo,
-  groupBy,
-  reduce,
-  tap,
-  scan,
-  map,
-  mergeAll,
-  flatMap,
-} from 'rxjs/operators';
+import { mergeMap, toArray, map } from 'rxjs/operators';
 import * as _ from 'lodash';
 
+import { RequestDataState } from './request-data.state';
+import * as FlightInfoActions from './flight-info.action';
+import { FlightsInfoService } from '../services/flights-info.service';
+import filterArray from 'src/utils/filterFunc';
+
 import {
-  CheapestTicketModel,
   CheapestTicketsResponseModel,
   TicketsObjModel,
 } from '../models/cheapest-tickets.model';
@@ -30,6 +18,7 @@ import {
 import {
   DestinationPopular,
   GetDestinationPopular,
+  CityInfo,
 } from '../models/city-destination.model';
 
 import {
@@ -39,15 +28,22 @@ import {
   StopLoading,
 } from './flight-info.action';
 
+import { FlightPriceTrends } from 'src/app/models/flight-price-trends.model';
+import { FilterModel } from '../models/filter.model';
+import { FilterConfigModel } from 'src/app/models/filter-config.model';
+import { CitiesModel } from '../models/cities.model';
+import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';
+
 export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesModel[];
   specialOffers: any; // TODO: create model;
   nonStopTickets: any; // TODO: create model
   flightTiketsForDate: any;
   flightPriceTrends: any;
-  popularDestinations: Map<string, DestinationPopular[]>;
+  popularDestinations: Map<CityInfo, DestinationPopular[]>;
   currency: string;
   filter: FilterModel;
+  filterConfig: FilterConfigModel;
   loading: boolean;
   cheapestTickets: any;
   errors: string;
@@ -62,7 +58,7 @@ export interface FlightInfoStateModel {
     cheapestTickets: [],
     nonStopTickets: [],
     flightPriceTrends: [],
-    popularDestinations: new Map<string, DestinationPopular[]>(),
+    popularDestinations: new Map<CityInfo, DestinationPopular[]>(),
     currency: 'uah',
     filter: {
       flightClass: null,
@@ -71,19 +67,29 @@ export interface FlightInfoStateModel {
       minPrice: null,
       maxPrice: null,
     },
+    filterConfig: {
+      maxPrice: 150,
+      minPrice: 1,
+      airline: false,
+      expires: false,
+      destination: false,
+    },
     loading: false,
     errors: '',
   },
 })
 @Injectable()
 export class FlightInfoState {
-  constructor(private flightInfoService: FlightsInfoService) {}
+  constructor(
+    private flightInfoService: FlightsInfoService,
+    private store: Store
+  ) {}
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
     return state.calendarOfPrices.map(
       ({ depart_date, return_date, value, found_at, gate }) => ({
-        start: startOfDay(new Date(found_at)),
+        start: startOfDay(new Date(depart_date)),
         title: `Price: ${value} Gate: ${gate} ${depart_date}-${return_date} `,
       })
     );
@@ -123,6 +129,10 @@ export class FlightInfoState {
   static filter(state: FlightInfoStateModel): FilterModel {
     return state.filter;
   }
+  @Selector()
+  static filterConfig(state: FlightInfoStateModel): FilterConfigModel {
+    return state.filterConfig;
+  }
 
   @Selector()
   static loading(state: FlightInfoStateModel): boolean {
@@ -131,7 +141,7 @@ export class FlightInfoState {
 
   @Selector()
   static cheapestTickets(state: FlightInfoStateModel): any {
-    return filterArray(state.cheapestTickets, state.filter)
+    return filterArray(state.cheapestTickets, state.filter);
   }
 
   @Selector()
@@ -191,7 +201,8 @@ export class FlightInfoState {
       .getSpecialOffers(
         payload.cityOrigin,
         payload.cityDestination,
-        payload.language
+        payload.language,
+        payload.currency
       )
       .subscribe((specialOffers: { data: any }) => {
         context.patchState({
@@ -215,8 +226,30 @@ export class FlightInfoState {
         payload.returnDate
       )
       .subscribe((response) => {
-        const data = Object.values(response.data);
-        context.patchState({ flightPriceTrends: data, loading: false });
+        const data: any = Object.values(response.data);
+        const filterConfig: FilterConfigModel = {
+          maxPrice:
+            _.maxBy(
+              data,
+              (flightPriceTrend: FlightPriceTrends) => flightPriceTrend.price
+            )?.price || 150,
+          minPrice:
+            _.minBy(
+              data,
+              (flightPriceTrend: FlightPriceTrends) => flightPriceTrend.price
+            )?.price || 1,
+          airline: true,
+          expires: true,
+          destination: true,
+          // For test, change to your elements
+          flightClass: true,
+          gate: true,
+        };
+        context.patchState({
+          flightPriceTrends: data,
+          loading: false,
+          filterConfig,
+        });
       });
   }
 
@@ -340,16 +373,38 @@ export class FlightInfoState {
         )
       )
       .subscribe((popularDestinations: any) => {
-        const response: Map<string, DestinationPopular[]> = new Map<
-          string,
+        const response: Map<CityInfo, DestinationPopular[]> = new Map<
+          CityInfo,
           DestinationPopular[]
         >();
         Object.keys(popularDestinations).forEach((key: string) => {
           if (popularDestinations[key].length > 3) {
-            response.set(key, popularDestinations[key]);
+            popularDestinations[key].forEach((item: DestinationPopular) => {
+              item.originName = this.getCityNameByKey(item.origin);
+              item.destinationName = this.getCityNameByKey(item.destination);
+            });
+            const cityInfo: CityInfo = {
+              cityName: this.getCityNameByKey(key),
+              countryCode: this.getCountryCodeByCityCode(key),
+            };
+            response.set(cityInfo, popularDestinations[key]);
           }
         });
         patchState({ popularDestinations: response, loading: false });
       });
+  }
+
+  getCityNameByKey(cityKey: string) {
+    const matchedCity = this.store
+      .selectSnapshot(RequestDataState.cities)
+      .find((city: CitiesModel) => city.code === cityKey);
+    return matchedCity ? matchedCity.name : '';
+  }
+
+  getCountryCodeByCityCode(countryKey: string): string {
+    const matchedCountry = this.store
+      .selectSnapshot(RequestDataState.cities)
+      .find((city: CitiesModel) => city.code === countryKey);
+    return matchedCountry ? matchedCountry.country_code : '';
   }
 }

@@ -5,28 +5,24 @@ import { Observable } from 'rxjs';
 import { FormDataModel } from 'src/app/models/formData.model';
 import { GetSpecialOffers } from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-special-offers',
   templateUrl: './special-offers.component.html',
   styleUrls: ['./special-offers.component.scss'],
 })
-export class SpecialOffersComponent implements OnInit, OnDestroy {
-  @Select(RequestDataState.formData)
-  formData$: Observable<FormDataModel>;
-
-  @Select(FlightInfoState.specialOffers)
-  offers$: Observable<any>;
+export class SpecialOffersComponent implements OnInit {
+  @Select(RequestDataState.formData) formData$: Observable<FormDataModel>;
+  @Select(FlightInfoState.specialOffers) offers$: Observable<any>;
 
   language: string = 'en';
-  currency: string = 'usd';
+  currency: string = 'uah';
   cityOrigin: string = 'IEV';
   destinationCity: string;
 
-  private unsubscribe$ = new Subject<null>();
-  constructor(public store: Store) { }
+  constructor(public store: Store) {}
 
   gotToLink(link: any) {
     window.open(
@@ -58,11 +54,14 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.formData$
-      .pipe(takeUntil(this.unsubscribe$))
+      .pipe(untilDestroyed(this))
       .subscribe((formData: FormDataModel) => {
-        if (!formData.isFormValid) { return };
+        if (!formData.isFormValid) {
+          return;
+        }
         this.dispatchSpecialOffers(formData);
         this.destinationCity = formData.destinationTo.name;
+        this.currency = this.store.selectSnapshot(RequestDataState.currency);
       });
   }
 
@@ -74,16 +73,11 @@ export class SpecialOffersComponent implements OnInit, OnDestroy {
       cityDestination:
         // formData.destinationTo
         //   ? formData.destinationTo.code
-        //   : 
+        //   :
         '',
       language: this.language,
       currency: this.currency,
     };
     this.store.dispatch(new GetSpecialOffers(payload));
-  }
-
-  ngOnDestroy() {
-    this.unsubscribe$.next(null);
-    this.unsubscribe$.complete();
   }
 }
