@@ -30,7 +30,6 @@ const filterArray = (
             ({ value }) => value >= minPrice && value <= maxPrice
           );
         }
-
         if (minPrice) {
           copy = copy.filter(({ value }) => value >= minPrice);
         }
