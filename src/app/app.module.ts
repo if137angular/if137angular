@@ -8,7 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { NgxsModule } from '@ngxs/store';
 import { appState } from 'src/app/store/appState';
-// import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { environment } from 'src/environments/environment';
 
@@ -37,7 +36,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatSliderModule } from '@angular/material/slider';
 import { MtxSliderModule } from '@ng-matero/extensions/slider';
 import { MatDialogModule } from '@angular/material/dialog';
 
@@ -112,7 +110,6 @@ import { CalendarDialogComponent } from './components/calendar-of-prices/calenda
     FormsModule,
     ReactiveFormsModule,
     NgxsModule.forRoot(appState, { developmentMode: !environment.production }),
-    // NgxsLoggerPluginModule.forRoot({ disabled: environment.production }),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
 
     // Angular Material
@@ -136,9 +133,9 @@ import { CalendarDialogComponent } from './components/calendar-of-prices/calenda
     MatToolbarModule,
     MatProgressBarModule,
     MatMenuModule,
-    MatSliderModule,
     MtxSliderModule,
     MatDialogModule,
+
     // Other
     FontAwesomeModule,
     NgbModalModule,

@@ -50,7 +50,6 @@ export interface FlightInfoStateModel {
   loading: boolean;
   cheapestTickets: any;
   errors: string;
-
 }
 
 @State<FlightInfoStateModel>({
@@ -90,16 +89,7 @@ export class FlightInfoState {
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
-
-    return state.calendarOfPrices.map(({ depart_date, value, ...item }) => ({
-      start: startOfDay(new Date(depart_date)),
-      title: `Price: ${value} ${state.currency.toUpperCase()}`,
-      currency: state.currency,
-      depart_date,
-      value,
-      ...item,
-    }));
-
+    return state.calendarOfPrices;
   }
 
   @Selector()
@@ -435,7 +425,7 @@ export class FlightInfoState {
             popularDestinations[key].forEach((item: DestinationPopular) => {
               item.originName = this.getCityNameByKey(item.origin);
               item.destinationName = this.getCityNameByKey(item.destination);
-              item.currencyCode = this.getCurrency(item.price)
+              item.currencyCode = this.getCurrency(item.price);
             });
             const cityInfo: CityInfo = {
               cityName: this.getCityNameByKey(key),
@@ -473,5 +463,4 @@ export class FlightInfoState {
       minimumFractionDigits: 0,
     }).format(number);
   }
-
 }
