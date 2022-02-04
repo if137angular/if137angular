@@ -22,7 +22,9 @@ export class CurrencyDropdownComponent implements OnInit {
 
   selectedOption: string = 'uah';
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) { }
+
+
 
   ngOnInit(): void {
     this.store.dispatch(new GetCurrencies());

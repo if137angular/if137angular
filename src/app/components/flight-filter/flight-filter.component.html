@@ -13,9 +13,9 @@
     </ng-container>
 
     <div>
-      <b>Price range</b>
-      <mtx-slider formControlName="priceRange" thumbLabel="true" [min]="minPrice" [max]="maxPrice"
-        (valueChange)="onFilterChange()"></mtx-slider>
+      <b>Price range ({{currency | uppercase}})</b>
+      <mtx-slider [displayWith]="formatLabel" formControlName="priceRange" thumbLabel="true" [min]="minPrice"
+        [max]="maxPrice" (valueChange)="onFilterChange()"></mtx-slider>
     </div>
   </form>
 </div>
