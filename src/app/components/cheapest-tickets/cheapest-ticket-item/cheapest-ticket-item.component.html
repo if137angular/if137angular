@@ -1,7 +1,7 @@
 <div class="ticketContainer">
   <div class="airlineContainer">
     <div class="airlineLogo" *ngIf="airlineInfo">
-      <img src="{{airlineInfo.logo}}" alt="Airline Logo"/>
+      <img src="{{airlineInfo.logo}}" alt="Airline Logo" loading="lazy" />
     </div>
     <div class="airlineInfo">
       <p *ngIf="airlineInfo; else airlineId">Airline: {{airlineInfo.name}}</p>
