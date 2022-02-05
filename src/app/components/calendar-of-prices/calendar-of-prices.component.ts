@@ -10,7 +10,7 @@ import { CalendarOfPricesLoaded } from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { isSameDay, isSameMonth } from 'date-fns';
+import { isSameDay, isSameMonth, startOfDay } from 'date-fns';
 import { Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,7 +27,7 @@ import { CalendarDialogComponent } from './calendar-dialog/calendar-dialog.compo
 })
 export class CalendarOfPricesComponent implements OnInit {
   formData: CalendarOfPricesPayload;
-  events: any[];
+  events: CalendarEvent<CalendarOfPricesModel>[];
 
   constructor(
     private store: Store,
@@ -40,7 +40,17 @@ export class CalendarOfPricesComponent implements OnInit {
       .select(FlightInfoState.calendarOfPrices)
       .pipe(untilDestroyed(this))
       .subscribe((state: CalendarOfPricesModel[]) => {
-        this.events = state;
+        const currencyFromStore = this.store.selectSnapshot(
+          RequestDataState.currency
+        );
+        this.events = state.map(({ depart_date, value, ...item }) => ({
+          start: startOfDay(new Date(depart_date)),
+          title: `Price: ${value} ${currencyFromStore.toUpperCase()}`,
+          depart_date,
+          value,
+          currency: currencyFromStore,
+          ...item,
+        }));
         this.cdRef.detectChanges();
       });
 
