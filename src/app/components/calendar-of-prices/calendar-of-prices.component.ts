@@ -43,12 +43,13 @@ export class CalendarOfPricesComponent implements OnInit {
         const currencyFromStore = this.store.selectSnapshot(
           RequestDataState.currency
         );
-        this.events = state.map(
-          ({ depart_date, return_date, value, found_at, gate }) => ({
-            start: startOfDay(new Date(depart_date)),
-            title: `Price: ${value}${currencyFromStore.toUpperCase()} Gate: ${gate} ${depart_date}-${return_date} `,
-          })
-        );
+        this.events = state.map(({ depart_date, value, ...item }) => ({
+          start: startOfDay(new Date(depart_date)),
+          title: `Price: ${value}${currencyFromStore.toUpperCase()}`,
+          depart_date,
+          value,
+          ...item,
+        }));
         this.cdRef.detectChanges();
       });
 
