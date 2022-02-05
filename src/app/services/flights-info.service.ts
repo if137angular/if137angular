@@ -143,4 +143,13 @@ export class FlightsInfoService {
       `/v1/city-directions?origin=${origin}&currency=${currencyFromStore}`
     );
   }
+  getCovidStatistic(): Observable<any> {
+    const headers = new HttpHeaders({"x-rapidapi-host": "covid-193.p.rapidapi.com","x-rapidapi-key": "000debadb3mshd605b33161f98c7p1cfaacjsn38d27d9d7d8e"});
+  return this.http.get(
+    'https://covid-193.p.rapidapi.com/statistics',
+    {headers: headers}
+    );
 }
+}
+
+

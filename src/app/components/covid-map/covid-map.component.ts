@@ -1,5 +1,9 @@
-import { Component, Inject, NgZone, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, NgZone, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { FlightsInfoService } from 'src/app/services/flights-info.service';
+import { Store } from '@ngxs/store';
+import { RequestDataState } from 'src/app/store/request-data.state';
+import { CitiesModel } from 'src/app/models/cities.model';
 
 import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
@@ -8,16 +12,68 @@ import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import am4themes from "@amcharts/amcharts4/themes/animated";
 import am4geodata from "@amcharts/amcharts5-geodata/data/countries2";
 
+export interface Data {
+  "id": any,
+  "joined": number
+}
 
 @Component({
   selector: 'app-covid-map',
   templateUrl: './covid-map.component.html',
   styleUrls: ['./covid-map.component.scss']
 })
-export class CovidMapComponent {
-  id: string = "UA"
+export class CovidMapComponent implements OnInit {
+  dataLow: any[] = [];
+  dataMedium: any[];
+  dataHigh: any[];
+  constructor(@Inject(PLATFORM_ID) private platformId: any,
+    private zone: NgZone,
+    private flightInfoService: FlightsInfoService,
+    private store: Store
+  ) { }
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private zone: NgZone , ) { }
+  ngOnInit() {
+    this.flightInfoService.getCovidStatistic().subscribe(data => {
+      const countries = this.getCountriesWithCode(data.response);
+
+      const covidInfo = countries.map((element: any) => Object.assign(element, {
+        id: this.store.selectSnapshot(RequestDataState.countries)
+          .find((country: CitiesModel) => country.name === element.country).code,
+        covidLevel: this.getCovidLevel(element)
+      }));
+
+      this.dataLow = covidInfo.filter((element: any) => element.covidLevel === "low");
+      this.dataMedium = covidInfo.filter((element: any) => element.covidLevel === "medium");
+      this.dataHigh = covidInfo.filter((element: any) => element.covidLevel === "high");
+
+      this.createMap(this.dataLow, this.dataMedium, this.dataHigh)
+
+    })
+  }
+
+  getCovidLevel(element: any): string {
+    const percent = element.cases.total * 100 / element.population;
+    if (percent > 0.05 && percent < 0.2) {
+      return "low";
+    } else if (percent > 0.2 && percent < 0.8) {
+      return "medium";
+    } else {
+      return "high";
+    }
+
+  }
+
+  getCountriesWithCode(arr: any) {
+    const covid = arr.map((element: any) => this.store.selectSnapshot(RequestDataState.countries)
+      .find((country: CitiesModel) => country.name === element.country))
+    const countries: any[] = [];
+    for (let i = 0; i < arr.length; i++) {
+      if (covid[i] !== undefined) {
+        countries.push(arr[i]);
+      }
+    }
+    return countries;
+  }
 
   browserOnly(f: () => void) {
     if (isPlatformBrowser(this.platformId)) {
@@ -27,65 +83,37 @@ export class CovidMapComponent {
     }
   }
 
-  ngAfterViewInit() {
+  createMap(dataLow: any, dataMedium: any, dataHigh: any) {
     this.browserOnly(() => {
-      
-        let groupData = [
-          {
-            "name": "High level of disease",
-            "data": [
-              { "id": "AT", "joined": "1995" },
-              { "id": "IE", "joined": "1973" },
-              { "id": "DK", "joined": "1973" },
-              { "id": "FI", "joined": "1995" },
-              { "id": "SE", "joined": "1995" },
-              { "id": "GB", "joined": "1973" },
-              { "id": "IT", "joined": "1957" },
-              { "id": "FR", "joined": "1957" },
-              { "id": "ES", "joined": "1986" },
-              { "id": "GR", "joined": "1981" },
-              { "id": "DE", "joined": "1957" },
-              { "id": "BE", "joined": "1957" },
-              { "id": "LU", "joined": "1957" },
-              { "id": "NL", "joined": "1957" },
-              { "id": "PT", "joined": "1986" }
-            ]
-          }, {
-            "name": "Medium level of disease ",
-            "data": [
-              { "id": "LT", "joined": "2004" },
-              { "id": "LV", "joined": "2004" },
-              { "id": "CZ", "joined": "2004" },
-              { "id": "SK", "joined": "2004" },
-              { "id": "SI", "joined": "2004" },
-              { "id": "EE", "joined": "2004" },
-              { "id": "HU", "joined": "2004" },
-              { "id": "CY", "joined": "2004" },
-              { "id": "MT", "joined": "2004" },
-              { "id": "PL", "joined": "2004" }
-            ]
-          }, {
-            "name": "Low level of disease",
-            "data": [
-              { "id": "RO", "joined": "2007" },
-              { "id": "BG", "joined": "2007" },
-              { "id": "RU", "joined": "2007" }
-            ]
-          }, {
-            "name": "null",
-            "data": [
-              { "id": "HR", "joined": "2013" }
-            ]
-          }
-        ];
 
-        const arr = () => {
-          groupData[0].data.unshift({"id": "UA", "joined": "25"})
+      let groupData = [
+        {
+          "name": "High level of disease",
+          "data": []
+        }, {
+          "name": "Medium level of disease ",
+          "data": []
+        }, {
+          "name": "Low level of disease",
+          "data": [{ "id": "", "joined": "" }]
+        },
+      ];
+
+      const arr = () => {
+        for (let item of this.dataLow) {
+          groupData[2].data.unshift({ id: item.id, joined: item.cases.total })
         }
-        arr()
+        for (let item of this.dataMedium) {
+          groupData[1].data.unshift({ id: item.id, joined: item.cases.total })
+        }
+        for (let item of this.dataHigh) {
+          groupData[0].data.unshift({ id: item.id, joined: item.cases.total })
+        }
+      }
+      arr()
 
       // Create root and chart
-      let root = am5.Root.new("chartdiv");
+      let root = am5.Root.new("mapdiv");
 
 
       // Set themes
@@ -96,7 +124,7 @@ export class CovidMapComponent {
 
       // Create chart
       let chart = root.container.children.push(am5map.MapChart.new(root, {
-        homeZoomLevel: 3.5,
+        homeZoomLevel: 1,
         homeGeoPoint: { longitude: 10, latitude: 52 }
       }));
 
@@ -156,7 +184,7 @@ export class CovidMapComponent {
 
 
         polygonSeries.mapPolygons.template.setAll({
-          tooltipText: "[bold]{name}[/]\nconfirmed {joined}",
+          tooltipText: "[bold]{name}[/]\ntotal cases {joined}",
           interactive: true,
           fill: color,
           strokeWidth: 2
