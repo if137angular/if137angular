@@ -6,7 +6,7 @@
     [refresh]="refresh"
     [activeDayIsOpen]="activeDayIsOpen"
     (dayClicked)="dayClicked($event.day)"
-    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventClicked)="handleEvent($event.event)"
   >
   </mwl-calendar-month-view>
 </div>
@@ -36,22 +36,3 @@
 <p class="current-date">
   {{ viewDate | calendarDate: view + "ViewTitle":"en" }}
 </p>
-
-<ng-template let-close="close">
-  <div class="modal-header">
-    <h5 class="modal-title">Event action occurred</h5>
-    <button type="button" class="close" (click)="close()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div>
-      Action:
-      <pre>{{ modalData?.action }}</pre>
-    </div>
-    <div>
-      Event:
-      <pre>{{ modalData?.event.title }}</pre>
-    </div>
-  </div>
-</ng-template>
