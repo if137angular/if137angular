@@ -1,11 +1,13 @@
 const express = require("express");
 const app = express();
+const compression = require("compression");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const livereload = require("livereload").createServer();
 const logger = require("morgan");
 
 // Middlewares
 app.use(logger("dev"));
+app.use(compression());
 app.use(express.static("dist/if137-flights-info"));
 
 // Proxy
