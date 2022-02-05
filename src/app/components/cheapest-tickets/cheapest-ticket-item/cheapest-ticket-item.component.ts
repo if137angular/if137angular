@@ -15,9 +15,9 @@ import * as moment from "moment";
 export class CheapestTicketItemComponent implements OnInit {
   @Input() ticket: CheapestTicketModel
   @Input() formData: FormDataModel
-  @Input() currency: string
 
   @Select(RequestDataState.airlines) airlines$: Observable<AirlineModel[]>
+  @Select(RequestDataState.currency) currency$: Observable<string>
 
   airlines: AirlineModel[]
   airlineInfo: AirlineModel

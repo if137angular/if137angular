@@ -1,3 +1,4 @@
+import { RequestDataState } from './../../store/request-data.state';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Store, Select } from '@ngxs/store';
@@ -24,6 +25,8 @@ export class FlightFilterComponent implements OnInit {
   minPrice: number = 0;
   maxPrice: number = 0;
 
+  currency: string = "UAH"
+
   filterElements: filterElementsModel[] = [
     {
       formControlName: 'flightClass',
@@ -49,17 +52,21 @@ export class FlightFilterComponent implements OnInit {
     priceRange: new FormControl(null),
   });
 
-  constructor(public store: Store) {}
+  constructor(public store: Store) { }
 
   ngOnInit(): void {
     this.filterConfig$.pipe(untilDestroyed(this)).subscribe((filterConfig) => {
       this.minPrice = filterConfig.minPrice;
       this.maxPrice = filterConfig.maxPrice;
 
+
+      this.currency = this.store.selectSnapshot(RequestDataState.currency)
       this.filterGroup.patchValue({
         priceRange: [this.minPrice, this.maxPrice],
       });
     });
+
+
   }
 
   onFilterChange() {
@@ -70,5 +77,15 @@ export class FlightFilterComponent implements OnInit {
         Object.assign(this.filterGroup.value, { minPrice, maxPrice })
       )
     );
+  }
+
+  formatLabel(value: number | null) {
+    if (!value) {
+      return 0;
+    }
+    if (value >= 1000) {
+      return Math.round(value / 1000) + 'k';
+    }
+    return value;
   }
 }

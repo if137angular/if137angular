@@ -22,7 +22,7 @@ export class SpecialOffersComponent implements OnInit {
   cityOrigin: string = 'IEV';
   destinationCity: string;
 
-  constructor(public store: Store) {}
+  constructor(public store: Store) { }
 
   gotToLink(link: any) {
     window.open(
@@ -32,8 +32,7 @@ export class SpecialOffersComponent implements OnInit {
   }
 
   getCurrency(number: any) {
-    let language = this.language;
-    return new Intl.NumberFormat(language.substring(0, 2), {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency: this.currency,
       minimumFractionDigits: 0,
@@ -70,11 +69,7 @@ export class SpecialOffersComponent implements OnInit {
       cityOrigin: formData.destinationFrom
         ? formData.destinationFrom.code
         : this.cityOrigin,
-      cityDestination:
-        // formData.destinationTo
-        //   ? formData.destinationTo.code
-        //   :
-        '',
+      cityDestination: '',
       language: this.language,
       currency: this.currency,
     };

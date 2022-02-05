@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { NgxsModule } from '@ngxs/store';
 import { appState } from 'src/app/store/appState';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { environment } from 'src/environments/environment';
 
 // Other
@@ -36,8 +36,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatSliderModule } from '@angular/material/slider';
 import { MtxSliderModule } from '@ng-matero/extensions/slider';
+import { MatDialogModule } from '@angular/material/dialog';
 
 // Services
 import { RequestDataService } from 'src/app/services/request-data.service';
@@ -70,7 +70,9 @@ import { CurrencyDropdownComponent } from './components/currency-dropdown/curren
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
 import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/cheapest-ticket-item.component';
 import { SortPipe } from 'src/utils/sort.pipe';
+import { CalendarDialogComponent } from './components/calendar-of-prices/calendar-dialog/calendar-dialog.component';
 import { CovidMapComponent } from './components/covid-map/covid-map.component';
+
 
 @NgModule({
   declarations: [
@@ -98,6 +100,7 @@ import { CovidMapComponent } from './components/covid-map/covid-map.component';
     CheapestTicketsComponent,
     CheapestTicketItemComponent,
     SortPipe,
+    CalendarDialogComponent,
     CovidMapComponent,
   ],
   imports: [
@@ -110,7 +113,7 @@ import { CovidMapComponent } from './components/covid-map/covid-map.component';
     FormsModule,
     ReactiveFormsModule,
     NgxsModule.forRoot(appState, { developmentMode: !environment.production }),
-    NgxsLoggerPluginModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
 
     // Angular Material
     MatSelectModule,
@@ -133,8 +136,8 @@ import { CovidMapComponent } from './components/covid-map/covid-map.component';
     MatToolbarModule,
     MatProgressBarModule,
     MatMenuModule,
-    MatSliderModule,
     MtxSliderModule,
+    MatDialogModule,
 
     // Other
     FontAwesomeModule,

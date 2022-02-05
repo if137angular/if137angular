@@ -11,6 +11,7 @@ import {
   CityInfo,
 } from '../../models/city-destination.model';
 
+
 @UntilDestroy()
 @Component({
   selector: 'app-city-destination',
@@ -33,12 +34,14 @@ export class CityDestinationComponent implements OnInit {
   selectedDestinstion: string = '';
   selectedOrigin: string = '';
   selectedCities: string;
+  currency: string = 'uah';
 
   ngOnInit(): void {
     this.store.dispatch(
       new GetPopularDestinations(this.popularDestinationCities)
     );
-  }
+  };
+
   selectDestination(selectedDestination: DestinationPopular) {
     this.selectedCities = selectedDestination.originName;
     this.selectedDestinstion = selectedDestination.destination;
