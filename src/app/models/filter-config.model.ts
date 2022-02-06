@@ -3,8 +3,9 @@ export interface FilterConfigModel {
   minPrice: number;
   airline: boolean;
   expires: boolean;
-  destination: boolean;
+  destination?: boolean;
   // For test, change to your elements
   flightClass?: boolean;
   gate?: boolean;
+
 }

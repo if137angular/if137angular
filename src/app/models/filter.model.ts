@@ -5,4 +5,5 @@ export type FilterModel = {
   minPrice: number | null;
   maxPrice: number | null;
   priceRange?: number[];
+  airline?: string | null;
 };

@@ -301,13 +301,13 @@ export class FlightInfoState {
       this.flightInfoService
         .getCheapestTickets(payload)
         .subscribe((response: CheapestTicketsResponseModel) => {
-          if (Object.keys(response.data).length == 0)
-            dispatch(
-              new CheapestTicketsRequestFail(
-                'There are no tickets in the selected direction'
-              )
-            );
-          else dispatch(new CheapestTicketsRequestSuccess(response));
+          if (!response.success && response.error) {
+            dispatch(new CheapestTicketsRequestFail(response.error));
+          } else if (response.success && Object.keys(response.data).length === 0) {
+            dispatch(new CheapestTicketsRequestFail('There are no tickets in the selected direction'));
+          } else if (response.success && Object.keys(response.data).length > 0) {
+            dispatch(new CheapestTicketsRequestSuccess(response));
+          }
         });
   }
 
@@ -330,9 +330,8 @@ export class FlightInfoState {
           ticketsArray,
           (cheapestTickets: CheapestTicketModel) => cheapestTickets.price
         )?.price || 1,
-      expires: true,
-      destination: true,
-      airline: true,
+      expires: false,
+      airline: false,
       flightClass: false,
       gate: false,
     };
@@ -350,7 +349,8 @@ export class FlightInfoState {
     { patchState }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.CheapestTicketsRequestFail
   ) {
-    patchState({ errors: payload });
+
+    patchState({ errors: payload, loading: false });
   }
 
   @Action(FlightInfoActions.GetNonStopTickets)

@@ -43,6 +43,11 @@ export class FlightFilterComponent implements OnInit {
       label: 'Transfers',
       options: ['All', 'Directly', 'Transfers'],
     },
+    {
+      formControlName: 'airline',
+      label: 'Airline',
+      options: ['All', '7W', 'RR'],
+    },
   ];
 
   filterGroup: FormGroup = new FormGroup({
@@ -50,6 +55,7 @@ export class FlightFilterComponent implements OnInit {
     gate: new FormControl(null),
     transfers: new FormControl(null),
     priceRange: new FormControl(null),
+    airline: new FormControl(null),
   });
 
   constructor(public store: Store) { }
