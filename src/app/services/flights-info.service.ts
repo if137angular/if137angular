@@ -73,12 +73,10 @@ export class FlightsInfoService {
       .append('origin', formData.destinationFrom.code)
       .append('destination', formData.destinationTo.code)
       .append('depart_date', moment(formData.startDate).format('YYYY-MM-DD'))
-      .append('return_date', moment(formData.startDate).format('YYYY-MM-DD'))
+      .append('return_date', moment(formData.endDate).format('YYYY-MM-DD'))
       .append('currency', currencyFromStore);
 
-    return this.http.get<CheapestTicketsResponseModel>('/v1/prices/cheap', {
-      params: paramsURL,
-    });
+    return this.http.get<CheapestTicketsResponseModel>('/v1/prices/cheap', {params: paramsURL});
   }
 
   getFlightPriceTrends(

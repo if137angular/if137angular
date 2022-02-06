@@ -55,6 +55,7 @@ export class FlightFilterComponent implements OnInit {
     transfers: new FormControl(null),
     airline_titles: new FormControl(null),
     priceRange: new FormControl(null),
+    airline: new FormControl(null),
   });
 
   constructor(public store: Store) {}
