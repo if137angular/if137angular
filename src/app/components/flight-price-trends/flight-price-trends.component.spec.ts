@@ -29,7 +29,7 @@ import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
-import { GetFlightPriceTrends, GetSpecialOffers } from 'src/app/store/flight-info.action';
+import { GetFlightPriceTrends } from 'src/app/store/flight-info.action';
 import { any } from '@amcharts/amcharts5/.internal/core/util/Array';
 
 describe('FlightPriceTrendsComponent', () => {
@@ -114,17 +114,84 @@ describe('FlightPriceTrendsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('#lala', () => {
-    it('should lsls', () => {
-      const dat = [
-        { transfers : 0}
+  describe('#filterDataOnFieldTransfers', () => {
+
+    it('should return data with { transfers: 0}', () => {
+      const data = [
+        { transfers: 1 },
+        { transfers: 0 }
       ] as any
 
-      component.getDirectlyFlights(dat)
+      component.getDirectlyFlights(data);
 
-      expect(component.data).toContain({transfers : 0})
+      expect(component.data).toContain({ transfers: 0 });
 
-    })
+    });
+
+    it('should return data without { transfers: 0}', () => {
+      const data = [
+        { transfers: 1 },
+        { transfers: 0 }
+      ] as any
+
+      component.getFlightsWithTransfers(data);
+
+      expect(component.data).not.toContain({ transfers: 0 });
+
+    });
+
+    it('should return data without { transfers: 1}', () => {
+      const data = [
+        { transfers: 1 },
+        { transfers: 0 }
+      ] as any
+
+      component.getDirectlyFlights(data);
+
+      expect(component.data).not.toContain({ transfers: 1 });
+
+    });
+
+    it('should return data with { transfers: 1}', () => {
+      const data = [
+        { transfers: 1 },
+        { transfers: 0 }
+      ] as any
+
+      component.getFlightsWithTransfers(data);
+
+      expect(component.data).toContain({ transfers: 1 });
+
+    });
+  });
+
+  describe('#dispatchFlightPriceTrends', () => {
+    it('should dispatch GetFlightPriceTrends with appropriate params', () => {
+      const formData = {
+        destinationFrom:{
+          code: 'LWO',
+        } ,
+        destinationTo:{
+          code: 'MIL',
+        } ,
+        endDate: new Date(2022,1,11),
+        startDate: new Date(2022,1,13),
+        transfers: 'All'
+      } as any
+     
+      component.dispatchFlightPriceTrends(formData);
+
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new GetFlightPriceTrends(
+          {
+            origin: 'LWO',
+            destination: 'MIL',
+            departDate: '2022-02',
+            returnDate: '2022-02',
+          }
+        )
+      );
+    });
   })
 
 });
