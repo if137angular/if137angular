@@ -34,8 +34,7 @@ export class CovidMapComponent implements OnInit {
 
   ngOnInit() {
     this.flightInfoService.getCovidStatistic().subscribe(data => {
-      const countries = this.getCountriesWithCode(data.response);
-
+      const countries = this.getCountriesWithCode(data.response)
       const covidInfo = countries.map((element: any) => Object.assign(element, {
         id: this.store.selectSnapshot(RequestDataState.countries)
           .find((country: CitiesModel) => country.name === element.country).code,
