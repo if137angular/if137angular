@@ -145,7 +145,7 @@ export class FlightInfoState {
     { payload }: FlightInfoActions.CalendarOfPricesLoaded
   ) {
     this.flightInfoService
-      .RequestGetCalendarOfPrices(payload)
+      .getCalendarOfPrices(payload)
       .subscribe(({ data }) => {
         patchState({
           calendarOfPrices: data,

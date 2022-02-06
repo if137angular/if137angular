@@ -29,8 +29,8 @@ export interface CalendarOfPricesStateModel {
 }
 
 export type CalendarOfPricesPayload = {
-  destination: string;
-  origin: string;
+  destination?: string;
+  origin?: string;
   return_date: string;
   depart_date: string;
   originCode: string;

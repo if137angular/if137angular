@@ -11,16 +11,27 @@ import { appState } from 'src/app/store/appState';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { CalendarOfPricesComponent } from './calendar-of-prices.component';
+import { CalendarDialogComponent } from './calendar-dialog/calendar-dialog.component';
+import {
+  MatDialogModule,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarOfPricesModel } from 'src/app/models/calendar-of-prices.model';
 import { CalendarOfPricesLoaded } from 'src/app/store/flight-info.action';
 
-describe('CalendarOfPricesComponent', () => {
+fdescribe('CalendarOfPricesComponent', () => {
   let component: CalendarOfPricesComponent;
   let fixture: ComponentFixture<CalendarOfPricesComponent>;
   let debugElement: DebugElement;
   let storeMock: any;
-  let store: any;
+  let store: Store;
   let flightsInfoServiceMock: any;
-  let requestDataService: any;
+  let requestDataServiceMock: any;
   let formDataMock = new Subject();
   let calendarDataMock = new Subject();
 
@@ -33,30 +44,43 @@ describe('CalendarOfPricesComponent', () => {
         .withArgs(FlightInfoState.calendarOfPrices)
         .and.returnValue(calendarDataMock.asObservable()),
       dispatch: jasmine.createSpy('dispatch'),
+      selectSnapshot: jasmine
+        .createSpy('selectSnapshot')
+        .and.returnValue('USD'),
     };
-    flightsInfoServiceMock = jasmine.createSpy().and.returnValue({});
 
     TestBed.configureTestingModule({
       imports: [
         BrowserModule,
+        CommonModule,
+        BrowserAnimationsModule,
         AppRoutingModule,
+        CalendarModule,
+        MatDialogModule,
         NgxsModule.forRoot(appState, {
           developmentMode: true,
         }),
         NgxsLoggerPluginModule.forRoot(),
+        CalendarModule.forRoot({
+          provide: DateAdapter,
+          useFactory: adapterFactory,
+        }),
       ],
-      declarations: [CalendarOfPricesComponent],
+
+      declarations: [CalendarOfPricesComponent, CalendarDialogComponent],
       providers: [
         { provide: Store, useValue: storeMock },
         { provide: FlightsInfoService, useValue: flightsInfoServiceMock },
-        { provide: RequestDataService, useValue: requestDataService },
+        { provide: RequestDataService, useValue: requestDataServiceMock },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CalendarOfPricesComponent);
     debugElement = fixture.debugElement;
-    store = TestBed.get(Store);
+    store = TestBed.inject(Store);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -68,36 +92,70 @@ describe('CalendarOfPricesComponent', () => {
   describe('#ngOnInit', () => {
     beforeEach(() => {
       calendarDataMock.next({
-        loading: false,
-        data: [],
-        currency: 'uah',
-        error: 'string',
+        value: 1,
+        start: new Date(),
+        title: '',
+        trip_class: 1,
+        show_to_affiliates: true,
+        origin: '',
+        destination: '',
+        gate: '',
+        depart_date: new Date(),
+        return_date: new Date(),
+        number_of_changes: 1,
+        found_at: new Date(),
+        duration: 1,
+        distance: 1,
+        actual: true,
+        currency: '',
       });
       formDataMock.next({
-        destinationFrom: {
-          name: '',
-          code: '',
-        },
-        destinationTo: {
-          name: '',
-          code: '',
-        },
-        endDate: new Date(),
-        startDate: new Date(),
-        transfers: 'string',
+        origin: '',
+        destination: '',
+        originCode: '',
+        destinationCode: '',
+        return_date: '',
+        depart_date: '',
       });
     });
-    it('should...', () => {
-      expect(storeMock.dispatch).toHaveBeenCalledWith(
-        new CalendarOfPricesLoaded({
-          origin: '',
-          destination: '',
-          originCode: '',
-          destinationCode: '',
-          return_date: '2022-01-22',
-          depart_date: '2022-01-22',
-        })
-      );
+
+    it('should select calendarData from store', () => {
+      store
+        .select(FlightInfoState.calendarOfPrices)
+        .subscribe((state: CalendarOfPricesModel[]) =>
+          expect(state).toEqual([
+            {
+              value: 1,
+              start: new Date(),
+              title: '',
+              trip_class: 1,
+              show_to_affiliates: true,
+              origin: '',
+              destination: '',
+              gate: '',
+              depart_date: new Date(),
+              return_date: new Date(),
+              number_of_changes: 1,
+              found_at: new Date(),
+              duration: 1,
+              distance: 1,
+              actual: true,
+              currency: '',
+            },
+          ])
+        );
+    });
+
+    it('should select currency from store', () => {
+      expect(store.selectSnapshot(RequestDataState.currency)).toBeTruthy();
+    });
+
+    it('should select formData from store', () => {
+      store
+        .select(RequestDataState.formData)
+        .subscribe((data: any) =>
+          store.dispatch(new CalendarOfPricesLoaded(data))
+        );
     });
   });
 });
