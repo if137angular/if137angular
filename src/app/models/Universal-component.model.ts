@@ -14,7 +14,7 @@ export type UniversalComponentModel = {
   actual?: boolean;
   price: number;
   airline?: string;
-  airline_title?: string
+  airline_title?: string;
   flight_number?: string;
   departure_at?: string;
   return_at?: string;
