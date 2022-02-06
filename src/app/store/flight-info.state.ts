@@ -349,7 +349,10 @@ export class FlightInfoState {
     { patchState }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.CheapestTicketsRequestFail
   ) {
-    patchState({ errors: payload });
+    patchState({
+      errors: payload,
+      loading: false,
+    });
   }
 
   @Action(FlightInfoActions.GetNonStopTickets)
