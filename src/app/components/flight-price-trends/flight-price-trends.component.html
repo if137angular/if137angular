@@ -1,60 +1,60 @@
 <div class="tickets">
-	<mat-card class="ticket-info" *ngFor="let item of data">
-		<mat-card-title class="ticket-info-title">{{ cityFrom }} - {{ cityTo }}</mat-card-title>
-		<mat-card-content class="ticket-info-content">
-			<div class="ticket-info-content-flight">
-				<img src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png" alt="airlineImage">
-				<div class="ticket-info-content-flight-details">
-					<span> Airline: {{ item.airline }}</span>
-					<span> Flight number: {{ item.flight_number }}</span>
-					<span *ngIf="item.transfers > 0"> <b>Stops: {{ item.transfers }}</b></span>
-					<span *ngIf="item.transfers === 0"><b> Nonstop (direct) </b></span>
-				</div>
-			</div>
+  <mat-card class="ticket-info" *ngFor="let item of data">
+    <mat-card-title class="ticket-info-title">{{ cityFrom }} - {{ cityTo }}</mat-card-title>
+    <mat-card-content class="ticket-info-content">
+      <div class="ticket-info-content-flight">
+        <img src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png" alt="airlineImage" loading="lazy">
+        <div class="ticket-info-content-flight-details">
+          <span> Airline: {{ item.airline }}</span>
+          <span> Flight number: {{ item.flight_number }}</span>
+          <span *ngIf="item.transfers > 0"> <b>Stops: {{ item.transfers }}</b></span>
+          <span *ngIf="item.transfers === 0"><b> Nonstop (direct) </b></span>
+        </div>
+      </div>
 
-			<div class="ticket-info-content-main">
-				<div class="ticket-info-content-main-departure">
-					<span class="ticket-info-content-main-departure-city"> {{ cityFrom }} </span>
-					<span class="ticket-info-content-main-departure-date"> {{ item.departure_at | date : "MMM,dd" }}, {{
-						item.departure_at | date : "HH:mm" }} </span>
-				</div>
-				<div class="ticket-info-content-main-image">
-					<div class="ticket-info-content-main-image-top">
-						<mat-icon>flight_takeoff</mat-icon>
-						<mat-icon>flight_land</mat-icon>
-					</div>
-					<div class="ticket-info-content-main-image-line"></div>
-					<div class="ticket-info-content-main-image-bottom">
-						<span>{{item.origin}}</span>
-						<span>{{item.destination}}</span>
-					</div>
-				</div>
-				<div class="ticket-info-content-main-return">
-					<span> {{ cityTo }} </span>
-				</div>
-			</div>
+      <div class="ticket-info-content-main">
+        <div class="ticket-info-content-main-departure">
+          <span class="ticket-info-content-main-departure-city"> {{ cityFrom }} </span>
+          <span class="ticket-info-content-main-departure-date"> {{ item.departure_at | date : "MMM,dd" }}, {{
+            item.departure_at | date : "HH:mm" }} </span>
+        </div>
+        <div class="ticket-info-content-main-image">
+          <div class="ticket-info-content-main-image-top">
+            <mat-icon>flight_takeoff</mat-icon>
+            <mat-icon>flight_land</mat-icon>
+          </div>
+          <div class="ticket-info-content-main-image-line"></div>
+          <div class="ticket-info-content-main-image-bottom">
+            <span>{{item.origin}}</span>
+            <span>{{item.destination}}</span>
+          </div>
+        </div>
+        <div class="ticket-info-content-main-return">
+          <span> {{ cityTo }} </span>
+        </div>
+      </div>
 
-			<div class="ticket-info-content-main">
-				<div class="ticket-info-content-main-departure">
-					<span class="ticket-info-content-main-departure-city"> {{ cityTo }} </span>
-					<span class="ticket-info-content-main-departure-date"> {{ item.return_at | date : "MMM,dd" }}, {{
-						item.return_at | date : "HH:mm" }} </span>
-				</div>
-				<div class="ticket-info-content-main-image">
-					<div class="ticket-info-content-main-image-top">
-						<mat-icon>flight_takeoff</mat-icon>
-						<mat-icon>flight_land</mat-icon>
-					</div>
-					<div class="ticket-info-content-main-image-line"></div>
-					<div class="ticket-info-content-main-image-bottom">
-						<span>{{item.destination}}</span>
-						<span>{{item.origin}}</span>
-					</div>
-				</div>
-				<div class="ticket-info-content-main-return">
-					<span> {{ cityFrom }} </span>
-				</div>
-			</div>
+      <div class="ticket-info-content-main">
+        <div class="ticket-info-content-main-departure">
+          <span class="ticket-info-content-main-departure-city"> {{ cityTo }} </span>
+          <span class="ticket-info-content-main-departure-date"> {{ item.return_at | date : "MMM,dd" }}, {{
+            item.return_at | date : "HH:mm" }} </span>
+        </div>
+        <div class="ticket-info-content-main-image">
+          <div class="ticket-info-content-main-image-top">
+            <mat-icon>flight_takeoff</mat-icon>
+            <mat-icon>flight_land</mat-icon>
+          </div>
+          <div class="ticket-info-content-main-image-line"></div>
+          <div class="ticket-info-content-main-image-bottom">
+            <span>{{item.destination}}</span>
+            <span>{{item.origin}}</span>
+          </div>
+        </div>
+        <div class="ticket-info-content-main-return">
+          <span> {{ cityFrom }} </span>
+        </div>
+      </div>
 
 			<div class="ticket-info-content-price">
 				<span class="price">Price: <b>{{ item.price }} {{ currency | uppercase }}</b></span>
@@ -64,5 +64,5 @@
 	</mat-card>
 </div>
 <div *ngIf="data.length === 0">
-	<app-no-records-found></app-no-records-found>
+  <app-no-records-found></app-no-records-found>
 </div>

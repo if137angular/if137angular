@@ -43,6 +43,7 @@
     "angular-calendar": "^0.29.0",
     "angularx-flatpickr": "^6.6.0",
     "bootstrap": "^4.6.0",
+    "compression": "^1.7.4",
     "date-fns": "^2.28.0",
     "express": "4.17.1",
     "flatpickr": "^4.6.9",
