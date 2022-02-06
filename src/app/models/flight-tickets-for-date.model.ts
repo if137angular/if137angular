@@ -1,5 +1,4 @@
 export type FlightInfo = {
-	loading: boolean;
 	airline: string; // add
 	departure_at: string;
 	destination: string; // ? 
@@ -20,14 +19,14 @@ export type FlightTiketsForDatePayload = {
 }
 
 export type Destinations = {
-	code: string;
-	name: string;
-}
+  code: string;
+  name: string;
+};
 
 export type TicketsType = {
-	destinationFrom: Destinations;
-	destinationTo: Destinations;
-	endDate: Date;
-	startDate: Date;
-	transfers: string;
-}
+  destinationFrom: Destinations;
+  destinationTo: Destinations;
+  endDate: Date;
+  startDate: Date;
+  transfers: string;
+};
