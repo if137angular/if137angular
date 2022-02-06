@@ -319,13 +319,13 @@ export class FlightInfoState {
       this.flightInfoService
         .getCheapestTickets(payload)
         .subscribe((response: CheapestTicketsResponseModel) => {
-          if (Object.keys(response.data).length == 0)
-            dispatch(
-              new CheapestTicketsRequestFail(
-                'There are no tickets in the selected direction'
-              )
-            );
-          else dispatch(new CheapestTicketsRequestSuccess(response));
+          if (!response.success && response.error) {
+            dispatch(new CheapestTicketsRequestFail(response.error));
+          } else if (response.success && Object.keys(response.data).length === 0) {
+            dispatch(new CheapestTicketsRequestFail('There are no tickets in the selected direction'));
+          } else if (response.success && Object.keys(response.data).length > 0) {
+            dispatch(new CheapestTicketsRequestSuccess(response));
+          }
         });
   }
 
@@ -335,7 +335,8 @@ export class FlightInfoState {
     { payload }: FlightInfoActions.CheapestTicketsRequestSuccess
   ) {
     const ticketsObj: TicketsObjModel = Object.values(payload.data)[0];
-    const ticketsArray: CheapestTicketModel[] = Object.values(ticketsObj);
+    const ticketsArray: CheapestTicketModel[] = Object.values(ticketsObj)
+
     const filterConfig: FilterConfigModel = {
       maxPrice:
         _.maxBy(
@@ -347,10 +348,9 @@ export class FlightInfoState {
           ticketsArray,
           (cheapestTickets: CheapestTicketModel) => cheapestTickets.price
         )?.price || 1,
-      expires: true,
-      destination: true,
-      airline: true,
       airline_titles: false,
+      expires: false,
+      airline: false,
       flightClass: false,
       gate: false,
     };
@@ -372,10 +372,7 @@ export class FlightInfoState {
     { patchState }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.CheapestTicketsRequestFail
   ) {
-    patchState({
-      errors: payload,
-      loading: false,
-    });
+    patchState({ errors: payload, loading: false });
   }
 
   @Action(FlightInfoActions.GetNonStopTickets)

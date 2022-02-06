@@ -1,0 +1,13 @@
+<div class="flightSortWrapper">
+  <h3>Sort</h3>
+  <mat-form-field appearance="fill">
+    <mat-label>Sort By</mat-label>
+    <mat-select (selectionChange)="sortTickets($event.value)" [(value)]="selected">
+      <mat-option *ngFor="let food of foods" [value]="food.value">
+        {{food.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  {{selected}}
+</div>
