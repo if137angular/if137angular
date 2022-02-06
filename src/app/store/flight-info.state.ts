@@ -84,7 +84,7 @@ export class FlightInfoState {
   constructor(
     private flightInfoService: FlightsInfoService,
     private store: Store
-  ) { }
+  ) {}
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
