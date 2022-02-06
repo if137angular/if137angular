@@ -17,7 +17,7 @@ export class CurrencyDropdownComponent implements OnInit {
   >;
   @Select(RequestDataState.currency) selectedCurrency$: Observable<any>;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
     this.store.dispatch(new GetCurrencies());
@@ -26,4 +26,5 @@ export class CurrencyDropdownComponent implements OnInit {
   setValue(data: string): void {
     this.store.dispatch(new SetCurrency(data));
   }
+
 }
