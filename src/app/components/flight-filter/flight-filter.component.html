@@ -18,5 +18,12 @@
       <mtx-slider [displayWith]="formatLabel" formControlName="priceRange" thumbLabel="true" [min]="minPrice"
         [max]="maxPrice" (valueChange)="onFilterChange()"></mtx-slider>
     </div>
+
+    <div [ngStyle]="{ 'display': checkTrue ? 'block' : 'none' }">
+      <b>Duration range</b>
+      <mtx-slider formControlName="durationRange" thumbLabel="true" [min]="minDuration" [max]=" maxDuration"
+        (valueChange)="onDurationChange()"></mtx-slider>
+      <div>{{getHours(filterGroup.value.durationRange[0])}} - {{getHours(filterGroup.value.durationRange[1])}}</div>
+    </div>
   </form>
 </div>

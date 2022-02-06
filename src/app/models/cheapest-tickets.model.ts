@@ -21,6 +21,7 @@ export interface CheapestTicketModel {
   flight_number: number
   price: number
   return_at: string
+  duration: number
 }
 
 export interface AirlineModel {

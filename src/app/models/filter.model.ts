@@ -6,5 +6,8 @@ export type FilterModel = {
   airline_titles?: string | null;
   minPrice: number | null;
   maxPrice: number | null;
+  minDuration: number | null;
+  maxDuration: number | null;
   priceRange?: number[];
+  durationRange?: number[];
 };
