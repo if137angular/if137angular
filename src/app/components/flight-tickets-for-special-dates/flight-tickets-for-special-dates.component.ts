@@ -20,32 +20,30 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
 
   flightInfo: FlightInfo[];
   currency: string;
-
   loading: boolean;
+  numCards: number = 10;
 
   constructor(private store: Store) { }
 
-  ngOnInit(): void {
-    this.store
-      .select(FlightInfoState.flightTiketsForDate)
-      .pipe(untilDestroyed(this))
-      .subscribe((state) => (this.flightInfo = state));
+  onScroll() {
+    this.numCards += 4;
+    console.log(this.numCards)
+    this.getFlightInfo()
+  }
 
-    this.store.select(FlightInfoState.loading)
-      .pipe(untilDestroyed(this))
-      .subscribe(loading => this.loading = loading);
-
+  getFlightInfo() {
     this.formData$.pipe(untilDestroyed(this)).subscribe(formData => {
       const payload = {
         codeFrom: formData.destinationFrom.code,
         codeTo: formData.destinationTo.code,
         startDate: formData.startDate.toISOString().slice(0, 10),
         endDate: formData.endDate.toISOString().slice(0, 10),
-        direct: formData.transfers  === 'Directly'
+        direct: formData.transfers  === 'Directly',
+        numCards: this.numCards
       }
       this.store.dispatch([new StartLoading(), new GetTiketsForSpecialDate(payload)])
         .subscribe((data: any) => {
-          this.flightInfo = data
+          this.flightInfo.push(data)
         })
     
       this.store.select(RequestDataState.currency)
@@ -53,5 +51,20 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
       .subscribe((currency: string) => this.currency = currency.toUpperCase())
 
     })
+
+    this.store.select(FlightInfoState.loading)
+    .pipe(untilDestroyed(this))
+    .subscribe(loading => this.loading = loading);
+  }
+
+  ngOnInit(): void {
+    this.getFlightInfo()
+
+    this.store
+      .select(FlightInfoState.flightTiketsForDate)
+      .pipe(untilDestroyed(this))
+      .subscribe((state) => (this.flightInfo = state));
+
+
   }
 }

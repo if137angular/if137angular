@@ -16,6 +16,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 // Angular Material
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -135,6 +136,7 @@ import { SortPipe } from 'src/utils/sort.pipe';
     MtxSliderModule,
 
     // Other
+    InfiniteScrollModule,
     FontAwesomeModule,
     NgbModalModule,
     FlatpickrModule.forRoot(),

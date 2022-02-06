@@ -123,14 +123,15 @@ export class FlightsInfoService {
     codeTo: string,
     startDate: string,
     endDate: string,
-    direct: boolean
+    direct: boolean,
+    numCards: number
   ): Observable<any> {
     const currencyFromStore = this.store.selectSnapshot(
       RequestDataState.currency
     );
 
     return this.http.get(
-      `/aviasales/v3/prices_for_dates?origin=${codeFrom}&destination=${codeTo}&departure_at=${startDate}&return_at=${endDate}&unique=false&sorting=price&direct=${direct}&currency=${currencyFromStore}&limit=15&page=1&one_way=true`
+      `/aviasales/v3/prices_for_dates?origin=${codeFrom}&destination=${codeTo}&departure_at=${startDate}&return_at=${endDate}&unique=false&sorting=price&direct=${direct}&currency=${currencyFromStore}&limit=${numCards}&page=1&one_way=true`
     );
   }
 
