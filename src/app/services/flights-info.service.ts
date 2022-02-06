@@ -121,14 +121,15 @@ export class FlightsInfoService {
     codeTo: string,
     startDate: string,
     endDate: string,
-    direct: boolean
+    direct: boolean,
+    numCards: number
   ): Observable<any> {
     const currencyFromStore = this.store.selectSnapshot(
       RequestDataState.currency
     );
 
     return this.http.get(
-      `/aviasales/v3/prices_for_dates?origin=${codeFrom}&destination=${codeTo}&departure_at=${startDate}&return_at=${endDate}&unique=false&sorting=price&direct=${direct}&currency=${currencyFromStore}&limit=15&page=1&one_way=true`
+      `/aviasales/v3/prices_for_dates?origin=${codeFrom}&destination=${codeTo}&departure_at=${startDate}&return_at=${endDate}&unique=false&sorting=price&direct=${direct}&currency=${currencyFromStore}&limit=${numCards}&page=1&one_way=true`
     );
   }
 
@@ -141,4 +142,13 @@ export class FlightsInfoService {
       `/v1/city-directions?origin=${origin}&currency=${currencyFromStore}`
     );
   }
+  getCovidStatistic(): Observable<any> {
+    const headers = new HttpHeaders({"x-rapidapi-host": "covid-193.p.rapidapi.com","x-rapidapi-key": "000debadb3mshd605b33161f98c7p1cfaacjsn38d27d9d7d8e"});
+  return this.http.get(
+    'https://covid-193.p.rapidapi.com/statistics',
+    {headers: headers}
+    );
 }
+}
+
+

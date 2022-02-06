@@ -17,6 +17,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 // Angular Material
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -72,6 +73,7 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
 import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/cheapest-ticket-item.component';
 import { SortPipe } from 'src/utils/sort.pipe';
 import { CalendarDialogComponent } from './components/calendar-of-prices/calendar-dialog/calendar-dialog.component';
+import { CovidMapComponent } from './components/covid-map/covid-map.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +102,7 @@ import { CalendarDialogComponent } from './components/calendar-of-prices/calenda
     CheapestTicketItemComponent,
     SortPipe,
     CalendarDialogComponent,
+    CovidMapComponent,
   ],
   imports: [
     // Common
@@ -139,6 +142,7 @@ import { CalendarDialogComponent } from './components/calendar-of-prices/calenda
     MatDialogModule,
 
     // Other
+    InfiniteScrollModule,
     FontAwesomeModule,
     NgbModalModule,
     FlatpickrModule.forRoot(),

@@ -115,7 +115,6 @@ export class FlightInfoState {
   static flightPriceTrends(state: FlightInfoStateModel): any {
     return filterArray(state.flightPriceTrends, state.filter);
   }
-
   @Selector()
   static popularDestinations(state: FlightInfoStateModel): any {
     return state.popularDestinations;
@@ -167,7 +166,8 @@ export class FlightInfoState {
         payload.codeTo,
         payload.startDate,
         payload.endDate,
-        payload.direct
+        payload.direct,
+        payload.numCards
       )
       .subscribe((response) => {
         const data: any = Object.values(response.data);
@@ -356,7 +356,10 @@ export class FlightInfoState {
     { patchState }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.CheapestTicketsRequestFail
   ) {
-    patchState({ errors: payload });
+    patchState({
+      errors: payload,
+      loading: false,
+    });
   }
 
   @Action(FlightInfoActions.GetNonStopTickets)
