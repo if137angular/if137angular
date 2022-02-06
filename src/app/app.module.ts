@@ -70,6 +70,7 @@ import { CurrencyDropdownComponent } from './components/currency-dropdown/curren
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
 import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/cheapest-ticket-item.component';
 import { SortPipe } from 'src/utils/sort.pipe';
+import { FlightSortComponent } from './components/flight-sort/flight-sort.component';
 
 @NgModule({
   declarations: [
@@ -97,6 +98,7 @@ import { SortPipe } from 'src/utils/sort.pipe';
     CheapestTicketsComponent,
     CheapestTicketItemComponent,
     SortPipe,
+    FlightSortComponent,
   ],
   imports: [
     // Common

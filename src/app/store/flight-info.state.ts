@@ -356,6 +356,7 @@ export class FlightInfoState {
   ) {
     const ticketsObj: TicketsObjModel = Object.values(payload.data)[0];
     const ticketsArray: CheapestTicketModel[] = Object.values(ticketsObj)
+
     const filterConfig: FilterConfigModel = {
       maxPrice:
         _.maxBy(
