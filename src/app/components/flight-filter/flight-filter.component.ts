@@ -24,8 +24,7 @@ export class FlightFilterComponent implements OnInit {
 
   minPrice: number = 0;
   maxPrice: number = 0;
-
-  currency: string = "UAH"
+  currency: string;
 
   filterElements: filterElementsModel[] = [
     {
@@ -52,21 +51,19 @@ export class FlightFilterComponent implements OnInit {
     priceRange: new FormControl(null),
   });
 
-  constructor(public store: Store) { }
+  constructor(public store: Store) {}
 
   ngOnInit(): void {
     this.filterConfig$.pipe(untilDestroyed(this)).subscribe((filterConfig) => {
       this.minPrice = filterConfig.minPrice;
       this.maxPrice = filterConfig.maxPrice;
 
-
-      this.currency = this.store.selectSnapshot(RequestDataState.currency)
       this.filterGroup.patchValue({
         priceRange: [this.minPrice, this.maxPrice],
       });
+
+      this.currency = this.store.selectSnapshot(RequestDataState.currency);
     });
-
-
   }
 
   onFilterChange() {

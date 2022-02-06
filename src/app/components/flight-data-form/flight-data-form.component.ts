@@ -9,6 +9,7 @@ import { SetFormDate } from 'src/app/store/request-data.action';
 import { FormDataModel } from 'src/app/models/formData.model';
 import { GetLocationModel } from 'src/app/models/GetLocation.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { SetFilter } from 'src/app/store/flight-info.action';
 
 @UntilDestroy()
 @Component({
@@ -70,6 +71,13 @@ export class FlightDataFormComponent implements OnInit {
           endDate: formData.endDate,
           transfers: formData.transfers,
         });
+
+        this.store.dispatch(
+          new SetFilter({
+            minPrice: null,
+            maxPrice: null,
+          })
+        );
       });
   }
 
