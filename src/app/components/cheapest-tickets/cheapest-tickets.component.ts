@@ -21,7 +21,6 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 export class CheapestTicketsComponent implements OnInit {
   @Select(RequestDataState.formData) formData$: Observable<FormDataModel>;
   @Select(RequestDataState.currency) currency$: Observable<string>;
-  @Select(FlightInfoState.loading) loading$: Observable<boolean>;
   @Select(FlightInfoState.cheapestTickets) cheapestTickets$: Observable<
     CheapestTicketModel[]
   >;
