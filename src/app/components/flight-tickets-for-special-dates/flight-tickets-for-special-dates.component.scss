@@ -1,3 +1,4 @@
+
 .wrap {
   display: flex;
   align-items: center;
@@ -18,4 +19,9 @@
   font-size: 1.8rem;
   font-weight: 500;
   color: rgb(228, 125, 99);
+}
+
+.spinner {
+  margin: 20px auto;
+  color: #673ab7;
 }

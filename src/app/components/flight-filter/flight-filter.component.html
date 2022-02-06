@@ -14,6 +14,7 @@
 
     <div>
       <b>Price range ({{currency | uppercase}})</b>
+      <div>{{filterGroup.value.priceRange[0]}} - {{filterGroup.value.priceRange[1]}}</div>
       <mtx-slider [displayWith]="formatLabel" formControlName="priceRange" thumbLabel="true" [min]="minPrice"
         [max]="maxPrice" (valueChange)="onFilterChange()"></mtx-slider>
     </div>

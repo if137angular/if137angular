@@ -7,6 +7,7 @@ import { CitiesModel } from 'src/app/models/cities.model';
 import { FormDataModel } from '../models/formData.model';
 import { IpFullModel, IpShortModel } from '../models/ip.model';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
+import * as moment from 'moment';
 
 export interface RequestDataStateModel {
   countries: any[];
@@ -39,8 +40,8 @@ export interface RequestDataStateModel {
         name: '',
         code: '',
       },
-      endDate: new Date(),
       startDate: new Date(),
+      endDate: new Date(),
       transfers: '',
     },
     userData: {
@@ -220,8 +221,8 @@ export class RequestDataState {
                 name: '',
                 code: '',
               },
-              endDate: new Date(),
               startDate: new Date(),
+              endDate: moment().add(7, 'days').toDate(),
               transfers: 'All',
             };
 
