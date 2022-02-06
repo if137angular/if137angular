@@ -25,7 +25,7 @@ export class FlightPriceTrendsComponent implements OnInit {
   flightPriceTrends$: Observable<FlightPriceTrendsRequest>;
 
   data: any = [];
-  currency: string = 'USD';
+  currency: string;
   cityFrom: string;
   cityTo: string;
   transfers: string;
@@ -59,6 +59,7 @@ export class FlightPriceTrendsComponent implements OnInit {
       this.cityFrom = formData.destinationFrom.name;
       this.cityTo = formData.destinationTo.name;
       this.transfers = formData.transfers ?? 'All';
+      this.currency = this.store.selectSnapshot(RequestDataState.currency);
     });
   }
 

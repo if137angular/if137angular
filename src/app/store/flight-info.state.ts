@@ -112,7 +112,6 @@ export class FlightInfoState {
   static flightPriceTrends(state: FlightInfoStateModel): any {
     return filterArray(state.flightPriceTrends, state.filter);
   }
-
   @Selector()
   static popularDestinations(state: FlightInfoStateModel): any {
     return state.popularDestinations;

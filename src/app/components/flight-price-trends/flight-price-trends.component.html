@@ -56,12 +56,12 @@
         </div>
       </div>
 
-      <div class="ticket-info-content-price">
-        <span class="price">Price: <b>{{ item.price }} {{ currency }}</b></span>
-        <span class="offer">The offer valid untill {{ item.expires_at | date : "short" }}</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
+			<div class="ticket-info-content-price">
+				<span class="price">Price: <b>{{ item.price }} {{ currency | uppercase }}</b></span>
+				<span class="offer">The offer valid untill {{ item.expires_at | date : "short" }}</span>
+			</div>
+		</mat-card-content>
+	</mat-card>
 </div>
 <div *ngIf="data.length === 0">
   <app-no-records-found></app-no-records-found>

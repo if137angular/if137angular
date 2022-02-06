@@ -73,6 +73,8 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
 import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/cheapest-ticket-item.component';
 import { SortPipe } from 'src/utils/sort.pipe';
 import { CalendarDialogComponent } from './components/calendar-of-prices/calendar-dialog/calendar-dialog.component';
+import { CovidMapComponent } from './components/covid-map/covid-map.component';
+
 
 @NgModule({
   declarations: [
@@ -101,6 +103,7 @@ import { CalendarDialogComponent } from './components/calendar-of-prices/calenda
     CheapestTicketItemComponent,
     SortPipe,
     CalendarDialogComponent,
+    CovidMapComponent,
   ],
   imports: [
     // Common
