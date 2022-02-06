@@ -22,7 +22,7 @@ import { RequestDataState } from 'src/app/store/request-data.state';
 export class FlightsInfoService {
   constructor(private http: HttpClient, private store: Store) {}
 
-  RequestGetCalendarOfPrices({
+  getCalendarOfPrices({
     originCode,
     destinationCode,
     depart_date,
@@ -65,18 +65,18 @@ export class FlightsInfoService {
   getCheapestTickets(
     formData: FormDataModel
   ): Observable<CheapestTicketsResponseModel> {
-    const currencyFromStore = this.store.selectSnapshot(RequestDataState.currency);
+    const currencyFromStore = this.store.selectSnapshot(
+      RequestDataState.currency
+    );
 
     let paramsURL = new HttpParams()
       .append('origin', formData.destinationFrom.code)
       .append('destination', formData.destinationTo.code)
       .append('depart_date', moment(formData.startDate).format('YYYY-MM-DD'))
-      .append('return_date', moment(formData.startDate).format('YYYY-MM-DD'))
+      .append('return_date', moment(formData.endDate).format('YYYY-MM-DD'))
       .append('currency', currencyFromStore);
 
-    return this.http.get<CheapestTicketsResponseModel>('/v1/prices/cheap', {
-      params: paramsURL,
-    });
+    return this.http.get<CheapestTicketsResponseModel>('/v1/prices/cheap', {params: paramsURL});
   }
 
   getFlightPriceTrends(

@@ -21,6 +21,9 @@ const filterArray = (
   if (gate !== null && gate !== 'All') {
     copy = copy.filter(({ gate: flightGate }) => flightGate === gate);
   }
+  // if (airline !== null && airline !== 'All') {
+  //   copy = copy.filter((elm) => elm.airline === airline);
+  // }
 
   if (airline_titles !== null && airline_titles !== 'All' && airline_titles !== undefined) {
     copy = copy.filter(({ airline_title }) => airline_title === airline_titles);

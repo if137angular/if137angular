@@ -63,7 +63,8 @@ export class FlightFilterComponent implements OnInit {
     airline_titles: new FormControl(null),
     priceRange: new FormControl(null),
     durationRange: new FormControl(null),
-  });
+    airline: new FormControl(null),
+
 
   constructor(public store: Store, private router: Router) { }
 

@@ -6,7 +6,7 @@ export interface FilterConfigModel {
   airline: boolean;
   airline_titles: boolean;
   expires: boolean;
-  destination: boolean;
+  destination?: boolean;
   // For test, change to your elements
   flightClass?: boolean;
   gate?: boolean;
