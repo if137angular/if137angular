@@ -69,7 +69,7 @@ export class CalendarOfPricesComponent implements OnInit {
         }))
       )
       .subscribe((data: CalendarOfPricesPayload) => {
-        this.store.dispatch([new CalendarOfPricesLoaded(data)]);
+        this.store.dispatch(new CalendarOfPricesLoaded(data));
         this.formData = data;
       });
   }

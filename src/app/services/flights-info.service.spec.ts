@@ -33,14 +33,28 @@ describe('FlightsInfoService', () => {
     });
   });
 
-  describe('#getFlightPriceTrends', () => {
-    it('should call http with appropriate params', () =>{
-      const expectedParams = 
-      `/v1/prices/calendar?origin=LWO&destination=MIL&departure_date=2022-02&return_date=2022-02&currency=USD&calendar_type=departure_date`;
-
-      service.getFlightPriceTrends('LWO','MIL','2022-02','2022-02');
-
+  describe('#getCalendarOfPrices', () => {
+    it('should call http with appropriate params for calendar request', () => {
+      storeMock.selectSnapshot = jasmine
+        .createSpy('selectSnapshot')
+        .and.returnValue('USD');
+      const requestParams = {
+        originCode: 'LWO',
+        destinationCode: 'WAW',
+        depart_date: '2021-09-18',
+        return_date: '2021-09-19',
+      };
+      const expectedParams =
+        '/v2/prices/week-matrix?currency=USD&origin=LWO&destination=WAW&show_to_affiliates=true&depart_date=2021-09-18&return_date=2021-09-19';
+      service.getCalendarOfPrices(requestParams);
       expect(httpMock.get).toHaveBeenCalledWith(expectedParams);
+    });
+  });
+
+  describe('#getFlightPriceTrends', () => {
+    it('should call http with appropriate params', () => {
+      const expectedParams = `/v1/prices/calendar?origin=LWO&destination=MIL&departure_date=2022-02&return_date=2022-02&currency=USD&calendar_type=departure_date`;
+      service.getFlightPriceTrends('LWO', 'MIL', '2022-02', '2022-02');
     });
   });
 });
