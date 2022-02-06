@@ -42,12 +42,18 @@ export class FlightFilterComponent implements OnInit {
       label: 'Transfers',
       options: ['All', 'Directly', 'Transfers'],
     },
+    {
+      formControlName: 'airline_titles',
+      label: 'Airline',
+      options: ['All', 'Ryanair', 'Wizz Air', 'Bees Airline'],
+    },
   ];
 
   filterGroup: FormGroup = new FormGroup({
     flightClass: new FormControl(null),
     gate: new FormControl(null),
     transfers: new FormControl(null),
+    airline_titles: new FormControl(null),
     priceRange: new FormControl(null),
   });
 
