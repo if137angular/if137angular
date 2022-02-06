@@ -65,9 +65,7 @@ export class FlightsInfoService {
   getCheapestTickets(
     formData: FormDataModel
   ): Observable<CheapestTicketsResponseModel> {
-    const currencyFromStore = this.store.selectSnapshot(
-      RequestDataState.currency
-    );
+    const currencyFromStore = this.store.selectSnapshot(RequestDataState.currency);
 
     let paramsURL = new HttpParams()
       .append('origin', formData.destinationFrom.code)

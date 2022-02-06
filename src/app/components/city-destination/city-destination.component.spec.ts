@@ -1,38 +1,37 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {CityDestinationComponent} from './city-destination.component';
-import {BrowserModule} from "@angular/platform-browser";
-import {AppRoutingModule} from "../../app-routing.module";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatSelectModule} from "@angular/material/select";
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {MatInputModule} from "@angular/material/input";
-import {MatButtonModule} from "@angular/material/button";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
-import {MatRadioModule} from "@angular/material/radio";
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {MatTabsModule} from "@angular/material/tabs";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatTooltipModule} from "@angular/material/tooltip";
-import {MatIconModule} from "@angular/material/icon";
-import {MatTableModule} from "@angular/material/table";
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {NgxsModule, Store} from '@ngxs/store';
-import {appState} from "../../store/appState";
-import {NgxsLoggerPluginModule} from "@ngxs/logger-plugin";
-import {CUSTOM_ELEMENTS_SCHEMA, DebugElement} from "@angular/core";
-import {Subject} from "rxjs";
-import {RequestDataState} from "../../store/request-data.state";
-import {FlightInfoState} from "../../store/flight-info.state";
-import {FlightsInfoService} from "../../services/flights-info.service";
-import {RequestDataService} from "../../services/request-data.service";
-import {SpecialOffersComponent} from "../special-offers/special-offers.component";
-import {MatCardModule} from "@angular/material/card";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {CitiesModel} from "../../models/cities.model";
-import {GetCities} from "../../store/request-data.action";
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CityDestinationComponent } from './city-destination.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from '../../app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { NgxsModule, Store } from '@ngxs/store';
+import { appState } from '../../store/appState';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
+import { Subject } from 'rxjs';
+import { RequestDataState } from '../../store/request-data.state';
+import { FlightInfoState } from '../../store/flight-info.state';
+import { FlightsInfoService } from '../../services/flights-info.service';
+import { RequestDataService } from '../../services/request-data.service';
+import { SpecialOffersComponent } from '../special-offers/special-offers.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CitiesModel } from '../../models/cities.model';
+import { GetCities } from '../../store/request-data.action';
 
 describe('CityDestinationComponent', () => {
   let component: CityDestinationComponent;
@@ -86,9 +85,9 @@ describe('CityDestinationComponent', () => {
       ],
       declarations: [CityDestinationComponent],
       providers: [
-        {provide: Store, useValue: storeMock},
-        {provide: FlightsInfoService, useValue: flightsInfoServiceMock},
-        {provide: RequestDataService, useValue: requestDataService},
+        { provide: Store, useValue: storeMock },
+        { provide: FlightsInfoService, useValue: flightsInfoServiceMock },
+        { provide: RequestDataService, useValue: requestDataService },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
@@ -109,32 +108,26 @@ describe('CityDestinationComponent', () => {
   });
 
   describe('#ngOnit', () => {
-    beforeEach( () => {
-
-
-    })
-  })
+    beforeEach(() => {});
+  });
 
   describe('#getCityNameByKey', () => {
     beforeEach(() => {
       store.selectSnapshot = jasmine
         .createSpy('selectSnapshot')
         .and.returnValue({
-          code: "IEV",
-          name: "KYIV",
-        })
-    })
-    it('should return GetCities' +
-      ' with selected name', function () {
-      component.getCityNameByKey("IEV");
+          code: 'IEV',
+          name: 'KYIV',
+        });
+    });
+    it('should return GetCities' + ' with selected name', function () {
+      // component.getCityNameByKey("IEV");
       expect(store.selectSnapshot).toHaveBeenCalledWith(
         new GetCities({
-          "code": "IEV",
-          "name": "KYIV",
+          code: 'IEV',
+          name: 'KYIV',
         })
-      )
+      );
     });
-  })
-
-})
-
+  });
+});

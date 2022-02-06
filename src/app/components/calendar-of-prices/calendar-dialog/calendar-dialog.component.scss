@@ -1,24 +1,9 @@
-.no-data {
-  display: block;
-  max-width: 800px;
-  margin: auto;
-}
-.card-group {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 50px 50px;
-  color: #1d3557;
-}
-
 p,
 h3 {
   margin: 0;
 }
 
 .card {
-  position: relative;
   display: block;
   width: 650px;
   background-image: url("^/assets/card-background.jpg");
@@ -29,11 +14,6 @@ h3 {
   box-shadow: 0px 0px 5px 4px rgba(73, 73, 73, 0.164);
   transition: ease-in-out all 0.2s;
   font-size: 15px;
-
-  &:hover {
-    transform: scale(1.005);
-    box-shadow: 0px 0px 5px 3px rgba(73, 73, 73, 0.3);
-  }
 
   &__inner {
     height: 250px;
@@ -123,6 +103,11 @@ h3 {
     font-size: 12px;
     font-weight: 400;
   }
+  &__distance {
+    color: #0096c7;
+    font-size: 12px;
+    font-weight: 400;
+  }
   &__line-main {
     display: block;
     width: 200px;
@@ -133,6 +118,7 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-top: 5px;
   }
 
   &__logo {
@@ -151,67 +137,4 @@ h3 {
 
 .card__info:hover .card__info {
   opacity: 0;
-}
-
-.highlighted {
-  box-shadow: 0px 0px 6px 5px rgba(104, 58, 183, 0.464);
-
-  &:hover {
-    box-shadow: 0px 0px 3px 4px rgba(104, 58, 183, 0.464);
-  }
-  h3 {
-    text-decoration: underline;
-    text-decoration-color: #1d3557;
-  }
-}
-/* ribbon */
-.ribbon {
-  width: 150px;
-  height: 150px;
-  overflow: hidden;
-  position: absolute;
-}
-.ribbon::before,
-.ribbon::after {
-  position: absolute;
-  z-index: -1;
-  content: "";
-  display: block;
-  border: 5px solid #db3434;
-}
-.ribbon span {
-  position: absolute;
-  display: block;
-  width: 225px;
-  padding: 15px 0;
-  background-color: #db3434;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-  color: #fff;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  text-transform: uppercase;
-  text-align: center;
-}
-
-/* top right*/
-.ribbon-top-right {
-  top: -10px;
-  right: -10px;
-}
-.ribbon-top-right::before,
-.ribbon-top-right::after {
-  border-top-color: transparent;
-  border-right-color: transparent;
-}
-.ribbon-top-right::before {
-  top: 0;
-  left: 0;
-}
-.ribbon-top-right::after {
-  bottom: 0;
-  right: 0;
-}
-.ribbon-top-right span {
-  left: -25px;
-  top: 30px;
-  transform: rotate(45deg);
 }

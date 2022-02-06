@@ -5,33 +5,22 @@ import { Store } from '@ngxs/store';
 import { GetCurrencies, SetCurrency } from 'src/app/store/request-data.action';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { CurrencyDropdownModel } from 'src/app/models/Currency-dropdown.model';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
-@UntilDestroy()
 @Component({
   selector: 'app-currency-dropdown',
   templateUrl: './currency-dropdown.component.html',
   styleUrls: ['./currency-dropdown.component.scss'],
 })
 export class CurrencyDropdownComponent implements OnInit {
-  @Select(RequestDataState.currencies)
-  currencies$: Observable<CurrencyDropdownModel[]>;
-
-  @Select(RequestDataState.currency)
-  selectedCurrency$: Observable<any>;
-
-  selectedOption: string = 'uah';
+  @Select(RequestDataState.currencies) currencies$: Observable<
+    CurrencyDropdownModel[]
+  >;
+  @Select(RequestDataState.currency) selectedCurrency$: Observable<any>;
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.store.dispatch(new GetCurrencies());
-
-    this.selectedCurrency$
-      .pipe(untilDestroyed(this))
-      .subscribe((selectedCurrency) => {
-        this.selectedOption = selectedCurrency;
-      });
   }
 
   setValue(data: string): void {
