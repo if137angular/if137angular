@@ -1,21 +1,22 @@
 export type FlightInfo = {
-  airline: string;
-  departure_at: string;
-  destination: string;
-  duration: number;
-  flight_number: string;
-  origin: string;
-  price: number;
-  return_at: string;
-};
+	airline: string; // add
+	departure_at: string;
+	destination: string; // ? 
+	duration: number; // add
+	flight_number: string;
+	origin: string;
+	price: number;
+	return_at: string;
+}
 
 export type FlightTiketsForDatePayload = {
-  codeFrom: string;
-  codeTo: string;
-  startDate: string;
-  endDate: string;
-  direct: boolean;
-};
+	codeFrom: string;
+	codeTo: string;
+	startDate: string;
+	endDate: string;
+	direct: boolean;
+	numCards: number;
+}
 
 export type Destinations = {
   code: string;

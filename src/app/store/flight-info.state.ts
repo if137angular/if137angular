@@ -164,7 +164,8 @@ export class FlightInfoState {
         payload.codeTo,
         payload.startDate,
         payload.endDate,
-        payload.direct
+        payload.direct,
+        payload.numCards
       )
       .subscribe((response) => {
         const data: any = Object.values(response.data);
