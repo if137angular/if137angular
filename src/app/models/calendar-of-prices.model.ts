@@ -1,5 +1,7 @@
 export type CalendarOfPricesModel = {
   value: number;
+  start?: Date;
+  title?: string;
   trip_class: number;
   show_to_affiliates: boolean;
   origin: string;
@@ -12,6 +14,7 @@ export type CalendarOfPricesModel = {
   duration: number;
   distance: number;
   actual: boolean;
+  currency?: string;
 };
 
 export type GetCalendarOfPricesRequestModel = {
@@ -20,7 +23,6 @@ export type GetCalendarOfPricesRequestModel = {
 };
 
 export interface CalendarOfPricesStateModel {
-  loading: boolean;
   data: CalendarOfPricesModel[];
   currency: string;
   error?: string;

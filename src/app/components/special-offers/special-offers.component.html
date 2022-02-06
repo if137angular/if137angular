@@ -1,18 +1,15 @@
 <div class="special-offers">
-  <div
-    class="no-data"
-    *ngIf="(offers$ | async)?.length === 0 && !(offers$ | async)?.loading"
-  >
+  <div class="no-data" *ngIf="(offers$ | async)?.length === 0 && !(offers$ | async)?.loading">
     <app-no-records-found></app-no-records-found>
   </div>
   <div class="card-group">
-    <div
-      class="card"
-      *ngFor="let item of offers$ | async | sort: destinationCity"
-      [ngClass]="{
+    <div class="card" *ngFor="let item of offers$ | async | sort: destinationCity" [ngClass]="{
         highlighted: item.destination_name === destinationCity
-      }"
-    >
+      }">
+      <div [ngStyle]="{ 'display':item.destination_name === destinationCity ? 'block' : 'none' }"
+        class="ribbon ribbon-top-right">
+        <span>{{item.destination_name}}</span>
+      </div>
       <div class="card__inner">
         <h3 class="card__title">
           {{ item.title }}
@@ -49,20 +46,17 @@
             <div class="card__line-main"></div>
             <div class="card__line-bottom">
               <p class="card__airport-from">{{ item.origin_airport }}</p>
-              <img
-                class="card__logo"
-                src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png"
-                alt="{{ item.airline_title }}"
-              />
+              <img class="card__logo" src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png"
+                alt="{{ item.airline_title }}" loading="lazy" />
               <p class="card__airport-to">{{ item.destination_airport }}</p>
             </div>
           </div>
           <div class="card__info-item">
             <p class="card__city-to">
               {{
-                item.destination_name === ""
-                  ? item.destination
-                  : item.destination_name
+              item.destination_name === ""
+              ? item.destination
+              : item.destination_name
               }}
             </p>
             <p class="card__date">

@@ -1,15 +1,26 @@
-<!--<app-loading-bar></app-loading-bar>-->
-
-<div class="container" *ngIf="flightInfo.length > 0; else noRecordsFound">
-  <div class="wrap">
-    <app-flight-ticket
-      *ngFor="let info of flightInfo"
-      [flightInfo]="info"
-      [currency]="currency"
-      ></app-flight-ticket>
+<div class="container" *ngIf="(flightInfo$ | async)?.length > 0; else noRecordsFound">
+  <div class="wrap"
+    infiniteScroll
+    [infiniteScrollDistance]="0"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()"
+    [scrollWindow]="true"
+  >
+    <div *ngFor="let info of flightInfo$ | async">
+      <mat-card-content>
+        <app-flight-ticket
+          [flightInfo]="info"
+          [currency]="currency"
+        ></app-flight-ticket>
+      </mat-card-content>
+    </div>
   </div>
 
+  <div *ngIf="loading">
+    <mat-spinner class="spinner"></mat-spinner>
+  </div>
 </div>
+
 <ng-template #noRecordsFound>
   <app-no-records-found></app-no-records-found>
 </ng-template>

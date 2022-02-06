@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
-import { startOfDay } from 'date-fns';
 import { from, of } from 'rxjs';
 import { mergeMap, toArray, map } from 'rxjs/operators';
 import * as _ from 'lodash';
-import { SetCurrency } from './request-data.action';
 
 import { RequestDataState } from './request-data.state';
 import * as FlightInfoActions from './flight-info.action';
@@ -26,8 +24,6 @@ import {
 import {
   CheapestTicketsRequestFail,
   CheapestTicketsRequestSuccess,
-  StartLoading,
-  StopLoading,
 } from './flight-info.action';
 
 import { FlightPriceTrends } from 'src/app/models/flight-price-trends.model';
@@ -43,10 +39,8 @@ export interface FlightInfoStateModel {
   nonStopTickets: any; // TODO: create model
   // flightTiketsForDate: UniversalComponentModel[];
   flightTiketsForDate: any;
-
   flightPriceTrends: any;
   popularDestinations: Map<CityInfo, DestinationPopular[]>;
-  currency: string;
   filter: FilterModel;
   filterConfig: FilterConfigModel;
   loading: boolean;
@@ -64,7 +58,6 @@ export interface FlightInfoStateModel {
     nonStopTickets: [],
     flightPriceTrends: [],
     popularDestinations: new Map<CityInfo, DestinationPopular[]>(),
-    currency: 'uah',
     filter: {
       flightClass: null,
       gate: null,
@@ -88,21 +81,11 @@ export class FlightInfoState {
   constructor(
     private flightInfoService: FlightsInfoService,
     private store: Store
-  ) { }
+  ) {}
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
-    return state.calendarOfPrices.map(
-      ({ depart_date, return_date, value, found_at, gate }) => ({
-        start: startOfDay(new Date(depart_date)),
-        title: `Price: ${value}${state.currency.toUpperCase()} Gate: ${gate} ${depart_date}-${return_date} `,
-      })
-    );
-  }
-
-  @Selector()
-  static specialOffers(state: FlightInfoStateModel): any {
-    return filterArray(state.specialOffers, state.filter);
+    return state.calendarOfPrices;
   }
 
   @Selector()
@@ -116,18 +99,22 @@ export class FlightInfoState {
   }
 
   @Selector()
+  static cheapestTickets(state: FlightInfoStateModel): any {
+    return filterArray(state.cheapestTickets, state.filter);
+  }
+
+  @Selector()
+  static specialOffers(state: FlightInfoStateModel): any {
+    return filterArray(state.specialOffers, state.filter);
+  }
+
+  @Selector()
   static flightPriceTrends(state: FlightInfoStateModel): any {
     return filterArray(state.flightPriceTrends, state.filter);
   }
-
   @Selector()
   static popularDestinations(state: FlightInfoStateModel): any {
     return state.popularDestinations;
-  }
-
-  @Selector()
-  static currency(state: FlightInfoStateModel): string {
-    return state.currency;
   }
 
   @Selector()
@@ -145,46 +132,31 @@ export class FlightInfoState {
   }
 
   @Selector()
-  static cheapestTickets(state: FlightInfoStateModel): any {
-    return filterArray(state.cheapestTickets, state.filter);
-  }
-
-  @Selector()
   static errors(state: FlightInfoStateModel): string | null {
     return state.errors;
   }
 
-  @Action(SetCurrency)
-  SetCurrency(
-    { patchState }: StateContext<FlightInfoStateModel>,
-    { currency }: SetCurrency
-  ) {
-    patchState({ currency });
-  }
-
   @Action(FlightInfoActions.CalendarOfPricesLoaded)
   LoadCalendarOfPrices(
-    context: StateContext<FlightInfoStateModel>,
+    { patchState }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.CalendarOfPricesLoaded
   ) {
-    context.patchState({ loading: true });
     this.flightInfoService
       .RequestGetCalendarOfPrices(payload)
-      .subscribe(({ data, currency }) => {
-        context.patchState({
+      .subscribe(({ data }) => {
+        patchState({
           calendarOfPrices: data,
-          currency,
-          loading: false,
         });
       });
   }
 
   @Action(FlightInfoActions.GetTiketsForSpecialDate)
   LoadTiketsForSpecialDate(
-    context: StateContext<FlightInfoStateModel>,
+    { patchState }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.GetTiketsForSpecialDate
   ) {
-    context.patchState({ loading: true });
+    patchState({ loading: true });
+
     this.flightInfoService
       .getFlightTicketsForDate(
         payload.codeFrom,
@@ -192,6 +164,7 @@ export class FlightInfoState {
         payload.startDate,
         payload.endDate,
         payload.direct,
+        payload.numCards
       )
       .subscribe((response) => {
         const data: any = Object.values(response.data);
@@ -211,21 +184,23 @@ export class FlightInfoState {
           airline: true,
           flightClass: false,
           gate: false,
-        }
-        context.patchState({
+        };
+
+        patchState({
           flightTiketsForDate: data,
           loading: false,
           filterConfig,
-        })
-      })
+        });
+      });
   }
 
   @Action(FlightInfoActions.GetSpecialOffers)
   GetSpecialOffers(
-    context: StateContext<FlightInfoStateModel>,
+    { patchState }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.GetSpecialOffers
   ) {
-    context.patchState({ loading: true });
+    patchState({ loading: true });
+
     this.flightInfoService
       .getSpecialOffers(
         payload.cityOrigin,
@@ -234,19 +209,14 @@ export class FlightInfoState {
         payload.currency
       )
       .subscribe((response) => {
-
         const data: any = Object.values(response.data);
         const filterConfig: FilterConfigModel = {
           maxPrice:
-            _.maxBy(
-              data,
-              (specialOffers: any) => specialOffers.price
-            )?.price || 150,
+            _.maxBy(data, (specialOffers: any) => specialOffers.price)?.price ||
+            150,
           minPrice:
-            _.minBy(
-              data,
-              (specialOffers: any) => specialOffers.price
-            )?.price || 1,
+            _.minBy(data, (specialOffers: any) => specialOffers.price)?.price ||
+            1,
           airline: true,
           expires: true,
           destination: true,
@@ -254,21 +224,22 @@ export class FlightInfoState {
           flightClass: false,
           gate: false,
         };
-        context.patchState({
+
+        patchState({
           specialOffers: data,
           loading: false,
           filterConfig,
         });
       });
-
   }
 
   @Action(FlightInfoActions.GetFlightPriceTrends)
   GetFlightPriceTrends(
-    context: StateContext<FlightInfoStateModel>,
+    { patchState }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.GetFlightPriceTrends
   ) {
-    context.patchState({ loading: true });
+    patchState({ loading: true });
+
     this.flightInfoService
       .getFlightPriceTrends(
         payload.origin,
@@ -296,7 +267,8 @@ export class FlightInfoState {
           flightClass: true,
           gate: true,
         };
-        context.patchState({
+
+        patchState({
           flightPriceTrends: data,
           loading: false,
           filterConfig,
@@ -314,26 +286,12 @@ export class FlightInfoState {
     });
   }
 
-  @Action(FlightInfoActions.StartLoading)
-  StartLoading({ patchState }: StateContext<FlightInfoStateModel>) {
-    patchState({
-      loading: true,
-    });
-  }
-
-  @Action(FlightInfoActions.StopLoading)
-  StopLoading({ patchState }: StateContext<FlightInfoStateModel>) {
-    patchState({
-      loading: false,
-    });
-  }
-
   @Action(FlightInfoActions.CheapestTicketsRequest)
   CheapestTicketsRequest(
     { patchState, dispatch }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.CheapestTicketsRequest
   ) {
-    dispatch(new StartLoading());
+    patchState({ loading: true });
 
     if (!payload.destinationFrom.code)
       dispatch(new CheapestTicketsRequestFail('No destination from city'));
@@ -344,14 +302,18 @@ export class FlightInfoState {
         .getCheapestTickets(payload)
         .subscribe((response: CheapestTicketsResponseModel) => {
           if (Object.keys(response.data).length == 0)
-            dispatch(new CheapestTicketsRequestFail('There are no tickets in the selected direction'));
+            dispatch(
+              new CheapestTicketsRequestFail(
+                'There are no tickets in the selected direction'
+              )
+            );
           else dispatch(new CheapestTicketsRequestSuccess(response));
         });
   }
 
   @Action(FlightInfoActions.CheapestTicketsRequestSuccess)
   CheapestTicketsRequestSuccess(
-    { patchState, dispatch }: StateContext<FlightInfoStateModel>,
+    { patchState }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.CheapestTicketsRequestSuccess
   ) {
     const ticketsObj: TicketsObjModel = Object.values(payload.data)[0];
@@ -373,23 +335,21 @@ export class FlightInfoState {
       airline: true,
       flightClass: false,
       gate: false,
-    }
+    };
 
     patchState({
       cheapestTickets: ticketsArray,
       errors: '',
+      loading: false,
       filterConfig,
     });
-
-    dispatch(new StopLoading());
   }
 
   @Action(FlightInfoActions.CheapestTicketsRequestFail)
   CheapestTicketsRequestFail(
-    { patchState, dispatch }: StateContext<FlightInfoStateModel>,
+    { patchState }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.CheapestTicketsRequestFail
   ) {
-    dispatch(new StopLoading());
     patchState({ errors: payload });
   }
 
@@ -399,6 +359,7 @@ export class FlightInfoState {
     { formData }: FlightInfoActions.GetNonStopTickets
   ) {
     patchState({ loading: true });
+
     return this.flightInfoService
       .requestGetNonStopTickets(
         formData.destinationFrom.code,
@@ -408,6 +369,7 @@ export class FlightInfoState {
       )
       .subscribe((response: any) => {
         const nonStopTickets: any = Object.values(response.data)[0];
+
         patchState({
           nonStopTickets: nonStopTickets ? Object.values(nonStopTickets) : [],
           loading: false,
@@ -420,9 +382,6 @@ export class FlightInfoState {
     { patchState }: StateContext<FlightInfoStateModel>,
     payload: FlightInfoActions.GetPopularDestinations
   ) {
-    patchState({
-      loading: true,
-    });
     from(payload.payload)
       .pipe(
         mergeMap((cityCode: string) =>
@@ -444,11 +403,13 @@ export class FlightInfoState {
           CityInfo,
           DestinationPopular[]
         >();
+        this.currency = this.store.selectSnapshot(RequestDataState.currency);
         Object.keys(popularDestinations).forEach((key: string) => {
           if (popularDestinations[key].length > 3) {
             popularDestinations[key].forEach((item: DestinationPopular) => {
               item.originName = this.getCityNameByKey(item.origin);
               item.destinationName = this.getCityNameByKey(item.destination);
+              item.currencyCode = this.getCurrency(item.price);
             });
             const cityInfo: CityInfo = {
               cityName: this.getCityNameByKey(key),
@@ -457,7 +418,7 @@ export class FlightInfoState {
             response.set(cityInfo, popularDestinations[key]);
           }
         });
-        patchState({ popularDestinations: response, loading: false });
+        patchState({ popularDestinations: response });
       });
   }
 
@@ -473,5 +434,17 @@ export class FlightInfoState {
       .selectSnapshot(RequestDataState.cities)
       .find((city: CitiesModel) => city.code === countryKey);
     return matchedCountry ? matchedCountry.country_code : '';
+  }
+
+  language: string = 'en';
+  currency: string = 'uah';
+
+  getCurrency(number: any) {
+    let language = this.language;
+    return new Intl.NumberFormat(language.substring(0, 2), {
+      style: 'currency',
+      currency: this.currency,
+      minimumFractionDigits: 0,
+    }).format(number);
   }
 }
