@@ -190,6 +190,10 @@ export class FlightInfoState {
           flightTiketsForDate: data,
           loading: false,
           filterConfig,
+          filter: {
+            minPrice: null,
+            maxPrice: null,
+          },
         });
       });
   }
@@ -229,6 +233,10 @@ export class FlightInfoState {
           specialOffers: data,
           loading: false,
           filterConfig,
+          filter: {
+            minPrice: null,
+            maxPrice: null,
+          },
         });
       });
   }
@@ -272,6 +280,10 @@ export class FlightInfoState {
           flightPriceTrends: data,
           loading: false,
           filterConfig,
+          filter: {
+            minPrice: null,
+            maxPrice: null,
+          },
         });
       });
   }
@@ -341,6 +353,10 @@ export class FlightInfoState {
       errors: '',
       loading: false,
       filterConfig,
+      filter: {
+        minPrice: null,
+        maxPrice: null,
+      },
     });
   }
 
@@ -375,6 +391,10 @@ export class FlightInfoState {
         patchState({
           nonStopTickets: nonStopTickets ? Object.values(nonStopTickets) : [],
           loading: false,
+          filter: {
+            minPrice: null,
+            maxPrice: null,
+          },
         });
       });
   }

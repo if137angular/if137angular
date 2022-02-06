@@ -71,13 +71,6 @@ export class FlightDataFormComponent implements OnInit {
           endDate: formData.endDate,
           transfers: formData.transfers,
         });
-
-        this.store.dispatch(
-          new SetFilter({
-            minPrice: null,
-            maxPrice: null,
-          })
-        );
       });
   }
 
