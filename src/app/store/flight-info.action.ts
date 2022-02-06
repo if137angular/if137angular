@@ -49,14 +49,6 @@ export class SetFilter {
   constructor(public payload: FilterModel) {}
 }
 
-export class StartLoading {
-  static readonly type = '[Loading] Start Loading';
-}
-
-export class StopLoading {
-  static readonly type = '[Loading] Stop Loading';
-}
-
 export class CheapestTicketsRequest {
   static readonly type = '[FlightInfo] Cheapest Tickets Request';
   constructor(public payload: FormDataModel) {}
