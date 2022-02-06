@@ -62,6 +62,8 @@ export interface FlightInfoStateModel {
       flightClass: null,
       gate: null,
       transfers: null,
+      airline: null,
+      airline_titles: null,
       minPrice: null,
       maxPrice: null,
     },
@@ -69,6 +71,7 @@ export interface FlightInfoStateModel {
       maxPrice: 150,
       minPrice: 1,
       airline: false,
+      airline_titles: false,
       expires: false,
       destination: false,
     },
@@ -81,7 +84,7 @@ export class FlightInfoState {
   constructor(
     private flightInfoService: FlightsInfoService,
     private store: Store
-  ) {}
+  ) { }
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
@@ -182,6 +185,7 @@ export class FlightInfoState {
           expires: false,
           destination: true,
           airline: true,
+          airline_titles: false,
           flightClass: false,
           gate: false,
         };
@@ -218,6 +222,7 @@ export class FlightInfoState {
             _.minBy(data, (specialOffers: any) => specialOffers.price)?.price ||
             1,
           airline: true,
+          airline_titles: true,
           expires: true,
           destination: true,
           // For test, change to your elements
@@ -261,6 +266,7 @@ export class FlightInfoState {
               (flightPriceTrend: FlightPriceTrends) => flightPriceTrend.price
             )?.price || 1,
           airline: true,
+          airline_titles: false,
           expires: true,
           destination: true,
           // For test, change to your elements
@@ -332,6 +338,7 @@ export class FlightInfoState {
       expires: true,
       destination: true,
       airline: true,
+      airline_titles: false,
       flightClass: false,
       gate: false,
     };
