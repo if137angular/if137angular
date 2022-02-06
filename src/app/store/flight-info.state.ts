@@ -66,10 +66,14 @@ export interface FlightInfoStateModel {
       airline_titles: null,
       minPrice: null,
       maxPrice: null,
+      minDuration: null,
+      maxDuration: null,
     },
     filterConfig: {
       maxPrice: 150,
       minPrice: 1,
+      maxDuration: 150,
+      minDuration: 1,
       airline: false,
       airline_titles: false,
       expires: false,
@@ -84,7 +88,7 @@ export class FlightInfoState {
   constructor(
     private flightInfoService: FlightsInfoService,
     private store: Store
-  ) {}
+  ) { }
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
@@ -182,6 +186,13 @@ export class FlightInfoState {
               data,
               (flightTiketsForDate: FlightInfo) => flightTiketsForDate.price
             )?.price || 1,
+
+          maxDuration:
+            _.maxBy(data, (flightTiketsForDate: FlightInfo) => flightTiketsForDate.duration)?.duration ||
+            150,
+          minDuration:
+            _.minBy(data, (flightTiketsForDate: FlightInfo) => flightTiketsForDate.duration)?.duration ||
+            1,
           expires: false,
           destination: true,
           airline: true,
@@ -197,6 +208,8 @@ export class FlightInfoState {
           filter: {
             minPrice: null,
             maxPrice: null,
+            minDuration: null,
+            maxDuration: null,
           },
         });
       });
@@ -219,12 +232,21 @@ export class FlightInfoState {
       .subscribe((response) => {
         const data: any = Object.values(response.data);
         const filterConfig: FilterConfigModel = {
+
           maxPrice:
             _.maxBy(data, (specialOffers: any) => specialOffers.price)?.price ||
             150,
           minPrice:
             _.minBy(data, (specialOffers: any) => specialOffers.price)?.price ||
             1,
+
+          maxDuration:
+            _.maxBy(data, (specialOffers: any) => specialOffers.duration)?.duration ||
+            150,
+          minDuration:
+            _.minBy(data, (specialOffers: any) => specialOffers.duration)?.duration ||
+            1,
+
           airline: true,
           airline_titles: true,
           expires: true,
@@ -241,6 +263,9 @@ export class FlightInfoState {
           filter: {
             minPrice: null,
             maxPrice: null,
+
+            minDuration: null,
+            maxDuration: null,
           },
         });
       });
@@ -273,6 +298,7 @@ export class FlightInfoState {
               data,
               (flightPriceTrend: FlightPriceTrends) => flightPriceTrend.price
             )?.price || 1,
+
           airline: true,
           airline_titles: false,
           expires: true,
@@ -289,6 +315,9 @@ export class FlightInfoState {
           filter: {
             minPrice: null,
             maxPrice: null,
+
+            minDuration: null,
+            maxDuration: null,
           },
         });
       });
@@ -347,6 +376,13 @@ export class FlightInfoState {
           ticketsArray,
           (cheapestTickets: CheapestTicketModel) => cheapestTickets.price
         )?.price || 1,
+
+      maxDuration:
+        _.maxBy(ticketsArray, (cheapestTickets: CheapestTicketModel) => cheapestTickets.duration)?.duration ||
+        150,
+      minDuration:
+        _.minBy(ticketsArray, (cheapestTickets: CheapestTicketModel) => cheapestTickets.duration)?.duration ||
+        1,
       expires: true,
       destination: true,
       airline: true,
@@ -363,6 +399,9 @@ export class FlightInfoState {
       filter: {
         minPrice: null,
         maxPrice: null,
+
+        minDuration: null,
+        maxDuration: null,
       },
     });
   }
@@ -401,6 +440,9 @@ export class FlightInfoState {
           filter: {
             minPrice: null,
             maxPrice: null,
+
+            minDuration: null,
+            maxDuration: null,
           },
         });
       });

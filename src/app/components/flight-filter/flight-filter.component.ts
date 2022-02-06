@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { RequestDataState } from './../../store/request-data.state';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -24,7 +25,13 @@ export class FlightFilterComponent implements OnInit {
 
   minPrice: number = 0;
   maxPrice: number = 0;
+
+  minDuration: number = 0;
+  maxDuration: number = 0;
+
   currency: string;
+
+  checkTrue: boolean = true;
 
   filterElements: filterElementsModel[] = [
     {
@@ -55,17 +62,25 @@ export class FlightFilterComponent implements OnInit {
     transfers: new FormControl(null),
     airline_titles: new FormControl(null),
     priceRange: new FormControl(null),
+    durationRange: new FormControl(null),
   });
 
-  constructor(public store: Store) {}
+  constructor(public store: Store, private router: Router) { }
 
   ngOnInit(): void {
     this.filterConfig$.pipe(untilDestroyed(this)).subscribe((filterConfig) => {
       this.minPrice = filterConfig.minPrice;
       this.maxPrice = filterConfig.maxPrice;
 
+      this.minDuration = filterConfig.minDuration;
+      this.maxDuration = filterConfig.maxDuration;
+
+      this.checkURL();
+
       this.filterGroup.patchValue({
         priceRange: [this.minPrice, this.maxPrice],
+        durationRange: [this.minDuration, this.maxDuration],
+
       });
 
       this.currency = this.store.selectSnapshot(RequestDataState.currency);
@@ -82,6 +97,16 @@ export class FlightFilterComponent implements OnInit {
     );
   }
 
+  onDurationChange() {
+    const [minDuration, maxDuration] = this.filterGroup.value.durationRange;
+
+    this.store.dispatch(
+      new SetFilter(
+        Object.assign(this.filterGroup.value, { minDuration, maxDuration })
+      )
+    );
+  }
+
   formatLabel(value: number | null) {
     if (!value) {
       return 0;
@@ -90,5 +115,27 @@ export class FlightFilterComponent implements OnInit {
       return Math.round(value / 1000) + 'k';
     }
     return value;
+  }
+
+  checkURL(): void {
+    if (this.router.url === '/search/cheapest-tickets') {
+      this.checkTrue = false;
+    } else if (this.router.url === '/search/trends') {
+      this.checkTrue = false;
+    } else {
+      this.checkTrue = true;
+    }
+  }
+
+  getHours(min: any) {
+    let hours = Math.trunc(min / 60);
+    let minutes = min % 60;
+    if (minutes === 0) {
+      return `${hours}h`;
+    }
+    if (hours === 0 && minutes !== 0) {
+      return ` ${minutes}m`;
+    }
+    return `${hours}h:${minutes}m`;
   }
 }

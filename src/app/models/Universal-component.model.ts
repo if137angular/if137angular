@@ -9,7 +9,7 @@ export type UniversalComponentModel = {
   return_date?: Date;
   number_of_changes: number;
   found_at?: Date;
-  duration?: number;
+  duration: number;
   distance?: number;
   actual?: boolean;
   price: number;
