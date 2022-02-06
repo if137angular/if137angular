@@ -62,6 +62,8 @@ export interface FlightInfoStateModel {
       flightClass: null,
       gate: null,
       transfers: null,
+      airline: null,
+      airline_titles: null,
       minPrice: null,
       maxPrice: null,
     },
@@ -69,6 +71,7 @@ export interface FlightInfoStateModel {
       maxPrice: 150,
       minPrice: 1,
       airline: false,
+      airline_titles: false,
       expires: false,
       destination: false,
     },
@@ -142,7 +145,7 @@ export class FlightInfoState {
     { payload }: FlightInfoActions.CalendarOfPricesLoaded
   ) {
     this.flightInfoService
-      .RequestGetCalendarOfPrices(payload)
+      .getCalendarOfPrices(payload)
       .subscribe(({ data }) => {
         patchState({
           calendarOfPrices: data,
@@ -182,6 +185,7 @@ export class FlightInfoState {
           expires: false,
           destination: true,
           airline: true,
+          airline_titles: false,
           flightClass: false,
           gate: false,
         };
@@ -190,6 +194,10 @@ export class FlightInfoState {
           flightTiketsForDate: data,
           loading: false,
           filterConfig,
+          filter: {
+            minPrice: null,
+            maxPrice: null,
+          },
         });
       });
   }
@@ -218,6 +226,7 @@ export class FlightInfoState {
             _.minBy(data, (specialOffers: any) => specialOffers.price)?.price ||
             1,
           airline: true,
+          airline_titles: true,
           expires: true,
           destination: true,
           // For test, change to your elements
@@ -229,6 +238,10 @@ export class FlightInfoState {
           specialOffers: data,
           loading: false,
           filterConfig,
+          filter: {
+            minPrice: null,
+            maxPrice: null,
+          },
         });
       });
   }
@@ -261,6 +274,7 @@ export class FlightInfoState {
               (flightPriceTrend: FlightPriceTrends) => flightPriceTrend.price
             )?.price || 1,
           airline: true,
+          airline_titles: false,
           expires: true,
           destination: true,
           // For test, change to your elements
@@ -272,6 +286,10 @@ export class FlightInfoState {
           flightPriceTrends: data,
           loading: false,
           filterConfig,
+          filter: {
+            minPrice: null,
+            maxPrice: null,
+          },
         });
       });
   }
@@ -332,6 +350,7 @@ export class FlightInfoState {
       expires: true,
       destination: true,
       airline: true,
+      airline_titles: false,
       flightClass: false,
       gate: false,
     };
@@ -341,6 +360,10 @@ export class FlightInfoState {
       errors: '',
       loading: false,
       filterConfig,
+      filter: {
+        minPrice: null,
+        maxPrice: null,
+      },
     });
   }
 
@@ -349,7 +372,10 @@ export class FlightInfoState {
     { patchState }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.CheapestTicketsRequestFail
   ) {
-    patchState({ errors: payload });
+    patchState({
+      errors: payload,
+      loading: false,
+    });
   }
 
   @Action(FlightInfoActions.GetNonStopTickets)
@@ -372,6 +398,10 @@ export class FlightInfoState {
         patchState({
           nonStopTickets: nonStopTickets ? Object.values(nonStopTickets) : [],
           loading: false,
+          filter: {
+            minPrice: null,
+            maxPrice: null,
+          },
         });
       });
   }

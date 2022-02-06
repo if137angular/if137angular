@@ -1,16 +1,26 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatMenuModule } from '@angular/material/menu';
+import { Store } from '@ngxs/store';
 
 import { CurrencyDropdownComponent } from './currency-dropdown.component';
 
-describe('CurrencyDropdownComponent', () => {
+fdescribe('CurrencyDropdownComponent', () => {
   let component: CurrencyDropdownComponent;
   let fixture: ComponentFixture<CurrencyDropdownComponent>;
+  let storeMock: any;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CurrencyDropdownComponent ]
+      imports: [
+        MatMenuModule
+      ],
+      declarations: [CurrencyDropdownComponent],
+      providers: [
+        { provide: Store, useValue: storeMock },
+
+      ],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -23,3 +33,24 @@ describe('CurrencyDropdownComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+
+// import { Store } from '@ngxs/store';
+// import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+// import { CurrencyDropdownComponent } from './currency-dropdown.component';
+
+// describe('CurrencyDropdownComponent', () => {
+//   let component: CurrencyDropdownComponent;
+//   beforeEach(() => {
+//     TestBed.configureTestingModule({
+//       providers: [CurrencyDropdownComponent]
+//     })
+//   });
+
+//   component = TestBed.inject(CurrencyDropdownComponent);
+
+//   it('should create CurrencyDropdownComponent', () => {
+//     expect(component).toBeDefined();
+//   })
+// });

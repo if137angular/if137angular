@@ -4,7 +4,7 @@ import { UniversalComponentModel } from 'src/app/models/Universal-component.mode
 // FIXME: optimize
 const filterArray = (
   array: UniversalComponentModel[],
-  { flightClass, minPrice, maxPrice, transfers, gate }: FilterModel
+  { flightClass, minPrice, maxPrice, transfers, gate, airline_titles }: FilterModel
 ) => {
   let copy = [...array];
 
@@ -17,8 +17,13 @@ const filterArray = (
   if (transfers === 'Transfers') {
     copy = copy.filter(({ number_of_changes }) => number_of_changes >= 1);
   }
+
   if (gate !== null && gate !== 'All') {
     copy = copy.filter(({ gate: flightGate }) => flightGate === gate);
+  }
+
+  if (airline_titles !== null && airline_titles !== 'All' && airline_titles !== undefined) {
+    copy = copy.filter(({ airline_title }) => airline_title === airline_titles);
   }
 
   copy.forEach((item: any) => {

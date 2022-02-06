@@ -48,19 +48,22 @@ export class FlightPriceTrendsComponent implements OnInit {
     });
 
     this.formData$.pipe(untilDestroyed(this)).subscribe((formData) => {
-      const payload = {
-        origin: formData.destinationFrom.code,
-        destination: formData.destinationTo.code,
-        departDate: formData.startDate.toISOString().slice(0, 7),
-        returnDate: formData.endDate.toISOString().slice(0, 7),
-      };
-      this.store.dispatch([new GetFlightPriceTrends(payload)]);
-
+      this.dispatchFlightPriceTrends(formData)
       this.cityFrom = formData.destinationFrom.name;
       this.cityTo = formData.destinationTo.name;
       this.transfers = formData.transfers ?? 'All';
       this.currency = this.store.selectSnapshot(RequestDataState.currency);
     });
+  }
+
+  dispatchFlightPriceTrends(formData: FormDataModel){
+    const payload = {
+      origin: formData.destinationFrom.code,
+      destination: formData.destinationTo.code,
+      departDate: formData.startDate.toISOString().slice(0, 7),
+      returnDate: formData.endDate.toISOString().slice(0, 7),
+    };
+    this.store.dispatch(new GetFlightPriceTrends(payload));
   }
 
   getDirectlyFlights(data: FlightPriceTrends[]) {
@@ -69,8 +72,8 @@ export class FlightPriceTrendsComponent implements OnInit {
     for (let item of data) {
       if (item.transfers === 0) {
         newArray.unshift(item);
-      }
-    }
+      };
+    };
 
     this.data = newArray;
   }
@@ -81,8 +84,8 @@ export class FlightPriceTrendsComponent implements OnInit {
     for (let item of data) {
       if (item.transfers > 0) {
         newArray.unshift(item);
-      }
-    }
+      };
+    };
 
     this.data = newArray;
   }

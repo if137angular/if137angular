@@ -52,6 +52,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "morgan": "1.10.0",
+    "reflect-metadata": "^0.1.13",
     "ngx-infinite-scroll": "^10.0.1",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
