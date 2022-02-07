@@ -7,6 +7,7 @@
   flex-wrap: wrap;
   gap: 50px 50px;
 
+
   @media screen {
     max-width: 980px;
     min-width: 400px;
@@ -29,6 +30,12 @@
   background-repeat: no-repeat;
   background-size: cover;
   box-shadow: 0px 0px 5px 4px rgba(73, 73, 73, 0.164);
+
+}
+.ticket-content__wrapper:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+  transition: ease-in-out 0.2s;
 }
 
 .content-info-block {
@@ -111,3 +118,9 @@ h1 {
   color: #1d3557;
   margin-left: 2%;
 }
+
+.content-info-style {
+  font-weight: 500;
+font-size: 17px;
+font-family: Arial, Helvetica, sans-serif;}
+

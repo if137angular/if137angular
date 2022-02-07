@@ -387,7 +387,7 @@ export class FlightInfoState {
         formData.destinationFrom.code,
         formData.destinationTo.code,
         formData.startDate.toISOString().slice(0, 7),
-        formData.endDate.toISOString().slice(0, 7)
+        formData.endDate.toISOString().slice(0, 7),
       )
       .subscribe((response: any) => {
         const nonStopTickets: any = Object.values(response.data)[0];

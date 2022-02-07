@@ -5,4 +5,5 @@ export interface NonStopInfo {
     departure_at: string;
     return_at: string;
     expires_at: string;
+
 }

@@ -3,12 +3,11 @@
        *ngIf="$any(nonStopTickets$ | async).length !== 0; else noData">
     <div
       *ngFor="let item of nonStopTickets$ | async"
-      class="ticket-content__wrapper"
-    >
+      class="ticket-content__wrapper">
         <h1>{{cityOrigin}} to {{cityArrival}}</h1>
 
       <div class="content-info-block">
-        <p class="content-info"> Price: {{ item.price}} {{currency}}</p>
+        <p class="content-info"> Price: <span class="content-info-style">{{ item.price}} {{ currency | uppercase }}</span></p>
         <p class="content-info"> Airline: <img
           class="card-logo"
           src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png"

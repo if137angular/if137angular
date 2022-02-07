@@ -10,7 +10,6 @@ import { FlightInfoState } from "src/app/store/flight-info.state";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 
 
-
 @UntilDestroy()
 @Component({
   selector: 'app-non-stop-tickets',
@@ -22,7 +21,7 @@ export class NonStopTicketsComponent implements OnInit {
   cityArrival: string;
   cityOriginCode: string;
   cityArrivalCode: string;
-  currency: string = 'UAH';
+  currency: string;
   faPlane = faPlane;
   faDeparture = faPlaneDeparture;
   faArrival = faPlaneArrival;
@@ -31,6 +30,7 @@ export class NonStopTicketsComponent implements OnInit {
 
   @Select(RequestDataState.formData) formData$: Observable<FormDataModel>;
   @Select(FlightInfoState.nonStopTickets) nonStopTickets$: Observable<NonStopInfo[]>;
+  @Select(RequestDataState.currency) currency$: Observable<string>;
 
   constructor(private store: Store) {}
 
@@ -41,8 +41,10 @@ export class NonStopTicketsComponent implements OnInit {
      this.cityOrigin = formData.destinationFrom.name;
      this.cityArrival = formData.destinationTo.name;
      this.cityOriginCode = formData.destinationFrom.code;
-     this.cityArrivalCode = formData.destinationTo.code
+     this.cityArrivalCode = formData.destinationTo.code;
      this.store.dispatch(new GetNonStopTickets(formData))
     });
+
+    this.currency$.pipe(untilDestroyed(this)).subscribe((currency: string) => {this.currency = currency});
  }
 }
