@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { DebugElement } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   MatDialogModule,
@@ -16,7 +17,7 @@ describe('CalendarDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, BrowserModule, MatDialogModule],
+      imports: [CommonModule, BrowserModule, MatDialogModule, MatIconModule],
       declarations: [CalendarDialogComponent],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
@@ -30,6 +31,12 @@ describe('CalendarDialogComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('#addToFavourites', () => {
+    it('should change favourites status', () => {
+      expect(component.addToFavourites()).toBe(void 0);
+    });
   });
 
   describe('#getHours', () => {

@@ -91,24 +91,26 @@ fdescribe('CalendarOfPricesComponent', () => {
 
   describe('#ngOnInit', () => {
     beforeEach(() => {
-      calendarDataMock.next({
-        value: 1,
-        start: new Date(),
-        title: '',
-        trip_class: 1,
-        show_to_affiliates: true,
-        origin: '',
-        destination: '',
-        gate: '',
-        depart_date: new Date(),
-        return_date: new Date(),
-        number_of_changes: 1,
-        found_at: new Date(),
-        duration: 1,
-        distance: 1,
-        actual: true,
-        currency: '',
-      });
+      calendarDataMock.next([
+        {
+          value: 1,
+          start: new Date(),
+          title: '',
+          trip_class: 1,
+          show_to_affiliates: true,
+          origin: '',
+          destination: '',
+          gate: '',
+          depart_date: new Date(),
+          return_date: new Date(),
+          number_of_changes: 1,
+          found_at: new Date(),
+          duration: 1,
+          distance: 1,
+          actual: true,
+          currency: '',
+        },
+      ]);
       formDataMock.next({
         origin: '',
         destination: '',
