@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { from, of } from 'rxjs';
-import { mergeMap, toArray, map } from 'rxjs/operators';
+import { mergeMap, toArray, map, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { RequestDataState } from './request-data.state';
@@ -19,11 +19,13 @@ import {
   DestinationPopular,
   GetDestinationPopular,
   CityInfo,
+  IMapData,
 } from '../models/city-destination.model';
 
 import {
   CheapestTicketsRequestFail,
   CheapestTicketsRequestSuccess,
+  GetMapData,
 } from './flight-info.action';
 
 import { FlightPriceTrends } from 'src/app/models/flight-price-trends.model';
@@ -46,6 +48,7 @@ export interface FlightInfoStateModel {
   loading: boolean;
   cheapestTickets: any;
   errors: string;
+  mapData: any;
 }
 
 @State<FlightInfoStateModel>({
@@ -58,6 +61,7 @@ export interface FlightInfoStateModel {
     nonStopTickets: [],
     flightPriceTrends: [],
     popularDestinations: new Map<CityInfo, DestinationPopular[]>(),
+    mapData: [],
     filter: {
       flightClass: null,
       gate: null,
@@ -141,6 +145,11 @@ export class FlightInfoState {
   @Selector()
   static errors(state: FlightInfoStateModel): string | null {
     return state.errors;
+  }
+
+  @Selector()
+  static mapData(state: FlightInfoStateModel): any {
+    return state.mapData;
   }
 
   @Action(FlightInfoActions.CalendarOfPricesLoaded)
@@ -464,11 +473,39 @@ export class FlightInfoState {
   }
 
   @Action(FlightInfoActions.GetPopularDestinations)
-  GetPopularDestinations(
-    { patchState }: StateContext<FlightInfoStateModel>,
-    { payload }: FlightInfoActions.GetPopularDestinations
+  GetMapData(
+    { patchState, dispatch }: StateContext<FlightInfoStateModel>,
+    payload: FlightInfoActions.GetPopularDestinations
   ) {
-    from(payload)
+    this.flightInfoService.requestPopularDestination('LWO')
+      .subscribe((res: GetDestinationPopular) => {
+        const mapData: any = res;
+        const objValues: DestinationPopular[] = Object.values(mapData[0].destination);
+        objValues.forEach((objValues: DestinationPopular) => {
+          const matchedCity = this.getCityByCode(objValues.destination);
+          Object.assign(objValues, {
+            id: matchedCity ? matchedCity.name.toLowerCase() : '',
+            title: matchedCity ? matchedCity.name : '',
+            geometry: {
+              type: 'Point',
+              coordinates: matchedCity ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat] : []
+            },
+          })
+        })
+        patchState({ mapData: objValues })
+      }
+      )
+  }
+
+  @Action(FlightInfoActions.GetPopularDestinations)
+  GetPopularDestinations(
+    { patchState, dispatch }: StateContext<FlightInfoStateModel>,
+    payload: FlightInfoActions.GetPopularDestinations
+  ) {
+    patchState({
+      loading: true,
+    });
+    from(payload.payload)
       .pipe(
         mergeMap((cityCode: string) =>
           this.flightInfoService.requestPopularDestination(cityCode)
@@ -489,29 +526,39 @@ export class FlightInfoState {
           CityInfo,
           DestinationPopular[]
         >();
-        const currencyFromStore = this.store.selectSnapshot(
-          RequestDataState.currency
-        );
-
-        Object.keys(popularDestinations)
-          .sort()
-          .forEach((key: string) => {
-            if (popularDestinations[key].length > 3) {
-              popularDestinations[key].forEach((item: DestinationPopular) => {
-                item.originName = this.getCityNameByKey(item.origin);
-                item.destinationName = this.getCityNameByKey(item.destination);
-                item.currencyCode =
-                  item.price + ' ' + currencyFromStore.toUpperCase();
-              });
-              const cityInfo: CityInfo = {
-                cityName: this.getCityNameByKey(key),
-                countryCode: this.getCountryCodeByCityCode(key),
-              };
-              response.set(cityInfo, popularDestinations[key]);
-            }
-          });
-        patchState({ popularDestinations: response });
-      });
+        Object.keys(popularDestinations).forEach((key: string) => {
+          if (popularDestinations[key].length > 3) {
+            popularDestinations[key].forEach((item: DestinationPopular) => {
+              item.originName = this.getCityNameByKey(item.origin);
+              item.destinationName = this.getCityNameByKey(item.destination);
+              const test: Map<string, DestinationPopular[]> = popularDestinations;
+              const objValues: DestinationPopular[] = Object.values(test);
+              const matchedCity = this.getCityNameByKey(item.destination);
+              objValues.forEach((obj: DestinationPopular) => {
+                Object.assign(obj, {
+                  id: matchedCity ? matchedCity.name.toLowerCase() : '',
+                  title: matchedCity ? matchedCity.name : '',
+                  geometry: {
+                    type: 'Point',
+                    coordinates: matchedCity ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat] : []
+                  },
+                })
+              })
+            });
+            const cityInfo: CityInfo = {
+              cityName: this.getCityNameByKey(key),
+              countryCode: this.getCountryCodeByCityCode(key),
+            };
+            response.set(cityInfo, popularDestinations[key]);
+          }
+        });
+        patchState({ popularDestinations: response, loading: false });
+      })
+  }
+  getCityByCode(cityCode: string): CitiesModel {
+    const cities = this.store.selectSnapshot(RequestDataState.cities);
+    const matchedCity = cities.find((city: CitiesModel) => city.code === 'LWO')
+    return matchedCity
   }
 
   getCityNameByKey(cityKey: string) {
