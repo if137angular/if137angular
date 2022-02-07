@@ -31,7 +31,7 @@ import {RequestDataState} from "../../../store/request-data.state";
 import {FlightInfoState} from "../../../store/flight-info.state";
 import {Subject} from "rxjs";
 
-xdescribe('CheapestTicketItemComponent', () => {
+fdescribe('CheapestTicketItemComponent', () => {
   let component: CheapestTicketItemComponent;
   let fixture: ComponentFixture<CheapestTicketItemComponent>;
   let storeMock: any;
@@ -97,7 +97,6 @@ xdescribe('CheapestTicketItemComponent', () => {
   });
 
   beforeEach(() => {
-    debugElement = fixture.debugElement;
     store = TestBed.get(Store);
     fixture = TestBed.createComponent(CheapestTicketItemComponent);
     component = fixture.componentInstance;

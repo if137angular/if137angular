@@ -38,8 +38,6 @@ export class CheapestTicketItemComponent implements OnInit {
 
   }
 
-
-
   initializeDateInfo()  {
     this.departTime = moment(this.ticket.departure_at).format('HH:mm')
     this.departDate = moment(this.ticket.departure_at).format('D MMM YYYY')
