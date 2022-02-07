@@ -64,9 +64,9 @@ export class FlightFilterComponent implements OnInit {
     priceRange: new FormControl(null),
     durationRange: new FormControl(null),
     airline: new FormControl(null),
+  });
 
-
-  constructor(public store: Store, private router: Router) { }
+  constructor(public store: Store, private router: Router) {}
 
   ngOnInit(): void {
     this.filterConfig$.pipe(untilDestroyed(this)).subscribe((filterConfig) => {
@@ -81,7 +81,6 @@ export class FlightFilterComponent implements OnInit {
       this.filterGroup.patchValue({
         priceRange: [this.minPrice, this.maxPrice],
         durationRange: [this.minDuration, this.maxDuration],
-
       });
 
       this.currency = this.store.selectSnapshot(RequestDataState.currency);

@@ -48,7 +48,7 @@ export class FlightPriceTrendsComponent implements OnInit {
     });
 
     this.formData$.pipe(untilDestroyed(this)).subscribe((formData) => {
-      this.dispatchFlightPriceTrends(formData)
+      this.dispatchFlightPriceTrends(formData);
       this.cityFrom = formData.destinationFrom.name;
       this.cityTo = formData.destinationTo.name;
       this.transfers = formData.transfers ?? 'All';
@@ -56,7 +56,7 @@ export class FlightPriceTrendsComponent implements OnInit {
     });
   }
 
-  dispatchFlightPriceTrends(formData: FormDataModel){
+  dispatchFlightPriceTrends(formData: FormDataModel) {
     const payload = {
       origin: formData.destinationFrom.code,
       destination: formData.destinationTo.code,
@@ -72,8 +72,8 @@ export class FlightPriceTrendsComponent implements OnInit {
     for (let item of data) {
       if (item.transfers === 0) {
         newArray.unshift(item);
-      };
-    };
+      }
+    }
 
     this.data = newArray;
   }
@@ -84,8 +84,8 @@ export class FlightPriceTrendsComponent implements OnInit {
     for (let item of data) {
       if (item.transfers > 0) {
         newArray.unshift(item);
-      };
-    };
+      }
+    }
 
     this.data = newArray;
   }

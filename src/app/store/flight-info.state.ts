@@ -88,7 +88,7 @@ export class FlightInfoState {
   constructor(
     private flightInfoService: FlightsInfoService,
     private store: Store
-  ) { }
+  ) {}
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
@@ -188,11 +188,15 @@ export class FlightInfoState {
             )?.price || 1,
 
           maxDuration:
-            _.maxBy(data, (flightTiketsForDate: FlightInfo) => flightTiketsForDate.duration)?.duration ||
-            150,
+            _.maxBy(
+              data,
+              (flightTiketsForDate: FlightInfo) => flightTiketsForDate.duration
+            )?.duration || 150,
           minDuration:
-            _.minBy(data, (flightTiketsForDate: FlightInfo) => flightTiketsForDate.duration)?.duration ||
-            1,
+            _.minBy(
+              data,
+              (flightTiketsForDate: FlightInfo) => flightTiketsForDate.duration
+            )?.duration || 1,
           expires: false,
           destination: true,
           airline: true,
@@ -232,7 +236,6 @@ export class FlightInfoState {
       .subscribe((response) => {
         const data: any = Object.values(response.data);
         const filterConfig: FilterConfigModel = {
-
           maxPrice:
             _.maxBy(data, (specialOffers: any) => specialOffers.price)?.price ||
             150,
@@ -241,11 +244,11 @@ export class FlightInfoState {
             1,
 
           maxDuration:
-            _.maxBy(data, (specialOffers: any) => specialOffers.duration)?.duration ||
-            150,
+            _.maxBy(data, (specialOffers: any) => specialOffers.duration)
+              ?.duration || 150,
           minDuration:
-            _.minBy(data, (specialOffers: any) => specialOffers.duration)?.duration ||
-            1,
+            _.minBy(data, (specialOffers: any) => specialOffers.duration)
+              ?.duration || 1,
 
           airline: true,
           airline_titles: true,
@@ -350,9 +353,19 @@ export class FlightInfoState {
         .subscribe((response: CheapestTicketsResponseModel) => {
           if (!response.success && response.error) {
             dispatch(new CheapestTicketsRequestFail(response.error));
-          } else if (response.success && Object.keys(response.data).length === 0) {
-            dispatch(new CheapestTicketsRequestFail('There are no tickets in the selected direction'));
-          } else if (response.success && Object.keys(response.data).length > 0) {
+          } else if (
+            response.success &&
+            Object.keys(response.data).length === 0
+          ) {
+            dispatch(
+              new CheapestTicketsRequestFail(
+                'There are no tickets in the selected direction'
+              )
+            );
+          } else if (
+            response.success &&
+            Object.keys(response.data).length > 0
+          ) {
             dispatch(new CheapestTicketsRequestSuccess(response));
           }
         });
@@ -364,7 +377,7 @@ export class FlightInfoState {
     { payload }: FlightInfoActions.CheapestTicketsRequestSuccess
   ) {
     const ticketsObj: TicketsObjModel = Object.values(payload.data)[0];
-    const ticketsArray: CheapestTicketModel[] = Object.values(ticketsObj)
+    const ticketsArray: CheapestTicketModel[] = Object.values(ticketsObj);
 
     const filterConfig: FilterConfigModel = {
       maxPrice:
@@ -377,20 +390,22 @@ export class FlightInfoState {
           ticketsArray,
           (cheapestTickets: CheapestTicketModel) => cheapestTickets.price
         )?.price || 1,
-      
+
       maxDuration:
-        _.maxBy(ticketsArray, (cheapestTickets: CheapestTicketModel) => cheapestTickets.duration)?.duration ||
-        150,
+        _.maxBy(
+          ticketsArray,
+          (cheapestTickets: CheapestTicketModel) => cheapestTickets.duration
+        )?.duration || 150,
       minDuration:
-        _.minBy(ticketsArray, (cheapestTickets: CheapestTicketModel) => cheapestTickets.duration)?.duration ||
-        1,
+        _.minBy(
+          ticketsArray,
+          (cheapestTickets: CheapestTicketModel) => cheapestTickets.duration
+        )?.duration || 1,
       expires: true,
       destination: true,
       airline: true,
 
       airline_titles: false,
-      expires: false,
-      airline: false,
       flightClass: false,
       gate: false,
     };
