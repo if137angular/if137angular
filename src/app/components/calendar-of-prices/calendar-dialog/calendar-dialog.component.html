@@ -1,4 +1,10 @@
 <div class="card">
+  <mat-icon
+    [ngClass]="isFavoutite ? 'active' : ''"
+    class="card__favourite"
+    (click)="addToFavourites()"
+    >{{ isFavoutite ? "favorite" : "favorite_outline" }}</mat-icon
+  >
   <div class="card__inner">
     <h3 class="card__title">Ticket info</h3>
     <div class="card__content">

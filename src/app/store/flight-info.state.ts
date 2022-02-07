@@ -88,7 +88,7 @@ export class FlightInfoState {
   constructor(
     private flightInfoService: FlightsInfoService,
     private store: Store
-  ) {}
+  ) { }
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
@@ -289,7 +289,10 @@ export class FlightInfoState {
         payload.returnDate
       )
       .subscribe((response) => {
-        const data: any = Object.values(response.data);
+        const data: any = Object.values(response.data).map((element: any) => Object.assign(element, {
+          airline_title: Object.values(this.store.selectSnapshot(RequestDataState.airlines))
+            .find((airline: any) => airline.id === element.airline).name,
+        }));
         const filterConfig: FilterConfigModel = {
           maxPrice:
             _.maxBy(
@@ -302,13 +305,13 @@ export class FlightInfoState {
               (flightPriceTrend: FlightPriceTrends) => flightPriceTrend.price
             )?.price || 1,
 
-          airline: true,
-          airline_titles: false,
+          airline: false,
+          airline_titles: true,
           expires: true,
           destination: true,
           // For test, change to your elements
-          flightClass: true,
-          gate: true,
+          flightClass: false,
+          gate: false,
         };
 
         patchState({

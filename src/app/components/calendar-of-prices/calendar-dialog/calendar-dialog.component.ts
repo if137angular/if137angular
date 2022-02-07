@@ -16,6 +16,12 @@ export class CalendarDialogComponent {
     public data: CalendarOfPricesModel & CalendarOfPricesPayload
   ) {}
 
+  isFavoutite: boolean = false;
+
+  addToFavourites(): void {
+    this.isFavoutite = !this.isFavoutite;
+  }
+
   getHours(minutes: number): string {
     let hours = Math.floor(minutes / 60);
     let min = Math.floor(minutes % 60);
