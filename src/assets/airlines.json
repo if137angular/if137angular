@@ -1,5 +1,11 @@
 [
   {
+    "id": "RR",
+    "lcc": "None",
+    "name": "Buzz Flight Tracker",
+    "logo": "https://images.kiwi.com/airlines/64/RR.png"
+  },
+  {
     "id": "AUTOSTRAD",
     "lcc": "None",
     "name": "Autostradale",
@@ -6296,7 +6302,7 @@
   {
     "id": "W6",
     "lcc": "1",
-    "name": "Wizzair",
+    "name": "Wizz Air",
     "logo": "https://images.kiwi.com/airlines/64/W6.png"
   },
   {
@@ -7094,7 +7100,7 @@
   {
     "id": "7B",
     "lcc": "0",
-    "name": "Fly Blue Crane",
+    "name": "Bees Airline",
     "logo": "https://images.kiwi.com/airlines/64/7B.png"
   },
   {

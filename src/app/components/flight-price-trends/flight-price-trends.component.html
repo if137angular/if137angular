@@ -5,8 +5,8 @@
       <div class="ticket-info-content-flight">
         <img src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png" alt="airlineImage" loading="lazy">
         <div class="ticket-info-content-flight-details">
-          <span> Airline: {{ item.airline }}</span>
-          <span> Flight number: {{ item.flight_number }}</span>
+          <span> Airline: <b>{{ item.airline_title }}</b></span>
+          <span> Flight number: <b>{{ item.flight_number }}</b></span>
           <span *ngIf="item.transfers > 0"> <b>Stops: {{ item.transfers }}</b></span>
           <span *ngIf="item.transfers === 0"><b> Nonstop (direct) </b></span>
         </div>
