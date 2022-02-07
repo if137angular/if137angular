@@ -37,7 +37,6 @@ export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesModel[];
   specialOffers: any; // TODO: create model;
   nonStopTickets: any; // TODO: create model
-  // flightTiketsForDate: UniversalComponentModel[];
   flightTiketsForDate: any;
   flightPriceTrends: any;
   popularDestinations: Map<CityInfo, DestinationPopular[]>;
