@@ -404,13 +404,9 @@ export class FlightInfoState {
           ticketsArray,
           (cheapestTickets: CheapestTicketModel) => cheapestTickets.duration
         )?.duration || 1,
-      expires: true,
-      destination: true,
-      airline: true,
-
+      expires: false,
+      airline: false,
       airline_titles: false,
-      flightClass: false,
-      gate: false,
     };
 
     patchState({
