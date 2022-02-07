@@ -30,7 +30,7 @@ export interface RequestDataStateModel {
     airports: [],
     airlines: [],
     currencies: [],
-    currency: 'uah',
+    currency: localStorage.getItem('currency') ?? 'uah',
     formData: {
       destinationFrom: {
         code: '',
@@ -186,6 +186,7 @@ export class RequestDataState {
     payload: RequestDataActions.SetCurrency
   ) {
     patchState({ currency: payload.currency });
+    localStorage.setItem('currency', payload.currency);
   }
 
   @Action(RequestDataActions.SetFormDate)
@@ -193,7 +194,7 @@ export class RequestDataState {
     { patchState }: StateContext<RequestDataStateModel>,
     { formData }: RequestDataActions.SetFormDate
   ) {
-    return patchState({ formData });
+    patchState({ formData });
   }
 
   @Action(RequestDataActions.SetUserData)
