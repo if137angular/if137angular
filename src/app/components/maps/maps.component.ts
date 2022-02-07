@@ -12,9 +12,11 @@ import am5geodata_worldLow from '@amcharts/amcharts5-geodata/worldLow';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import { Store } from '@ngxs/store';
 import { RequestDataState } from 'src/app/store/request-data.state';
+import { Observable } from 'rxjs';
+import { CurrencyDropdownModel } from 'src/app/models/Currency-dropdown.model';
 
-import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { CitiesModel } from "src/app/models/cities.model";
+import { FlightInfoState } from 'src/app/store/flight-info.state';
 
 export type DestinationPopular = {
   origin: string;
@@ -42,6 +44,8 @@ export type GetDestinationPopular = {
   styleUrls: ['./maps.component.scss'],
 })
 export class MapsComponent implements OnInit {
+  currency$: Observable<CurrencyDropdownModel>;
+
   button: any;
   private root!: am5.Root;
   items: GetDestinationPopular[] = [];
@@ -51,12 +55,13 @@ export class MapsComponent implements OnInit {
   originCode: string = '';
   objValues: any;
   matchedOriginCity: any;
+  selectedDestinstion: string = '';
+  selectedCities: string = '';
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private zone: NgZone,
-    private flightInfoService: FlightsInfoService,
-    private store: Store
+    private store: Store, @Inject('Window') private window: Window
   ) {
   }
 
@@ -64,30 +69,17 @@ export class MapsComponent implements OnInit {
     const cities = this.store.selectSnapshot(RequestDataState.cities);
     const matchedCity = cities.find((city: CitiesModel) => city.code === cityCode)
     return matchedCity
-  }
+  };
 
   ngOnInit(): void {
-    const origin = 'LWO';
-    this.flightInfoService
-      .requestPopularDestination(origin)
-      .subscribe((res: GetDestinationPopular) => {
-        const test: Map<string, DestinationPopular> = res.data;
-        const objValues: DestinationPopular[] = Object.values(test);
-        objValues.forEach((obj: DestinationPopular) => {
-          const matchedCity = this.getCityByCode(obj.destination);
-          Object.assign(obj, {
-            id: matchedCity ? matchedCity.name.toLowerCase() : '',
-            title: matchedCity ? matchedCity.name : '',
-            geometry: {
-              type: 'Point',
-              coordinates: matchedCity ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat] : []
-            },
-          })
-        })
+    this.store.select(FlightInfoState.mapData)
+      .subscribe((mapData: any) => {
+        if (mapData.length) {
+          this.makeChart(mapData[0].destination);
+        }
+      })
 
-        this.makeChart(objValues);
-      });
-    
+
     const citiesArr = this.store.selectSnapshot(RequestDataState.cities);
     const asd = citiesArr.filter(item => item.code === 'LWO');
 

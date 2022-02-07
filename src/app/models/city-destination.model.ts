@@ -3,7 +3,7 @@ export type DestinationPopular = {
   originName: string;
   destination: string;
   destinationName: string;
-  currencyCode:string;
+  currencyCode: string;
   countryCode: string;
   departure_at: Date;
   return_at: Date;
@@ -14,13 +14,24 @@ export type DestinationPopular = {
   transfers: number;
   airline: string;
   flight_number: number;
-}
+};
+
 export type GetDestinationPopular = {
   success: boolean;
   data: Map<string, DestinationPopular>;
   currency: string;
 };
+
 export type CityInfo = {
   cityName: string;
   countryCode: string;
+};
+
+export interface IMapData extends DestinationPopular {
+  id: string;
+  title: string;
+  geometry: {
+    type: string,
+    coordinates: string[],
+  };
 }
