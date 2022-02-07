@@ -192,6 +192,6 @@ describe('FlightPriceTrendsComponent', () => {
         )
       );
     });
-  })
+  });
 
 });
