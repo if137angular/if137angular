@@ -8,12 +8,15 @@
   </div>
 
   <app-nav></app-nav>
-  <mat-progress-bar mode="indeterminate" *ngIf="loading$ | async"></mat-progress-bar>
 </div>
+
+<mat-progress-bar mode="indeterminate" [style.visibility]="loading ? 'visible' : 'hidden'">
+</mat-progress-bar>
 
 <div class="search-content">
   <div class="filterWrapper">
     <app-flight-filter></app-flight-filter>
+<!--    <app-flight-sort></app-flight-sort>-->
     <div class="calendarWrapper">
       <app-calendar-of-prices></app-calendar-of-prices>
     </div>

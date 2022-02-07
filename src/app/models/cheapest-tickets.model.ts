@@ -1,7 +1,9 @@
 export interface CheapestTicketsResponseModel {
-  currency: string
+  currency?: string
   data: DestinationFromTicketsModel
-  success: boolean
+  success: boolean,
+  error?: string,
+  status?: number
 }
 
 export interface DestinationFromTicketsModel {
@@ -19,6 +21,7 @@ export interface CheapestTicketModel {
   flight_number: number
   price: number
   return_at: string
+  duration: number
 }
 
 export interface AirlineModel {

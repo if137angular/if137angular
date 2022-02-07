@@ -3,6 +3,7 @@ import {
   GetAirports,
   GetCities,
   GetCountries,
+  GetCurrencies,
   SetUserData,
 } from 'src/app/store/request-data.action';
 import { Store } from '@ngxs/store';
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
       new GetCountries(),
       new GetAirports(),
       new GetCities(),
+      new GetCurrencies(),
       new SetUserData(),
     ]);
   }

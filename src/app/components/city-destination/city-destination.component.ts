@@ -10,6 +10,8 @@ import {
   DestinationPopular,
   CityInfo,
 } from '../../models/city-destination.model';
+import { RequestDataState } from 'src/app/store/request-data.state';
+import { CurrencyDropdownModel } from 'src/app/models/Currency-dropdown.model';
 
 @UntilDestroy()
 @Component({
@@ -20,6 +22,8 @@ import {
 export class CityDestinationComponent implements OnInit {
   @Select(FlightInfoState.popularDestinations)
   popularDestinations$: Observable<Map<CityInfo, DestinationPopular[]>>;
+  @Select(RequestDataState.currency)
+  currency$: Observable<CurrencyDropdownModel>;
 
   private popularDestinationCities = ['IEV', 'LWO', 'DNK', 'ODS'];
   constructor(private store: Store, @Inject('Window') private window: Window) {}
@@ -32,16 +36,24 @@ export class CityDestinationComponent implements OnInit {
   cities: DestinationPopular[];
   selectedDestinstion: string = '';
   selectedOrigin: string = '';
-  selectedCities: string;
+  selectedCities: string = '';
 
   ngOnInit(): void {
-    this.store.dispatch(
-      new GetPopularDestinations(this.popularDestinationCities)
-    );
+    this.currency$.subscribe(() => {
+      this.store.dispatch(
+        new GetPopularDestinations(this.popularDestinationCities)
+      );
+    });
   }
+
   selectDestination(selectedDestination: DestinationPopular) {
     this.selectedCities = selectedDestination.originName;
     this.selectedDestinstion = selectedDestination.destination;
+
+    const { startDate, endDate } = this.store.selectSnapshot(
+      RequestDataState.formData
+    );
+
     const formData = {
       destinationFrom: {
         name: selectedDestination.originName,
@@ -51,8 +63,8 @@ export class CityDestinationComponent implements OnInit {
         name: selectedDestination.destinationName,
         code: selectedDestination.destination,
       },
-      endDate: new Date(),
-      startDate: new Date(),
+      startDate: startDate,
+      endDate: endDate,
     };
     this.store.dispatch(new SetFormDate(formData));
     this.window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });

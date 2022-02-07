@@ -3,7 +3,7 @@
     <div *ngFor="let cities of (popularDestinations$ | async) | keyvalue">
       <mat-form-field appearance="fill">
         <mat-label class="city-destination-label">
-          <img src="https://flagcdn.com/w40/{{cities.key.countryCode | lowercase}}.png">
+          <img src="https://flagcdn.com/w40/{{cities.key.countryCode | lowercase}}.png" loading="lazy">
           {{cities.key.cityName}}
         </mat-label>
 
@@ -12,7 +12,7 @@
             <span class="origin">{{items.originName}}</span>
             <mat-icon>trending_flat</mat-icon>
             <span class="destination">{{items.destinationName}}</span>
-            <span class="price">starting at <b>{{items.price}}$</b></span>
+            <span class="price">starting at <b>{{(items.currencyCode)}}</b></span>
           </mat-option>
         </mat-select>
       </mat-form-field>

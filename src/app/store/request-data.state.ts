@@ -7,6 +7,7 @@ import { CitiesModel } from 'src/app/models/cities.model';
 import { FormDataModel } from '../models/formData.model';
 import { IpFullModel, IpShortModel } from '../models/ip.model';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
+import * as moment from 'moment';
 
 export interface RequestDataStateModel {
   countries: any[];
@@ -29,7 +30,7 @@ export interface RequestDataStateModel {
     airports: [],
     airlines: [],
     currencies: [],
-    currency: 'uah',
+    currency: localStorage.getItem('currency') ?? 'uah',
     formData: {
       destinationFrom: {
         code: '',
@@ -39,8 +40,8 @@ export interface RequestDataStateModel {
         name: '',
         code: '',
       },
-      endDate: new Date(),
       startDate: new Date(),
+      endDate: new Date(),
       transfers: '',
     },
     userData: {
@@ -87,7 +88,7 @@ export class RequestDataState {
   constructor(
     private requestService: RequestDataService,
     private flightsInfoService: FlightsInfoService
-  ) { }
+  ) {}
 
   @Selector()
   static countries(state: RequestDataStateModel): any[] {
@@ -185,6 +186,7 @@ export class RequestDataState {
     payload: RequestDataActions.SetCurrency
   ) {
     patchState({ currency: payload.currency });
+    localStorage.setItem('currency', payload.currency);
   }
 
   @Action(RequestDataActions.SetFormDate)
@@ -192,7 +194,7 @@ export class RequestDataState {
     { patchState }: StateContext<RequestDataStateModel>,
     { formData }: RequestDataActions.SetFormDate
   ) {
-    return patchState({ formData });
+    patchState({ formData });
   }
 
   @Action(RequestDataActions.SetUserData)
@@ -220,8 +222,8 @@ export class RequestDataState {
                 name: '',
                 code: '',
               },
-              endDate: new Date(),
               startDate: new Date(),
+              endDate: moment().add(7, 'days').toDate(),
               transfers: 'All',
             };
 

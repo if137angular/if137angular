@@ -1,19 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CheapestTicketsComponent } from './cheapest-tickets.component';
 
-describe('CheapestTicketsComponent', () => {
-  let component: CheapestTicketsComponent;
-  let fixture: ComponentFixture<CheapestTicketsComponent>;
+import { CovidMapComponent } from './covid-map.component';
+
+describe('CovidMapComponent', () => {
+  let component: CovidMapComponent;
+  let fixture: ComponentFixture<CovidMapComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CheapestTicketsComponent ]
+      declarations: [ CovidMapComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CheapestTicketsComponent);
+    fixture = TestBed.createComponent(CovidMapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
