@@ -481,7 +481,7 @@ export class FlightInfoState {
     this.flightInfoService.requestPopularDestination('LWO')
       .subscribe((res: GetDestinationPopular) => {
         const mapData: any = res;
-        const objValues: DestinationPopular[] = Object.values(mapData[0].destination);
+        const objValues: DestinationPopular[] = Object.values(mapData);
         objValues.forEach((objValues: DestinationPopular) => {
           const matchedCity = this.getCityByCode(objValues.destination);
           Object.assign(objValues, {
@@ -532,19 +532,6 @@ export class FlightInfoState {
             popularDestinations[key].forEach((item: DestinationPopular) => {
               item.originName = this.getCityNameByKey(item.origin);
               item.destinationName = this.getCityNameByKey(item.destination);
-              const test: Map<string, DestinationPopular[]> = popularDestinations;
-              const objValues: DestinationPopular[] = Object.values(test);
-              const matchedCity = this.getCityNameByKey(item.destination);
-              objValues.forEach((obj: DestinationPopular) => {
-                Object.assign(obj, {
-                  id: matchedCity ? matchedCity.name.toLowerCase() : '',
-                  title: matchedCity ? matchedCity.name : '',
-                  geometry: {
-                    type: 'Point',
-                    coordinates: matchedCity ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat] : []
-                  },
-                })
-              })
             });
             const cityInfo: CityInfo = {
               cityName: this.getCityNameByKey(key),
