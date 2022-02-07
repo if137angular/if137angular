@@ -10,7 +10,7 @@ import {
   DestinationPopular,
   CityInfo,
 } from '../../models/city-destination.model';
-
+import { RequestDataState } from 'src/app/store/request-data.state';
 
 @UntilDestroy()
 @Component({
@@ -40,11 +40,16 @@ export class CityDestinationComponent implements OnInit {
     this.store.dispatch(
       new GetPopularDestinations(this.popularDestinationCities)
     );
-  };
+  }
 
   selectDestination(selectedDestination: DestinationPopular) {
     this.selectedCities = selectedDestination.originName;
     this.selectedDestinstion = selectedDestination.destination;
+
+    const { startDate, endDate } = this.store.selectSnapshot(
+      RequestDataState.formData
+    );
+
     const formData = {
       destinationFrom: {
         name: selectedDestination.originName,
@@ -54,8 +59,8 @@ export class CityDestinationComponent implements OnInit {
         name: selectedDestination.destinationName,
         code: selectedDestination.destination,
       },
-      endDate: new Date(),
-      startDate: new Date(),
+      startDate: startDate,
+      endDate: endDate,
     };
     this.store.dispatch(new SetFormDate(formData));
     this.window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
