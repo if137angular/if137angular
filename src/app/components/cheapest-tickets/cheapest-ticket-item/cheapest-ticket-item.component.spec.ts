@@ -31,7 +31,7 @@ import {RequestDataState} from "../../../store/request-data.state";
 import {FlightInfoState} from "../../../store/flight-info.state";
 import {Subject} from "rxjs";
 
-fdescribe('CheapestTicketItemComponent', () => {
+xdescribe('CheapestTicketItemComponent', () => {
   let component: CheapestTicketItemComponent;
   let fixture: ComponentFixture<CheapestTicketItemComponent>;
   let storeMock: any;
