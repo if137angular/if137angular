@@ -11,6 +11,7 @@ import {
   CityInfo,
 } from '../../models/city-destination.model';
 import { RequestDataState } from 'src/app/store/request-data.state';
+import { CurrencyDropdownModel } from 'src/app/models/Currency-dropdown.model';
 
 @UntilDestroy()
 @Component({
@@ -21,6 +22,8 @@ import { RequestDataState } from 'src/app/store/request-data.state';
 export class CityDestinationComponent implements OnInit {
   @Select(FlightInfoState.popularDestinations)
   popularDestinations$: Observable<Map<CityInfo, DestinationPopular[]>>;
+  @Select(RequestDataState.currency)
+  currency$: Observable<CurrencyDropdownModel>;
 
   private popularDestinationCities = ['IEV', 'LWO', 'DNK', 'ODS'];
   constructor(private store: Store, @Inject('Window') private window: Window) {}
@@ -33,13 +36,14 @@ export class CityDestinationComponent implements OnInit {
   cities: DestinationPopular[];
   selectedDestinstion: string = '';
   selectedOrigin: string = '';
-  selectedCities: string;
-  currency: string = 'uah';
+  selectedCities: string = '';
 
   ngOnInit(): void {
-    this.store.dispatch(
-      new GetPopularDestinations(this.popularDestinationCities)
-    );
+    this.currency$.subscribe(() => {
+      this.store.dispatch(
+        new GetPopularDestinations(this.popularDestinationCities)
+      );
+    });
   }
 
   selectDestination(selectedDestination: DestinationPopular) {
