@@ -22,6 +22,7 @@ type filterElementsModel = {
 })
 export class FlightFilterComponent implements OnInit {
   @Select(FlightInfoState.filterConfig) filterConfig$: Observable<any>;
+  @Select(FlightInfoState.filter) filter$: Observable<any>;
 
   minPrice: number = 0;
   maxPrice: number = 0;
