@@ -65,27 +65,13 @@ export class MapsComponent implements OnInit {
   ) {
   }
 
-  getCityByCode(cityCode: string): CitiesModel {
-    const cities = this.store.selectSnapshot(RequestDataState.cities);
-    const matchedCity = cities.find((city: CitiesModel) => city.code === cityCode)
-    return matchedCity
-  };
-
   ngOnInit(): void {
     this.store.select(FlightInfoState.mapData)
       .subscribe((mapData: any) => {
         if (mapData.length) {
-          this.makeChart(mapData[0].destination);
+          this.makeChart(mapData);
         }
       })
-
-
-    const citiesArr = this.store.selectSnapshot(RequestDataState.cities);
-    const asd = citiesArr.filter(item => item.code === 'LWO');
-
-    this.originLat = asd[0].coordinates.lat;
-    this.originLon = asd[0].coordinates.lon;
-    this.originCode = asd[0].code;
   }
 
   browserOnly(f: () => void) {
