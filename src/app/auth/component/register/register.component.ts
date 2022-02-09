@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { CurrentUserInterface } from '../../models/currentUser.interface';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../service/auth.service';
 import { RegisterAction } from '../../store/register.action';
 
 @Component({
@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
     this.authService.register(this.form.value)
     .subscribe((currentUser: CurrentUserInterface) => console.log('****Current USer', currentUser))
 
-    // this.form.reset()
+    this.form.reset()
   }
 
 }
