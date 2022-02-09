@@ -97,7 +97,6 @@ xdescribe('CheapestTicketItemComponent', () => {
   });
 
   beforeEach(() => {
-    debugElement = fixture.debugElement;
     store = TestBed.get(Store);
     fixture = TestBed.createComponent(CheapestTicketItemComponent);
     component = fixture.componentInstance;

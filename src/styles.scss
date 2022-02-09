@@ -9,9 +9,14 @@ body {
 }
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow-y: scroll;
 }
 
 .mat-dialog-container {
   padding: 0 !important;
   border-radius: 15px !important;
+}
+
+.cdk-global-scrollblock {
+  overflow-y: visible;
 }

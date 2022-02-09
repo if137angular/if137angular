@@ -1,9 +1,9 @@
 
 <div class="componentWrapper">
-  <div *ngIf="errors$ | async" class="error">
+  <div *ngIf="(errors$ | async) && (loading$ | async) === false" class="error">
     <app-no-records-found></app-no-records-found>
   </div>
-  <div *ngIf="(errors$ | async) === '' && cheapestTicketsArr">
+  <div *ngIf="(errors$ | async) === '' && cheapestTicketsArr && (loading$ | async) === false">
     <div class="sortWrapper">
       <mat-form-field appearance="fill">
         <mat-label>Sort by</mat-label>

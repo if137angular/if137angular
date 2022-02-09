@@ -58,7 +58,10 @@ describe('FlightsInfoService', () => {
   describe('#getFlightPriceTrends', () => {
     it('should call http with appropriate params', () => {
       const expectedParams = `/v1/prices/calendar?origin=LWO&destination=MIL&departure_date=2022-02&return_date=2022-02&currency=USD&calendar_type=departure_date`;
+
       service.getFlightPriceTrends('LWO', 'MIL', '2022-02', '2022-02');
+
+      expect(httpMock.get).toHaveBeenCalledWith(expectedParams);
     });
   });
   describe('#getCheapestTickets', () => {
