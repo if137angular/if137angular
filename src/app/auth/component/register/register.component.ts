@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
+import { CurrentUserInterface } from '../../models/currentUser.interface';
+import { AuthService } from '../../services/auth.service';
 import { RegisterAction } from '../../store/register.action';
 
 @Component({
@@ -11,7 +13,7 @@ import { RegisterAction } from '../../store/register.action';
 export class RegisterComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  constructor(private fb: FormBuilder, private store: Store, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.initializeForm()
@@ -20,7 +22,7 @@ export class RegisterComponent implements OnInit {
   initializeForm(): void {
     this.form = this.fb.group({
       username: ['', Validators.required],
-      email: ['', Validators.required],
+      email: '',
       password: ['', Validators.required]
     })
     console.log('initializeForm', this.form.valid)
@@ -29,7 +31,11 @@ export class RegisterComponent implements OnInit {
   onSubmit() {
     console.log('Submit ', this.form.value)
     this.store.dispatch(new RegisterAction(this.form.value))
-    this.form.reset()
+
+    this.authService.register(this.form.value)
+    .subscribe((currentUser: CurrentUserInterface) => console.log('****Current USer', currentUser))
+
+    // this.form.reset()
   }
 
 }
