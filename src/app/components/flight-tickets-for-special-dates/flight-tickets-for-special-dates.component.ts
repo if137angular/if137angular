@@ -26,7 +26,6 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
 
   onScroll() {
     this.numCards += 4;
-    console.log(this.numCards)
     this.getFlightInfo()
   }
 
@@ -40,19 +39,20 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
         direct: formData.transfers  === 'Directly',
         numCards: this.numCards
       }
-      this.store.dispatch([new GetTiketsForSpecialDate(payload)])
+      this.store.dispatch(new GetTiketsForSpecialDate(payload))
     
-      this.store.select(RequestDataState.currency)
-        .pipe(untilDestroyed(this))
-        .subscribe((currency: string) => this.currency = currency.toUpperCase())
     })
-
-    this.store.select(FlightInfoState.loading)
-      .pipe(untilDestroyed(this))
-      .subscribe(loading => this.loading = loading);
   }
 
   ngOnInit(): void {
     this.getFlightInfo()
+
+    this.store.select(RequestDataState.currency)
+      .pipe(untilDestroyed(this))
+      .subscribe((currency: string) => this.currency = currency.toUpperCase())
+
+    this.store.select(FlightInfoState.loading)
+      .pipe(untilDestroyed(this))
+      .subscribe(loading => this.loading = loading);
   }
 }

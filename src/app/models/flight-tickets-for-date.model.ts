@@ -2,11 +2,15 @@ export type FlightInfo = {
 	airline: string; // add
 	departure_at: string;
 	destination: string; // ? 
+	destination_airport: string;
 	duration: number; // add
 	flight_number: string;
+	link: string;
 	origin: string;
 	price: number;
 	return_at: string;
+	return_transfers: number;
+	transfers: number;
 }
 
 export type FlightTiketsForDatePayload = {
