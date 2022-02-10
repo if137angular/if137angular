@@ -25,5 +25,6 @@
         (valueChange)="onDurationChange()"></mtx-slider>
       <div>{{getHours(filterGroup.value.durationRange[0])}} - {{getHours(filterGroup.value.durationRange[1])}}</div>
     </div>
+    <button class="btn" (click)="onResetFilter()">Reset</button>
   </form>
 </div>

@@ -88,6 +88,24 @@ export class FlightFilterComponent implements OnInit {
     });
   }
 
+  onResetFilter() {
+    this.store.dispatch(
+      new SetFilter(
+        {
+          minPrice: null,
+          maxPrice: null,
+          minDuration: null,
+          maxDuration: null
+        }
+      )
+    )
+
+    this.filterGroup.patchValue({
+      priceRange: [this.minPrice, this.maxPrice],
+      durationRange: [this.minDuration, this.maxDuration]
+    })
+  }
+
   onFilterChange() {
     const [minPrice, maxPrice] = this.filterGroup.value.priceRange;
 
