@@ -15,11 +15,14 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   styleUrls: ['./flight-tickets-for-special-dates.component.scss'],
 })
 export class FlightTicketsForSpecialDatesComponent implements OnInit {
-  @Select(RequestDataState.formData) formData$: Observable<TicketsType>;
-  @Select(FlightInfoState.flightTicketsForDate) flightInfo$: Observable<any>;
+  @Select(RequestDataState.formData)
+  formData$: Observable<TicketsType>;
+  @Select(FlightInfoState.flightTicketsForDate)
+  flightInfo$: Observable<any>;
+  @Select(FlightInfoState.loading)
+  loading$: Observable<any>;
 
   currency: string;
-  loading: boolean;
   numCards: number = 10;
 
   constructor(private store: Store) {}
@@ -39,23 +42,13 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
         direct: formData.transfers === 'Directly',
         numCards: this.numCards,
       };
+
+      this.currency = this.store.selectSnapshot(RequestDataState.currency);
       this.store.dispatch(new GetTicketsForSpecialDate(payload));
     });
   }
 
   ngOnInit(): void {
     this.getFlightInfo();
-
-    this.store
-      .select(RequestDataState.currency)
-      .pipe(untilDestroyed(this))
-      .subscribe(
-        (currency: string) => (this.currency = currency.toUpperCase())
-      );
-
-    this.store
-      .select(FlightInfoState.loading)
-      .pipe(untilDestroyed(this))
-      .subscribe((loading) => (this.loading = loading));
   }
 }
