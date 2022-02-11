@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { RequestDataState } from './../../store/request-data.state';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -67,7 +66,7 @@ export class FlightFilterComponent implements OnInit {
     airline: new FormControl(null),
   });
 
-  constructor(public store: Store, private router: Router) { }
+  constructor(public store: Store) {}
 
   ngOnInit(): void {
     this.filterConfig$.pipe(untilDestroyed(this)).subscribe((filterConfig) => {
@@ -88,20 +87,18 @@ export class FlightFilterComponent implements OnInit {
 
   onResetFilter() {
     this.store.dispatch(
-      new SetFilter(
-        {
-          minPrice: null,
-          maxPrice: null,
-          minDuration: null,
-          maxDuration: null
-        }
-      )
-    )
+      new SetFilter({
+        minPrice: null,
+        maxPrice: null,
+        minDuration: null,
+        maxDuration: null,
+      })
+    );
 
     this.filterGroup.patchValue({
       priceRange: [this.minPrice, this.maxPrice],
-      durationRange: [this.minDuration, this.maxDuration]
-    })
+      durationRange: [this.minDuration, this.maxDuration],
+    });
   }
 
   onFilterChange() {
@@ -135,7 +132,6 @@ export class FlightFilterComponent implements OnInit {
   }
 
   getHours(min: any) {
-
     let hours = Math.trunc(min / 60);
     let minutes = min % 60;
     if (minutes === 0) {
