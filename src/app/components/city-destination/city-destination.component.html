@@ -8,11 +8,11 @@
         </mat-label>
 
         <mat-select [ngModel]="selectedCities" (ngModelChange)="selectDestination($event)" name="sel3">
-          <mat-option class="option" [value]="items" *ngFor="let items of cities.value">
-            <span class="origin">{{items.originName}}</span>
+          <mat-option class="option" [value]="city" *ngFor="let city of cities.value">
+            <span class="origin">{{city.originName}}</span>
             <mat-icon>trending_flat</mat-icon>
-            <span class="destination">{{items.destinationName}}</span>
-            <span class="price">starting at <b>{{(items.currencyCode)}}</b></span>
+            <span class="destination">{{city.destinationName}}</span>
+            <span class="price">starting at <b>{{(city.currencyCode)}}</b></span>
           </mat-option>
         </mat-select>
       </mat-form-field>

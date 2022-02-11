@@ -91,7 +91,7 @@ export class FlightInfoState {
   constructor(
     private flightInfoService: FlightsInfoService,
     private store: Store
-  ) { }
+  ) {}
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
@@ -297,10 +297,13 @@ export class FlightInfoState {
         payload.returnDate
       )
       .subscribe((response) => {
-        const data: any = Object.values(response.data).map((element: any) => Object.assign(element, {
-          airline_title: Object.values(this.store.selectSnapshot(RequestDataState.airlines))
-            .find((airline: any) => airline.id === element.airline).name,
-        }));
+        const data: any = Object.values(response.data).map((element: any) =>
+          Object.assign(element, {
+            airline_title: Object.values(
+              this.store.selectSnapshot(RequestDataState.airlines)
+            ).find((airline: any) => airline.id === element.airline).name,
+          })
+        );
         const filterConfig: FilterConfigModel = {
           maxPrice:
             _.maxBy(
@@ -476,7 +479,8 @@ export class FlightInfoState {
     { patchState, dispatch }: StateContext<FlightInfoStateModel>,
     payload: FlightInfoActions.GetPopularDestinations
   ) {
-    this.flightInfoService.requestPopularDestination('LWO')
+    this.flightInfoService
+      .requestPopularDestination('LWO')
       .subscribe((res: GetDestinationPopular) => {
         const mapData: any = res;
         const objValues: DestinationPopular[] = Object.values(mapData);
@@ -487,24 +491,22 @@ export class FlightInfoState {
             title: matchedCity ? matchedCity.name : '',
             geometry: {
               type: 'Point',
-              coordinates: matchedCity ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat] : []
+              coordinates: matchedCity
+                ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat]
+                : [],
             },
-          })
-        })
-        patchState({ mapData: objValues })
-      }
-      )
+          });
+        });
+        patchState({ mapData: objValues });
+      });
   }
 
   @Action(FlightInfoActions.GetPopularDestinations)
   GetPopularDestinations(
-    { patchState, dispatch }: StateContext<FlightInfoStateModel>,
-    payload: FlightInfoActions.GetPopularDestinations
+    { patchState }: StateContext<FlightInfoStateModel>,
+    { payload }: FlightInfoActions.GetPopularDestinations
   ) {
-    patchState({
-      loading: true,
-    });
-    from(payload.payload)
+    from(payload)
       .pipe(
         mergeMap((cityCode: string) =>
           this.flightInfoService.requestPopularDestination(cityCode)
@@ -525,26 +527,37 @@ export class FlightInfoState {
           CityInfo,
           DestinationPopular[]
         >();
-        Object.keys(popularDestinations).forEach((key: string) => {
-          if (popularDestinations[key].length > 3) {
-            popularDestinations[key].forEach((item: DestinationPopular) => {
-              item.originName = this.getCityNameByKey(item.origin);
-              item.destinationName = this.getCityNameByKey(item.destination);
-            });
-            const cityInfo: CityInfo = {
-              cityName: this.getCityNameByKey(key),
-              countryCode: this.getCountryCodeByCityCode(key),
-            };
-            response.set(cityInfo, popularDestinations[key]);
-          }
-        });
-        patchState({ popularDestinations: response, loading: false });
-      })
+        const currencyFromStore = this.store.selectSnapshot(
+          RequestDataState.currency
+        );
+
+        Object.keys(popularDestinations)
+          .sort()
+          .forEach((key: string) => {
+            if (popularDestinations[key].length > 3) {
+              popularDestinations[key].forEach((item: DestinationPopular) => {
+                item.originName = this.getCityNameByKey(item.origin);
+                item.destinationName = this.getCityNameByKey(item.destination);
+                item.currencyCode =
+                  item.price + ' ' + currencyFromStore.toUpperCase();
+              });
+              const cityInfo: CityInfo = {
+                cityName: this.getCityNameByKey(key),
+                countryCode: this.getCountryCodeByCityCode(key),
+              };
+              response.set(cityInfo, popularDestinations[key]);
+            }
+          });
+        patchState({ popularDestinations: response });
+      });
   }
+
   getCityByCode(cityCode: string): CitiesModel {
     const cities = this.store.selectSnapshot(RequestDataState.cities);
-    const matchedCity = cities.find((city: CitiesModel) => city.code === 'LWO')
-    return matchedCity
+    const matchedCity = cities.find(
+      (city: CitiesModel) => city.code === cityCode
+    );
+    return matchedCity;
   }
 
   getCityNameByKey(cityKey: string) {
