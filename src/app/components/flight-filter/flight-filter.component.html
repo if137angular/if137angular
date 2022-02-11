@@ -19,7 +19,7 @@
         [max]="maxPrice" (valueChange)="onFilterChange()"></mtx-slider>
     </div>
 
-    <div [ngStyle]="{ 'display': checkTrue ? 'block' : 'none' }">
+    <div [ngStyle]="{ 'display': minDuration ? 'block' : 'none' }">
       <b>Duration range</b>
       <mtx-slider formControlName="durationRange" thumbLabel="true" [min]="minDuration" [max]=" maxDuration"
         (valueChange)="onDurationChange()"></mtx-slider>
