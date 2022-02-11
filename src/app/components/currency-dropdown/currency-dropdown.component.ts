@@ -12,10 +12,10 @@ import { CurrencyDropdownModel } from 'src/app/models/Currency-dropdown.model';
   styleUrls: ['./currency-dropdown.component.scss'],
 })
 export class CurrencyDropdownComponent {
-  @Select(RequestDataState.currencies) currencies$: Observable<
-    CurrencyDropdownModel[]
-  >;
-  @Select(RequestDataState.currency) selectedCurrency$: Observable<any>;
+  @Select(RequestDataState.currencies)
+  currencies$: Observable<CurrencyDropdownModel[]>;
+  @Select(RequestDataState.currency)
+  selectedCurrency$: Observable<any>;
 
   constructor(private store: Store) {}
 

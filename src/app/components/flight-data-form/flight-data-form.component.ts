@@ -31,10 +31,14 @@ export class FlightDataFormComponent implements OnInit {
     transfers: new FormControl(),
   });
 
-  @Select(RequestDataState.cities) cities$: Observable<CitiesModel[]>;
-  @Select(RequestDataState.location) location$: Observable<GetLocationModel[]>;
-  @Select(RequestDataState.formData) formData$: Observable<FormDataModel>;
-  @Select(RequestDataState.currency) selectedCurrency$: Observable<any>;
+  @Select(RequestDataState.cities)
+  cities$: Observable<CitiesModel[]>;
+  @Select(RequestDataState.location)
+  location$: Observable<GetLocationModel[]>;
+  @Select(RequestDataState.formData)
+  formData$: Observable<FormDataModel>;
+  @Select(RequestDataState.currency)
+  selectedCurrency$: Observable<any>;
 
   constructor(private store: Store, private router: Router) {}
 
