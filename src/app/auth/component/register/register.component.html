@@ -1,11 +1,13 @@
 <div class="container">
-  <app-toolbar></app-toolbar> <!--thi code does't work well-->
+  <!-- <app-toolbar></app-toolbar> -->
   <div class="wrap">
     <h1>Sign Up</h1>
     <p>
       <a>Have an account?</a>
     </p>
-    <form>
+    <form [formGroup]="form" 
+    (submit)="onSubmit()"
+    >
       <div class="wrap-input">
         <input
           class="form-control"

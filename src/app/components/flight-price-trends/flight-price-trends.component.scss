@@ -28,6 +28,10 @@
     justify-content: space-between;
     width: 35%;
     align-items: center;
+    
+    &-details {
+      max-width: 125px;
+    }
 
     &-details > span {
       display: block;

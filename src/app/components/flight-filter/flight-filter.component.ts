@@ -22,12 +22,13 @@ type filterElementsModel = {
 })
 export class FlightFilterComponent implements OnInit {
   @Select(FlightInfoState.filterConfig) filterConfig$: Observable<any>;
+  @Select(FlightInfoState.filter) filter$: Observable<any>;
 
   minPrice: number = 0;
   maxPrice: number = 0;
 
-  minDuration: number = 0;
-  maxDuration: number = 0;
+  minDuration: number;
+  maxDuration: number;
 
   currency: string;
 
@@ -66,7 +67,7 @@ export class FlightFilterComponent implements OnInit {
     airline: new FormControl(null),
   });
 
-  constructor(public store: Store, private router: Router) {}
+  constructor(public store: Store, private router: Router) { }
 
   ngOnInit(): void {
     this.filterConfig$.pipe(untilDestroyed(this)).subscribe((filterConfig) => {
@@ -76,8 +77,6 @@ export class FlightFilterComponent implements OnInit {
       this.minDuration = filterConfig.minDuration;
       this.maxDuration = filterConfig.maxDuration;
 
-      this.checkURL();
-
       this.filterGroup.patchValue({
         priceRange: [this.minPrice, this.maxPrice],
         durationRange: [this.minDuration, this.maxDuration],
@@ -85,6 +84,24 @@ export class FlightFilterComponent implements OnInit {
 
       this.currency = this.store.selectSnapshot(RequestDataState.currency);
     });
+  }
+
+  onResetFilter() {
+    this.store.dispatch(
+      new SetFilter(
+        {
+          minPrice: null,
+          maxPrice: null,
+          minDuration: null,
+          maxDuration: null
+        }
+      )
+    )
+
+    this.filterGroup.patchValue({
+      priceRange: [this.minPrice, this.maxPrice],
+      durationRange: [this.minDuration, this.maxDuration]
+    })
   }
 
   onFilterChange() {
@@ -117,17 +134,8 @@ export class FlightFilterComponent implements OnInit {
     return value;
   }
 
-  checkURL(): void {
-    if (this.router.url === '/search/cheapest-tickets') {
-      this.checkTrue = false;
-    } else if (this.router.url === '/search/trends') {
-      this.checkTrue = false;
-    } else {
-      this.checkTrue = true;
-    }
-  }
-
   getHours(min: any) {
+
     let hours = Math.trunc(min / 60);
     let minutes = min % 60;
     if (minutes === 0) {

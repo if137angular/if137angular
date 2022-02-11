@@ -8,7 +8,6 @@ export interface FlightPriceTrends {
   price: number;
   return_at: string;
   transfers: number;
-  duration: number;
 }
 
 export interface FlightPriceTrendsRequest {

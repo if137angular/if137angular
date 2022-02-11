@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { from, of } from 'rxjs';
-import { mergeMap, toArray, map } from 'rxjs/operators';
+import { mergeMap, toArray, map, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { RequestDataState } from './request-data.state';
@@ -19,11 +19,13 @@ import {
   DestinationPopular,
   GetDestinationPopular,
   CityInfo,
+  IMapData,
 } from '../models/city-destination.model';
 
 import {
   CheapestTicketsRequestFail,
   CheapestTicketsRequestSuccess,
+  GetMapData,
 } from './flight-info.action';
 
 import { FlightPriceTrends } from 'src/app/models/flight-price-trends.model';
@@ -37,7 +39,6 @@ export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesModel[];
   specialOffers: any; // TODO: create model;
   nonStopTickets: any; // TODO: create model
-  // flightTiketsForDate: UniversalComponentModel[];
   flightTiketsForDate: any;
   flightPriceTrends: any;
   popularDestinations: Map<CityInfo, DestinationPopular[]>;
@@ -46,6 +47,7 @@ export interface FlightInfoStateModel {
   loading: boolean;
   cheapestTickets: any;
   errors: string;
+  mapData: any;
 }
 
 @State<FlightInfoStateModel>({
@@ -58,6 +60,7 @@ export interface FlightInfoStateModel {
     nonStopTickets: [],
     flightPriceTrends: [],
     popularDestinations: new Map<CityInfo, DestinationPopular[]>(),
+    mapData: [],
     filter: {
       flightClass: null,
       gate: null,
@@ -88,7 +91,7 @@ export class FlightInfoState {
   constructor(
     private flightInfoService: FlightsInfoService,
     private store: Store
-  ) { }
+  ) {}
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
@@ -141,6 +144,11 @@ export class FlightInfoState {
   @Selector()
   static errors(state: FlightInfoStateModel): string | null {
     return state.errors;
+  }
+
+  @Selector()
+  static mapData(state: FlightInfoStateModel): any {
+    return state.mapData;
   }
 
   @Action(FlightInfoActions.CalendarOfPricesLoaded)
@@ -289,10 +297,13 @@ export class FlightInfoState {
         payload.returnDate
       )
       .subscribe((response) => {
-        const data: any = Object.values(response.data).map((element: any) => Object.assign(element, {
-          airline_title: Object.values(this.store.selectSnapshot(RequestDataState.airlines))
-            .find((airline: any) => airline.id === element.airline).name,
-        }));
+        const data: any = Object.values(response.data).map((element: any) =>
+          Object.assign(element, {
+            airline_title: Object.values(
+              this.store.selectSnapshot(RequestDataState.airlines)
+            ).find((airline: any) => airline.id === element.airline).name,
+          })
+        );
         const filterConfig: FilterConfigModel = {
           maxPrice:
             _.maxBy(
@@ -464,6 +475,33 @@ export class FlightInfoState {
   }
 
   @Action(FlightInfoActions.GetPopularDestinations)
+  GetMapData(
+    { patchState, dispatch }: StateContext<FlightInfoStateModel>,
+    payload: FlightInfoActions.GetPopularDestinations
+  ) {
+    this.flightInfoService
+      .requestPopularDestination('LWO')
+      .subscribe((res: GetDestinationPopular) => {
+        const mapData: any = res;
+        const objValues: DestinationPopular[] = Object.values(mapData);
+        objValues.forEach((objValues: DestinationPopular) => {
+          const matchedCity = this.getCityByCode(objValues.destination);
+          Object.assign(objValues, {
+            id: matchedCity ? matchedCity.name.toLowerCase() : '',
+            title: matchedCity ? matchedCity.name : '',
+            geometry: {
+              type: 'Point',
+              coordinates: matchedCity
+                ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat]
+                : [],
+            },
+          });
+        });
+        patchState({ mapData: objValues });
+      });
+  }
+
+  @Action(FlightInfoActions.GetPopularDestinations)
   GetPopularDestinations(
     { patchState }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.GetPopularDestinations
@@ -512,6 +550,14 @@ export class FlightInfoState {
           });
         patchState({ popularDestinations: response });
       });
+  }
+
+  getCityByCode(cityCode: string): CitiesModel {
+    const cities = this.store.selectSnapshot(RequestDataState.cities);
+    const matchedCity = cities.find(
+      (city: CitiesModel) => city.code === cityCode
+    );
+    return matchedCity;
   }
 
   getCityNameByKey(cityKey: string) {

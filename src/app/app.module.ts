@@ -12,6 +12,9 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { environment } from 'src/environments/environment';
 
+// Module
+import { AuthModule } from './auth/auth.module';
+
 // Other
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -65,7 +68,6 @@ import { FlightPriceTrendsComponent } from './components/flight-price-trends/fli
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { FlightFilterComponent } from './components/flight-filter/flight-filter.component';
-import { RegisterComponent } from './components/register/register.component';
 import { MapsComponent } from './components/maps/maps.component';
 import { NoRecordsFoundComponent } from './components/no-records-found/no-records-found.component';
 import { CurrencyDropdownComponent } from './components/currency-dropdown/currency-dropdown.component';
@@ -95,7 +97,6 @@ import { CovidMapComponent } from './components/covid-map/covid-map.component';
     FlightPriceTrendsComponent,
     ToolbarComponent,
     FlightFilterComponent,
-    RegisterComponent,
     MapsComponent,
     NoRecordsFoundComponent,
     CurrencyDropdownComponent,
@@ -107,6 +108,8 @@ import { CovidMapComponent } from './components/covid-map/covid-map.component';
     CovidMapComponent,
   ],
   imports: [
+    // Module
+    AuthModule,
     // Common
     CommonModule,
     BrowserModule,
