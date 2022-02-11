@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, OnInit } from '@angular/core';
-import { Store } from '@ngxs/store';
-import { map } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+import { map, Observable } from 'rxjs';
 import {
   CalendarOfPricesModel,
   CalendarOfPricesPayload,
@@ -26,6 +26,11 @@ import { CalendarDialogComponent } from './calendar-dialog/calendar-dialog.compo
   templateUrl: './calendar-of-prices.component.html',
 })
 export class CalendarOfPricesComponent implements OnInit {
+  @Select(FlightInfoState.calendarOfPrices)
+  calendarOfPrices$: Observable<CalendarOfPricesModel[]>;
+  @Select(RequestDataState.formData)
+  formData$: Observable<FormDataModel>;
+
   formData: CalendarOfPricesPayload;
   events: CalendarEvent<CalendarOfPricesModel>[];
 
@@ -36,30 +41,26 @@ export class CalendarOfPricesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store
-      .select(FlightInfoState.calendarOfPrices)
-      .pipe(untilDestroyed(this))
-      .subscribe((state: CalendarOfPricesModel[]) => {
-        const currencyFromStore = this.store.selectSnapshot(
-          RequestDataState.currency
-        );
-        this.events = state.map(({ depart_date, value, ...item }) => ({
-          start: startOfDay(new Date(depart_date)),
-          title: `Price: ${value} ${currencyFromStore.toUpperCase()}`,
-          depart_date,
-          value,
-          currency: currencyFromStore,
-          ...item,
-        }));
-        this.cdRef.detectChanges();
-      });
+    this.calendarOfPrices$.pipe(untilDestroyed(this)).subscribe((state) => {
+      const currencyFromStore = this.store.selectSnapshot(
+        RequestDataState.currency
+      );
+      this.events = state.map(({ depart_date, value, ...item }) => ({
+        start: startOfDay(new Date(depart_date)),
+        title: `Price: ${value} ${currencyFromStore.toUpperCase()}`,
+        depart_date,
+        value,
+        currency: currencyFromStore,
+        ...item,
+      }));
+      this.cdRef.detectChanges();
+    });
 
-    this.store
-      .select(RequestDataState.formData)
+    this.formData$
       .pipe(
         untilDestroyed(this),
         filter((state: any) => state.isFormValid),
-        map((state: FormDataModel) => ({
+        map((state) => ({
           origin: state.destinationFrom.name,
           destination: state.destinationTo.name,
           originCode: state.destinationFrom.code,

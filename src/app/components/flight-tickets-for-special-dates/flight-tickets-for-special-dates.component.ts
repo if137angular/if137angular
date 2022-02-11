@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { TicketsType } from 'src/app/models/flight-tickets-for-date.model';
-import { GetTiketsForSpecialDate } from 'src/app/store/flight-info.action';
+import { GetTicketsForSpecialDate } from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -16,43 +16,46 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 })
 export class FlightTicketsForSpecialDatesComponent implements OnInit {
   @Select(RequestDataState.formData) formData$: Observable<TicketsType>;
-  @Select(FlightInfoState.flightTiketsForDate) flightInfo$: Observable<any>;
+  @Select(FlightInfoState.flightTicketsForDate) flightInfo$: Observable<any>;
 
   currency: string;
   loading: boolean;
   numCards: number = 10;
 
-  constructor(private store: Store) { }
+  constructor(private store: Store) {}
 
   onScroll() {
     this.numCards += 4;
-    this.getFlightInfo()
+    this.getFlightInfo();
   }
 
   getFlightInfo() {
-    this.formData$.pipe(untilDestroyed(this)).subscribe(formData => {
+    this.formData$.pipe(untilDestroyed(this)).subscribe((formData) => {
       const payload = {
         codeFrom: formData.destinationFrom.code,
         codeTo: formData.destinationTo.code,
         startDate: formData.startDate.toISOString().slice(0, 10),
         endDate: formData.endDate.toISOString().slice(0, 10),
-        direct: formData.transfers  === 'Directly',
-        numCards: this.numCards
-      }
-      this.store.dispatch(new GetTiketsForSpecialDate(payload))
-    
-    })
+        direct: formData.transfers === 'Directly',
+        numCards: this.numCards,
+      };
+      this.store.dispatch(new GetTicketsForSpecialDate(payload));
+    });
   }
 
   ngOnInit(): void {
-    this.getFlightInfo()
+    this.getFlightInfo();
 
-    this.store.select(RequestDataState.currency)
+    this.store
+      .select(RequestDataState.currency)
       .pipe(untilDestroyed(this))
-      .subscribe((currency: string) => this.currency = currency.toUpperCase())
+      .subscribe(
+        (currency: string) => (this.currency = currency.toUpperCase())
+      );
 
-    this.store.select(FlightInfoState.loading)
+    this.store
+      .select(FlightInfoState.loading)
       .pipe(untilDestroyed(this))
-      .subscribe(loading => this.loading = loading);
+      .subscribe((loading) => (this.loading = loading));
   }
 }

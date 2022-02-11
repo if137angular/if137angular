@@ -39,7 +39,7 @@ export interface FlightInfoStateModel {
   calendarOfPrices: CalendarOfPricesModel[];
   specialOffers: any; // TODO: create model;
   nonStopTickets: any; // TODO: create model
-  flightTiketsForDate: any;
+  flightTicketsForDate: any;
   flightPriceTrends: any;
   popularDestinations: Map<CityInfo, DestinationPopular[]>;
   filter: FilterModel;
@@ -55,7 +55,7 @@ export interface FlightInfoStateModel {
   defaults: {
     calendarOfPrices: [],
     specialOffers: [],
-    flightTiketsForDate: [],
+    flightTicketsForDate: [],
     cheapestTickets: [],
     nonStopTickets: [],
     flightPriceTrends: [],
@@ -99,8 +99,8 @@ export class FlightInfoState {
   }
 
   @Selector()
-  static flightTiketsForDate(state: FlightInfoStateModel): any {
-    return filterArray(state.flightTiketsForDate, state.filter);
+  static flightTicketsForDate(state: FlightInfoStateModel): any {
+    return filterArray(state.flightTicketsForDate, state.filter);
   }
 
   @Selector()
@@ -165,10 +165,10 @@ export class FlightInfoState {
       });
   }
 
-  @Action(FlightInfoActions.GetTiketsForSpecialDate)
-  LoadTiketsForSpecialDate(
+  @Action(FlightInfoActions.GetTicketsForSpecialDate)
+  LoadTicketsForSpecialDate(
     { patchState }: StateContext<FlightInfoStateModel>,
-    { payload }: FlightInfoActions.GetTiketsForSpecialDate
+    { payload }: FlightInfoActions.GetTicketsForSpecialDate
   ) {
     patchState({ loading: true });
 
@@ -187,23 +187,25 @@ export class FlightInfoState {
           maxPrice:
             _.maxBy(
               data,
-              (flightTiketsForDate: FlightInfo) => flightTiketsForDate.price
+              (flightTicketsForDate: FlightInfo) => flightTicketsForDate.price
             )?.price || 150,
           minPrice:
             _.minBy(
               data,
-              (flightTiketsForDate: FlightInfo) => flightTiketsForDate.price
+              (flightTicketsForDate: FlightInfo) => flightTicketsForDate.price
             )?.price || 1,
 
           maxDuration:
             _.maxBy(
               data,
-              (flightTiketsForDate: FlightInfo) => flightTiketsForDate.duration
+              (flightTicketsForDate: FlightInfo) =>
+                flightTicketsForDate.duration
             )?.duration || 150,
           minDuration:
             _.minBy(
               data,
-              (flightTiketsForDate: FlightInfo) => flightTiketsForDate.duration
+              (flightTicketsForDate: FlightInfo) =>
+                flightTicketsForDate.duration
             )?.duration || 1,
           expires: false,
           destination: true,
@@ -214,7 +216,7 @@ export class FlightInfoState {
         };
 
         patchState({
-          flightTiketsForDate: data,
+          flightTicketsForDate: data,
           loading: false,
           filterConfig,
           filter: {
