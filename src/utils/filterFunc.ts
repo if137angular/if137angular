@@ -1,5 +1,5 @@
 import { FilterModel } from 'src/app/models/filter.model';
-import { UniversalComponentModel } from 'src/app/models/Universal-component.model';
+import { UniversalComponentModel } from 'src/app/models/universal-component.model';
 
 // FIXME: optimize
 const filterArray = (

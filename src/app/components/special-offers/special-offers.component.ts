@@ -22,7 +22,7 @@ export class SpecialOffersComponent implements OnInit {
   cityOrigin: string = 'IEV';
   destinationCity: string;
 
-  constructor(public store: Store) { }
+  constructor(public store: Store) {}
 
   gotToLink(link: any) {
     window.open(
@@ -55,24 +55,20 @@ export class SpecialOffersComponent implements OnInit {
     this.formData$
       .pipe(untilDestroyed(this))
       .subscribe((formData: FormDataModel) => {
-        if (!formData.isFormValid) {
-          return;
-        }
-        this.dispatchSpecialOffers(formData);
+        if (!formData.isFormValid) return;
+
         this.destinationCity = formData.destinationTo.name;
         this.currency = this.store.selectSnapshot(RequestDataState.currency);
-      });
-  }
 
-  dispatchSpecialOffers(formData: FormDataModel): void {
-    const payload = {
-      cityOrigin: formData.destinationFrom
-        ? formData.destinationFrom.code
-        : this.cityOrigin,
-      cityDestination: '',
-      language: this.language,
-      currency: this.currency,
-    };
-    this.store.dispatch(new GetSpecialOffers(payload));
+        const payload = {
+          cityOrigin: formData.destinationFrom
+            ? formData.destinationFrom.code
+            : this.cityOrigin,
+          cityDestination: '',
+          language: this.language,
+          currency: this.currency,
+        };
+        this.store.dispatch(new GetSpecialOffers(payload));
+      });
   }
 }

@@ -32,7 +32,7 @@ import { FilterConfigModel } from 'src/app/models/filter-config.model';
 import { CitiesModel } from '../models/cities.model';
 import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';
 import { FlightInfo } from '../models/flight-tickets-for-date.model';
-import { UniversalComponentModel } from '../models/Universal-component.model';
+import { UniversalComponentModel } from '../models/universal-component.model';
 
 export interface FlightInfoStateModel {
   flightTicketsForDate: UniversalComponentModel[];
