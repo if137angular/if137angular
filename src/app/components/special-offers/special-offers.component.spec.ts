@@ -21,7 +21,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgxsModule, Store } from '@ngxs/store';
-import { appState } from 'src/app/store/appState';
+import { appState } from 'src/app/store/app.state';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { Subject } from 'rxjs';
