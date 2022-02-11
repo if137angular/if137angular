@@ -27,8 +27,7 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
 
   constructor(private store: Store) {}
 
-  onScroll() {
-    this.numCards += 4;
+  ngOnInit(): void {
     this.getFlightInfo();
   }
 
@@ -48,7 +47,8 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  onScroll() {
+    this.numCards += 4;
     this.getFlightInfo();
   }
 }

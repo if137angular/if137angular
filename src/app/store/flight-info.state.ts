@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { from, of } from 'rxjs';
-import { mergeMap, toArray, map, tap } from 'rxjs/operators';
+import { mergeMap, toArray, map } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import { RequestDataState } from './request-data.state';
@@ -19,33 +19,34 @@ import {
   DestinationPopular,
   GetDestinationPopular,
   CityInfo,
-  IMapData,
 } from '../models/city-destination.model';
 
 import {
   CheapestTicketsRequestFail,
   CheapestTicketsRequestSuccess,
-  GetMapData,
 } from './flight-info.action';
 
-import { FlightPriceTrends } from 'src/app/models/flight-price-trends.model';
+import { FlightPriceTrendsModel } from 'src/app/models/flight-price-trends.model';
 import { FilterModel } from '../models/filter.model';
 import { FilterConfigModel } from 'src/app/models/filter-config.model';
 import { CitiesModel } from '../models/cities.model';
 import { CalendarOfPricesModel } from '../models/calendar-of-prices.model';
 import { FlightInfo } from '../models/flight-tickets-for-date.model';
+import { UniversalComponentModel } from '../models/Universal-component.model';
 
 export interface FlightInfoStateModel {
+  flightTicketsForDate: UniversalComponentModel[];
+  nonStopTickets: UniversalComponentModel[];
+  cheapestTickets: UniversalComponentModel[];
+  specialOffers: UniversalComponentModel[];
+  flightPriceTrends: UniversalComponentModel[];
+
   calendarOfPrices: CalendarOfPricesModel[];
-  specialOffers: any; // TODO: create model;
-  nonStopTickets: any; // TODO: create model
-  flightTicketsForDate: any;
-  flightPriceTrends: any;
   popularDestinations: Map<CityInfo, DestinationPopular[]>;
+
   filter: FilterModel;
   filterConfig: FilterConfigModel;
   loading: boolean;
-  cheapestTickets: any;
   errors: string;
   mapData: any;
 }
@@ -310,12 +311,14 @@ export class FlightInfoState {
           maxPrice:
             _.maxBy(
               data,
-              (flightPriceTrend: FlightPriceTrends) => flightPriceTrend.price
+              (flightPriceTrend: FlightPriceTrendsModel) =>
+                flightPriceTrend.price
             )?.price || 150,
           minPrice:
             _.minBy(
               data,
-              (flightPriceTrend: FlightPriceTrends) => flightPriceTrend.price
+              (flightPriceTrend: FlightPriceTrendsModel) =>
+                flightPriceTrend.price
             )?.price || 1,
 
           airline: false,
@@ -397,26 +400,18 @@ export class FlightInfoState {
 
     const filterConfig: FilterConfigModel = {
       maxPrice:
-        _.maxBy(
-          ticketsArray,
-          (cheapestTickets: CheapestTicketModel) => cheapestTickets.price
-        )?.price || 150,
+        _.maxBy(ticketsArray, (cheapestTickets) => cheapestTickets.price)
+          ?.price || 150,
       minPrice:
-        _.minBy(
-          ticketsArray,
-          (cheapestTickets: CheapestTicketModel) => cheapestTickets.price
-        )?.price || 1,
+        _.minBy(ticketsArray, (cheapestTickets) => cheapestTickets.price)
+          ?.price || 1,
 
       maxDuration:
-        _.maxBy(
-          ticketsArray,
-          (cheapestTickets: CheapestTicketModel) => cheapestTickets.duration
-        )?.duration || 150,
+        _.maxBy(ticketsArray, (cheapestTickets) => cheapestTickets.duration)
+          ?.duration || 150,
       minDuration:
-        _.minBy(
-          ticketsArray,
-          (cheapestTickets: CheapestTicketModel) => cheapestTickets.duration
-        )?.duration || 1,
+        _.minBy(ticketsArray, (cheapestTickets) => cheapestTickets.duration)
+          ?.duration || 1,
       expires: false,
       airline: false,
       airline_titles: false,
