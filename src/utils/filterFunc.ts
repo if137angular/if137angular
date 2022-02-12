@@ -1,7 +1,17 @@
 import { FilterModel } from 'src/app/models/filter.model';
 import { UniversalComponentModel } from 'src/app/models/universal-component.model';
 
-// FIXME: optimize
+const priceDurationFilter = (
+  array: UniversalComponentModel[],
+  min: number | null,
+  max: number | null,
+  type: 'price' | 'duration'
+) => {
+  return min && max
+    ? array.filter((item) => item[type] >= min && item[type] <= max)
+    : array;
+};
+
 const filterArray = (
   array: UniversalComponentModel[],
   {
@@ -43,15 +53,9 @@ const filterArray = (
     copy = copy.filter(({ airline_title }) => airline_title === airline_titles);
   }
 
-  if (minDuration && maxDuration) {
-    copy = copy.filter(
-      ({ duration }) => duration >= minDuration && duration <= maxDuration
-    );
-  }
+  copy = priceDurationFilter(copy, minPrice, maxPrice, 'price');
 
-  if (minPrice && maxPrice) {
-    copy = copy.filter(({ price }) => price >= minPrice && price <= maxPrice);
-  }
+  copy = priceDurationFilter(copy, minDuration, maxDuration, 'duration');
 
   return copy;
 };
