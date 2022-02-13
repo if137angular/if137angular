@@ -14,11 +14,16 @@
 </mat-progress-bar>
 
 <div class="search-content">
-  <div class="filterWrapper">
-    <app-flight-filter></app-flight-filter>
-<!--    <app-flight-sort></app-flight-sort>-->
-    <div class="calendarWrapper">
-      <app-calendar-of-prices></app-calendar-of-prices>
+  <button class="filter-btn" (click)="toggling($event)">Filter</button>
+  <div class="filterWrapper" [ngClass]="{'background-color': toggle}" (click)="toggling($event)">
+    <div class="test-bg"></div>
+    <div class="filterInner" [ngClass]="{'close': !toggle}">
+      <button class="close-btn" (click)="toggling($event)">X</button>
+      <app-flight-filter></app-flight-filter>
+      <!-- <app-flight-sort></app-flight-sort> -->
+      <div class="calendarWrapper">
+        <app-calendar-of-prices></app-calendar-of-prices>
+      </div>
     </div>
   </div>
   <div class="ticketsWrapper">

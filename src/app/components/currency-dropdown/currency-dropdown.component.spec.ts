@@ -3,7 +3,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { Store, NgxsModule } from '@ngxs/store';
-import { appState } from 'src/app/store/appState';
+import { appState } from 'src/app/store/app.state';
 
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 
@@ -14,8 +14,6 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
-
-
 
 fdescribe('CurrencyDropdownComponent', () => {
   let component: CurrencyDropdownComponent;
@@ -31,9 +29,7 @@ fdescribe('CurrencyDropdownComponent', () => {
   let currencySubject = new BehaviorSubject('');
   let debugElement: DebugElement;
 
-
   beforeEach(() => {
-
     storeMock = {
       select: jasmine
         .createSpy('select')
@@ -47,9 +43,9 @@ fdescribe('CurrencyDropdownComponent', () => {
     };
 
     flightsInfoServiceMock = {}; //jasmine.createSpy().and.returnValue({});
-    requestDataServiceMock = {};// jasmine.createSpy().and.returnValue({});
-    requestDataStateMock = {};// jasmine.createSpy().and.returnValue({});
-    flightInfoStateMock = {};//jasmine.createSpy().and.returnValue({});
+    requestDataServiceMock = {}; // jasmine.createSpy().and.returnValue({});
+    requestDataStateMock = {}; // jasmine.createSpy().and.returnValue({});
+    flightInfoStateMock = {}; //jasmine.createSpy().and.returnValue({});
 
     TestBed.configureTestingModule({
       imports: [
@@ -64,9 +60,9 @@ fdescribe('CurrencyDropdownComponent', () => {
         { provide: FlightsInfoService, useValue: flightsInfoServiceMock },
         { provide: RequestDataService, useValue: requestDataServiceMock },
         { provide: RequestDataState, useValue: requestDataStateMock },
-        { provide: FlightInfoState, useValue: flightInfoStateMock }
+        { provide: FlightInfoState, useValue: flightInfoStateMock },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CurrencyDropdownComponent);
@@ -75,8 +71,6 @@ fdescribe('CurrencyDropdownComponent', () => {
     component = fixture.componentInstance;
 
     fixture.detectChanges();
-
-
   });
 
   afterAll(() => {

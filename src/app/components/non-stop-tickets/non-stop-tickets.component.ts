@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { FormDataModel } from 'src/app/models/formData.model';
-import { faPlane, faPlaneDeparture, faPlaneArrival, faMapMarker, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlane,
+  faPlaneDeparture,
+  faPlaneArrival,
+  faMapMarker,
+  faMapMarkerAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import { NonStopInfo } from 'src/app/models/non-stop-tickets.model';
-import { GetNonStopTickets } from "src/app/store/flight-info.action";
-import { FlightInfoState } from "src/app/store/flight-info.state";
-import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
-
+import { GetNonStopTickets } from 'src/app/store/flight-info.action';
+import { FlightInfoState } from 'src/app/store/flight-info.state';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
@@ -27,20 +32,25 @@ export class NonStopTicketsComponent implements OnInit {
   faMap = faMapMarker;
   faMapAlt = faMapMarkerAlt;
 
-  @Select(RequestDataState.formData) formData$: Observable<FormDataModel>;
-  @Select(FlightInfoState.nonStopTickets) nonStopTickets$: Observable<NonStopInfo[]>;
+  @Select(RequestDataState.formData)
+  formData$: Observable<FormDataModel>;
+  @Select(FlightInfoState.nonStopTickets)
+  nonStopTickets$: Observable<NonStopInfo[]>;
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {
+    this.formData$
+      .pipe(untilDestroyed(this))
+      .subscribe((formData: FormDataModel) => {
+        if (!formData.isFormValid) return;
 
-   this.formData$.pipe(untilDestroyed(this)).subscribe((formData: FormDataModel) => {
-     if (!formData.isFormValid) { return; }
-     this.cityOrigin = formData.destinationFrom.name;
-     this.cityArrival = formData.destinationTo.name;
-     this.cityOriginCode = formData.destinationFrom.code;
-     this.cityArrivalCode = formData.destinationTo.code
-     this.store.dispatch(new GetNonStopTickets(formData))
-    });
+        this.cityOrigin = formData.destinationFrom.name;
+        this.cityArrival = formData.destinationTo.name;
+        this.cityOriginCode = formData.destinationFrom.code;
+        this.cityArrivalCode = formData.destinationTo.code;
+
+        this.store.dispatch(new GetNonStopTickets(formData));
+      });
   }
 }

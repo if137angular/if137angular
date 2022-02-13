@@ -198,13 +198,16 @@ export class RequestDataState {
   }
 
   @Action(RequestDataActions.SetUserData)
-  GetUserGeolocation(ctx: StateContext<RequestDataStateModel>) {
+  GetUserGeolocation({
+    patchState,
+    getState,
+  }: StateContext<RequestDataStateModel>) {
     return this.flightsInfoService.getIpAddress().pipe(
       tap((ip: IpShortModel) => {
         this.flightsInfoService
           .getGEOLocation(Object.values(ip)[0])
           .subscribe((userData: IpFullModel) => {
-            const state = ctx.getState();
+            const state = getState();
 
             const defaultCity = state.cities.find(
               (city: CitiesModel) => city.name === userData.city
@@ -227,7 +230,7 @@ export class RequestDataState {
               transfers: 'All',
             };
 
-            ctx.patchState({
+            patchState({
               ...state,
               userData,
               formData,
