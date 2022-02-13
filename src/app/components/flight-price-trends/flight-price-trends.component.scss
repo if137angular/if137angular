@@ -16,7 +16,6 @@
   background-size: cover;
   background-position: center;
   width: 610px;
-  height: 250px;
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0px 0px 5px 4px rgba(73, 73, 73, 0.164);
@@ -26,8 +25,12 @@
     height: 100%;
     display: flex;
     justify-content: space-between;
-    width: 35%;
+    width: 215px;
     align-items: center;
+    
+    &-details {
+      max-width: 125px;
+    }
 
     &-details > span {
       display: block;
@@ -35,7 +38,7 @@
   }
 
   &-content-main {
-    width: 47%;
+    width: 295px;
     padding: 0 5px;
     display: flex;
     justify-content: space-around;
@@ -96,6 +99,7 @@
         height: 1px;
         border-top: 3px solid black;
         margin: -5px 1px;
+        width: 145px;
       }
 
       &-bottom {

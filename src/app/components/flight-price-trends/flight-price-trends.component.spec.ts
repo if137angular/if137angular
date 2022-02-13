@@ -21,7 +21,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgxsModule, Store } from '@ngxs/store';
-import { appState } from 'src/app/store/app.state';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { Subject } from 'rxjs';
@@ -30,7 +29,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { GetFlightPriceTrends } from 'src/app/store/flight-info.action';
-import { any } from '@amcharts/amcharts5/.internal/core/util/Array';
 
 describe('FlightPriceTrendsComponent', () => {
   let component: FlightPriceTrendsComponent;
@@ -81,9 +79,7 @@ describe('FlightPriceTrendsComponent', () => {
         MatCardModule,
         MatProgressSpinnerModule,
         MatToolbarModule,
-        NgxsModule.forRoot(appState, {
-          developmentMode: true,
-        }),
+        NgxsModule,
         NgxsLoggerPluginModule.forRoot(),
       ],
       declarations: [FlightPriceTrendsComponent],
@@ -93,7 +89,8 @@ describe('FlightPriceTrendsComponent', () => {
         { provide: RequestDataService, useValue: requestDataService },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    }).compileComponents();
+    })
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -114,63 +111,83 @@ describe('FlightPriceTrendsComponent', () => {
   });
 
   describe('#filterDataOnFieldTransfers', () => {
+
     it('should return data with { transfers: 0}', () => {
-      const data = [{ transfers: 1 }, { transfers: 0 }] as any;
+      const data = [
+        { transfers: 1 },
+        { transfers: 0 }
+      ] as any
 
       component.getDirectlyFlights(data);
 
       expect(component.data).toContain({ transfers: 0 });
+
     });
 
     it('should return data without { transfers: 0}', () => {
-      const data = [{ transfers: 1 }, { transfers: 0 }] as any;
+      const data = [
+        { transfers: 1 },
+        { transfers: 0 }
+      ] as any
 
       component.getFlightsWithTransfers(data);
 
       expect(component.data).not.toContain({ transfers: 0 });
+
     });
 
     it('should return data without { transfers: 1}', () => {
-      const data = [{ transfers: 1 }, { transfers: 0 }] as any;
+      const data = [
+        { transfers: 1 },
+        { transfers: 0 }
+      ] as any
 
       component.getDirectlyFlights(data);
 
       expect(component.data).not.toContain({ transfers: 1 });
+
     });
 
     it('should return data with { transfers: 1}', () => {
-      const data = [{ transfers: 1 }, { transfers: 0 }] as any;
+      const data = [
+        { transfers: 1 },
+        { transfers: 0 }
+      ] as any
 
       component.getFlightsWithTransfers(data);
 
       expect(component.data).toContain({ transfers: 1 });
+
     });
   });
 
   describe('#dispatchFlightPriceTrends', () => {
     it('should dispatch GetFlightPriceTrends with appropriate params', () => {
       const formData = {
-        destinationFrom: {
+        destinationFrom:{
           code: 'LWO',
-        },
-        destinationTo: {
+        } ,
+        destinationTo:{
           code: 'MIL',
-        },
-        endDate: new Date(2022, 1, 11),
-        startDate: new Date(2022, 1, 13),
-        transfers: 'All',
-      } as any;
-
+        } ,
+        endDate: new Date(2022,1,11),
+        startDate: new Date(2022,1,13),
+        transfers: 'All'
+      } as any
+     
       component.dispatchFlightPriceTrends(formData);
 
       expect(store.dispatch).toHaveBeenCalledWith(
-        new GetFlightPriceTrends({
-          origin: 'LWO',
-          destination: 'MIL',
-          departDate: '2022-02',
-          returnDate: '2022-02',
-        })
+        new GetFlightPriceTrends(
+          {
+            origin: 'LWO',
+            destination: 'MIL',
+            departDate: '2022-02',
+            returnDate: '2022-02',
+          }
+        )
       );
     });
   });
+
 });
