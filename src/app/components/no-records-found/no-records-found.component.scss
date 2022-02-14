@@ -4,11 +4,12 @@
   text-align: center;
   img {
     position: absolute;
+    width: 100%;
     display: block;
     height: auto;
     z-index: -3;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -25%);
+    transform: translate(-50%, -15%);
   }
 }
