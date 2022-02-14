@@ -31,7 +31,8 @@ import { SpecialOffersComponent } from '../special-offers/special-offers.compone
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CitiesModel } from '../../models/cities.model';
-import { GetCities } from '../../store/request-data.action';
+import {GetCities, SetFormDate} from '../../store/request-data.action';
+import {GetPopularDestinations} from "../../store/flight-info.action";
 
 describe('CityDestinationComponent', () => {
   let component: CityDestinationComponent;
@@ -107,27 +108,40 @@ describe('CityDestinationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('#ngOnit', () => {
-    beforeEach(() => {});
-  });
+  // describe('#ngOninit',() =>{
+ //   it('should dispatch GetPopularDestination with appropriate params',() => {
+ //     component.ngOnInit();
+ //     expect(store.dispatch).toHaveBeenCalledWith(
+ //       new GetPopularDestinations({
+ //         this.popularDestinationCities
+ //       })
+ //     )
+ //   })
+ // } )
 
-  describe('#getCityNameByKey', () => {
-    beforeEach(() => {
-      store.selectSnapshot = jasmine
-        .createSpy('selectSnapshot')
-        .and.returnValue({
-          code: 'IEV',
-          name: 'KYIV',
-        });
-    });
-    it('should return GetCities' + ' with selected name', function () {
-      // component.getCityNameByKey("IEV");
-      expect(store.selectSnapshot).toHaveBeenCalledWith(
-        new GetCities({
-          code: 'IEV',
-          name: 'KYIV',
-        })
+  describe('# selectDestination',() => {
+    it('#should dispatch  SetFormDate with appropriate params', () => {
+      component.selectedCities = 'LWO';
+      component.selectedDestinstion = 'WAW';
+      const formData = {
+        destinationFrom: {
+          name: 'Lviv',
+          code: 'LWO',
+        },
+        destinationTo:{
+          name: 'Warsaw',
+          code: 'WAW',
+        },
+        endDate: new Date(),
+        startDate: new Date(),
+      } as any;
+
+      component.selectDestination(formData);
+
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new SetFormDate(formData)
       );
     });
   });
+
 });

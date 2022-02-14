@@ -49,7 +49,7 @@ export class CityDestinationComponent implements OnInit {
   }
 
   selectDestination(selectedDestination: DestinationPopular) {
-    this.selectedCities = selectedDestination.originName;
+    this.selectedCities = selectedDestination.origin;
     this.selectedDestinstion = selectedDestination.destination;
 
     const { startDate, endDate } = this.store.selectSnapshot(
