@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { FormDataModel } from 'src/app/models/formData.model';
 import {
-  FlightPriceTrends,
+  FlightPriceTrendsModel,
   FlightPriceTrendsRequest,
 } from 'src/app/models/flight-price-trends.model';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
@@ -66,8 +66,8 @@ export class FlightPriceTrendsComponent implements OnInit {
     this.store.dispatch(new GetFlightPriceTrends(payload));
   }
 
-  getDirectlyFlights(data: FlightPriceTrends[]) {
-    const newArray: FlightPriceTrends[] = [];
+  getDirectlyFlights(data: FlightPriceTrendsModel[]) {
+    const newArray: FlightPriceTrendsModel[] = [];
 
     for (let item of data) {
       if (item.transfers === 0) {
@@ -78,8 +78,8 @@ export class FlightPriceTrendsComponent implements OnInit {
     this.data = newArray;
   }
 
-  getFlightsWithTransfers(data: FlightPriceTrends[]) {
-    const newArray: FlightPriceTrends[] = [];
+  getFlightsWithTransfers(data: FlightPriceTrendsModel[]) {
+    const newArray: FlightPriceTrendsModel[] = [];
 
     for (let item of data) {
       if (item.transfers > 0) {

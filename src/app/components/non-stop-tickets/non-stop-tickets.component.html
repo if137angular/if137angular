@@ -1,54 +1,47 @@
 <div class="container">
-  <div class="non-stop-tickets-data"
-       *ngIf="$any(nonStopTickets$ | async).length !== 0; else noData">
-    <div
-      *ngFor="let item of nonStopTickets$ | async"
-      class="ticket-content__wrapper"
-    >
-        <h1>{{cityOrigin}} to {{cityArrival}}</h1>
+  <div class="non-stop-tickets-data" *ngIf="$any(nonStopTickets$ | async).length !== 0; else noData">
+    <div *ngFor="let item of nonStopTickets$ | async" class="ticket-content__wrapper">
+      <h1>{{cityOrigin}} to {{cityArrival}}</h1>
 
       <div class="content-info-block">
         <p class="content-info"> Price: {{ item.price | currency }}</p>
-        <p class="content-info"> Airline: <img
-          class="card-logo"
-          src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png"
-          alt="{{ item.airline }}"
-        /></p>
+        <p class="content-info"> Airline: <img class="card-logo"
+            src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png" alt="{{ item.airline }}" /></p>
         <p class="content-info"> Flight Number: {{ item.flight_number }}</p>
       </div>
 
       <div class="bottom-flight-info">
         <div class="bottom-flight-info-city">
-            {{cityOrigin}}
+          {{cityOrigin}}
           <p class="card-info">
             {{ item.departure_at | date: 'mediumDate'}}
           </p>
         </div>
-        
+
         <div class="line-info">
           <div class="line-info-top">
             <mat-icon>flight_takeoff</mat-icon>
-            <mat-icon>flight_land</mat-icon>  
+            <mat-icon>flight_land</mat-icon>
           </div>
 
           <div class="line-img"></div>
           <div class="line-info-bottom">
-              <p class="line-airport-info">
-                {{cityOriginCode}}
-              </p>
-              <p class="line-airport-info">
-                {{cityArrivalCode}}
-              </p>
+            <p class="line-airport-info">
+              {{cityOriginCode}}
+            </p>
+            <p class="line-airport-info">
+              {{cityArrivalCode}}
+            </p>
           </div>
-        
+
         </div>
         <div class="bottom-flight-info-city">
-            {{cityArrival}}
+          {{cityArrival}}
           <p class="card-info">
             {{ item.return_at | date: 'mediumDate'}}
           </p>
         </div>
-  
+
       </div>
       <p class="expires"> <span class="expires_style">Expires:</span> {{ item.expires_at | date: 'medium' }}</p>
     </div>
@@ -58,4 +51,3 @@
     <app-no-records-found></app-no-records-found>
   </ng-template>
 </div>
-

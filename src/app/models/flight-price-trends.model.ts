@@ -1,4 +1,4 @@
-export interface FlightPriceTrends {
+export interface FlightPriceTrendsModel {
   airline: string;
   departure_at: string;
   destination: string;
@@ -8,7 +8,6 @@ export interface FlightPriceTrends {
   price: number;
   return_at: string;
   transfers: number;
-  duration: number;
 }
 
 export interface FlightPriceTrendsRequest {

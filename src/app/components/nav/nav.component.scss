@@ -5,3 +5,7 @@ a {
 .mat-tab-label-active {
   opacity: 1 !important;
 }
+
+::ng-deep .mat-tab-header-pagination-chevron {
+  border-color: #fff !important;
+}

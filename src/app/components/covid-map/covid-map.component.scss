@@ -6,7 +6,16 @@
   overflow: hidden;
   margin-top: 16px;
 }
-h1{
-  color: #fff;
-  text-align: center;
+
+@media screen and (max-width: 1100px) {
+  #mapdiv {
+    width: 600px;
+    height: 350px;
+  }
 }
+@media screen and (max-width: 700px) {
+  #mapdiv {
+    width: 300px;
+  }
+}
+

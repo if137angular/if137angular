@@ -11,7 +11,8 @@
         <span>{{item.destination_name}}</span>
       </div>
       <div class="card__inner">
-        <h3 class="card__title">
+        <h3 class="card__title"
+          [ngStyle]="{ 'padding-right':item.destination_name === destinationCity ? '100px' : '0px' }">
           {{ item.title }}
         </h3>
         <div class="card__content">

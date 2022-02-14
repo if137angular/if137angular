@@ -1,82 +1,61 @@
 import { FilterModel } from 'src/app/models/filter.model';
-import { UniversalComponentModel } from 'src/app/models/Universal-component.model';
+import { UniversalComponentModel } from 'src/app/models/universal-component.model';
 
-// FIXME: optimize
+const priceDurationFilter = (
+  array: UniversalComponentModel[],
+  min: number | null,
+  max: number | null,
+  type: 'price' | 'duration'
+) => {
+  return min && max
+    ? array.filter((item) => item[type] >= min && item[type] <= max)
+    : array;
+};
+
 const filterArray = (
   array: UniversalComponentModel[],
-  { flightClass, minPrice, maxPrice, transfers, gate, airline_titles, minDuration, maxDuration }: FilterModel
+  {
+    flightClass,
+    minPrice,
+    maxPrice,
+    transfers,
+    gate,
+    airline_titles,
+    minDuration,
+    maxDuration,
+  }: FilterModel
 ) => {
   let copy = [...array];
 
   if (flightClass !== null && flightClass !== 'All') {
     copy = copy.filter(({ trip_class }) => trip_class === flightClass);
   }
+
   if (transfers === 'Directly') {
-    copy = copy.filter(({ number_of_changes }) => number_of_changes === 0);
-  }
-  if (transfers === 'Transfers') {
-    copy = copy.filter(({ number_of_changes }) => number_of_changes >= 1);
+    copy = copy.filter(
+      ({ number_of_changes }) => (number_of_changes as number) === 0
+    );
+  } else if (transfers === 'Transfers') {
+    copy = copy.filter(
+      ({ number_of_changes }) => (number_of_changes as number) >= 1
+    );
   }
 
   if (gate !== null && gate !== 'All') {
     copy = copy.filter(({ gate: flightGate }) => flightGate === gate);
   }
-  // if (airline !== null && airline !== 'All') {
-  //   copy = copy.filter((elm) => elm.airline === airline);
-  // }
 
-  if (airline_titles !== null && airline_titles !== 'All' && airline_titles !== undefined) {
+  if (
+    airline_titles !== null &&
+    airline_titles !== 'All' &&
+    airline_titles !== undefined
+  ) {
     copy = copy.filter(({ airline_title }) => airline_title === airline_titles);
   }
 
-  if (minDuration && maxDuration) {
-    copy = copy.filter(
-      ({ duration }) => duration >= minDuration && duration <= maxDuration
-    );
-  }
+  copy = priceDurationFilter(copy, minPrice, maxPrice, 'price');
 
-  if (minDuration) {
-    copy = copy.filter(({ duration }) => duration >= minDuration);
-  }
-  if (maxDuration) {
-    copy = copy.filter(({ duration }) => duration <= maxDuration);
-  }
-
-
-  copy.forEach((item: any) => {
-    let keys = Object.keys(item);
-    keys.forEach((key: string) => {
-      if (key === 'value') {
-        if (minPrice && maxPrice) {
-          copy = copy.filter(
-            ({ value }) => value >= minPrice && value <= maxPrice
-          );
-        }
-
-        if (minPrice) {
-          copy = copy.filter(({ value }) => value >= minPrice);
-        }
-        if (maxPrice) {
-          copy = copy.filter(({ value }) => value <= maxPrice);
-        }
-      }
-
-      if (key === 'price') {
-        if (minPrice && maxPrice) {
-          copy = copy.filter(
-            ({ price }) => price >= minPrice && price <= maxPrice
-          );
-        }
-
-        if (minPrice) {
-          copy = copy.filter(({ price }) => price >= minPrice);
-        }
-        if (maxPrice) {
-          copy = copy.filter(({ price }) => price <= maxPrice);
-        }
-      }
-    });
-  });
+  copy = priceDurationFilter(copy, minDuration, maxDuration, 'duration');
 
   return copy;
 };

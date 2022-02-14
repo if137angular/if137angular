@@ -11,11 +11,8 @@ import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import am4themes from "@amcharts/amcharts4/themes/animated";
 import am4geodata from "@amcharts/amcharts5-geodata/data/countries2";
+import { CovidData } from 'src/app/models/covid-map.model';
 
-export interface Data {
-  "id": any,
-  "joined": number
-}
 
 @Component({
   selector: 'app-covid-map',
@@ -23,9 +20,9 @@ export interface Data {
   styleUrls: ['./covid-map.component.scss']
 })
 export class CovidMapComponent implements OnInit {
-  dataLow: any[] = [];
-  dataMedium: any[];
-  dataHigh: any[];
+  dataLow: CovidData[] = [];
+  dataMedium: CovidData[];
+  dataHigh: CovidData[];
   constructor(@Inject(PLATFORM_ID) private platformId: any,
     private zone: NgZone,
     private flightInfoService: FlightsInfoService,
@@ -35,22 +32,22 @@ export class CovidMapComponent implements OnInit {
   ngOnInit() {
     this.flightInfoService.getCovidStatistic().subscribe(data => {
       const countries = this.getCountriesWithCode(data.response)
-      const covidInfo = countries.map((element: any) => Object.assign(element, {
+      const covidInfo = countries.map((element: CovidData) => Object.assign(element, {
         id: this.store.selectSnapshot(RequestDataState.countries)
           .find((country: CitiesModel) => country.name === element.country).code,
         covidLevel: this.getCovidLevel(element)
       }));
 
-      this.dataLow = covidInfo.filter((element: any) => element.covidLevel === "low");
-      this.dataMedium = covidInfo.filter((element: any) => element.covidLevel === "medium");
-      this.dataHigh = covidInfo.filter((element: any) => element.covidLevel === "high");
+      this.dataLow = covidInfo.filter((element: CovidData) => element.covidLevel === "low");
+      this.dataMedium = covidInfo.filter((element: CovidData) => element.covidLevel === "medium");
+      this.dataHigh = covidInfo.filter((element: CovidData) => element.covidLevel === "high");
 
       this.createMap(this.dataLow, this.dataMedium, this.dataHigh)
 
     })
   }
 
-  getCovidLevel(element: any): string {
+  getCovidLevel(element: CovidData): string {
     const percent = element.cases.total * 100 / element.population;
     if (percent > 0.05 && percent < 0.2) {
       return "low";
@@ -62,10 +59,10 @@ export class CovidMapComponent implements OnInit {
 
   }
 
-  getCountriesWithCode(arr: any) {
-    const covid = arr.map((element: any) => this.store.selectSnapshot(RequestDataState.countries)
+  getCountriesWithCode(arr: CovidData[]) {
+    const covid = arr.map((element: CovidData) => this.store.selectSnapshot(RequestDataState.countries)
       .find((country: CitiesModel) => country.name === element.country))
-    const countries: any[] = [];
+    const countries: CovidData[] = [];
     for (let i = 0; i < arr.length; i++) {
       if (covid[i] !== undefined) {
         countries.push(arr[i]);
@@ -82,7 +79,7 @@ export class CovidMapComponent implements OnInit {
     }
   }
 
-  createMap(dataLow: any, dataMedium: any, dataHigh: any) {
+  createMap(dataLow: CovidData[], dataMedium: CovidData[], dataHigh: CovidData[]) {
     this.browserOnly(() => {
 
       let groupData = [
@@ -94,7 +91,7 @@ export class CovidMapComponent implements OnInit {
           "data": []
         }, {
           "name": "Low level of disease",
-          "data": [{ "id": "", "joined": "" }]
+          "data": [{ "id": "" , "joined": 0 }]
         },
       ];
 

@@ -1,56 +1,84 @@
+import { any } from '@amcharts/amcharts5/.internal/core/util/Array';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatMenuModule } from '@angular/material/menu';
-import { Store } from '@ngxs/store';
+import { Store, NgxsModule } from '@ngxs/store';
+import { appState } from 'src/app/store/app.state';
+
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 
 import { CurrencyDropdownComponent } from './currency-dropdown.component';
 
-describe('CurrencyDropdownComponent', () => {
+import { RequestDataState } from 'src/app/store/request-data.state';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { RequestDataService } from 'src/app/services/request-data.service';
+import { FlightsInfoService } from 'src/app/services/flights-info.service';
+import { FlightInfoState } from 'src/app/store/flight-info.state';
+
+fdescribe('CurrencyDropdownComponent', () => {
   let component: CurrencyDropdownComponent;
   let fixture: ComponentFixture<CurrencyDropdownComponent>;
   let storeMock: any;
+  let store: any;
+  let flightsInfoServiceMock: any;
+  let requestDataServiceMock: any;
+  let requestDataStateMock: any;
+  let flightInfoStateMock: any;
+  let formDataMock = new Subject();
+  let currenciesSubject = new BehaviorSubject([{ code: '' }]);
+  let currencySubject = new BehaviorSubject('');
+  let debugElement: DebugElement;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    storeMock = {
+      select: jasmine
+        .createSpy('select')
+        .withArgs(RequestDataState.formData)
+        .and.returnValue(formDataMock.asObservable())
+        .withArgs(RequestDataState.currencies)
+        .and.returnValue(currenciesSubject.asObservable())
+        .withArgs(RequestDataState.currency)
+        .and.returnValue(currencySubject.asObservable()),
+      dispatch: jasmine.createSpy('dispatch'),
+    };
+
+    flightsInfoServiceMock = {}; //jasmine.createSpy().and.returnValue({});
+    requestDataServiceMock = {}; // jasmine.createSpy().and.returnValue({});
+    requestDataStateMock = {}; // jasmine.createSpy().and.returnValue({});
+    flightInfoStateMock = {}; //jasmine.createSpy().and.returnValue({});
+
+    TestBed.configureTestingModule({
       imports: [
-        MatMenuModule
+        MatMenuModule,
+        NgxsModule.forRoot(appState, {
+          developmentMode: true,
+        }),
       ],
       declarations: [CurrencyDropdownComponent],
       providers: [
         { provide: Store, useValue: storeMock },
-
+        { provide: FlightsInfoService, useValue: flightsInfoServiceMock },
+        { provide: RequestDataService, useValue: requestDataServiceMock },
+        { provide: RequestDataState, useValue: requestDataStateMock },
+        { provide: FlightInfoState, useValue: flightInfoStateMock },
       ],
-    })
-      .compileComponents();
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(CurrencyDropdownComponent);
+    // debugElement = fixture.debugElement;
+    store = TestBed.get(Store);
+    component = fixture.componentInstance;
+
+    fixture.detectChanges();
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CurrencyDropdownComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  afterAll(() => {
+    currenciesSubject.complete();
+    currencySubject.complete();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
-
-
-// import { Store } from '@ngxs/store';
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-// import { CurrencyDropdownComponent } from './currency-dropdown.component';
-
-// describe('CurrencyDropdownComponent', () => {
-//   let component: CurrencyDropdownComponent;
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({
-//       providers: [CurrencyDropdownComponent]
-//     })
-//   });
-
-//   component = TestBed.inject(CurrencyDropdownComponent);
-
-//   it('should create CurrencyDropdownComponent', () => {
-//     expect(component).toBeDefined();
-//   })
-// });

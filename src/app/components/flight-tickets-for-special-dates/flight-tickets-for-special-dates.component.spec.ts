@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FlightTicketsForSpecialDatesComponent } from './flight-tickets-for-special-dates.component';
 
-import { BrowserModule, By } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,7 +22,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgxsModule, Store } from '@ngxs/store';
-import { appState } from 'src/app/store/appState';
+import { appState } from 'src/app/store/app.state';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { Subject } from 'rxjs';
@@ -51,7 +51,7 @@ fdescribe('FlightTicketsForSpecialDatesComponent', () => {
         .createSpy('select')
         .withArgs(RequestDataState.formData)
         .and.returnValue(formDataSubject.asObservable())
-        .withArgs(FlightInfoState.flightTiketsForDate)
+        .withArgs(FlightInfoState.flightTicketsForDate)
         .and.returnValue(flightTicketsSubject.asObservable())
         .withArgs(RequestDataState.currency)
         .and.returnValue(currency.asObservable())

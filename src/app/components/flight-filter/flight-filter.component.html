@@ -19,12 +19,13 @@
         [max]="maxPrice" (valueChange)="onFilterChange()"></mtx-slider>
     </div>
 
-    <div [ngStyle]="{ 'display': checkTrue ? 'block' : 'none' }">
+    <div *ngIf="minDuration && maxDuration">
       <b>Duration range</b>
+      <div>{{getHours(filterGroup.value.durationRange[0])}} - {{getHours(filterGroup.value.durationRange[1])}}</div>
       <mtx-slider formControlName="durationRange" thumbLabel="true" [min]="minDuration" [max]=" maxDuration"
         (valueChange)="onDurationChange()"></mtx-slider>
-      <div>{{getHours(filterGroup.value.durationRange[0])}} - {{getHours(filterGroup.value.durationRange[1])}}</div>
     </div>
-    <button class="btn" (click)="onResetFilter()">Reset</button>
+
+    <button mat-stroked-button (click)="onResetFilter()">RESET</button>
   </form>
 </div>

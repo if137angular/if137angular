@@ -1,9 +1,8 @@
-
 <div class="componentWrapper">
-  <div *ngIf="(errors$ | async) && (loading$ | async) === false" class="error">
+  <div *ngIf="(errors$ | async)" class="error">
     <app-no-records-found></app-no-records-found>
   </div>
-  <div *ngIf="(errors$ | async) === '' && cheapestTicketsArr && (loading$ | async) === false">
+  <div *ngIf="(errors$ | async) === '' && cheapestTicketsArr">
     <div class="sortWrapper">
       <mat-form-field appearance="fill">
         <mat-label>Sort by</mat-label>
@@ -16,13 +15,8 @@
     </div>
 
     <div class="cheapestTicketsWrapper">
-      <app-cheapest-ticket-item
-        *ngFor="let ticket of cheapestTicketsArr"
-        [ticket]="ticket"
-        [formData]="formData">
+      <app-cheapest-ticket-item *ngFor="let ticket of cheapestTicketsArr" [ticket]="ticket" [formData]="formData">
       </app-cheapest-ticket-item>
     </div>
-
   </div>
 </div>
-
