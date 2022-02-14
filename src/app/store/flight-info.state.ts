@@ -179,7 +179,7 @@ export class FlightInfoState {
         payload.startDate,
         payload.endDate,
         payload.direct,
-        payload.numCards
+        payload.cardsNumber
       )
       .subscribe((response) => {
         const data: any = Object.values(response.data);
@@ -216,7 +216,6 @@ export class FlightInfoState {
         patchState({
           flightTiketsForDate: data,
           loading: false,
-          filterConfig,
           filter: {
             minPrice: null,
             maxPrice: null,
@@ -224,6 +223,11 @@ export class FlightInfoState {
             maxDuration: null,
           },
         });
+        if (payload.cardsNumber === 10) {
+          patchState({
+            filterConfig
+          })
+        }
       });
   }
 

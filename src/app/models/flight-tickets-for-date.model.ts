@@ -19,7 +19,7 @@ export type FlightTiketsForDatePayload = {
 	startDate: string;
 	endDate: string;
 	direct: boolean;
-	numCards: number;
+	cardsNumber: number;
 }
 
 export type Destinations = {

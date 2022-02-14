@@ -24,7 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarOfPricesModel } from 'src/app/models/calendar-of-prices.model';
 import { CalendarOfPricesLoaded } from 'src/app/store/flight-info.action';
 
-fdescribe('CalendarOfPricesComponent', () => {
+describe('CalendarOfPricesComponent', () => {
   let component: CalendarOfPricesComponent;
   let fixture: ComponentFixture<CalendarOfPricesComponent>;
   let debugElement: DebugElement;

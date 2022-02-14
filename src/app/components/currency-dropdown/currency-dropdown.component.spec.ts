@@ -4,7 +4,7 @@ import { Store } from '@ngxs/store';
 
 import { CurrencyDropdownComponent } from './currency-dropdown.component';
 
-fdescribe('CurrencyDropdownComponent', () => {
+describe('CurrencyDropdownComponent', () => {
   let component: CurrencyDropdownComponent;
   let fixture: ComponentFixture<CurrencyDropdownComponent>;
   let storeMock: any;

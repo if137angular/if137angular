@@ -30,15 +30,39 @@ import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
-import { GetTiketsForSpecialDate } from 'src/app/store/flight-info.action';
 
 
-describe('FlightTicketsForSpecialDatesComponent', () => {
+fdescribe('FlightTicketsForSpecialDatesComponent', () => {
   let component: FlightTicketsForSpecialDatesComponent;
   let fixture: ComponentFixture<FlightTicketsForSpecialDatesComponent>;
+  let storeMock: any;
+  let store: any;
+  let debugElement: any;
+  let flightsInfoServiceMock: any;
+  let requestDataService: any;
+  let formDataSubject = new Subject();
+  let flightTicketsSubject = new Subject();
+  let currency = new Subject();
+  let loading = new Subject();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach( () => {
+    storeMock = {
+      select: jasmine
+        .createSpy('select')
+        .withArgs(RequestDataState.formData)
+        .and.returnValue(formDataSubject.asObservable())
+        .withArgs(FlightInfoState.flightTiketsForDate)
+        .and.returnValue(flightTicketsSubject.asObservable())
+        .withArgs(RequestDataState.currency)
+        .and.returnValue(currency.asObservable())
+        .withArgs(FlightInfoState.loading)
+        .and.returnValue(loading.asObservable()),
+      dispatch: jasmine.createSpy('dispatch'),
+      selectSnapshot: jasmine.createSpy('selectSnapshot')
+    }
+    flightsInfoServiceMock = jasmine.createSpy().and.returnValue({})
+
+    TestBed.configureTestingModule({
       declarations: [ FlightTicketsForSpecialDatesComponent ],
       imports: [
         BrowserModule,
@@ -69,6 +93,12 @@ describe('FlightTicketsForSpecialDatesComponent', () => {
         }),
         NgxsLoggerPluginModule.forRoot(),
       ],
+      providers: [
+        { provide: Store, useValue: storeMock },
+        { provide: FlightsInfoService, useValue: flightsInfoServiceMock },
+        { provide: RequestDataService, useValue: requestDataService },
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   });
@@ -76,8 +106,15 @@ describe('FlightTicketsForSpecialDatesComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FlightTicketsForSpecialDatesComponent);
     component = fixture.componentInstance;
+    store = TestBed.get(Store);
+    debugElement = fixture.debugElement;
     fixture.detectChanges();
   });
+
+  afterAll(() => {
+    formDataSubject.complete();
+    flightTicketsSubject.complete();
+  })
 
   it('should create', () => {
     expect(component).toBeTruthy();
