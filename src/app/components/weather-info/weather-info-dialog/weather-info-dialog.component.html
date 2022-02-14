@@ -1,0 +1,7 @@
+<div class="weather-dialog">
+  <day-info
+    *ngFor="let day of weatherData.daily; index as idx"
+    [dayInfo]="day"
+    [idx]="idx"
+  ></day-info>
+</div>
