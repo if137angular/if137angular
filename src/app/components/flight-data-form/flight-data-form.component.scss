@@ -21,10 +21,15 @@
 }
 
 .swap-inputs-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: white;
   border: none;
   outline: none;
   height: 52px;
+  width: 30px;
+  // border-radius: 50%;
   cursor: pointer;
 }
 
@@ -32,7 +37,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: red;
-  font-size: 40px
-;
+  color: rgb(238, 10, 10);
+  font-size: 25px;
+  font-weight: bold;
 }
