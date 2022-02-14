@@ -23,11 +23,11 @@ export const routes: Routes = [
         component: FlightTicketsForSpecialDatesComponent,
         data: { tab: 'Tickets' },
       },
-      {
-        path: 'non-stop-tickets',
-        component: NonStopTicketsComponent,
-        data: { tab: 'Non Stop Tickets' },
-      },
+      // {
+      //   path: 'non-stop-tickets',
+      //   component: NonStopTicketsComponent,
+      //   data: { tab: 'Non Stop Tickets' },
+      // },
       {
         path: 'cheapest-tickets',
         component: CheapestTicketsComponent,

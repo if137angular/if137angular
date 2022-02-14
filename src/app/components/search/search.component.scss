@@ -19,6 +19,13 @@
   border-radius: 15px;
 }
 
+.sidebarWprapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
 .ticketsWrapper {
   width: calc(100% - 300px);
 }

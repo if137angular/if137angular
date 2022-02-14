@@ -9,6 +9,7 @@ import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MatDialog } from '@angular/material/dialog';
 
+
 @UntilDestroy()
 @Component({
   selector: 'app-non-stop-tickets',
@@ -25,7 +26,7 @@ export class NonStopTicketsComponent implements OnInit {
   @Select(FlightInfoState.nonStopTickets) nonStopTickets$: Observable<NonStopInfo[]>;
   @Select(RequestDataState.currency) currency$: Observable<string>;
 
-  constructor(private store: Store, private dialog: MatDialog) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.formData$
@@ -42,10 +43,8 @@ export class NonStopTicketsComponent implements OnInit {
       });
   }
 
-  popUpToggle(popUp: TemplateRef<any>) {
-    this.dialog.open(popUp, {panelClass: 'custom-dialog'});
-
-  }
-
+  // popUpToggle(popUp: TemplateRef<any>) {
+  //   this.dialog.open(popUp, {panelClass: 'custom-dialog'});
+  //   }
 
 }

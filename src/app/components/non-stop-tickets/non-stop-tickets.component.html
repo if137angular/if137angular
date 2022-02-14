@@ -1,7 +1,7 @@
 <div class="container">
   <div
     class="non-stop-tickets-data"
-    *ngIf="$any(nonStopTickets$ | async)?.length !== 0; else noData"
+    *ngIf="$any(nonStopTickets$ | async)?.length !== 0;"
   >
     <div
       *ngFor="let item of nonStopTickets$ | async"
@@ -9,27 +9,28 @@
     >
       <div class="ticket-title-wrapper">
         <div class="ticket-title">
-          <h1>{{ cityOrigin }} to {{ cityArrival }}</h1>
+          <h1>Best offer</h1>
+          <!-- <button class="mat-heart-btn"><mat-icon class="mat-heart">favorite_border</mat-icon></button> -->
         </div>
-        <button class="mat-heart-btn" (click)="popUpToggle(popUp)"><mat-icon class="mat-heart">favorite_border</mat-icon></button>
+
       </div>
 
       <div class="content-info-block">
         <p class="content-info">
-          Price:
+          <!-- Price: -->
           <span class="content-info-style"
             >{{ item.price }} {{ currency$ | async | uppercase }}</span
           >
         </p>
         <p class="content-info">
-          Airline:
+          <!-- Airline: -->
           <img
             class="card-logo"
             src="https://images.kiwi.com/airlines/64/{{ item.airline }}.png"
             alt="{{ item.airline }}"
           />
         </p>
-        <p class="content-info">Flight Number: {{ item.flight_number }}</p>
+        <!-- <p class="content-info">Flight Number: {{ item.flight_number }}</p> -->
       </div>
 
       <div class="bottom-flight-info">
@@ -70,16 +71,16 @@
     </div>
   </div>
 
-  <ng-template #popUp>
+<!-- <ng-template #popUp>
     <mat-dialog-content>
       <p class="dialog-info-style">Your ticket was added</p>
     </mat-dialog-content>
     <mat-dialog-actions align="center">
       <button class="mat-heart-btn" matDialogClose><mat-icon class="mat-close-icon">close</mat-icon></button>
     </mat-dialog-actions>
-  </ng-template>
+  </ng-template>  -->
 
-  <ng-template #noData>
+  <!-- <ng-template #noData>
     <app-no-records-found></app-no-records-found>
   </ng-template>
-</div>
+</div> -->

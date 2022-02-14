@@ -19,3 +19,20 @@
 .mat-flat-button.mat-button-disabled.mat-button-disabled {
   background: rgba(244, 67, 54, 0.6);
 }
+
+.swap-inputs-btn {
+  background: white;
+  border: none;
+  outline: none;
+  height: 52px;
+  cursor: pointer;
+}
+
+.swap-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+  font-size: 40px
+;
+}

@@ -14,6 +14,8 @@
 </mat-progress-bar>
 
 <div class="search-content">
+  <div class="sidebarWrapper">
+    <app-non-stop-tickets></app-non-stop-tickets>
   <div class="filterWrapper">
     <app-flight-filter></app-flight-filter>
 <!--    <app-flight-sort></app-flight-sort>-->
@@ -21,6 +23,7 @@
       <app-calendar-of-prices></app-calendar-of-prices>
     </div>
   </div>
+</div>
   <div class="ticketsWrapper">
     <router-outlet></router-outlet>
   </div>

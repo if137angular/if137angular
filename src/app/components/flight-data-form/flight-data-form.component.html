@@ -1,5 +1,6 @@
 <form class="data-form" [formGroup]="flightDataFormGroup">
   <app-autocomplete formControlName="destinationFrom" label="From" [items]="cities"></app-autocomplete>
+  <button class="swap-inputs-btn"  (click)="swapInputs()"><mat-icon class="swap-icon">swap_horiz</mat-icon></button>
   <app-autocomplete formControlName="destinationTo" label="To" [items]="cities"></app-autocomplete>
 
   <mat-form-field appearance="fill">
