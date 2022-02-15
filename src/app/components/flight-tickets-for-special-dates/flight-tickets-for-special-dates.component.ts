@@ -23,8 +23,8 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
   loading$: Observable<any>;
 
   currency: string;
-  numCards: number = 10;
-
+  loading: boolean;
+  cardsNumber: number = 10;
   constructor(private store: Store) {}
 
   ngOnInit(): void {
@@ -39,7 +39,7 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
         startDate: formData.startDate.toISOString().slice(0, 10),
         endDate: formData.endDate.toISOString().slice(0, 10),
         direct: formData.transfers === 'Directly',
-        numCards: this.numCards,
+        cardsNumber: this.cardsNumber,
       };
 
       this.currency = this.store.selectSnapshot(RequestDataState.currency);
@@ -48,7 +48,7 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
   }
 
   onScroll() {
-    this.numCards += 4;
+    this.cardsNumber += 4;
     this.getFlightInfo();
   }
 }

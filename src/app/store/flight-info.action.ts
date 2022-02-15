@@ -1,6 +1,6 @@
 import { CalendarOfPricesPayload } from '../models/calendar-of-prices.model';
 import { FilterModel } from '../models/filter.model';
-import { FlightTicketsForDatePayload } from '../models/flight-tickets-for-date.model';
+import { FlightTiketsForDatePayload } from '../models/flight-tickets-for-date.model';
 import { FormDataModel } from '../models/formData.model';
 import { CheapestTicketsResponseModel } from '../models/cheapest-tickets.model';
 import { FlightPriceTrendsRequest } from '../models/flight-price-trends.model';
@@ -32,7 +32,7 @@ export class GetNonStopTickets {
 
 export class GetTicketsForSpecialDate {
   static readonly type = '[FlightInfo] Get Tickets For Special Date';
-  constructor(public payload: FlightTicketsForDatePayload) {}
+  constructor(public payload: FlightTiketsForDatePayload) {}
 }
 
 export class GetPopularDestinations {

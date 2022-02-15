@@ -13,14 +13,14 @@ export type FlightInfo = {
   transfers: number;
 };
 
-export type FlightTicketsForDatePayload = {
-  codeFrom: string;
-  codeTo: string;
-  startDate: string;
-  endDate: string;
-  direct: boolean;
-  numCards: number;
-};
+export type FlightTiketsForDatePayload = {
+	codeFrom: string;
+	codeTo: string;
+	startDate: string;
+	endDate: string;
+	direct: boolean;
+	cardsNumber: number;
+}
 
 export type Destinations = {
   code: string;
