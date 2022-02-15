@@ -3,63 +3,115 @@
   margin: auto;
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 50px 50px;
-
-  @media screen {
-    max-width: 980px;
-    min-width: 400px;
-  }
+  margin-bottom: 10%;
 }
 
 .ticket-content__wrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  min-height: 40px;
   box-sizing: border-box;
+  min-height: 40px;
   border-radius: 15px;
-  margin: auto;
-  padding: 20px;
-  width: 650px;
+  width: 300px;
   min-height: 290px;
-  background-image: url("^/assets/card-background.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: rgb(103, 58, 183);
   box-shadow: 0px 0px 5px 4px rgba(73, 73, 73, 0.164);
+}
+ 
+
+.ticket-content__wrapper:hover {
+  cursor: pointer;
+  transform: scale(1.02);
+  transition: ease-in-out all 0.2s;
+}
+
+.hot-price {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  width: 280px;
+  min-height: 15px;
+  border-radius: 15px;
+}
+  .hot-price-text {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    }
+
+.ticket-title-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mat-heart {
+  transform: scale(1.6);
+  color: white;
+  margin-right: 15px;
+}
+.mat-heart:hover {
+  color: red;
+  cursor: pointer;
+  transition: ease-in-out 2ms;
+}
+
+.mat-heart-btn {
+  background: transparent;
+    border: none;
+    outline: none;
 }
 
 .content-info-block {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: 2%;
+  justify-content: space-around;
+  padding: 0 20px;
 }
 
 .bottom-flight-info {
   display: flex;
   justify-content: space-around;
   max-width: 280px;
+  padding: 0 20px;
 }
+
 .card-info {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 10px;
   font-style: italic;
-  color: #a33b84;
+  color: antiquewhite;
 }
 
 .content-info {
   font-family: Arial, Helvetica, sans-serif;
-  text-align: left;
-  font-size: 15px;
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+  color: whitesmoke;
+}
+.ticket-title {
+  background-color: red;
+  width: 300px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  margin-top: -13px;
 }
 
 h1 {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 30px;
-  color: #1d3557;
+  color: whitesmoke;
+  text-align: center;
+  margin: 0;
 }
 
 .line-info {
@@ -79,7 +131,7 @@ h1 {
 
 .line-img {
   display: flex;
-  min-width: 140px;
+  min-width: 120px;
   height: 2px;
   margin: -5px 0;
   border: none;
@@ -91,23 +143,55 @@ h1 {
 }
 
 .card-logo {
-  width: 20%;
-  height: 20%;
+  width: 50px;
+  height: 50px;
 }
 
 .bottom-flight-info-city {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
+  color: whitesmoke;
 }
 
 .expires {
-  color: red;
-  text-align: left;
+  font-size: medium;
+  color: antiquewhite;
+  text-align: center;
+  padding: 0 20px;
 }
 
 .expires_style {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
-  color: #1d3557;
+  color: whitesmoke;
   margin-left: 2%;
+}
+
+.dialog-info-style {
+  margin-top: 13%;
+  margin-bottom: 25px;
+  text-align: center;
+  font-weight: 500;
+font-size: 25px;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+.mat-close-icon {
+  color: red;
+  font-weight: bold;
+  font-size: 50px;
+  padding-right: 25px;
+}
+.mat-close-icon:hover{
+  cursor: pointer;
+}
+
+
+
+::ng-deep .custom-dialog {
+  mat-dialog-container {
+    height: 200px;
+    width: 400px;
+    overflow: hidden;
+  }
 }

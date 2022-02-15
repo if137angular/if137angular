@@ -53,7 +53,7 @@ export class FlightsInfoService {
     startDate: string,
     endDate: string
   ): Observable<any> {
-    const currencyFromStore = this.store.selectSnapshot(
+   const currencyFromStore = this.store.selectSnapshot(
       RequestDataState.currency
     );
 

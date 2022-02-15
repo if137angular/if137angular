@@ -1,0 +1,29 @@
+.user-location {
+    display: flex;
+}
+
+.user-location-btn {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    cursor: pointer;
+    margin-left: 20%;
+}
+
+.user-location-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 180px;
+    height: 80px;
+    background: white;
+}
+
+.user-location-text {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 5px;
+    font-size: 15px;
+    color: #752c5f;
+}
+
