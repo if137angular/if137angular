@@ -47,6 +47,11 @@ export class SetUserData {
   constructor() {}
 }
 
+export class GetWeather {
+  static readonly type = '[Request] GetWeather';
+  constructor(public lat: string, public lon: string) {}
+}
+
 export type RequestDataActions =
   | GetCountries
   | GetCities

@@ -8,6 +8,7 @@ import { FormDataModel } from '../models/formData.model';
 import { IpFullModel, IpShortModel } from '../models/ip.model';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import * as moment from 'moment';
+import { WeatherDataModel } from '../models/weather-data.model';
 
 export interface RequestDataStateModel {
   countries: any[];
@@ -19,6 +20,7 @@ export interface RequestDataStateModel {
   currency: string;
   formData: FormDataModel;
   userData: IpFullModel;
+  weatherData: WeatherDataModel;
 }
 
 @State<RequestDataStateModel>({
@@ -81,6 +83,53 @@ export interface RequestDataStateModel {
       },
       zipcode: '',
     },
+    weatherData: {
+      lat: 33.44,
+      lon: -94.04,
+      timezone: 'America/Chicago',
+      timezone_offset: -21600,
+      daily: [
+        {
+          dt: 1,
+          sunrise: 1,
+          sunset: 1,
+          moonrise: 1,
+          moonset: 1,
+          moon_phase: 0.44,
+          temp: {
+            day: 1.97,
+            min: 1.78,
+            max: 1.41,
+            night: 1.15,
+            eve: 1.34,
+            morn: 1.16,
+          },
+          feels_like: {
+            day: 1.42,
+            night: 1.2,
+            eve: 1.01,
+            morn: 1.79,
+          },
+          pressure: 1,
+          humidity: 1,
+          dew_point: 0.37,
+          wind_speed: 1.83,
+          wind_deg: 1,
+          wind_gust: 1.69,
+          weather: [
+            {
+              id: 1,
+              main: '',
+              description: '',
+              icon: '',
+            },
+          ],
+          clouds: 0,
+          pop: 0,
+          uvi: 1.38,
+        },
+      ],
+    },
   },
 })
 @Injectable()
@@ -133,6 +182,11 @@ export class RequestDataState {
   @Selector()
   static userData(state: RequestDataStateModel): any {
     return state.userData;
+  }
+
+  @Selector()
+  static weatherData(state: RequestDataStateModel): any {
+    return state.weatherData;
   }
 
   @Action(RequestDataActions.GetCountries)
@@ -197,14 +251,28 @@ export class RequestDataState {
     patchState({ formData });
   }
 
+  @Action(RequestDataActions.GetWeather)
+  GetWeather(
+    { patchState }: StateContext<RequestDataStateModel>,
+    { lat, lon }: RequestDataActions.GetWeather
+  ) {
+    this.flightsInfoService
+      .getWeatherForWeek(lat, lon)
+      .subscribe((data) => patchState({ weatherData: data }));
+  }
+
   @Action(RequestDataActions.SetUserData)
-  GetUserGeolocation(ctx: StateContext<RequestDataStateModel>) {
+  GetUserGeolocation({
+    patchState,
+    getState,
+    dispatch,
+  }: StateContext<RequestDataStateModel>) {
     return this.flightsInfoService.getIpAddress().pipe(
       tap((ip: IpShortModel) => {
         this.flightsInfoService
           .getGEOLocation(Object.values(ip)[0])
           .subscribe((userData: IpFullModel) => {
-            const state = ctx.getState();
+            const state = getState();
 
             const defaultCity = state.cities.find(
               (city: CitiesModel) => city.name === userData.city
@@ -227,7 +295,14 @@ export class RequestDataState {
               transfers: 'All',
             };
 
-            ctx.patchState({
+            dispatch(
+              new RequestDataActions.GetWeather(
+                userData.latitude,
+                userData.longitude
+              )
+            );
+
+            patchState({
               ...state,
               userData,
               formData,

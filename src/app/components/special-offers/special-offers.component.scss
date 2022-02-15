@@ -1,15 +1,36 @@
+$maxWidth: 1920;
+
+@mixin font-size($pcSize, $mobSize) {
+  $addSize: $pcSize - $mobSize;
+  $maxWidth: $maxWidth - 400;
+  font-size: calc(
+    #{$mobSize + px} + #{$addSize} * ((100vw - 400px) / #{$maxWidth})
+  );
+}
+
+@mixin height($pcSize, $mobSize) {
+  $addSize: $pcSize - $mobSize;
+  $maxWidth: $maxWidth - 400;
+  height: calc(
+    #{$mobSize + px} + #{$addSize} * ((100vw - 400px) / #{$maxWidth})
+  );
+}
 .no-data {
   display: block;
   max-width: 800px;
   margin: auto;
 }
 .card-group {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(320px, 650px));
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 50px 50px;
+  grid-gap: 50px;
   color: #1d3557;
+  @media only screen and(max-width:1350px) {
+    grid-template-columns: repeat(1, minmax(320px, 650px));
+    grid-gap: 40px;
+  }
 }
 
 p,
@@ -19,8 +40,6 @@ h3 {
 
 .card {
   position: relative;
-  display: block;
-  width: 650px;
   background-image: url("^/assets/card-background.jpg");
   background-position: center;
   background-repeat: no-repeat;
@@ -42,6 +61,11 @@ h3 {
     align-items: space-around;
     justify-content: space-between;
     padding: 20px;
+
+    @media only screen and (max-width: 700px) {
+      @include height(250, 220);
+      padding: 15px;
+    }
   }
 
   &__header {
@@ -49,9 +73,8 @@ h3 {
   }
 
   &__title {
-    padding-left: 40px;
     text-align: left;
-    font-size: 25px;
+    @include font-size(25, 20);
   }
   &__content {
     min-width: max-content;
@@ -123,9 +146,15 @@ h3 {
     font-size: 12px;
     font-weight: 400;
   }
+  &__info-item {
+    flex-grow: 1;
+
+    &:nth-child(3) {
+      flex-grow: 3;
+    }
+  }
   &__line-main {
     display: block;
-    width: 200px;
     height: 2px;
     background-color: #1d3557;
   }
@@ -184,7 +213,7 @@ h3 {
   display: block;
   width: 225px;
   padding: 15px 0;
-  background-color: #f44336;
+  background-color: #f44336e1;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
   color: #fff;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);

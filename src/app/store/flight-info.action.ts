@@ -4,6 +4,7 @@ import { FlightTiketsForDatePayload } from '../models/flight-tickets-for-date.mo
 import { FormDataModel } from '../models/formData.model';
 import { CheapestTicketsResponseModel } from '../models/cheapest-tickets.model';
 import { FlightPriceTrendsRequest } from '../models/flight-price-trends.model';
+import { DestinationPopular, IMapData } from '../models/city-destination.model';
 
 //-- Calendar State Actions --
 
@@ -29,8 +30,8 @@ export class GetNonStopTickets {
   constructor(public formData: FormDataModel) {}
 }
 
-export class GetTiketsForSpecialDate {
-  static readonly type = '[FlightInfo] Get Tikets For Special Date';
+export class GetTicketsForSpecialDate {
+  static readonly type = '[FlightInfo] Get Tickets For Special Date';
   constructor(public payload: FlightTiketsForDatePayload) {}
 }
 
@@ -62,4 +63,9 @@ export class CheapestTicketsRequestSuccess {
 export class CheapestTicketsRequestFail {
   static readonly type = '[FlightInfo] Cheapest Tickets Request Fail';
   constructor(public payload: string) {}
+}
+
+export class GetMapData {
+  static readonly type = '[GetMap] Get map data';
+  constructor(public payload: Map<IMapData, DestinationPopular>) {}
 }

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { TicketsType } from 'src/app/models/flight-tickets-for-date.model';
-import { GetTiketsForSpecialDate } from 'src/app/store/flight-info.action';
+import { GetTicketsForSpecialDate } from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -15,44 +15,40 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   styleUrls: ['./flight-tickets-for-special-dates.component.scss'],
 })
 export class FlightTicketsForSpecialDatesComponent implements OnInit {
-  @Select(RequestDataState.formData) formData$: Observable<TicketsType>;
-  @Select(FlightInfoState.flightTiketsForDate) flightInfo$: Observable<any>;
+  @Select(RequestDataState.formData)
+  formData$: Observable<TicketsType>;
+  @Select(FlightInfoState.flightTicketsForDate)
+  flightInfo$: Observable<any>;
+  @Select(FlightInfoState.loading)
+  loading$: Observable<any>;
 
   currency: string;
   loading: boolean;
-  numCards: number = 10;
+  cardsNumber: number = 10;
+  constructor(private store: Store) {}
 
-  constructor(private store: Store) { }
-
-  onScroll() {
-    this.numCards += 4;
-    console.log(this.numCards)
-    this.getFlightInfo()
+  ngOnInit(): void {
+    this.getFlightInfo();
   }
 
   getFlightInfo() {
-    this.formData$.pipe(untilDestroyed(this)).subscribe(formData => {
+    this.formData$.pipe(untilDestroyed(this)).subscribe((formData) => {
       const payload = {
         codeFrom: formData.destinationFrom.code,
         codeTo: formData.destinationTo.code,
         startDate: formData.startDate.toISOString().slice(0, 10),
         endDate: formData.endDate.toISOString().slice(0, 10),
-        direct: formData.transfers  === 'Directly',
-        numCards: this.numCards
-      }
-      this.store.dispatch([new GetTiketsForSpecialDate(payload)])
-    
-      this.store.select(RequestDataState.currency)
-        .pipe(untilDestroyed(this))
-        .subscribe((currency: string) => this.currency = currency.toUpperCase())
-    })
+        direct: formData.transfers === 'Directly',
+        cardsNumber: this.cardsNumber,
+      };
 
-    this.store.select(FlightInfoState.loading)
-      .pipe(untilDestroyed(this))
-      .subscribe(loading => this.loading = loading);
+      this.currency = this.store.selectSnapshot(RequestDataState.currency);
+      this.store.dispatch(new GetTicketsForSpecialDate(payload));
+    });
   }
 
-  ngOnInit(): void {
-    this.getFlightInfo()
+  onScroll() {
+    this.cardsNumber += 4;
+    this.getFlightInfo();
   }
 }

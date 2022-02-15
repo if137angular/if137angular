@@ -15,8 +15,7 @@ p {
   height: 290px;
   display: flex;
   flex-direction: column;
-  align-items: space-around;
-  justify-content: space-between;
+  justify-content: center;
   border-radius: 15px;
   margin: auto;
   background-image: url("^/assets/card-background.jpg");
@@ -27,6 +26,10 @@ p {
   font-size: 15px;
   transition: ease-in-out all 0.2s;
   padding: 20px;
+
+  @media only screen and (max-width: 700px) {
+    width: 100%;
+  }
 }
 
 .title {
@@ -34,6 +37,10 @@ p {
   padding-left: 40px;
   text-align: left;
   font-size: 25px;
+
+  @media only screen and (max-width: 700px) {
+    font-size: 1.2rem;
+  }
 }
 
 .card__content {

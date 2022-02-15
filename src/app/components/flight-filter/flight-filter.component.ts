@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { RequestDataState } from './../../store/request-data.state';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -22,12 +21,13 @@ type filterElementsModel = {
 })
 export class FlightFilterComponent implements OnInit {
   @Select(FlightInfoState.filterConfig) filterConfig$: Observable<any>;
+  @Select(FlightInfoState.filter) filter$: Observable<any>;
 
   minPrice: number = 0;
   maxPrice: number = 0;
 
-  minDuration: number = 0;
-  maxDuration: number = 0;
+  minDuration: number;
+  maxDuration: number;
 
   currency: string;
 
@@ -66,7 +66,7 @@ export class FlightFilterComponent implements OnInit {
     airline: new FormControl(null),
   });
 
-  constructor(public store: Store, private router: Router) {}
+  constructor(public store: Store) {}
 
   ngOnInit(): void {
     this.filterConfig$.pipe(untilDestroyed(this)).subscribe((filterConfig) => {
@@ -76,14 +76,28 @@ export class FlightFilterComponent implements OnInit {
       this.minDuration = filterConfig.minDuration;
       this.maxDuration = filterConfig.maxDuration;
 
-      this.checkURL();
-
       this.filterGroup.patchValue({
         priceRange: [this.minPrice, this.maxPrice],
         durationRange: [this.minDuration, this.maxDuration],
       });
 
       this.currency = this.store.selectSnapshot(RequestDataState.currency);
+    });
+  }
+
+  onResetFilter() {
+    this.store.dispatch(
+      new SetFilter({
+        minPrice: null,
+        maxPrice: null,
+        minDuration: null,
+        maxDuration: null,
+      })
+    );
+
+    this.filterGroup.patchValue({
+      priceRange: [this.minPrice, this.maxPrice],
+      durationRange: [this.minDuration, this.maxDuration],
     });
   }
 
@@ -115,16 +129,6 @@ export class FlightFilterComponent implements OnInit {
       return Math.round(value / 1000) + 'k';
     }
     return value;
-  }
-
-  checkURL(): void {
-    if (this.router.url === '/search/cheapest-tickets') {
-      this.checkTrue = false;
-    } else if (this.router.url === '/search/trends') {
-      this.checkTrue = false;
-    } else {
-      this.checkTrue = true;
-    }
   }
 
   getHours(min: any) {

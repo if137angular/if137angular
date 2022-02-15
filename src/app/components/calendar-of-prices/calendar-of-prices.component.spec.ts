@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { RequestDataService } from 'src/app/services/request-data.service';
-import { appState } from 'src/app/store/appState';
+import { appState } from 'src/app/store/app.state';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { CalendarOfPricesComponent } from './calendar-of-prices.component';
@@ -24,7 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarOfPricesModel } from 'src/app/models/calendar-of-prices.model';
 import { CalendarOfPricesLoaded } from 'src/app/store/flight-info.action';
 
-fdescribe('CalendarOfPricesComponent', () => {
+describe('CalendarOfPricesComponent', () => {
   let component: CalendarOfPricesComponent;
   let fixture: ComponentFixture<CalendarOfPricesComponent>;
   let debugElement: DebugElement;
@@ -91,24 +91,26 @@ fdescribe('CalendarOfPricesComponent', () => {
 
   describe('#ngOnInit', () => {
     beforeEach(() => {
-      calendarDataMock.next({
-        value: 1,
-        start: new Date(),
-        title: '',
-        trip_class: 1,
-        show_to_affiliates: true,
-        origin: '',
-        destination: '',
-        gate: '',
-        depart_date: new Date(),
-        return_date: new Date(),
-        number_of_changes: 1,
-        found_at: new Date(),
-        duration: 1,
-        distance: 1,
-        actual: true,
-        currency: '',
-      });
+      calendarDataMock.next([
+        {
+          value: 1,
+          start: new Date(),
+          title: '',
+          trip_class: 1,
+          show_to_affiliates: true,
+          origin: '',
+          destination: '',
+          gate: '',
+          depart_date: new Date(),
+          return_date: new Date(),
+          number_of_changes: 1,
+          found_at: new Date(),
+          duration: 1,
+          distance: 1,
+          actual: true,
+          currency: '',
+        },
+      ]);
       formDataMock.next({
         origin: '',
         destination: '',

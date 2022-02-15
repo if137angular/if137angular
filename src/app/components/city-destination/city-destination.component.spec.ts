@@ -19,7 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgxsModule, Store } from '@ngxs/store';
-import { appState } from '../../store/appState';
+import { appState } from '../../store/app.state';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { Subject } from 'rxjs';

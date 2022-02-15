@@ -2,10 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { RequestDataState } from '../../store/request-data.state';
 import { Observable } from 'rxjs';
-import {
-  FormDataModel,
-  FormDestinationModel,
-} from '../../models/formData.model';
+import { FormDataModel } from '../../models/formData.model';
 import { CheapestTicketsRequest } from '../../store/flight-info.action';
 import { FlightInfoState } from '../../store/flight-info.state';
 import { CheapestTicketModel } from '../../models/cheapest-tickets.model';
@@ -19,11 +16,14 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   styleUrls: ['./cheapest-tickets.component.scss'],
 })
 export class CheapestTicketsComponent implements OnInit {
-  @Select(RequestDataState.formData) formData$: Observable<FormDataModel>;
-  @Select(FlightInfoState.cheapestTickets) cheapestTickets$: Observable<
-    CheapestTicketModel[]
-  >;
-  @Select(FlightInfoState.errors) errors$: Observable<string>;
+  @Select(RequestDataState.formData)
+  formData$: Observable<FormDataModel>;
+  @Select(RequestDataState.currency)
+  currency$: Observable<string>;
+  @Select(FlightInfoState.cheapestTickets)
+  cheapestTickets$: Observable<CheapestTicketModel[]>;
+  @Select(FlightInfoState.errors)
+  errors$: Observable<string>;
 
   cheapestTicketsArr: CheapestTicketModel[];
   formData: FormDataModel;
