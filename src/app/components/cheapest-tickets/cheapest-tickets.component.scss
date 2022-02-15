@@ -5,12 +5,16 @@
 .componentWrapper {
   padding: 0 0 100px;
   .cheapestTicketsWrapper {
-    width: 100%;
-    margin-top: 30px;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(320px, 650px));
+    align-items: center;
     justify-content: center;
-    gap: 50px 50px;
+    grid-gap: 50px;
+
+    @media only screen and(max-width:1350px) {
+      grid-template-columns: repeat(1, minmax(320px, 650px));
+      grid-gap: 40px;
+    }
   }
 
   .error {
