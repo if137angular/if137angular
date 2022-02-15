@@ -77,6 +77,9 @@ import { SortPipe } from 'src/utils/sort.pipe';
 import { FlightSortComponent } from './components/flight-sort/flight-sort.component';
 import { CalendarDialogComponent } from './components/calendar-of-prices/calendar-dialog/calendar-dialog.component';
 import { CovidMapComponent } from './components/covid-map/covid-map.component';
+import { WeatherInfoComponent } from './components/weather-info/weather-info.component';
+import { WeatherInfoDialogComponent } from './components/weather-info/weather-info-dialog/weather-info-dialog.component';
+import { DayInfoComponent } from './components/weather-info/weather-info-dialog/day-info/day-info.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +109,9 @@ import { CovidMapComponent } from './components/covid-map/covid-map.component';
     FlightSortComponent,
     CalendarDialogComponent,
     CovidMapComponent,
+    WeatherInfoComponent,
+    WeatherInfoDialogComponent,
+    DayInfoComponent,
   ],
   imports: [
     // Module

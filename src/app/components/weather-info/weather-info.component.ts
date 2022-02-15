@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngxs/store';
+import { MatDialog } from '@angular/material/dialog';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { WeatherDataModel } from 'src/app/models/weather-data.model';
 import { RequestDataState } from 'src/app/store/request-data.state';
+import { WeatherInfoDialogComponent } from './weather-info-dialog/weather-info-dialog.component';
 
 @Component({
   selector: 'weather-info',
@@ -10,11 +12,20 @@ import { RequestDataState } from 'src/app/store/request-data.state';
   styleUrls: ['./weather-info.component.scss'],
 })
 export class WeatherInfoComponent implements OnInit {
-  weatherData: Observable<WeatherDataModel>;
+  @Select(RequestDataState.weatherData)
+  weatherData$: Observable<WeatherDataModel>;
 
-  constructor(private store: Store) {}
+  weatherData: WeatherDataModel;
+
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.weatherData = this.store.select(RequestDataState.weatherData);
+    this.weatherData$.subscribe((data) => (this.weatherData = data));
+  }
+
+  showDialog() {
+    this.dialog.open(WeatherInfoDialogComponent, {
+      data: this.weatherData,
+    });
   }
 }
