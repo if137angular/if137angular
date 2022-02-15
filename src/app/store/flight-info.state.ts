@@ -479,8 +479,7 @@ export class FlightInfoState {
     this.flightInfoService
       .requestPopularDestination('LWO')
       .subscribe((res: GetDestinationPopular) => {
-        const mapData: any = res;
-        const objValues: DestinationPopular[] = Object.values(mapData);
+        const objValues: DestinationPopular[] = Object.values(res.data);
         objValues.forEach((objValues: DestinationPopular) => {
           const matchedCity = this.getCityByCode(objValues.destination);
           Object.assign(objValues, {
