@@ -1,29 +1,28 @@
 .user-location {
-    display: flex;
+  display: flex;
+  align-items: center;
 }
 
 .user-location-btn {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: white;
-    cursor: pointer;
-    margin-left: 20%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  cursor: pointer;
 }
 
 .user-location-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 180px;
-    height: 80px;
-    background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 180px;
+  height: 80px;
+  background: white;
 }
 
 .user-location-text {
-    font-family: Arial, Helvetica, sans-serif;
-    margin-top: 5px;
-    font-size: 15px;
-    color: #752c5f;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 5px;
+  font-size: 15px;
+  color: #752c5f;
 }
-

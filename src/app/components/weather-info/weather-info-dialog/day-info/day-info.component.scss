@@ -10,6 +10,10 @@
   justify-content: space-between;
   flex-basis: 60%;
 
+  @media screen and(max-width: 429px) {
+    flex-basis: 69%;
+  }
+
   &-temp {
     display: flex;
     align-items: center;
