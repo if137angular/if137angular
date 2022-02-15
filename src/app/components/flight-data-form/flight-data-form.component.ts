@@ -94,15 +94,11 @@ export class FlightDataFormComponent implements OnInit {
     this.flightDataFormGroup.reset({});
   }
 
-  swapInputs() {
+  onSwapInputs() {
    const first = this.flightDataFormGroup.get('destinationFrom')?.value;
    const second = this.flightDataFormGroup.get('destinationTo')?.value;
    this.flightDataFormGroup.get('destinationFrom')?.setValue(second);
    this.flightDataFormGroup.get('destinationTo')?.setValue(first);
-  
-    
-    
-    
   }  
 
 }

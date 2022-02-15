@@ -1,7 +1,7 @@
 
 <form class="data-form" [formGroup]="flightDataFormGroup">
   <app-autocomplete formControlName="destinationFrom" label="From" [items]="cities"></app-autocomplete>
-  <button class="swap-inputs-btn"  (click)="swapInputs()"><mat-icon class="swap-icon">swap_horiz</mat-icon></button>
+    <button class="swap-inputs-btn"  (click)="onSwapInputs()"><mat-icon class="swap-icon">swap_horiz</mat-icon></button>
   <app-autocomplete formControlName="destinationTo" label="To" [items]="cities"></app-autocomplete>
 
   <mat-form-field appearance="fill">
@@ -17,7 +17,7 @@
   <app-transfers formControlName="transfers"></app-transfers>
 
   <div>
-    <button [disabled]="flightDataFormGroup.invalid" mat-flat-button type="button" color="warn"
+    <button class="search-btn" [disabled]="flightDataFormGroup.invalid" mat-flat-button type="button" color="warn"
       (click)="onSubmitForm()">SEARCH</button>
   </div>
 </form>
