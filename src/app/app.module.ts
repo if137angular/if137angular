@@ -73,6 +73,7 @@ import { NoRecordsFoundComponent } from './components/no-records-found/no-record
 import { CurrencyDropdownComponent } from './components/currency-dropdown/currency-dropdown.component';
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
 import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/cheapest-ticket-item.component';
+import { UserLocationComponent } from './components/user-location/user-location.component';
 import { SortPipe } from 'src/utils/sort.pipe';
 import { FlightSortComponent } from './components/flight-sort/flight-sort.component';
 import { CalendarDialogComponent } from './components/calendar-of-prices/calendar-dialog/calendar-dialog.component';
@@ -105,6 +106,7 @@ import { DayInfoComponent } from './components/weather-info/weather-info-dialog/
     CurrencyDropdownComponent,
     CheapestTicketsComponent,
     CheapestTicketItemComponent,
+    UserLocationComponent,
     SortPipe,
     FlightSortComponent,
     CalendarDialogComponent,
