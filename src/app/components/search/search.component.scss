@@ -62,13 +62,6 @@
   right: 10px;
 }
 
-.sidebarWprapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  margin-bottom: 20px;
-}
-
 .ticketsWrapper {
   width: calc(100% - 300px);
   @media only screen and (max-width: 1092px) {
@@ -105,4 +98,9 @@
   .toolbar {
     padding: 30px 15px 0 15px;
   }
+}
+.sidebarWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 }
