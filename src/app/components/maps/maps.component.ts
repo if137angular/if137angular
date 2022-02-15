@@ -4,6 +4,7 @@ import {
   Inject,
   NgZone,
   PLATFORM_ID,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import * as am5 from '@amcharts/amcharts5';
@@ -16,6 +17,7 @@ import { DestinationPopular, GetDestinationPopular } from 'src/app/models/city-d
 import { CitiesModel } from 'src/app/models/cities.model';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
+import { FlightInfoState } from 'src/app/store/flight-info.state';
 
 @Component({
   selector: 'app-maps',
@@ -34,7 +36,8 @@ export class MapsComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: any,
     private zone: NgZone,
     private flightInfoService: FlightsInfoService,
-    private store: Store, @Inject('Window') private window: Window
+    private store: Store, @Inject('Window') private window: Window,
+    private cdRef: ChangeDetectorRef,
   ) {
   }
 
@@ -45,34 +48,40 @@ export class MapsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const origin = 'LWO';
-    this.flightInfoService
-      .requestPopularDestination(origin)
-      .subscribe((res: GetDestinationPopular) => {
-        const test: Map<string, DestinationPopular> = res.data;
-        const objValues: DestinationPopular[] = Object.values(test);
-        objValues.forEach((obj: DestinationPopular) => {
-          const matchedCity = this.getCityByCode(obj.destination);
-          Object.assign(obj, {
-            id: matchedCity ? matchedCity.name.toLowerCase() : '',
-            title: matchedCity ? matchedCity.name : '',
-            geometry: {
-              type: 'Point',
-              coordinates: matchedCity ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat] : []
-            },
-          })
-        })
 
-        this.makeChart(objValues);
-
+    const dataState = this.store.select(FlightInfoState.mapData)
+      .subscribe((mapData: any) => {
+        this.makeChart(mapData);
+        this.cdRef.detectChanges();
       })
+    // const origin = 'LWO';
+    // this.flightInfoService
+    //   .requestPopularDestination(origin)
+    //   .subscribe((res: GetDestinationPopular) => {
+    //     const test: Map<string, DestinationPopular> = res.data;
+    //     const objValues: DestinationPopular[] = Object.values(test);
+    //     objValues.forEach((obj: DestinationPopular) => {
+    //       const matchedCity = this.getCityByCode(obj.destination);
+    //       Object.assign(obj, {
+    //         id: matchedCity ? matchedCity.name.toLowerCase() : '',
+    //         title: matchedCity ? matchedCity.name : '',
+    //         geometry: {
+    //           type: 'Point',
+    //           coordinates: matchedCity ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat] : []
+    //         },
+    //       })
+    //     })
 
-    const citiesArr = this.store.selectSnapshot(RequestDataState.cities);
-    const asd = citiesArr.filter(item => item.code === 'LWO');
+    //     this.makeChart(objValues);
 
-    this.originLat = asd[0].coordinates.lat;
-    this.originLon = asd[0].coordinates.lon;
-    this.originCode = asd[0].code;
+      // })
+
+    // const citiesArr = this.store.selectSnapshot(RequestDataState.cities);
+    // const asd = citiesArr.filter(item => item.code === 'LWO');
+
+    // this.originLat = asd[0].coordinates.lat;
+    // this.originLon = asd[0].coordinates.lon;
+    // this.originCode = asd[0].code;
   }
 
   browserOnly(f: () => void) {
