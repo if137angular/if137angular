@@ -1,13 +1,13 @@
 <div class="user-location">
-  <button class="user-location-btn" mat-button [matMenuTriggerFor]="menu">
+  <button class="user-location-btn" [matMenuTriggerFor]="menu">
     <mat-icon>dashboard</mat-icon>
   </button>
 
   <mat-menu #menu="matMenu">
     <div class="user-location-info">
-        <span class="user-location-text">{{userDistrict}}</span>
-        <span class="user-location-text">{{userTimezone | date: 'short'}}</span>
-        <span class="user-location-text">{{userIp}}</span>
+      <span class="user-location-text">{{ userDistrict }}</span>
+      <span class="user-location-text">{{ userTimezone | date: "short" }}</span>
+      <span class="user-location-text">{{ userIp }}</span>
     </div>
   </mat-menu>
 </div>
