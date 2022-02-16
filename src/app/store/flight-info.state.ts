@@ -376,19 +376,9 @@ export class FlightInfoState {
         .subscribe((response: CheapestTicketsResponseModel) => {
           if (!response.success && response.error) {
             dispatch(new CheapestTicketsRequestFail(response.error));
-          } else if (
-            response.success &&
-            Object.keys(response.data).length === 0
-          ) {
-            dispatch(
-              new CheapestTicketsRequestFail(
-                'There are no tickets in the selected direction'
-              )
-            );
-          } else if (
-            response.success &&
-            Object.keys(response.data).length > 0
-          ) {
+          } else if (response.success && Object.keys(response.data).length === 0) {
+            dispatch(new CheapestTicketsRequestFail('There are no tickets in the selected direction'));
+          } else if (response.success && Object.keys(response.data).length > 0) {
             dispatch(new CheapestTicketsRequestSuccess(response));
           }
         });

@@ -5,20 +5,34 @@
 .componentWrapper {
   padding: 0 0 100px;
   .cheapestTicketsWrapper {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(320px, 650px));
-    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    grid-gap: 50px;
-
-    @media only screen and(max-width:1350px) {
-      grid-template-columns: repeat(1, minmax(320px, 650px));
-      grid-gap: 40px;
-    }
+    //display: grid;
+    //grid-template-columns: repeat(2, minmax(320px, 650px));
+    //align-items: center;
+    //justify-content: center;
+    //grid-gap: 50px;
+    //
+    //@media only screen and(max-width:1350px) {
+    //  grid-template-columns: repeat(1, minmax(320px, 650px));
+    //  grid-gap: 40px;
+    //}
   }
 
   .error {
     max-width: 700px;
     margin: 0 auto;
+  }
+}
+
+:host ::ng-deep app-cheapest-ticket-item {
+  width: 550px;
+}
+
+@media(max-width: 750px) {
+  :host ::ng-deep app-cheapest-ticket-item {
+    width: 100%;
+    max-width: 550px;
   }
 }
