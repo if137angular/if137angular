@@ -73,10 +73,14 @@ import { NoRecordsFoundComponent } from './components/no-records-found/no-record
 import { CurrencyDropdownComponent } from './components/currency-dropdown/currency-dropdown.component';
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
 import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/cheapest-ticket-item.component';
+import { UserLocationComponent } from './components/user-location/user-location.component';
 import { SortPipe } from 'src/utils/sort.pipe';
 import { FlightSortComponent } from './components/flight-sort/flight-sort.component';
 import { CalendarDialogComponent } from './components/calendar-of-prices/calendar-dialog/calendar-dialog.component';
 import { CovidMapComponent } from './components/covid-map/covid-map.component';
+import { WeatherInfoComponent } from './components/weather-info/weather-info.component';
+import { WeatherInfoDialogComponent } from './components/weather-info/weather-info-dialog/weather-info-dialog.component';
+import { DayInfoComponent } from './components/weather-info/weather-info-dialog/day-info/day-info.component';
 
 @NgModule({
   declarations: [
@@ -102,10 +106,14 @@ import { CovidMapComponent } from './components/covid-map/covid-map.component';
     CurrencyDropdownComponent,
     CheapestTicketsComponent,
     CheapestTicketItemComponent,
+    UserLocationComponent,
     SortPipe,
     FlightSortComponent,
     CalendarDialogComponent,
     CovidMapComponent,
+    WeatherInfoComponent,
+    WeatherInfoDialogComponent,
+    DayInfoComponent,
   ],
   imports: [
     // Module

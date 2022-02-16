@@ -1,5 +1,5 @@
 <div class="dropdown">
-  <button mat-button [matMenuTriggerFor]="menu">
+  <button class="btn" mat-button [matMenuTriggerFor]="menu">
     <div style="display: flex; align-items: center">
       <img src="https://flagcdn.com/w40/{{(selectedCurrency$ | async).slice(0, 2)}}.png" alt="">
       {{ (selectedCurrency$ | async) | uppercase }}

@@ -31,8 +31,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 
-
-fdescribe('FlightTicketsForSpecialDatesComponent', () => {
+describe('FlightTicketsForSpecialDatesComponent', () => {
   let component: FlightTicketsForSpecialDatesComponent;
   let fixture: ComponentFixture<FlightTicketsForSpecialDatesComponent>;
   let storeMock: any;
@@ -45,7 +44,7 @@ fdescribe('FlightTicketsForSpecialDatesComponent', () => {
   let currency = new Subject();
   let loading = new Subject();
 
-  beforeEach( () => {
+  beforeEach(() => {
     storeMock = {
       select: jasmine
         .createSpy('select')
@@ -58,12 +57,12 @@ fdescribe('FlightTicketsForSpecialDatesComponent', () => {
         .withArgs(FlightInfoState.loading)
         .and.returnValue(loading.asObservable()),
       dispatch: jasmine.createSpy('dispatch'),
-      selectSnapshot: jasmine.createSpy('selectSnapshot')
-    }
-    flightsInfoServiceMock = jasmine.createSpy().and.returnValue({})
+      selectSnapshot: jasmine.createSpy('selectSnapshot'),
+    };
+    flightsInfoServiceMock = jasmine.createSpy().and.returnValue({});
 
     TestBed.configureTestingModule({
-      declarations: [ FlightTicketsForSpecialDatesComponent ],
+      declarations: [FlightTicketsForSpecialDatesComponent],
       imports: [
         BrowserModule,
         AppRoutingModule,
@@ -99,8 +98,7 @@ fdescribe('FlightTicketsForSpecialDatesComponent', () => {
         { provide: RequestDataService, useValue: requestDataService },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-    .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -114,7 +112,7 @@ fdescribe('FlightTicketsForSpecialDatesComponent', () => {
   afterAll(() => {
     formDataSubject.complete();
     flightTicketsSubject.complete();
-  })
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();

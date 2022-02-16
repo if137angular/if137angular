@@ -4,6 +4,7 @@ import {
   Inject,
   NgZone,
   PLATFORM_ID,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import * as am5 from '@amcharts/amcharts5';
@@ -16,6 +17,7 @@ import { DestinationPopular, GetDestinationPopular } from 'src/app/models/city-d
 import { CitiesModel } from 'src/app/models/cities.model';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
+import { FlightInfoState } from 'src/app/store/flight-info.state';
 
 @Component({
   selector: 'app-maps',
@@ -34,7 +36,8 @@ export class MapsComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: any,
     private zone: NgZone,
     private flightInfoService: FlightsInfoService,
-    private store: Store, @Inject('Window') private window: Window
+    private store: Store, @Inject('Window') private window: Window,
+    private cdRef: ChangeDetectorRef,
   ) {
   }
 
@@ -45,6 +48,12 @@ export class MapsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    // const dataState = this.store.select(FlightInfoState.mapData)
+    //   .subscribe((mapData: any) => {
+    //     this.makeChart(mapData);
+    //     this.cdRef.detectChanges();
+    //   })
     const origin = 'LWO';
     this.flightInfoService
       .requestPopularDestination(origin)

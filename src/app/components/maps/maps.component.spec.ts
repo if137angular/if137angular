@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from '../../app-routing.module';
 import { NgxsModule, Store } from '@ngxs/store';
-import { appState } from 'src/app/store/appState';
+import { appState } from 'src/app/store/app.state';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { environment } from 'src/environments/environment';
@@ -84,12 +84,10 @@ import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { Subject } from 'rxjs';
 import { RequestDataState } from '../../store/request-data.state';
 
-
-
-fdescribe('MapsComponent', () => {
+describe('MapsComponent', () => {
   let component: MapsComponent;
   let fixture: ComponentFixture<MapsComponent>;
-    let debugElement: DebugElement;
+  let debugElement: DebugElement;
   let storeMock: any;
   let store: any;
   let flightsInfoServiceMock: any;

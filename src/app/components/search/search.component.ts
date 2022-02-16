@@ -22,6 +22,7 @@ export class SearchComponent implements OnInit {
       this.loading = loading;
       this.cdRef.detectChanges();
     });
+
   }
   toggle: boolean = false;
 

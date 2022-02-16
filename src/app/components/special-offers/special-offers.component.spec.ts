@@ -122,7 +122,7 @@ describe('SpecialOffersComponent', () => {
         destinationTo: null,
       } as any;
       // act
-      component.dispatchSpecialOffers(formData);
+      // component.dispatchSpecialOffers(formData);
       // assert
       expect(store.dispatch).toHaveBeenCalledWith(
         new GetSpecialOffers({

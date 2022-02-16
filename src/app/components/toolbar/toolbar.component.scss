@@ -1,6 +1,12 @@
 mat-toolbar {
   justify-content: center;
 
+  @media only screen and (max-width: 600px) {
+    padding: 0px;
+    margin-bottom: 50px;
+    justify-content: space-between;
+  }
+
   .toolbar-wrapper {
     display: flex;
     max-width: 1110px;
@@ -13,6 +19,9 @@ mat-toolbar {
       color: #fff;
       display: flex;
       align-items: center;
+      @media only screen and (max-width: 600px) {
+        flex-direction: column;
+      }
     }
   }
 

@@ -456,7 +456,7 @@ export class FlightInfoState {
         formData.destinationFrom.code,
         formData.destinationTo.code,
         formData.startDate.toISOString().slice(0, 7),
-        formData.endDate.toISOString().slice(0, 7)
+        formData.endDate.toISOString().slice(0, 7),
       )
       .subscribe((response: any) => {
         const nonStopTickets: any = Object.values(response.data)[0];
@@ -483,8 +483,7 @@ export class FlightInfoState {
     this.flightInfoService
       .requestPopularDestination('LWO')
       .subscribe((res: GetDestinationPopular) => {
-        const mapData: any = res;
-        const objValues: DestinationPopular[] = Object.values(mapData);
+        const objValues: DestinationPopular[] = Object.values(res.data);
         objValues.forEach((objValues: DestinationPopular) => {
           const matchedCity = this.getCityByCode(objValues.destination);
           Object.assign(objValues, {
