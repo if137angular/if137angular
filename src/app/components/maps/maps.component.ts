@@ -49,39 +49,39 @@ export class MapsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const dataState = this.store.select(FlightInfoState.mapData)
-      .subscribe((mapData: any) => {
-        this.makeChart(mapData);
-        this.cdRef.detectChanges();
+    // const dataState = this.store.select(FlightInfoState.mapData)
+    //   .subscribe((mapData: any) => {
+    //     this.makeChart(mapData);
+    //     this.cdRef.detectChanges();
+    //   })
+    const origin = 'LWO';
+    this.flightInfoService
+      .requestPopularDestination(origin)
+      .subscribe((res: GetDestinationPopular) => {
+        const test: Map<string, DestinationPopular> = res.data;
+        const objValues: DestinationPopular[] = Object.values(test);
+        objValues.forEach((obj: DestinationPopular) => {
+          const matchedCity = this.getCityByCode(obj.destination);
+          Object.assign(obj, {
+            id: matchedCity ? matchedCity.name.toLowerCase() : '',
+            title: matchedCity ? matchedCity.name : '',
+            geometry: {
+              type: 'Point',
+              coordinates: matchedCity ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat] : []
+            },
+          })
+        })
+
+        this.makeChart(objValues);
+
       })
-    // const origin = 'LWO';
-    // this.flightInfoService
-    //   .requestPopularDestination(origin)
-    //   .subscribe((res: GetDestinationPopular) => {
-    //     const test: Map<string, DestinationPopular> = res.data;
-    //     const objValues: DestinationPopular[] = Object.values(test);
-    //     objValues.forEach((obj: DestinationPopular) => {
-    //       const matchedCity = this.getCityByCode(obj.destination);
-    //       Object.assign(obj, {
-    //         id: matchedCity ? matchedCity.name.toLowerCase() : '',
-    //         title: matchedCity ? matchedCity.name : '',
-    //         geometry: {
-    //           type: 'Point',
-    //           coordinates: matchedCity ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat] : []
-    //         },
-    //       })
-    //     })
 
-    //     this.makeChart(objValues);
+    const citiesArr = this.store.selectSnapshot(RequestDataState.cities);
+    const asd = citiesArr.filter(item => item.code === 'LWO');
 
-      // })
-
-    // const citiesArr = this.store.selectSnapshot(RequestDataState.cities);
-    // const asd = citiesArr.filter(item => item.code === 'LWO');
-
-    // this.originLat = asd[0].coordinates.lat;
-    // this.originLon = asd[0].coordinates.lon;
-    // this.originCode = asd[0].code;
+    this.originLat = asd[0].coordinates.lat;
+    this.originLon = asd[0].coordinates.lon;
+    this.originCode = asd[0].code;
   }
 
   browserOnly(f: () => void) {
