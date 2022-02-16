@@ -1,0 +1,30 @@
+.daily-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.daily-info-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-basis: 60%;
+
+  @media screen and(max-width: 429px) {
+    flex-basis: 69%;
+  }
+
+  &-temp {
+    display: flex;
+    align-items: center;
+  }
+
+  &-description {
+    font-size: 10px;
+    color: grey;
+  }
+}
+
+img {
+  width: 45px;
+}

@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgxsModule, Store } from '@ngxs/store';
-import { appState } from 'src/app/store/appState';
+import { appState } from 'src/app/store/app.state';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { Subject } from 'rxjs';

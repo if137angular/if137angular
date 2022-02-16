@@ -9,7 +9,6 @@ import { SetFormDate } from 'src/app/store/request-data.action';
 import { FormDataModel } from 'src/app/models/formData.model';
 import { GetLocationModel } from 'src/app/models/GetLocation.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { SetFilter } from 'src/app/store/flight-info.action';
 
 @UntilDestroy()
 @Component({
@@ -22,7 +21,10 @@ export class FlightDataFormComponent implements OnInit {
   location: any;
   transfers: string = '';
   minDate: Date = new Date();
+  first: any;
+  second: any;
 
+ 
   flightDataFormGroup: FormGroup = new FormGroup({
     startDate: new FormControl(),
     endDate: new FormControl(),
@@ -31,10 +33,14 @@ export class FlightDataFormComponent implements OnInit {
     transfers: new FormControl(),
   });
 
-  @Select(RequestDataState.cities) cities$: Observable<CitiesModel[]>;
-  @Select(RequestDataState.location) location$: Observable<GetLocationModel[]>;
-  @Select(RequestDataState.formData) formData$: Observable<FormDataModel>;
-  @Select(RequestDataState.currency) selectedCurrency$: Observable<any>;
+  @Select(RequestDataState.cities)
+  cities$: Observable<CitiesModel[]>;
+  @Select(RequestDataState.location)
+  location$: Observable<GetLocationModel[]>;
+  @Select(RequestDataState.formData)
+  formData$: Observable<FormDataModel>;
+  @Select(RequestDataState.currency)
+  selectedCurrency$: Observable<any>;
 
   constructor(private store: Store, private router: Router) {}
 
@@ -91,4 +97,12 @@ export class FlightDataFormComponent implements OnInit {
   onResetForm() {
     this.flightDataFormGroup.reset({});
   }
+
+  onSwapInputs() {
+   const first = this.flightDataFormGroup.get('destinationFrom')?.value;
+   const second = this.flightDataFormGroup.get('destinationTo')?.value;
+   this.flightDataFormGroup.get('destinationFrom')?.setValue(second);
+   this.flightDataFormGroup.get('destinationTo')?.setValue(first);
+  }  
+
 }

@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { RequestDataService } from 'src/app/services/request-data.service';
-import { appState } from 'src/app/store/appState';
+import { appState } from 'src/app/store/app.state';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { CalendarOfPricesComponent } from './calendar-of-prices.component';
@@ -24,7 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarOfPricesModel } from 'src/app/models/calendar-of-prices.model';
 import { CalendarOfPricesLoaded } from 'src/app/store/flight-info.action';
 
-fdescribe('CalendarOfPricesComponent', () => {
+describe('CalendarOfPricesComponent', () => {
   let component: CalendarOfPricesComponent;
   let fixture: ComponentFixture<CalendarOfPricesComponent>;
   let debugElement: DebugElement;

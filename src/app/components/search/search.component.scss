@@ -10,30 +10,92 @@
   display: flex;
   gap: 50px;
   padding: 50px;
+  @media only screen and (max-width: 1092px) {
+    position: relative;
+    flex-direction: column;
+    gap: 40px;
+    padding: 40px 20px;
+  }
 }
 
-.filterWrapper {
+.filterInner {
   width: 300px;
   height: max-content;
   box-shadow: 0px 0px 5px 4px rgba(73, 73, 73, 0.164);
   border-radius: 15px;
+  @media only screen and (max-width: 1092px) {
+    position: absolute;
+    top: 25px;
+    height: 350px;
+    left: 50%;
+    z-index: 3;
+    background-color: rgb(255, 255, 255);
+    transition: all ease-in-out 0.4s;
+    transform: translate(-50%, 0);
+    overflow-y: auto;
+  }
+}
+.filter-btn,
+.close-btn {
+  display: none;
+  @media only screen and (max-width: 1092px) {
+    display: block;
+    z-index: 2;
+    width: max-content;
+    margin: auto auto 0px auto;
+    background-color: #f44336;
+    color: #fff;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+}
+
+.close-btn {
+  position: absolute;
+  border-radius: 3px;
+  padding: 2px 5px;
+  top: 10px;
+  right: 10px;
 }
 
 .ticketsWrapper {
   width: calc(100% - 300px);
+  @media only screen and (max-width: 1092px) {
+    width: 100%;
+    margin: auto;
+  }
 }
 .calendarWrapper {
   display: flex;
   justify-content: center;
 }
 
-@media (max-width: 800px) {
-  .search-content {
-    display: block;
+@media (max-width: 1092px) {
+  .close {
+    left: -50%;
+    transform: translate(-50%, 0);
   }
 
-  .filterWrapper,
-  .ticketsWrapper {
+  .filterWrapper {
+    position: absolute;
+    top: -4px;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
+    min-height: 100vh;
+    transition: all 0.2s;
+  }
+  .background-color {
+    background-color: rgba(0, 0, 0, 0.794);
+    z-index: 2;
+  }
+
+  .toolbar {
+    padding: 30px 15px 0 15px;
   }
 }

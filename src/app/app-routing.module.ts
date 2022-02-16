@@ -10,7 +10,6 @@ import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest
 import { SpecialOffersComponent } from './components/special-offers/special-offers.component';
 import { FlightPriceTrendsComponent } from './components/flight-price-trends/flight-price-trends.component';
 
-import { RegisterComponent } from './components/register/register.component';
 
 export const routes: Routes = [
   { path: '', component: MainComponent },
@@ -23,11 +22,11 @@ export const routes: Routes = [
         component: FlightTicketsForSpecialDatesComponent,
         data: { tab: 'Tickets' },
       },
-      {
-        path: 'non-stop-tickets',
-        component: NonStopTicketsComponent,
-        data: { tab: 'Non Stop Tickets' },
-      },
+      // {
+      //   path: 'non-stop-tickets',
+      //   component: NonStopTicketsComponent,
+      //   data: { tab: 'Non Stop Tickets' },
+      // },
       {
         path: 'cheapest-tickets',
         component: CheapestTicketsComponent,
@@ -45,7 +44,6 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: 'register', component: RegisterComponent },
 ];
 
 @NgModule({

@@ -21,7 +21,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgxsModule, Store } from '@ngxs/store';
-import { appState } from 'src/app/store/appState';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { Subject } from 'rxjs';
@@ -30,7 +29,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { GetFlightPriceTrends } from 'src/app/store/flight-info.action';
-import { any } from '@amcharts/amcharts5/.internal/core/util/Array';
 
 describe('FlightPriceTrendsComponent', () => {
   let component: FlightPriceTrendsComponent;
@@ -81,9 +79,7 @@ describe('FlightPriceTrendsComponent', () => {
         MatCardModule,
         MatProgressSpinnerModule,
         MatToolbarModule,
-        NgxsModule.forRoot(appState, {
-          developmentMode: true,
-        }),
+        NgxsModule,
         NgxsLoggerPluginModule.forRoot(),
       ],
       declarations: [FlightPriceTrendsComponent],

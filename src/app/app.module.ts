@@ -7,10 +7,13 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { NgxsModule } from '@ngxs/store';
-import { appState } from 'src/app/store/appState';
+import { appState } from 'src/app/store/app.state';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { environment } from 'src/environments/environment';
+
+// Module
+import { AuthModule } from './auth/auth.module';
 
 // Other
 import { FlatpickrModule } from 'angularx-flatpickr';
@@ -65,16 +68,19 @@ import { FlightPriceTrendsComponent } from './components/flight-price-trends/fli
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { FlightFilterComponent } from './components/flight-filter/flight-filter.component';
-import { RegisterComponent } from './components/register/register.component';
 import { MapsComponent } from './components/maps/maps.component';
 import { NoRecordsFoundComponent } from './components/no-records-found/no-records-found.component';
 import { CurrencyDropdownComponent } from './components/currency-dropdown/currency-dropdown.component';
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
 import { CheapestTicketItemComponent } from './components/cheapest-tickets/cheapest-ticket-item/cheapest-ticket-item.component';
+import { UserLocationComponent } from './components/user-location/user-location.component';
 import { SortPipe } from 'src/utils/sort.pipe';
 import { FlightSortComponent } from './components/flight-sort/flight-sort.component';
 import { CalendarDialogComponent } from './components/calendar-of-prices/calendar-dialog/calendar-dialog.component';
 import { CovidMapComponent } from './components/covid-map/covid-map.component';
+import { WeatherInfoComponent } from './components/weather-info/weather-info.component';
+import { WeatherInfoDialogComponent } from './components/weather-info/weather-info-dialog/weather-info-dialog.component';
+import { DayInfoComponent } from './components/weather-info/weather-info-dialog/day-info/day-info.component';
 
 @NgModule({
   declarations: [
@@ -95,18 +101,23 @@ import { CovidMapComponent } from './components/covid-map/covid-map.component';
     FlightPriceTrendsComponent,
     ToolbarComponent,
     FlightFilterComponent,
-    RegisterComponent,
     MapsComponent,
     NoRecordsFoundComponent,
     CurrencyDropdownComponent,
     CheapestTicketsComponent,
     CheapestTicketItemComponent,
+    UserLocationComponent,
     SortPipe,
     FlightSortComponent,
     CalendarDialogComponent,
     CovidMapComponent,
+    WeatherInfoComponent,
+    WeatherInfoDialogComponent,
+    DayInfoComponent,
   ],
   imports: [
+    // Module
+    AuthModule,
     // Common
     CommonModule,
     BrowserModule,

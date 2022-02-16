@@ -4,6 +4,7 @@ import {
   Inject,
   NgZone,
   PLATFORM_ID,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import * as am5 from '@amcharts/amcharts5';
@@ -11,32 +12,12 @@ import * as am5map from '@amcharts/amcharts5/map';
 import am5geodata_worldLow from '@amcharts/amcharts5-geodata/worldLow';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import { Store } from '@ngxs/store';
+
+import { DestinationPopular, GetDestinationPopular } from 'src/app/models/city-destination.model';
+import { CitiesModel } from 'src/app/models/cities.model';
 import { RequestDataState } from 'src/app/store/request-data.state';
-import { Observable } from 'rxjs';
-import { CurrencyDropdownModel } from 'src/app/models/Currency-dropdown.model';
-
-import { CitiesModel } from "src/app/models/cities.model";
+import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
-
-export type DestinationPopular = {
-  origin: string;
-  destination: string;
-  departure_at: Date;
-  return_at: Date;
-  expires_at: Date;
-  number_of_changes: number;
-  price: number;
-  found_at: Date;
-  transfers: number;
-  airline: string;
-  flight_number: number;
-};
-
-export type GetDestinationPopular = {
-  success: boolean;
-  data: Map<string, DestinationPopular>;
-  currency: string;
-};
 
 @Component({
   selector: 'app-maps',
@@ -44,16 +25,9 @@ export type GetDestinationPopular = {
   styleUrls: ['./maps.component.scss'],
 })
 export class MapsComponent implements OnInit {
-  currency$: Observable<CurrencyDropdownModel>;
-
-  button: any;
-  private root!: am5.Root;
-  items: GetDestinationPopular[] = [];
-  originPointCode: string = '';
   originLat: string;
   originLon: string;
   originCode: string = '';
-  objValues: any;
   matchedOriginCity: any;
   selectedDestinstion: string = '';
   selectedCities: string = '';
@@ -61,17 +35,53 @@ export class MapsComponent implements OnInit {
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private zone: NgZone,
-    private store: Store, @Inject('Window') private window: Window
+    private flightInfoService: FlightsInfoService,
+    private store: Store, @Inject('Window') private window: Window,
+    private cdRef: ChangeDetectorRef,
   ) {
   }
 
+  getCityByCode(cityCode: string): CitiesModel {
+    const cities = this.store.selectSnapshot(RequestDataState.cities);
+    const matchedCity = cities.find((city: CitiesModel) => city.code === cityCode)
+    return matchedCity
+  }
+
   ngOnInit(): void {
-    this.store.select(FlightInfoState.mapData)
+
+    const dataState = this.store.select(FlightInfoState.mapData)
       .subscribe((mapData: any) => {
-        if (mapData.length) {
-          this.makeChart(mapData);
-        }
+        this.makeChart(mapData);
+        this.cdRef.detectChanges();
       })
+    // const origin = 'LWO';
+    // this.flightInfoService
+    //   .requestPopularDestination(origin)
+    //   .subscribe((res: GetDestinationPopular) => {
+    //     const test: Map<string, DestinationPopular> = res.data;
+    //     const objValues: DestinationPopular[] = Object.values(test);
+    //     objValues.forEach((obj: DestinationPopular) => {
+    //       const matchedCity = this.getCityByCode(obj.destination);
+    //       Object.assign(obj, {
+    //         id: matchedCity ? matchedCity.name.toLowerCase() : '',
+    //         title: matchedCity ? matchedCity.name : '',
+    //         geometry: {
+    //           type: 'Point',
+    //           coordinates: matchedCity ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat] : []
+    //         },
+    //       })
+    //     })
+
+    //     this.makeChart(objValues);
+
+      // })
+
+    // const citiesArr = this.store.selectSnapshot(RequestDataState.cities);
+    // const asd = citiesArr.filter(item => item.code === 'LWO');
+
+    // this.originLat = asd[0].coordinates.lat;
+    // this.originLon = asd[0].coordinates.lon;
+    // this.originCode = asd[0].code;
   }
 
   browserOnly(f: () => void) {
@@ -95,14 +105,6 @@ export class MapsComponent implements OnInit {
         })
       );
 
-      let cont = chart.children.push(
-        am5.Container.new(root, {
-          layout: root.horizontalLayout,
-          x: 20,
-          y: 40,
-        })
-      );
-
       chart.set('projection', am5map.geoMercator());
       chart.set('panX', 'translateX');
       chart.set('panY', 'translateY');
@@ -116,6 +118,7 @@ export class MapsComponent implements OnInit {
       let graticuleSeries = chart.series.push(
         am5map.GraticuleSeries.new(root, {})
       );
+      
       graticuleSeries.mapLines.template.setAll({
         stroke: root.interfaceColors.get('alternativeBackground'),
         strokeOpacity: 0.08,
