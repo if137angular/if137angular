@@ -42,3 +42,13 @@
     transform: scaleX(1.2);
   }
 }
+
+@media screen and (max-width: 430px) {
+  .swap-inputs-btn {
+    position: absolute;
+    left: 50%;
+    top: 36%;
+    
+  }
+  
+}
