@@ -121,43 +121,25 @@ describe('CalendarOfPricesComponent', () => {
       });
     });
 
-    it('should select calendarData from store', () => {
-      store
-        .select(FlightInfoState.calendarOfPrices)
-        .subscribe((state: CalendarOfPricesModel[]) =>
-          expect(state).toEqual([
-            {
-              value: 1,
-              start: new Date(),
-              title: '',
-              trip_class: 1,
-              show_to_affiliates: true,
-              origin: '',
-              destination: '',
-              gate: '',
-              depart_date: new Date(),
-              return_date: new Date(),
-              number_of_changes: 1,
-              found_at: new Date(),
-              duration: 1,
-              distance: 1,
-              actual: true,
-              currency: '',
-            },
-          ])
-        );
-    });
-
     it('should select currency from store', () => {
       expect(store.selectSnapshot(RequestDataState.currency)).toBeTruthy();
     });
 
-    it('should select formData from store', () => {
+    it('should select calendarData from store', () => {
       store
-        .select(RequestDataState.formData)
-        .subscribe((data: any) =>
-          store.dispatch(new CalendarOfPricesLoaded(data))
+        .select(FlightInfoState.calendarOfPrices)
+        .subscribe((state: CalendarOfPricesModel[]) =>
+          expect(state).toBeTruthy()
         );
+    });
+
+    it('should select formData from store', () => {
+      store.select(RequestDataState.formData).subscribe((data: any) => {
+        store.dispatch(new CalendarOfPricesLoaded(data));
+        expect(store.dispatch).toHaveBeenCalledWith(
+          new CalendarOfPricesLoaded(data)
+        );
+      });
     });
   });
 });

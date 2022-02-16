@@ -53,7 +53,7 @@ export class FlightsInfoService {
     startDate: string,
     endDate: string
   ): Observable<any> {
-   const currencyFromStore = this.store.selectSnapshot(
+    const currencyFromStore = this.store.selectSnapshot(
       RequestDataState.currency
     );
 
@@ -97,30 +97,17 @@ export class FlightsInfoService {
   }
 
   getIpAddress(): Observable<any> {
-    return this.http
-      .get('https://api.ipify.org/?format=json')
-      .pipe(catchError(this.handleError));
+    return this.http.get('https://api.ipify.org/?format=json');
   }
 
   getGEOLocation(ip: string): Observable<any> {
     let url = `https://api.ipgeolocation.io/ipgeo?apiKey=a4503669913f4ef28711027d136d2d68&ip=${ip}`;
-    return this.http.get(url).pipe(catchError(this.handleError));
+    return this.http.get(url);
   }
 
   getWeatherForWeek(lat: string, lon: string): Observable<any> {
     let url = `https://api.openweathermap.org/data/2.5/onecall?units=metric&lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=2985eb313867605617f21eabece2b4b2`;
     return this.http.get(url);
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred:', error.error.message);
-    } else {
-      console.error(
-        `Backend returned code ${error.status}, ` + `body was: ${error.error}`
-      );
-    }
-    return throwError('Something bad happened; please try again later.');
   }
 
   getFlightTicketsForDate(

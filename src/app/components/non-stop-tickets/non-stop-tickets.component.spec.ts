@@ -1,17 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgxsModule, Store } from '@ngxs/store';
 import { NonStopTicketsComponent } from './non-stop-tickets.component';
-import { appState } from 'src/app/store/appState';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { RequestDataService } from 'src/app/services/request-data.service';
-import {
-  CUSTOM_ELEMENTS_SCHEMA,
-} from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { of, Subject } from 'rxjs';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
+import { appState } from 'src/app/store/app.state';
 
-fdescribe('NonStopTicketsComponent', () => {
+describe('NonStopTicketsComponent', () => {
   let component: NonStopTicketsComponent;
   let fixture: ComponentFixture<NonStopTicketsComponent>;
 

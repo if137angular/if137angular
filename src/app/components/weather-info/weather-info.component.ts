@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Select, Store } from '@ngxs/store';
+import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { WeatherDataModel } from 'src/app/models/weather-data.model';
 import { RequestDataState } from 'src/app/store/request-data.state';
