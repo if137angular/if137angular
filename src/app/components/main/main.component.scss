@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: url("/assets/background.svg") 10% 10% no-repeat,
-    url("/assets/background.svg") 90% 90% no-repeat;
+  background: url("~/src/assets/background.svg") 10% 10% no-repeat,
+    url("~/src/assets/background.svg") 90% 90% no-repeat;
   background-color: #673ab7;
 
   h1,

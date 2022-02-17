@@ -100,13 +100,13 @@ export class FlightInfoState {
   }
 
   @Selector()
-  static flightTicketsForDate(state: FlightInfoStateModel): any {
-    return filterArray(state.flightTicketsForDate, state.filter);
+  static nonStopTickets(state: FlightInfoStateModel): any {
+    return state.nonStopTickets;
   }
 
   @Selector()
-  static nonStopTickets(state: FlightInfoStateModel): any {
-    return filterArray(state.nonStopTickets, state.filter);
+  static flightTicketsForDate(state: FlightInfoStateModel): any {
+    return filterArray(state.flightTicketsForDate, state.filter);
   }
 
   @Selector()
@@ -228,8 +228,8 @@ export class FlightInfoState {
         });
         if (payload.cardsNumber === 10) {
           patchState({
-            filterConfig
-          })
+            filterConfig,
+          });
         }
       });
   }
@@ -376,9 +376,19 @@ export class FlightInfoState {
         .subscribe((response: CheapestTicketsResponseModel) => {
           if (!response.success && response.error) {
             dispatch(new CheapestTicketsRequestFail(response.error));
-          } else if (response.success && Object.keys(response.data).length === 0) {
-            dispatch(new CheapestTicketsRequestFail('There are no tickets in the selected direction'));
-          } else if (response.success && Object.keys(response.data).length > 0) {
+          } else if (
+            response.success &&
+            Object.keys(response.data).length === 0
+          ) {
+            dispatch(
+              new CheapestTicketsRequestFail(
+                'There are no tickets in the selected direction'
+              )
+            );
+          } else if (
+            response.success &&
+            Object.keys(response.data).length > 0
+          ) {
             dispatch(new CheapestTicketsRequestSuccess(response));
           }
         });
@@ -446,7 +456,7 @@ export class FlightInfoState {
         formData.destinationFrom.code,
         formData.destinationTo.code,
         formData.startDate.toISOString().slice(0, 7),
-        formData.endDate.toISOString().slice(0, 7),
+        formData.endDate.toISOString().slice(0, 7)
       )
       .subscribe((response: any) => {
         const nonStopTickets: any = Object.values(response.data)[0];

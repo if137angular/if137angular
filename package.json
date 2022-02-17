@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "npm-run-all --parallel watch server",
     "serve": "ng serve --proxy-config proxy.conf.json",
-    "build": "ng build --configuration production",
+    "build": "ng build --configuration production --output-path docs",
     "watch": "ng build --watch --configuration development --delete-output-path false",
     "server": "nodemon ./src/server --watch ./src/server",
     "test": "ng test --watch false --browsers ChromeHeadless",
