@@ -42,3 +42,12 @@
     transform: scaleX(1.2);
   }
 }
+
+@media screen and (max-width: 430px) {
+  .swap-inputs-btn {
+    margin-top: 50px;
+    margin-bottom: -20px;
+
+  }
+  
+}
