@@ -11,9 +11,13 @@ import * as moment from 'moment';
 import { GetDestinationPopular } from '../models/city-destination.model';
 import { Store } from '@ngxs/store';
 import { RequestDataState } from 'src/app/store/request-data.state';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class FlightsInfoService {
+  // TODO change to our own domain
+  proxy: string = environment.production ? 'https://fdi.kplsp.com.ua' : '';
+
   constructor(private http: HttpClient, private store: Store) {}
 
   getCalendarOfPrices({
@@ -24,7 +28,7 @@ export class FlightsInfoService {
   }: CalendarOfPricesPayload): Observable<any> {
     const currency = this.store.selectSnapshot(RequestDataState.currency);
     return this.http.get<GetCalendarOfPricesRequestModel>(
-      `/v2/prices/week-matrix?currency=${currency}&origin=${originCode}&destination=${destinationCode}&show_to_affiliates=true&depart_date=${depart_date}&return_date=${return_date}`
+      `${this.proxy}/v2/prices/week-matrix?currency=${currency}&origin=${originCode}&destination=${destinationCode}&show_to_affiliates=true&depart_date=${depart_date}&return_date=${return_date}`
     );
   }
 
@@ -37,7 +41,7 @@ export class FlightsInfoService {
     currencyFromStore = this.store.selectSnapshot(RequestDataState.currency);
 
     return this.http.get(
-      `/aviasales/v3/get_special_offers?origin=${cityOrigin}&destination=${cityDestination}&locale=${locale}&currency=${currencyFromStore}`
+      `${this.proxy}/aviasales/v3/get_special_offers?origin=${cityOrigin}&destination=${cityDestination}&locale=${locale}&currency=${currencyFromStore}`
     );
   }
 
@@ -52,7 +56,7 @@ export class FlightsInfoService {
     );
 
     return this.http.get(
-      `/v1/prices/direct?origin=${city}&destination=${destination}&depart_date=${startDate}&return_date=${endDate}&currency=${currencyFromStore}`
+      `${this.proxy}/v1/prices/direct?origin=${city}&destination=${destination}&depart_date=${startDate}&return_date=${endDate}&currency=${currencyFromStore}`
     );
   }
 
@@ -70,9 +74,12 @@ export class FlightsInfoService {
       .append('return_date', moment(formData.endDate).format('YYYY-MM-DD'))
       .append('currency', currencyFromStore);
 
-    return this.http.get<CheapestTicketsResponseModel>('/v1/prices/cheap', {
-      params: paramsURL,
-    });
+    return this.http.get<CheapestTicketsResponseModel>(
+      `${this.proxy}/v1/prices/cheap`,
+      {
+        params: paramsURL,
+      }
+    );
   }
 
   getFlightPriceTrends(
@@ -86,22 +93,8 @@ export class FlightsInfoService {
     );
 
     return this.http.get(
-      `/v1/prices/calendar?origin=${origin}&destination=${destination}&departure_date=${departDate}&return_date=${returnDate}&currency=${currencyFromStore}&calendar_type=departure_date`
+      `${this.proxy}/v1/prices/calendar?origin=${origin}&destination=${destination}&departure_date=${departDate}&return_date=${returnDate}&currency=${currencyFromStore}&calendar_type=departure_date`
     );
-  }
-
-  getIpAddress(): Observable<any> {
-    return this.http.get('https://api.ipify.org/?format=json');
-  }
-
-  getGEOLocation(ip: string): Observable<any> {
-    let url = `https://api.ipgeolocation.io/ipgeo?apiKey=a4503669913f4ef28711027d136d2d68&ip=${ip}`;
-    return this.http.get(url);
-  }
-
-  getWeatherForWeek(lat: string, lon: string): Observable<any> {
-    let url = `https://api.openweathermap.org/data/2.5/onecall?units=metric&lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=2985eb313867605617f21eabece2b4b2`;
-    return this.http.get(url);
   }
 
   getFlightTicketsForDate(
@@ -117,7 +110,7 @@ export class FlightsInfoService {
     );
 
     return this.http.get(
-      `/aviasales/v3/prices_for_dates?origin=${codeFrom}&destination=${codeTo}&departure_at=${startDate}&return_at=${endDate}&unique=false&sorting=price&direct=${direct}&currency=${currencyFromStore}&limit=${numCards}&page=1&one_way=true`
+      `${this.proxy}/aviasales/v3/prices_for_dates?origin=${codeFrom}&destination=${codeTo}&departure_at=${startDate}&return_at=${endDate}&unique=false&sorting=price&direct=${direct}&currency=${currencyFromStore}&limit=${numCards}&page=1&one_way=true`
     );
   }
 
@@ -127,9 +120,19 @@ export class FlightsInfoService {
     );
 
     return this.http.get<GetDestinationPopular>(
-      `/v1/city-directions?origin=${origin}&currency=${currencyFromStore}`
+      `${this.proxy}/v1/city-directions?origin=${origin}&currency=${currencyFromStore}`
     );
   }
+
+  getIpAddress(): Observable<any> {
+    return this.http.get('https://api.ipify.org/?format=json');
+  }
+
+  getGEOLocation(ip: string): Observable<any> {
+    let url = `https://api.ipgeolocation.io/ipgeo?ip=${ip}&apiKey=a4503669913f4ef28711027d136d2d68`;
+    return this.http.get(url);
+  }
+
   getCovidStatistic(): Observable<any> {
     const headers = new HttpHeaders({
       'x-rapidapi-host': 'covid-193.p.rapidapi.com',
@@ -138,5 +141,10 @@ export class FlightsInfoService {
     return this.http.get('https://covid-193.p.rapidapi.com/statistics', {
       headers: headers,
     });
+  }
+
+  getWeatherForWeek(lat: string, lon: string): Observable<any> {
+    let url = `https://api.openweathermap.org/data/2.5/onecall?units=metric&lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=2985eb313867605617f21eabece2b4b2`;
+    return this.http.get(url);
   }
 }
