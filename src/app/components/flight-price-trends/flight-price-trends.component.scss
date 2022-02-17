@@ -12,7 +12,7 @@
 }
 
 .ticket-info {
-  background-image: url("^/assets/card-background.jpg");
+  background-image: url("~/src/assets/card-background.jpg");
   background-size: cover;
   background-position: center;
   width: 610px;
@@ -27,7 +27,7 @@
     justify-content: space-between;
     width: 215px;
     align-items: center;
-    
+
     &-details {
       max-width: 125px;
     }
