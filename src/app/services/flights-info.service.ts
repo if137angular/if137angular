@@ -24,7 +24,7 @@ export class FlightsInfoService {
   }: CalendarOfPricesPayload): Observable<any> {
     const currency = this.store.selectSnapshot(RequestDataState.currency);
     return this.http.get<GetCalendarOfPricesRequestModel>(
-      `/v2/prices/week-matrix?currency=${currency}&origin=${originCode}&destination=${destinationCode}&show_to_affiliates=true&depart_date=${depart_date}&return_date=${return_date}`
+      `https://fdi.kplsp.com.ua/v2/prices/week-matrix?currency=${currency}&origin=${originCode}&destination=${destinationCode}&show_to_affiliates=true&depart_date=${depart_date}&return_date=${return_date}`
     );
   }
 
@@ -37,7 +37,7 @@ export class FlightsInfoService {
     currencyFromStore = this.store.selectSnapshot(RequestDataState.currency);
 
     return this.http.get(
-      `/aviasales/v3/get_special_offers?origin=${cityOrigin}&destination=${cityDestination}&locale=${locale}&currency=${currencyFromStore}`
+      `https://fdi.kplsp.com.ua/aviasales/v3/get_special_offers?origin=${cityOrigin}&destination=${cityDestination}&locale=${locale}&currency=${currencyFromStore}`
     );
   }
 
@@ -52,7 +52,7 @@ export class FlightsInfoService {
     );
 
     return this.http.get(
-      `/v1/prices/direct?origin=${city}&destination=${destination}&depart_date=${startDate}&return_date=${endDate}&currency=${currencyFromStore}`
+      `https://fdi.kplsp.com.ua/v1/prices/direct?origin=${city}&destination=${destination}&depart_date=${startDate}&return_date=${endDate}&currency=${currencyFromStore}`
     );
   }
 
@@ -70,9 +70,12 @@ export class FlightsInfoService {
       .append('return_date', moment(formData.endDate).format('YYYY-MM-DD'))
       .append('currency', currencyFromStore);
 
-    return this.http.get<CheapestTicketsResponseModel>('/v1/prices/cheap', {
-      params: paramsURL,
-    });
+    return this.http.get<CheapestTicketsResponseModel>(
+      'https://fdi.kplsp.com.ua/v1/prices/cheap',
+      {
+        params: paramsURL,
+      }
+    );
   }
 
   getFlightPriceTrends(
@@ -86,7 +89,7 @@ export class FlightsInfoService {
     );
 
     return this.http.get(
-      `/v1/prices/calendar?origin=${origin}&destination=${destination}&departure_date=${departDate}&return_date=${returnDate}&currency=${currencyFromStore}&calendar_type=departure_date`
+      `https://fdi.kplsp.com.ua/v1/prices/calendar?origin=${origin}&destination=${destination}&departure_date=${departDate}&return_date=${returnDate}&currency=${currencyFromStore}&calendar_type=departure_date`
     );
   }
 
@@ -117,7 +120,7 @@ export class FlightsInfoService {
     );
 
     return this.http.get(
-      `/aviasales/v3/prices_for_dates?origin=${codeFrom}&destination=${codeTo}&departure_at=${startDate}&return_at=${endDate}&unique=false&sorting=price&direct=${direct}&currency=${currencyFromStore}&limit=${numCards}&page=1&one_way=true`
+      `https://fdi.kplsp.com.ua/aviasales/v3/prices_for_dates?origin=${codeFrom}&destination=${codeTo}&departure_at=${startDate}&return_at=${endDate}&unique=false&sorting=price&direct=${direct}&currency=${currencyFromStore}&limit=${numCards}&page=1&one_way=true`
     );
   }
 
@@ -127,7 +130,7 @@ export class FlightsInfoService {
     );
 
     return this.http.get<GetDestinationPopular>(
-      `/v1/city-directions?origin=${origin}&currency=${currencyFromStore}`
+      `https://fdi.kplsp.com.ua/v1/city-directions?origin=${origin}&currency=${currencyFromStore}`
     );
   }
   getCovidStatistic(): Observable<any> {
