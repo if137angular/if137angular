@@ -18,8 +18,8 @@ a:hover {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: url("^/assets/background.svg") 10% 10% no-repeat,
-    url("^/assets/background.svg") 90% 90% no-repeat;
+  background: url("/assets/background.svg") 10% 10% no-repeat,
+    url("/assets/background.svg") 90% 90% no-repeat;
   background-color: #673ab7;
 }
 .wrap {
@@ -29,14 +29,14 @@ a:hover {
   text-align: center;
   border-radius: 16px;
 }
-.form-control {
+.form-control{
   width: 450px;
   height: 50px;
   font-size: 18px;
   margin-bottom: 25px;
   border-radius: 4px;
   padding-left: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0,0,0,.3);
 }
 .form-control:focus {
   // border-color: #c8bfd8;
@@ -52,6 +52,7 @@ a:hover {
   color: #fff;
   margin-bottom: 25px;
   cursor: pointer;
+  
 }
 .btn:hover {
   opacity: 0.9;
