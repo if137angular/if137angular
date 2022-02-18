@@ -35,6 +35,9 @@ import {GetCities, SetFormDate} from '../../store/request-data.action';
 import {GetPopularDestinations} from "../../store/flight-info.action";
 import {FlightPriceTrendsComponent} from "../flight-price-trends/flight-price-trends.component";
 import {string} from "@amcharts/amcharts4/core";
+import { HttpClientModule} from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+
 
 describe('CityDestinationComponent', () => {
   let component: CityDestinationComponent;
@@ -46,8 +49,12 @@ describe('CityDestinationComponent', () => {
   let requestDataService: any;
   let popularDestinations = new Subject();
   let currency = new Subject();
+  let windowMock: any;
 
   beforeEach(() => {
+    windowMock = {
+      scroll: jasmine.createSpy("scroll")
+    };
     storeMock = {
       select: jasmine
         .createSpy('select')
@@ -62,6 +69,8 @@ describe('CityDestinationComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
+        RouterTestingModule,
+        HttpClientModule,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -88,8 +97,9 @@ describe('CityDestinationComponent', () => {
         NgxsModule,
         NgxsLoggerPluginModule.forRoot(),
       ],
-      declarations: [FlightPriceTrendsComponent],
+      declarations: [CityDestinationComponent],
       providers: [
+        {provide: 'Window', useValue: windowMock},
         {provide: Store, useValue: storeMock},
         {provide: FlightsInfoService, useValue: flightsInfoServiceMock},
         {provide: RequestDataService, useValue: requestDataService},
@@ -139,20 +149,18 @@ describe('CityDestinationComponent', () => {
       it('#should dispatch  SetFormDate with appropriate params', () => {
         component.selectedCities = 'LWO';
         component.selectedDestinstion = 'WAW';
-        const formData = {
-          destinationFrom: {
-            name: 'Lviv',
-            code: 'LWO',
-          },
-          destinationTo: {
-            name: 'Warsaw',
-            code: 'WAW',
-          },
-          endDate: new Date(2022, 1, 11),
-          startDate: new Date(2022, 1, 13),
-        } as any;
 
-        component.selectDestination(formData);
+        storeMock.selectSnapshot = jasmine.createSpy('selectSnapshot')
+          .and.returnValue({
+            startDate: new Date(2022, 1, 11),
+            endDate: new Date(2022, 1, 13)
+          })
+        component.selectDestination({
+          origin: 'LWO',
+          originName: 'Lviv',
+          destination: 'WAW',
+          destinationName: 'Warsaw'
+        } as any );
 
         expect(store.dispatch).toHaveBeenCalledWith(
           new SetFormDate({
