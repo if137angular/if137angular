@@ -1,12 +1,14 @@
 const express = require("express");
 const app = express();
+const logger = require("morgan");
+const cors = require("cors");
 const compression = require("compression");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const livereload = require("livereload").createServer();
-const logger = require("morgan");
 
 // Middlewares
 app.use(logger("dev"));
+app.use(cors());
 app.use(compression());
 app.use(express.static("dist/if137-flights-info"));
 
@@ -27,4 +29,7 @@ app.use(
 livereload.watch("dist/if137-flights-info");
 
 // Start server
-app.listen(5000, () => console.log("Server started at: http://localhost:5000"));
+const PORT = process.argv.length === 3 ? process.argv[2] : 5000;
+app.listen(PORT, () =>
+  console.log(`Server started at: http://localhost:${PORT}`)
+);
