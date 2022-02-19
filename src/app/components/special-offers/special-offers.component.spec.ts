@@ -110,30 +110,56 @@ describe('SpecialOffersComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('#dispatchSpecialOffers', () => {
-    it('should dispatch GetSpecialOffers with appropriate params', () => {
-      // arrange
-      component.language = 'UA';
-      component.currency = 'USD';
-      const formData = {
+  describe('#ngOnInit', () => {
+    beforeEach(() => {
+      formDataSubject.next({
         destinationFrom: {
-          code: 'LWO',
+          code: 'PARIS',
         },
-        destinationTo: null,
-      } as any;
-      // act
-      // component.dispatchSpecialOffers(formData);
+        destinationTo: {
+          code: 'KYIV',
+        },
+      });
+    });
+    it('should dispatch GetSpecialOffers with appropriate params', () => {
+      // arrange / act
+      component.ngOnInit();
       // assert
       expect(store.dispatch).toHaveBeenCalledWith(
         new GetSpecialOffers({
-          cityOrigin: 'LWO',
-          cityDestination: '',
-          language: 'UA',
+          cityOrigin: 'PARIS',
+          cityDestination: 'KYIV',
+          language: 'en',
           currency: 'USD',
         })
       );
     });
   });
+
+  // describe('#dispatchSpecialOffers', () => {
+  //   it('should dispatch GetSpecialOffers with appropriate params', () => {
+  //     // arrange
+  //     component.language = 'UA';
+  //     component.currency = 'USD';
+  //     const formData = {
+  //       destinationFrom: {
+  //         code: 'LWO',
+  //       },
+  //       destinationTo: null,
+  //     } as any;
+  //     // act
+  //     // component.dispatchSpecialOffers(formData);
+  //     // assert
+  //     expect(store.dispatch).toHaveBeenCalledWith(
+  //       new GetSpecialOffers({
+  //         cityOrigin: 'LWO',
+  //         cityDestination: '',
+  //         language: 'UA',
+  //         currency: 'USD',
+  //       })
+  //     );
+  //   });
+  // });
 
   describe('#onSelectedCurrencyChanged', () => {
     beforeEach(() => {
@@ -185,32 +211,6 @@ describe('SpecialOffersComponent', () => {
     //     })
     //   );
     // });
-  });
-
-  describe('#ngOnInit', () => {
-    beforeEach(() => {
-      formDataSubject.next({
-        destinationFrom: {
-          code: 'PARIS',
-        },
-        destinationTo: {
-          code: 'KYIV',
-        },
-      });
-    });
-    it('should should dispatch GetSpecialOffers with form data', () => {
-      // arrange / act
-      component.ngOnInit();
-      // assert
-      expect(store.dispatch).toHaveBeenCalledWith(
-        new GetSpecialOffers({
-          cityOrigin: 'PARIS',
-          cityDestination: 'KYIV',
-          language: 'en',
-          currency: 'usd',
-        })
-      );
-    });
   });
 
   describe('testing UI', () => {
