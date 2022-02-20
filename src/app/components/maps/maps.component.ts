@@ -13,7 +13,10 @@ import am5geodata_worldLow from '@amcharts/amcharts5-geodata/worldLow';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import { Store } from '@ngxs/store';
 
-import { DestinationPopular, GetDestinationPopular } from 'src/app/models/city-destination.model';
+import {
+  DestinationPopular,
+  GetDestinationPopular,
+} from 'src/app/models/city-destination.model';
 import { CitiesModel } from 'src/app/models/cities.model';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
@@ -36,19 +39,20 @@ export class MapsComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: any,
     private zone: NgZone,
     private flightInfoService: FlightsInfoService,
-    private store: Store, @Inject('Window') private window: Window,
-    private cdRef: ChangeDetectorRef,
-  ) {
-  }
+    private store: Store,
+    @Inject('Window') private window: Window,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   getCityByCode(cityCode: string): CitiesModel {
     const cities = this.store.selectSnapshot(RequestDataState.cities);
-    const matchedCity = cities.find((city: CitiesModel) => city.code === cityCode)
-    return matchedCity
+    const matchedCity = cities.find(
+      (city: CitiesModel) => city.code === cityCode
+    );
+    return matchedCity;
   }
 
   ngOnInit(): void {
-
     // const dataState = this.store.select(FlightInfoState.mapData)
     //   .subscribe((mapData: any) => {
     //     this.makeChart(mapData);
@@ -67,17 +71,18 @@ export class MapsComponent implements OnInit {
             title: matchedCity ? matchedCity.name : '',
             geometry: {
               type: 'Point',
-              coordinates: matchedCity ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat] : []
+              coordinates: matchedCity
+                ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat]
+                : [],
             },
-          })
-        })
+          });
+        });
 
         this.makeChart(objValues);
-
-      })
+      });
 
     const citiesArr = this.store.selectSnapshot(RequestDataState.cities);
-    const asd = citiesArr.filter(item => item.code === 'LWO');
+    const asd = citiesArr.filter((item) => item.code === 'LWO');
 
     this.originLat = asd[0].coordinates.lat;
     this.originLon = asd[0].coordinates.lon;
@@ -118,7 +123,7 @@ export class MapsComponent implements OnInit {
       let graticuleSeries = chart.series.push(
         am5map.GraticuleSeries.new(root, {})
       );
-      
+
       graticuleSeries.mapLines.template.setAll({
         stroke: root.interfaceColors.get('alternativeBackground'),
         strokeOpacity: 0.08,
@@ -179,14 +184,12 @@ export class MapsComponent implements OnInit {
         let array = [];
         const id = item.id;
         array.push(id);
-        return array
-      })
+        return array;
+      });
 
       citySeries.data.setAll(cities);
 
-      let destinations = [
-        ...arrOfId,
-      ];
+      let destinations = [...arrOfId];
       let originLongitude = this.originLon.toString();
       let originLatitude = this.originLat.toString();
 
