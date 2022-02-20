@@ -451,7 +451,7 @@ export class FlightInfoState {
   ) {
     patchState({ loading: true });
 
-    return this.flightInfoService
+    this.flightInfoService
       .requestGetNonStopTickets(
         formData.destinationFrom.code,
         formData.destinationTo.code,
@@ -476,10 +476,7 @@ export class FlightInfoState {
   }
 
   @Action(FlightInfoActions.GetPopularDestinations)
-  GetMapData(
-    { patchState, dispatch }: StateContext<FlightInfoStateModel>,
-    payload: FlightInfoActions.GetPopularDestinations
-  ) {
+  GetMapData({ patchState }: StateContext<FlightInfoStateModel>) {
     this.flightInfoService
       .requestPopularDestination('LWO')
       .subscribe((res: GetDestinationPopular) => {
@@ -506,6 +503,8 @@ export class FlightInfoState {
     { patchState }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.GetPopularDestinations
   ) {
+    patchState({ loading: true });
+
     from(payload)
       .pipe(
         mergeMap((cityCode: string) =>
@@ -548,7 +547,7 @@ export class FlightInfoState {
               response.set(cityInfo, popularDestinations[key]);
             }
           });
-        patchState({ popularDestinations: response });
+        patchState({ popularDestinations: response, loading: false });
       });
   }
 
