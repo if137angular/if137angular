@@ -22,7 +22,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarOfPricesModel } from 'src/app/models/calendar-of-prices.model';
-import { CalendarOfPricesLoaded } from 'src/app/store/flight-info.action';
+import { CalendarOfPrices } from 'src/app/store/flight-info.action';
 
 describe('CalendarOfPricesComponent', () => {
   let component: CalendarOfPricesComponent;
@@ -135,10 +135,8 @@ describe('CalendarOfPricesComponent', () => {
 
     it('should select formData from store', () => {
       store.select(RequestDataState.formData).subscribe((data: any) => {
-        store.dispatch(new CalendarOfPricesLoaded(data));
-        expect(store.dispatch).toHaveBeenCalledWith(
-          new CalendarOfPricesLoaded(data)
-        );
+        store.dispatch(new CalendarOfPrices(data));
+        expect(store.dispatch).toHaveBeenCalledWith(new CalendarOfPrices(data));
       });
     });
   });
