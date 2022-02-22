@@ -6,12 +6,18 @@ import am5geodata_worldLow from '@amcharts/amcharts5-geodata/worldLow';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import { Select, Store } from '@ngxs/store';
 
-import { CitiesModel } from 'src/app/models/cities.model';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable, skip } from 'rxjs';
 import { GetMapData } from 'src/app/store/flight-info.action';
+import {CountriesDataModel} from "../../models/countries-data.model";
+
+export interface ICoordinates {
+  id: string,
+  title: string,
+  origin: string,
+}
 
 @UntilDestroy()
 @Component({
@@ -23,12 +29,15 @@ export class RoutesMapComponent implements OnInit {
   @Select(FlightInfoState.mapData)
   mapData$: Observable<any>;
 
+  citiesArr: any;
+
   originLat: string;
   originLon: string;
-  originCode: string = '';
+  // originCode: string = '';
   matchedOriginCity: any;
-  selectedDestinstion: string = '';
   selectedCities: string = '';
+
+  newArray: ICoordinates[] = [];
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
@@ -36,29 +45,33 @@ export class RoutesMapComponent implements OnInit {
     private store: Store
   ) {}
 
-  getCityByCode(cityCode: string): CitiesModel {
-    const cities = this.store.selectSnapshot(RequestDataState.cities);
-    const matchedCity = cities.find(
-      (city: CitiesModel) => city.code === cityCode
-    );
-    return matchedCity;
-  }
-
   ngOnInit(): void {
     this.store.dispatch(new GetMapData('LWO'));
 
     this.mapData$
-      .pipe(untilDestroyed(this), skip(1))
-      .subscribe((mapData: any) => {
+      .pipe(
+        untilDestroyed(this),
+        skip(1)
+      )
+      .subscribe((mapData: any[]) => {
         this.makeChart(mapData);
+        console.log('mapData', mapData)
+
+      this.newArray = mapData;
       });
 
-    const citiesArr = this.store.selectSnapshot(RequestDataState.cities);
-    const asd = citiesArr.filter((item) => item.code === 'LWO');
 
-    this.originLat = asd[0].coordinates.lat;
-    this.originLon = asd[0].coordinates.lon;
-    this.originCode = asd[0].code;
+    this.citiesArr = this.store.selectSnapshot(RequestDataState.cities);
+    // const asd = this.citiesArr.filter((item: any) => item[0].code === 'LWO'); // comment it
+
+    // const wer = this.citiesArr.filter((item: CountriesDataModel) => {
+    //     item.code = this.newArray[0].origin;
+    //   console.log('wer', wer)
+    //   }
+    // )
+
+    // this.originLat = asd[0].coordinates.lat;  // comment it
+    // this.originLon = asd[0].coordinates.lon;  // comment it
   }
 
   browserOnly(f: () => void) {
@@ -162,8 +175,8 @@ export class RoutesMapComponent implements OnInit {
       citySeries.data.setAll(cities);
 
       let destinations = [...arrOfId];
-      let originLongitude = this.originLon.toString();
-      let originLatitude = this.originLat.toString();
+      // let originLongitude = this.originLon.toString();  // comment it
+      // let originLatitude = this.originLat.toString();  // comment it
 
       am5.array.each(destinations, function (did: string) {
         let destinationDataItem: any = citySeries.getDataItemById(did);
@@ -171,7 +184,7 @@ export class RoutesMapComponent implements OnInit {
           geometry: {
             type: 'LineString',
             coordinates: [
-              [originLongitude, originLatitude],
+              // [originLongitude, originLatitude],  // comment it
               [
                 destinationDataItem.get('longitude'),
                 destinationDataItem.get('latitude'),
