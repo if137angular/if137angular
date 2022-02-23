@@ -19,6 +19,7 @@ import { CurrencyDropdownModel } from 'src/app/models/Currency-dropdown.model';
   templateUrl: './city-destination.component.html',
   styleUrls: ['./city-destination.component.scss'],
 })
+
 export class CityDestinationComponent implements OnInit {
   @Select(FlightInfoState.popularDestinations)
   popularDestinations$: Observable<Map<CityInfo, DestinationPopular[]>>;

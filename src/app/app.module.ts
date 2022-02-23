@@ -81,6 +81,7 @@ import { CovidMapComponent } from './components/covid-map/covid-map.component';
 import { WeatherInfoComponent } from './components/weather-info/weather-info.component';
 import { WeatherInfoDialogComponent } from './components/weather-info/weather-info-dialog/weather-info-dialog.component';
 import { DayInfoComponent } from './components/weather-info/weather-info-dialog/day-info/day-info.component';
+import { MobileCityDestinationComponent } from './components/mobile-city-destination/mobile-city-destination.component';
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import { DayInfoComponent } from './components/weather-info/weather-info-dialog/
     WeatherInfoComponent,
     WeatherInfoDialogComponent,
     DayInfoComponent,
+    MobileCityDestinationComponent,
   ],
   imports: [
     // Module

@@ -33,7 +33,7 @@ import {SetFormDate} from "../../store/request-data.action";
 import {HttpClientModule} from "@angular/common/http";
 import {CityDestinationComponent} from "./city-destination.component";
 
- describe('CityDestinationComponent', () => {
+describe('CityDestinationComponent', () => {
   let component: CityDestinationComponent;
   let fixture: ComponentFixture<CityDestinationComponent>;
   let debugElement: DebugElement;
@@ -88,13 +88,13 @@ import {CityDestinationComponent} from "./city-destination.component";
         MatCardModule,
         MatProgressSpinnerModule,
         MatToolbarModule,
-        NgxsModule,
+        NgxsModule.forRoot(),
         NgxsLoggerPluginModule.forRoot(),
       ],
       declarations: [CityDestinationComponent],
       providers: [
-        {provide: Window, useValue: windowMock},
         {provide: Store, useValue: storeMock},
+        {provide: 'Window', useValue: windowMock},
         {provide: FlightsInfoService, useValue: flightsInfoServiceMock},
         {provide: RequestDataService, useValue: requestDataService},
       ],
