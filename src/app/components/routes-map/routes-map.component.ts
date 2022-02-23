@@ -11,13 +11,7 @@ import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable, skip } from 'rxjs';
 import { GetMapData } from 'src/app/store/flight-info.action';
-import {CountriesDataModel} from "../../models/countries-data.model";
-
-export interface ICoordinates {
-  id: string,
-  title: string,
-  origin: string,
-}
+import { ICoordinates } from "../../models/routes-map.model";
 
 @UntilDestroy()
 @Component({
@@ -28,15 +22,9 @@ export interface ICoordinates {
 export class RoutesMapComponent implements OnInit {
   @Select(FlightInfoState.mapData)
   mapData$: Observable<any>;
-
-  citiesArr: any;
-
+  originCity: any;
   originLat: string;
   originLon: string;
-  // originCode: string = '';
-  matchedOriginCity: any;
-  selectedCities: string = '';
-
   newArray: ICoordinates[] = [];
 
   constructor(
@@ -54,24 +42,13 @@ export class RoutesMapComponent implements OnInit {
         skip(1)
       )
       .subscribe((mapData: any[]) => {
-        this.makeChart(mapData);
-        console.log('mapData', mapData)
+        const newArray = mapData;
+        const originObj: any = this.getOrigin(newArray)
+        const originLon = originObj.coordinates.lon;
+        const originLat = originObj.coordinates.lat;
 
-      this.newArray = mapData;
+        this.makeChart(newArray, originObj , originLon, originLat );
       });
-
-
-    this.citiesArr = this.store.selectSnapshot(RequestDataState.cities);
-    // const asd = this.citiesArr.filter((item: any) => item[0].code === 'LWO'); // comment it
-
-    // const wer = this.citiesArr.filter((item: CountriesDataModel) => {
-    //     item.code = this.newArray[0].origin;
-    //   console.log('wer', wer)
-    //   }
-    // )
-
-    // this.originLat = asd[0].coordinates.lat;  // comment it
-    // this.originLon = asd[0].coordinates.lon;  // comment it
   }
 
   browserOnly(f: () => void) {
@@ -82,7 +59,18 @@ export class RoutesMapComponent implements OnInit {
     }
   }
 
-  makeChart(objValues: any): void {
+  getOrigin(arr: any) {
+    let obj: any;
+    this.store.selectSnapshot(RequestDataState.cities).map(item => {
+        if (item.code === arr[0].origin) {
+          obj = item
+        }
+      }
+    )
+    return obj;
+  }
+
+  makeChart(objValues: any, originObj: any, originLon: any , originLat: any): void {
     this.browserOnly(() => {
       let root = am5.Root.new('chartdiv');
       root.setThemes([am5themes_Animated.new(root)]);
@@ -117,7 +105,7 @@ export class RoutesMapComponent implements OnInit {
       let lineSeries = chart.series.push(am5map.MapLineSeries.new(root, {}));
       lineSeries.mapLines.template.setAll({
         stroke: root.interfaceColors.get('alternativeBackground'),
-        strokeOpacity: 0.6,
+        strokeOpacity: 0.4,
       });
 
       let citySeries = chart.series.push(am5map.MapPointSeries.new(root, {}));
@@ -129,7 +117,7 @@ export class RoutesMapComponent implements OnInit {
           tooltipY: 0,
           fill: am5.color(0xffba00),
           stroke: root.interfaceColors.get('background'),
-          strokeWidth: 2,
+          strokeWidth: 1,
         });
 
         return am5.Bullet.new(root, {
@@ -158,11 +146,11 @@ export class RoutesMapComponent implements OnInit {
 
       let cities = [
         {
-          id: 'lviv',
-          title: 'Lviv',
-          geometry: { type: 'Point', coordinates: [23.955318, 49.816418] },
+          id: originObj.name.toLowerCase(),
+          title: originObj.name,
+          geometry: { type: 'Point', coordinates: [originLon, originLat] },
         },
-        ...objValues,
+          ...objValues,
       ];
 
       const arrOfId = objValues.map((item: any) => {
@@ -175,16 +163,16 @@ export class RoutesMapComponent implements OnInit {
       citySeries.data.setAll(cities);
 
       let destinations = [...arrOfId];
-      // let originLongitude = this.originLon.toString();  // comment it
-      // let originLatitude = this.originLat.toString();  // comment it
+      let originLongitude = originLon.toString();
+      let originLatitude = originLat.toString();
 
-      am5.array.each(destinations, function (did: string) {
-        let destinationDataItem: any = citySeries.getDataItemById(did);
+      am5.array.each(destinations, function (item: string) {
+        let destinationDataItem: any = citySeries.getDataItemById(item);
         let lineDataItem = lineSeries.pushDataItem({
           geometry: {
             type: 'LineString',
             coordinates: [
-              // [originLongitude, originLatitude],  // comment it
+              [originLongitude, originLatitude],
               [
                 destinationDataItem.get('longitude'),
                 destinationDataItem.get('latitude'),
@@ -195,16 +183,14 @@ export class RoutesMapComponent implements OnInit {
 
         arrowSeries.pushDataItem({
           lineDataItem: lineDataItem,
-          positionOnLine: 0.5,
+          positionOnLine: 0.7,
           autoRotate: true,
         });
       });
 
       polygonSeries.events.on('datavalidated', function () {
-        chart.zoomToGeoPoint({ longitude: -0.1262, latitude: 51.5002 }, 3);
+        chart.zoomToGeoPoint({ longitude: 15.1262, latitude: 55.5002 }, 7);
       });
-
-      chart.appear(1000, 100);
     });
   }
 }
