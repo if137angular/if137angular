@@ -4,12 +4,9 @@ import { FlightTiketsForDatePayload } from '../models/flight-tickets-for-date.mo
 import { FormDataModel } from '../models/formData.model';
 import { CheapestTicketsResponseModel } from '../models/cheapest-tickets.model';
 import { FlightPriceTrendsRequest } from '../models/flight-price-trends.model';
-import { DestinationPopular, IMapData } from '../models/city-destination.model';
 
-//-- Calendar State Actions --
-
-export class CalendarOfPricesLoaded {
-  static readonly type = '[FlightInfo] CalendarOfPricesLoaded';
+export class CalendarOfPrices {
+  static readonly type = '[FlightInfo] Get Calendar Of Prices';
   constructor(public payload: CalendarOfPricesPayload) {}
 }
 
@@ -45,11 +42,6 @@ export class GetFlightPriceTrends {
   constructor(public payload: FlightPriceTrendsRequest) {}
 }
 
-export class SetFilter {
-  static readonly type = '[Filter] Set Filter Data';
-  constructor(public payload: FilterModel) {}
-}
-
 export class CheapestTicketsRequest {
   static readonly type = '[FlightInfo] Cheapest Tickets Request';
   constructor(public payload: FormDataModel) {}
@@ -66,6 +58,11 @@ export class CheapestTicketsRequestFail {
 }
 
 export class GetMapData {
-  static readonly type = '[GetMap] Get map data';
-  constructor(public payload: Map<IMapData, DestinationPopular>) {}
+  static readonly type = '[GetMap] Get Map Data';
+  constructor(public payload: string) {}
+}
+
+export class SetFilter {
+  static readonly type = '[Filter] Set Filter Data';
+  constructor(public payload: FilterModel) {}
 }

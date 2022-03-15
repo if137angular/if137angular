@@ -68,7 +68,7 @@ import { FlightPriceTrendsComponent } from './components/flight-price-trends/fli
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { FlightFilterComponent } from './components/flight-filter/flight-filter.component';
-import { MapsComponent } from './components/maps/maps.component';
+import { RoutesMapComponent } from './components/routes-map/routes-map.component';
 import { NoRecordsFoundComponent } from './components/no-records-found/no-records-found.component';
 import { CurrencyDropdownComponent } from './components/currency-dropdown/currency-dropdown.component';
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
@@ -101,7 +101,7 @@ import { DayInfoComponent } from './components/weather-info/weather-info-dialog/
     FlightPriceTrendsComponent,
     ToolbarComponent,
     FlightFilterComponent,
-    MapsComponent,
+    RoutesMapComponent,
     NoRecordsFoundComponent,
     CurrencyDropdownComponent,
     CheapestTicketsComponent,

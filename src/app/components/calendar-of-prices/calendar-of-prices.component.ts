@@ -6,7 +6,7 @@ import {
   CalendarOfPricesPayload,
 } from 'src/app/models/calendar-of-prices.model';
 import { FormDataModel } from 'src/app/models/formData.model';
-import { CalendarOfPricesLoaded } from 'src/app/store/flight-info.action';
+import { CalendarOfPrices } from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { RequestDataState } from 'src/app/store/request-data.state';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
@@ -70,7 +70,7 @@ export class CalendarOfPricesComponent implements OnInit {
         }))
       )
       .subscribe((data: CalendarOfPricesPayload) => {
-        this.store.dispatch(new CalendarOfPricesLoaded(data));
+        this.store.dispatch(new CalendarOfPrices(data));
         this.formData = data;
       });
   }

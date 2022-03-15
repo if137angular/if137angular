@@ -152,10 +152,10 @@ export class FlightInfoState {
     return state.mapData;
   }
 
-  @Action(FlightInfoActions.CalendarOfPricesLoaded)
+  @Action(FlightInfoActions.CalendarOfPrices)
   LoadCalendarOfPrices(
     { patchState }: StateContext<FlightInfoStateModel>,
-    { payload }: FlightInfoActions.CalendarOfPricesLoaded
+    { payload }: FlightInfoActions.CalendarOfPrices
   ) {
     this.flightInfoService
       .getCalendarOfPrices(payload)
@@ -451,7 +451,7 @@ export class FlightInfoState {
   ) {
     patchState({ loading: true });
 
-    return this.flightInfoService
+    this.flightInfoService
       .requestGetNonStopTickets(
         formData.destinationFrom.code,
         formData.destinationTo.code,
@@ -476,36 +476,12 @@ export class FlightInfoState {
   }
 
   @Action(FlightInfoActions.GetPopularDestinations)
-  GetMapData(
-    { patchState, dispatch }: StateContext<FlightInfoStateModel>,
-    payload: FlightInfoActions.GetPopularDestinations
-  ) {
-    this.flightInfoService
-      .requestPopularDestination('LWO')
-      .subscribe((res: GetDestinationPopular) => {
-        const objValues: DestinationPopular[] = Object.values(res.data);
-        objValues.forEach((objValues: DestinationPopular) => {
-          const matchedCity = this.getCityByCode(objValues.destination);
-          Object.assign(objValues, {
-            id: matchedCity ? matchedCity.name.toLowerCase() : '',
-            title: matchedCity ? matchedCity.name : '',
-            geometry: {
-              type: 'Point',
-              coordinates: matchedCity
-                ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat]
-                : [],
-            },
-          });
-        });
-        patchState({ mapData: objValues });
-      });
-  }
-
-  @Action(FlightInfoActions.GetPopularDestinations)
   GetPopularDestinations(
     { patchState }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.GetPopularDestinations
   ) {
+    patchState({ loading: true });
+
     from(payload)
       .pipe(
         mergeMap((cityCode: string) =>
@@ -549,6 +525,32 @@ export class FlightInfoState {
             }
           });
         patchState({ popularDestinations: response });
+      });
+  }
+
+  @Action(FlightInfoActions.GetMapData)
+  GetMapData(
+    { patchState }: StateContext<FlightInfoStateModel>,
+    { payload }: FlightInfoActions.GetMapData
+  ) {
+    this.flightInfoService
+      .requestPopularDestination(payload)
+      .subscribe((res: GetDestinationPopular) => {
+        const objValues: DestinationPopular[] = Object.values(res.data);
+        objValues.forEach((objValues: DestinationPopular) => {
+          const matchedCity = this.getCityByCode(objValues.destination);
+          Object.assign(objValues, {
+            id: matchedCity ? matchedCity.name.toLowerCase() : '',
+            title: matchedCity ? matchedCity.name : '',
+            geometry: {
+              type: 'Point',
+              coordinates: matchedCity
+                ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat]
+                : [],
+            },
+          });
+        });
+        patchState({ mapData: objValues, loading: false });
       });
   }
 
