@@ -17,7 +17,6 @@ import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { appState } from 'src/app/store/app.state';
 import { RequestDataState } from 'src/app/store/request-data.state';
-import { WeatherInfoComponent } from '../weather-info.component';
 import { DayInfoComponent } from './day-info/day-info.component';
 
 import { WeatherInfoDialogComponent } from './weather-info-dialog.component';
