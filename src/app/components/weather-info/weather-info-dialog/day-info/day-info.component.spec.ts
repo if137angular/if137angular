@@ -14,7 +14,7 @@ import { RequestDataState } from 'src/app/store/request-data.state';
 
 import { DayInfoComponent } from './day-info.component';
 
-fdescribe('DayInfoComponent', () => {
+describe('DayInfoComponent', () => {
   let component: DayInfoComponent;
   let fixture: ComponentFixture<DayInfoComponent>;
   let debugElement: DebugElement;
