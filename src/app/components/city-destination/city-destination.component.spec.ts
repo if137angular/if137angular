@@ -22,7 +22,7 @@ import { NgxsModule, Store } from '@ngxs/store';
 import { appState } from '../../store/app.state';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { RequestDataState } from '../../store/request-data.state';
 import { FlightInfoState } from '../../store/flight-info.state';
 import { FlightsInfoService } from '../../services/flights-info.service';
@@ -41,14 +41,18 @@ describe('CityDestinationComponent', () => {
   let store: any;
   let flightsInfoServiceMock: any;
   let requestDataService: any;
-  let citiesSubject = new Subject();
+  let windowMock: any;
+  let currencySubject = new BehaviorSubject('USD');
+  let popularDestinationSubject = new Subject();
 
   beforeEach(() => {
     storeMock = {
       select: jasmine
         .createSpy('select')
-        .withArgs(RequestDataState.cities)
-        .and.returnValue(citiesSubject.asObservable()),
+        .withArgs(RequestDataState.currency)
+        .and.returnValue(currencySubject.asObservable())
+        .withArgs(FlightInfoState.popularDestinations)
+        .and.returnValue(popularDestinationSubject.asObservable()),
       selectSnapshot: jasmine.createSpy('selectSnapshot'),
     };
     flightsInfoServiceMock = jasmine.createSpy().and.returnValue({});
@@ -86,6 +90,7 @@ describe('CityDestinationComponent', () => {
       declarations: [CityDestinationComponent],
       providers: [
         { provide: Store, useValue: storeMock },
+        {provide: 'Window', useValue: windowMock},
         { provide: FlightsInfoService, useValue: flightsInfoServiceMock },
         { provide: RequestDataService, useValue: requestDataService },
       ],
@@ -100,34 +105,23 @@ describe('CityDestinationComponent', () => {
   });
 
   afterAll(() => {
-    citiesSubject.complete();
+    currencySubject.complete();
+    popularDestinationSubject.complete();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('#ngOnit', () => {
-    beforeEach(() => {});
-  });
+  // xdescribe('#ngOnit', () => {
+  //   it('It should dispatch GetPopularDestinations whith arg IEV, LWO, DNK, ODS', () => {
+  //     // arrange
+  //     // act
+  //     component.ngOnInit()
+  //     // assert
+  //     expect(store.dispatch).toHaveBeenCalledWith())
+      
+  //   }) 
+  // });
 
-  describe('#getCityNameByKey', () => {
-    beforeEach(() => {
-      store.selectSnapshot = jasmine
-        .createSpy('selectSnapshot')
-        .and.returnValue({
-          code: 'IEV',
-          name: 'KYIV',
-        });
-    });
-    it('should return GetCities' + ' with selected name', function () {
-      // component.getCityNameByKey("IEV");
-      expect(store.selectSnapshot).toHaveBeenCalledWith(
-        new GetCities({
-          code: 'IEV',
-          name: 'KYIV',
-        })
-      );
-    });
-  });
 });

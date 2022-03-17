@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
 import { FlightInfo } from 'src/app/models/flight-tickets-for-date.model';
+import { FormDataModel } from 'src/app/models/formData.model';
 import { RequestDataState } from 'src/app/store/request-data.state';
 
 @Component({
@@ -11,10 +13,10 @@ import { RequestDataState } from 'src/app/store/request-data.state';
 })
 export class FlightTicketComponent implements OnInit {
 
-  formData: any;
+  @Select(RequestDataState.currency) currency$: Observable<string>
+  formData: FormDataModel;
 
   @Input() flightInfo: FlightInfo;
-  @Input() currency: string;
 
   constructor(private store: Store) {
   }

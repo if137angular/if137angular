@@ -22,7 +22,7 @@ import { WeatherInfoDialogComponent } from './weather-info-dialog/weather-info-d
 
 import { WeatherInfoComponent } from './weather-info.component';
 
-fdescribe('WeatherInfoComponent', () => {
+describe('WeatherInfoComponent', () => {
   let component: WeatherInfoComponent;
   let fixture: ComponentFixture<WeatherInfoComponent>;
   let debugElement: DebugElement;

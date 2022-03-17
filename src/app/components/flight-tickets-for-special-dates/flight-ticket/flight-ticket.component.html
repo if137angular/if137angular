@@ -5,7 +5,7 @@
   </h3>
   <div class="card__content">
     <div class="card__content-item">
-      Price: <p class="card__price">{{flightInfo.price}} {{currency | uppercase}}</p>
+      Price: <p class="card__price">{{flightInfo.price}} {{currency$ | async | uppercase}}</p>
     </div>
     <div class="card__content-item">
       Airline:
