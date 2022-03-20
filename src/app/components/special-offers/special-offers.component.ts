@@ -22,7 +22,7 @@ export class SpecialOffersComponent implements OnInit {
   cityOrigin: string = 'IEV';
   destinationCity: string;
 
-  constructor(public store: Store) {}
+  constructor(public store: Store) { }
 
   gotToLink(link: any) {
     window.open(
@@ -70,5 +70,6 @@ export class SpecialOffersComponent implements OnInit {
         };
         this.store.dispatch(new GetSpecialOffers(payload));
       });
+
   }
 }

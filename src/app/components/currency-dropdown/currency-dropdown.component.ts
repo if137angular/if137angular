@@ -17,7 +17,7 @@ export class CurrencyDropdownComponent {
   @Select(RequestDataState.currency)
   selectedCurrency$: Observable<any>;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) { }
 
   setValue(data: string): void {
     this.store.dispatch(new SetCurrency(data));

@@ -10,12 +10,12 @@ import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { CurrencyDropdownComponent } from './currency-dropdown.component';
 
 import { RequestDataState } from 'src/app/store/request-data.state';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { SetCurrency } from 'src/app/store/request-data.action';
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 
-describe('CurrencyDropdownComponent', () => {
+fdescribe('CurrencyDropdownComponent', () => {
   let component: CurrencyDropdownComponent;
   let fixture: ComponentFixture<CurrencyDropdownComponent>;
   let storeMock: any;
@@ -24,6 +24,7 @@ describe('CurrencyDropdownComponent', () => {
   let requestDataServiceMock: any;
   let requestDataStateMock: any;
   let flightInfoStateMock: any;
+
   let formDataMock = new Subject();
   let currenciesSubject = new BehaviorSubject([{ code: '' }]);
   let currencySubject = new BehaviorSubject('');
@@ -81,4 +82,25 @@ describe('CurrencyDropdownComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('#setValue', () => {
+    beforeEach(() => {
+      store.selectSnapshot = jasmine
+        .createSpy('selectSnapshot')
+        .and.returnValue({
+          currency: "UAH"
+        });
+    });
+    it('should set new value of currency', () => {
+      // arrange / act
+      component.setValue('USD');
+      // assert
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new SetCurrency(
+          "USD"
+        )
+      );
+    });
+  });
+
 });
