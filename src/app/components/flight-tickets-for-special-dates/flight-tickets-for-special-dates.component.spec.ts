@@ -178,11 +178,11 @@ fdescribe('FlightTicketsForSpecialDatesComponent', () => {
   describe('#onScroll', () => {
     it('should add cards numbers on page', () => {
       //arrange
-      let number = 10
+      component.cardsNumber = 10
       //act
       component.onScroll()
       //asert
-      expect(number + 4).toEqual(14)
+      expect(component.cardsNumber).toEqual(14)
     })
   })
 
