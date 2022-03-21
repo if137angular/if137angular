@@ -10,6 +10,9 @@ import { NgxsModule } from '@ngxs/store';
 import { appState } from 'src/app/store/app.state';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from 'src/environments/environment';
 
 // Module
@@ -128,9 +131,13 @@ import { MobileCityDestinationComponent } from './components/mobile-city-destina
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     NgxsModule.forRoot(appState, { developmentMode: !environment.production }),
     NgxsLoggerPluginModule.forRoot({ disabled: environment.production }),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
+    NgxsRouterPluginModule.forRoot(),
+    
 
     // Angular Material
     MatSelectModule,

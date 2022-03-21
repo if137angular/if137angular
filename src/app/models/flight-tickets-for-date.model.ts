@@ -1,9 +1,9 @@
 export type FlightInfo = {
-  airline: string; // add
+  airline: string; 
   departure_at: string;
-  destination: string; // ?
+  destination: string;
   destination_airport: string;
-  duration: number; // add
+  duration: number; 
   flight_number: string;
   link: string;
   origin: string;
