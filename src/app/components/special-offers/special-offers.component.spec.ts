@@ -179,6 +179,13 @@ fdescribe('SpecialOffersComponent', () => {
     });
   });
 
+  describe('#getCurrency', () => {
+    it('should return UAH', () => {
+      expect(component.getCurrency(23)).toEqual('UAH 23');
+    });
+
+  });
+
   describe('testing UI', () => {
     beforeEach(() => {
       store.select(FlightInfoState.specialOffers).subscribe();
