@@ -59,10 +59,10 @@
     "morgan": "1.10.0",
     "ngx-infinite-scroll": "^10.0.1",
     "reflect-metadata": "^0.1.13",
+    "rxfire": "^6.0.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4",
-    "rxfire": "^6.0.0"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~13.0.3",
