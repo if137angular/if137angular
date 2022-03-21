@@ -7,7 +7,7 @@ import { RequestDataState } from 'src/app/store/request-data.state';
 import { WeatherInfoDialogComponent } from './weather-info-dialog/weather-info-dialog.component';
 
 @Component({
-  selector: 'weather-info',
+  selector: 'app-weather-info',
   templateUrl: './weather-info.component.html',
   styleUrls: ['./weather-info.component.scss'],
 })

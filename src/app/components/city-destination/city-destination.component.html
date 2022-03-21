@@ -1,5 +1,7 @@
 <div class="container">
-  <div class="city-destination">
+  <mat-spinner mode="indeterminate" color="accent" *ngIf="loading$ | async"></mat-spinner>
+
+  <div class="city-destination" *ngIf="(loading$ | async) === false">
     <div *ngFor="let cities of (popularDestinations$ | async) | keyvalue">
       <mat-form-field appearance="fill">
         <mat-label class="city-destination-label">

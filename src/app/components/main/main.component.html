@@ -16,8 +16,9 @@
     <h1 class="mat-display-1">Popular Destinations</h1>
     <h3>Tickets that people buy most</h3>
 
-    <app-city-destination></app-city-destination>
-    <app-maps></app-maps>
+    <app-city-destination *ngIf="!isMobile" ></app-city-destination>
+    <app-mobile-city-destination *ngIf="isMobile" ></app-mobile-city-destination>
+    <app-routes-map></app-routes-map>
   </div>
 </div>
 

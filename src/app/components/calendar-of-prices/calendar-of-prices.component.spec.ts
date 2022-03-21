@@ -21,8 +21,8 @@ import { CommonModule } from '@angular/common';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CalendarOfPricesModel } from 'src/app/models/calendar-of-prices.model';
-import { CalendarOfPricesLoaded } from 'src/app/store/flight-info.action';
+
+import * as moment from 'moment';
 
 describe('CalendarOfPricesComponent', () => {
   let component: CalendarOfPricesComponent;
@@ -32,17 +32,17 @@ describe('CalendarOfPricesComponent', () => {
   let store: Store;
   let flightsInfoServiceMock: any;
   let requestDataServiceMock: any;
-  let formDataMock = new Subject();
   let calendarDataMock = new Subject();
+  let formDataMock = new Subject();
 
   beforeEach(() => {
     storeMock = {
       select: jasmine
         .createSpy('select')
-        .withArgs(RequestDataState.formData)
-        .and.returnValue(formDataMock.asObservable())
         .withArgs(FlightInfoState.calendarOfPrices)
-        .and.returnValue(calendarDataMock.asObservable()),
+        .and.returnValue(calendarDataMock.asObservable())
+        .withArgs(RequestDataState.formData)
+        .and.returnValue(formDataMock.asObservable()),
       dispatch: jasmine.createSpy('dispatch'),
       selectSnapshot: jasmine
         .createSpy('selectSnapshot')
@@ -66,7 +66,6 @@ describe('CalendarOfPricesComponent', () => {
           useFactory: adapterFactory,
         }),
       ],
-
       declarations: [CalendarOfPricesComponent, CalendarDialogComponent],
       providers: [
         { provide: Store, useValue: storeMock },
@@ -94,17 +93,17 @@ describe('CalendarOfPricesComponent', () => {
       calendarDataMock.next([
         {
           value: 1,
-          start: new Date(),
+          start: moment('2016-01-01').toDate(),
           title: '',
           trip_class: 1,
           show_to_affiliates: true,
           origin: '',
           destination: '',
           gate: '',
-          depart_date: new Date(),
-          return_date: new Date(),
+          depart_date: moment('2016-01-01').toDate(),
+          return_date: moment('2016-01-01').toDate(),
           number_of_changes: 1,
-          found_at: new Date(),
+          found_at: moment('2016-01-01').toDate(),
           duration: 1,
           distance: 1,
           actual: true,
@@ -112,34 +111,63 @@ describe('CalendarOfPricesComponent', () => {
         },
       ]);
       formDataMock.next({
-        origin: '',
-        destination: '',
-        originCode: '',
-        destinationCode: '',
-        return_date: '',
-        depart_date: '',
+        origin: 'LWO',
+        destination: 'LWO',
+        originCode: 'LWO',
+        destinationCode: 'LWO',
+        return_date: '2022-16-01',
+        depart_date: '2022-16-01',
       });
     });
 
     it('should select currency from store', () => {
-      expect(store.selectSnapshot(RequestDataState.currency)).toBeTruthy();
+      expect(store.selectSnapshot(RequestDataState.currency)).toEqual('USD');
     });
 
     it('should select calendarData from store', () => {
+      const expectedData = [
+        {
+          value: 1,
+          start: moment('2016-01-01').toDate(),
+          title: '',
+          trip_class: 1,
+          show_to_affiliates: true,
+          origin: '',
+          destination: '',
+          gate: '',
+          depart_date: moment('2016-01-01').toDate(),
+          return_date: moment('2016-01-01').toDate(),
+          number_of_changes: 1,
+          found_at: moment('2016-01-01').toDate(),
+          duration: 1,
+          distance: 1,
+          actual: true,
+          currency: '',
+        },
+      ];
+
       store
         .select(FlightInfoState.calendarOfPrices)
-        .subscribe((state: CalendarOfPricesModel[]) =>
-          expect(state).toBeTruthy()
-        );
+        .subscribe((state: any[]) => (component.events = state));
+
+      expect(component.events).toEqual(expectedData);
     });
 
-    it('should select formData from store', () => {
-      store.select(RequestDataState.formData).subscribe((data: any) => {
-        store.dispatch(new CalendarOfPricesLoaded(data));
-        expect(store.dispatch).toHaveBeenCalledWith(
-          new CalendarOfPricesLoaded(data)
-        );
-      });
+    xit('should select formData from store', () => {
+      const expectedData = {
+        origin: 'LWO',
+        destination: 'LWO',
+        originCode: 'LWO',
+        destinationCode: 'LWO',
+        return_date: '2022-16-01',
+        depart_date: '2022-16-01',
+      };
+
+      store
+        .select(RequestDataState.formData)
+        .subscribe((state: any) => (component.formData = state));
+
+      expect(component.formData).toEqual(expectedData);
     });
   });
 });

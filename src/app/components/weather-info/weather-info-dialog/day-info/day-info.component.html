@@ -6,7 +6,7 @@
         class="img"
         src="{{
           'https://openweathermap.org/img/wn/' +
-            dayInfo.weather[0].icon +
+            dayInfo.weather[0]?.icon +
             '@2x.png'
         }}"
         alt=""
@@ -15,7 +15,7 @@
       {{ floorTemp(dayInfo.temp.min) }} / {{ floorTemp(dayInfo.temp.max) }}°C
     </div>
     <div class="daily-info-main-description">
-      {{ dayInfo.weather[0].description }}
+      {{ dayInfo.weather[0]?.description }}
     </div>
   </div>
 </div>

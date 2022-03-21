@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { SetFormDate } from '../../store/request-data.action';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { GetPopularDestinations } from 'src/app/store/flight-info.action';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { Observable } from 'rxjs';
@@ -19,11 +19,14 @@ import { CurrencyDropdownModel } from 'src/app/models/Currency-dropdown.model';
   templateUrl: './city-destination.component.html',
   styleUrls: ['./city-destination.component.scss'],
 })
+
 export class CityDestinationComponent implements OnInit {
   @Select(FlightInfoState.popularDestinations)
   popularDestinations$: Observable<Map<CityInfo, DestinationPopular[]>>;
   @Select(RequestDataState.currency)
   currency$: Observable<CurrencyDropdownModel>;
+  @Select(FlightInfoState.loading)
+  loading$: Observable<any>;
 
   private popularDestinationCities = ['IEV', 'LWO', 'DNK', 'ODS'];
   constructor(private store: Store, @Inject('Window') private window: Window) {}
@@ -39,7 +42,7 @@ export class CityDestinationComponent implements OnInit {
   selectedCities: string = '';
 
   ngOnInit(): void {
-    this.currency$.subscribe(() => {
+    this.currency$.pipe(untilDestroyed(this)).subscribe(() => {
       this.store.dispatch(
         new GetPopularDestinations(this.popularDestinationCities)
       );
@@ -47,7 +50,7 @@ export class CityDestinationComponent implements OnInit {
   }
 
   selectDestination(selectedDestination: DestinationPopular) {
-    this.selectedCities = selectedDestination.originName;
+    this.selectedCities = selectedDestination.origin;
     this.selectedDestinstion = selectedDestination.destination;
 
     const { startDate, endDate } = this.store.selectSnapshot(
@@ -66,6 +69,7 @@ export class CityDestinationComponent implements OnInit {
       startDate: startDate,
       endDate: endDate,
     };
+
     this.store.dispatch(new SetFormDate(formData));
     this.window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }

@@ -11,7 +11,7 @@ Run `npm run start` for the Angular dev & proxy server. Navigate to `http://loca
 
 ## Build
 
-Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `npm run build` to build the project for production. The build artifacts will be stored in the `docs/` directory.
 
 Run `npm run server` for production server after build.
 

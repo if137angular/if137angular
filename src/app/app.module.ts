@@ -71,7 +71,7 @@ import { FlightPriceTrendsComponent } from './components/flight-price-trends/fli
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { FlightFilterComponent } from './components/flight-filter/flight-filter.component';
-import { MapsComponent } from './components/maps/maps.component';
+import { RoutesMapComponent } from './components/routes-map/routes-map.component';
 import { NoRecordsFoundComponent } from './components/no-records-found/no-records-found.component';
 import { CurrencyDropdownComponent } from './components/currency-dropdown/currency-dropdown.component';
 import { CheapestTicketsComponent } from './components/cheapest-tickets/cheapest-tickets.component';
@@ -84,6 +84,7 @@ import { CovidMapComponent } from './components/covid-map/covid-map.component';
 import { WeatherInfoComponent } from './components/weather-info/weather-info.component';
 import { WeatherInfoDialogComponent } from './components/weather-info/weather-info-dialog/weather-info-dialog.component';
 import { DayInfoComponent } from './components/weather-info/weather-info-dialog/day-info/day-info.component';
+import { MobileCityDestinationComponent } from './components/mobile-city-destination/mobile-city-destination.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +105,7 @@ import { DayInfoComponent } from './components/weather-info/weather-info-dialog/
     FlightPriceTrendsComponent,
     ToolbarComponent,
     FlightFilterComponent,
-    MapsComponent,
+    RoutesMapComponent,
     NoRecordsFoundComponent,
     CurrencyDropdownComponent,
     CheapestTicketsComponent,
@@ -117,6 +118,7 @@ import { DayInfoComponent } from './components/weather-info/weather-info-dialog/
     WeatherInfoComponent,
     WeatherInfoDialogComponent,
     DayInfoComponent,
+    MobileCityDestinationComponent,
   ],
   imports: [
     // Module

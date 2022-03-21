@@ -92,7 +92,7 @@ export class FlightInfoState {
   constructor(
     private flightInfoService: FlightsInfoService,
     private store: Store
-  ) {}
+  ) { }
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
@@ -100,13 +100,13 @@ export class FlightInfoState {
   }
 
   @Selector()
-  static flightTicketsForDate(state: FlightInfoStateModel): any {
-    return filterArray(state.flightTicketsForDate, state.filter);
+  static nonStopTickets(state: FlightInfoStateModel): any {
+    return state.nonStopTickets;
   }
 
   @Selector()
-  static nonStopTickets(state: FlightInfoStateModel): any {
-    return filterArray(state.nonStopTickets, state.filter);
+  static flightTicketsForDate(state: FlightInfoStateModel): any {
+    return filterArray(state.flightTicketsForDate, state.filter);
   }
 
   @Selector()
@@ -152,10 +152,10 @@ export class FlightInfoState {
     return state.mapData;
   }
 
-  @Action(FlightInfoActions.CalendarOfPricesLoaded)
+  @Action(FlightInfoActions.CalendarOfPrices)
   LoadCalendarOfPrices(
     { patchState }: StateContext<FlightInfoStateModel>,
-    { payload }: FlightInfoActions.CalendarOfPricesLoaded
+    { payload }: FlightInfoActions.CalendarOfPrices
   ) {
     this.flightInfoService
       .getCalendarOfPrices(payload)
@@ -228,8 +228,8 @@ export class FlightInfoState {
         });
         if (payload.cardsNumber === 10) {
           patchState({
-            filterConfig
-          })
+            filterConfig,
+          });
         }
       });
   }
@@ -252,17 +252,17 @@ export class FlightInfoState {
         const data: any = Object.values(response.data);
         const filterConfig: FilterConfigModel = {
           maxPrice:
-            _.maxBy(data, (specialOffers: any) => specialOffers.price)?.price ||
+            _.maxBy(data, (specialOffers: UniversalComponentModel) => specialOffers.price)?.price ||
             150,
           minPrice:
-            _.minBy(data, (specialOffers: any) => specialOffers.price)?.price ||
+            _.minBy(data, (specialOffers: UniversalComponentModel) => specialOffers.price)?.price ||
             1,
 
           maxDuration:
-            _.maxBy(data, (specialOffers: any) => specialOffers.duration)
+            _.maxBy(data, (specialOffers: UniversalComponentModel) => specialOffers.duration)
               ?.duration || 150,
           minDuration:
-            _.minBy(data, (specialOffers: any) => specialOffers.duration)
+            _.minBy(data, (specialOffers: UniversalComponentModel) => specialOffers.duration)
               ?.duration || 1,
 
           airline: true,
@@ -376,9 +376,19 @@ export class FlightInfoState {
         .subscribe((response: CheapestTicketsResponseModel) => {
           if (!response.success && response.error) {
             dispatch(new CheapestTicketsRequestFail(response.error));
-          } else if (response.success && Object.keys(response.data).length === 0) {
-            dispatch(new CheapestTicketsRequestFail('There are no tickets in the selected direction'));
-          } else if (response.success && Object.keys(response.data).length > 0) {
+          } else if (
+            response.success &&
+            Object.keys(response.data).length === 0
+          ) {
+            dispatch(
+              new CheapestTicketsRequestFail(
+                'There are no tickets in the selected direction'
+              )
+            );
+          } else if (
+            response.success &&
+            Object.keys(response.data).length > 0
+          ) {
             dispatch(new CheapestTicketsRequestSuccess(response));
           }
         });
@@ -441,12 +451,12 @@ export class FlightInfoState {
   ) {
     patchState({ loading: true });
 
-    return this.flightInfoService
+    this.flightInfoService
       .requestGetNonStopTickets(
         formData.destinationFrom.code,
         formData.destinationTo.code,
         formData.startDate.toISOString().slice(0, 7),
-        formData.endDate.toISOString().slice(0, 7),
+        formData.endDate.toISOString().slice(0, 7)
       )
       .subscribe((response: any) => {
         const nonStopTickets: any = Object.values(response.data)[0];
@@ -466,36 +476,12 @@ export class FlightInfoState {
   }
 
   @Action(FlightInfoActions.GetPopularDestinations)
-  GetMapData(
-    { patchState, dispatch }: StateContext<FlightInfoStateModel>,
-    payload: FlightInfoActions.GetPopularDestinations
-  ) {
-    this.flightInfoService
-      .requestPopularDestination('LWO')
-      .subscribe((res: GetDestinationPopular) => {
-        const objValues: DestinationPopular[] = Object.values(res.data);
-        objValues.forEach((objValues: DestinationPopular) => {
-          const matchedCity = this.getCityByCode(objValues.destination);
-          Object.assign(objValues, {
-            id: matchedCity ? matchedCity.name.toLowerCase() : '',
-            title: matchedCity ? matchedCity.name : '',
-            geometry: {
-              type: 'Point',
-              coordinates: matchedCity
-                ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat]
-                : [],
-            },
-          });
-        });
-        patchState({ mapData: objValues });
-      });
-  }
-
-  @Action(FlightInfoActions.GetPopularDestinations)
   GetPopularDestinations(
     { patchState }: StateContext<FlightInfoStateModel>,
     { payload }: FlightInfoActions.GetPopularDestinations
   ) {
+    patchState({ loading: true });
+
     from(payload)
       .pipe(
         mergeMap((cityCode: string) =>
@@ -539,6 +525,32 @@ export class FlightInfoState {
             }
           });
         patchState({ popularDestinations: response });
+      });
+  }
+
+  @Action(FlightInfoActions.GetMapData)
+  GetMapData(
+    { patchState }: StateContext<FlightInfoStateModel>,
+    { payload }: FlightInfoActions.GetMapData
+  ) {
+    this.flightInfoService
+      .requestPopularDestination(payload)
+      .subscribe((res: GetDestinationPopular) => {
+        const objValues: DestinationPopular[] = Object.values(res.data);
+        objValues.forEach((objValues: DestinationPopular) => {
+          const matchedCity = this.getCityByCode(objValues.destination);
+          Object.assign(objValues, {
+            id: matchedCity ? matchedCity.name.toLowerCase() : '',
+            title: matchedCity ? matchedCity.name : '',
+            geometry: {
+              type: 'Point',
+              coordinates: matchedCity
+                ? [matchedCity.coordinates.lon, matchedCity.coordinates.lat]
+                : [],
+            },
+          });
+        });
+        patchState({ mapData: objValues, loading: false });
       });
   }
 

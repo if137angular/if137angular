@@ -6,4 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent {
+  isMobile: boolean;
+
+  constructor() {
+    this.isMobile = window.innerWidth < 768;
+  }
 }

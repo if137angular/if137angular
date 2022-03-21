@@ -1,0 +1,29 @@
+#chartdiv {
+  width: 1036px;
+  height: 500px;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 16px;
+}
+
+#chartdiv {
+  width: 1036px;
+  height: 500px;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 16px;
+}
+
+@media screen and (max-width: 1100px) {
+  #chartdiv {
+    width: 600px;
+    height: 350px;
+  }
+}
+@media screen and (max-width: 700px) {
+  #chartdiv {
+    width: 300px;
+  }
+}
