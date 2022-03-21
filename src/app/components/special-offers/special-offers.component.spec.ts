@@ -24,7 +24,7 @@ import { NgxsModule, Store } from '@ngxs/store';
 import { appState } from 'src/app/store/app.state';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { RequestDataState } from 'src/app/store/request-data.state';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { RequestDataService } from 'src/app/services/request-data.service';
@@ -41,8 +41,7 @@ fdescribe('SpecialOffersComponent', () => {
   let flightsInfoServiceMock: any;
   let requestDataService: any;
   let formDataSubject = new Subject();
-  let specialOffersSubject = new Subject();
-  let fakeSortPipe: any;
+  let specialOffersSubject = new BehaviorSubject([{}]);
 
   beforeEach(() => {
     storeMock = {
@@ -57,11 +56,6 @@ fdescribe('SpecialOffersComponent', () => {
     };
 
     flightsInfoServiceMock = jasmine.createSpy().and.returnValue({});
-    fakeSortPipe = [{
-      airline: "FR",
-      airline_title: "Ryanair",
-      color: "0D49C0"
-    }];
 
     TestBed.configureTestingModule({
       imports: [
@@ -98,14 +92,14 @@ fdescribe('SpecialOffersComponent', () => {
         { provide: Store, useValue: storeMock },
         { provide: FlightsInfoService, useValue: flightsInfoServiceMock },
         { provide: RequestDataService, useValue: requestDataService },
-        { provide: SortPipe, useValue: fakeSortPipe }
+
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SpecialOffersComponent);
     debugElement = fixture.debugElement;
-    store = TestBed.get(Store);
+    store = TestBed.inject(Store);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -119,160 +113,123 @@ fdescribe('SpecialOffersComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // describe('#ngOnInit', () => {
+  describe('#ngOnInit', () => {
+    beforeEach(() => {
+      store.selectSnapshot = jasmine
+        .createSpy('selectSnapshot')
+        .and.returnValue("usd");
+
+      formDataSubject.next({
+        destinationFrom: {
+          code: 'LWO',
+        },
+        destinationTo: {
+          code: '',
+        },
+
+        isFormValid: true,
+        currency: 'usd'
+      });
+
+    });
+    it('should dispatch GetSpecialOffers with appropriate params', () => {
+      // arrange / act
+      component.ngOnInit();
+      // assert
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new GetSpecialOffers({
+          cityOrigin: 'LWO',
+          cityDestination: '',
+          language: 'en',
+          currency: 'usd',
+        })
+      );
+    });
+  });
+
+  // describe('#goToLink', () => {
   //   beforeEach(() => {
-  //     formDataSubject.next({
-  //       destinationFrom: {
-  //         code: 'PARIS',
-  //       },
-  //       destinationTo: {
-  //         code: 'KYIV',
-  //       },
-  //     });
+  //     store.selectSnapshot = jasmine
+  //       .createSpy('selectSnapshot')
+  //       .and.returnValue({
+  //         currency: "UAH"
+  //       });
   //   });
-  //   it('should dispatch GetSpecialOffers with appropriate params', () => {
+  //   it('should return link', () => {
   //     // arrange / act
-  //     component.ngOnInit();
+  //     let link = '/search/MIL2403LPA1?t=FR16481076001648122900000255MXPLPA_0e2b9d095fc4e21a022e469141784c48_3806&search_date=19032022&expected_price_uuid=82fe6931-6532-450d-867c-99a7d996b295&expected_price_currency=usd'
+  //     component.goToLink(link);
   //     // assert
   //     expect(store.dispatch).toHaveBeenCalledWith(
-  //       new GetSpecialOffers({
-  //         cityOrigin: 'PARIS',
-  //         cityDestination: 'KYIV',
-  //         language: 'en',
-  //         currency: 'USD',
-  //       })
+  //       `https://search.jetradar.com/flights/${link}&currency=uah&locale=en`,
+  //       '_blank'
   //     );
   //   });
   // });
 
-  // describe('#dispatchSpecialOffers', () => {
-  //   it('should dispatch GetSpecialOffers with appropriate params', () => {
-  //     // arrange
-  //     component.language = 'UA';
-  //     component.currency = 'USD';
-  //     const formData = {
-  //       destinationFrom: {
-  //         code: 'LWO',
-  //       },
-  //       destinationTo: null,
-  //     } as any;
-  //     // act
-  //     // component.dispatchSpecialOffers(formData);
-  //     // assert
-  //     expect(store.dispatch).toHaveBeenCalledWith(
-  //       new GetSpecialOffers({
-  //         cityOrigin: 'LWO',
-  //         cityDestination: '',
-  //         language: 'UA',
-  //         currency: 'USD',
-  //       })
-  //     );
-  //   });
-  // });
+  describe('#getHours', () => {
+    it('should return 60h', () => {
+      expect(component.getHours(221)).toEqual('3h:41m');
+    });
+    it('should return 1m', () => {
+      expect(component.getHours(2024)).toEqual('33h:44m');
+    });
+    it('should return 60h 1m', () => {
+      expect(component.getHours(3601)).toEqual('60h:1m');
+    });
+  });
 
-  // describe('#onSelectedCurrencyChanged', () => {
-  //   beforeEach(() => {
-  //     store.selectSnapshot = jasmine
-  //       .createSpy('selectSnapshot')
-  //       .and.returnValue({
-  //         destinationFrom: {
-  //           code: 'LWO',
-  //         },
-  //         destinationTo: null,
-  //       });
-  //   });
-  //   // it('should dispatch GetSpecialOffers with selected currency', () => {
-  //   //   // arrange / act
-  //   //   component.onSelectedCurrencyChanged('EUR');
-  //   //   // assert
-  //   //   expect(store.dispatch).toHaveBeenCalledWith(
-  //   //     new GetSpecialOffers({
-  //   //       cityOrigin: 'LWO',
-  //   //       cityDestination: '',
-  //   //       language: 'en',
-  //   //       currency: 'EUR',
-  //   //     })
-  //   //   );
-  //   // });
-  // });
+  describe('testing UI', () => {
+    beforeEach(() => {
+      store.select(FlightInfoState.specialOffers).subscribe();
+    });
+    it('should show message Sorry! No result found :-( if response is empty', (done) => {
+      // arrange
+      specialOffersSubject.next([]);
+      // act
+      component.ngOnInit();
+      // assert
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
 
-  // describe('#onSelectedLanguageChanged', () => {
-  //   beforeEach(() => {
-  //     store.selectSnapshot = jasmine
-  //       .createSpy('selectSnapshot')
-  //       .and.returnValue({
-  //         destinationFrom: {
-  //           code: 'LWO',
-  //         },
-  //         destinationTo: null,
-  //       });
-  //   });
-  //   // it('should dispatch GetSpecialOffers with selected language', () => {
-  //   //   // arrange / act
-  //   //   component.onSelectedLanguageChanged('en');
-  //   //   // assert
-  //   //   expect(store.dispatch).toHaveBeenCalledWith(
-  //   //     new GetSpecialOffers({
-  //   //       cityOrigin: 'LWO',
-  //   //       cityDestination: '',
-  //   //       language: 'en',
-  //   //       currency: 'EUR',
-  //   //     })
-  //   //   );
-  //   // });
-  // });
+        const noDataDebugElements = debugElement.queryAll(By.css('.no-data'));
+        console.log(noDataDebugElements);
+        expect(noDataDebugElements.length > 0).toBeTruthy();
+        done();
+      });
+    });
+    it('should show result on a UI', (done) => {
+      // arrange
+      specialOffersSubject.next([
+        {
+          title: 'Title',
+          airline: 'airline',
+          airline_title: 'airline_title',
+          flight_number: 'flight_number,',
+          'departure_at:': new Date(),
+          price: 1000,
+          duration: '123',
+          link: 'link',
+        },
+      ]);
+      // act
+      component.ngOnInit();
+      // assert
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
 
-  // describe('testing UI', () => {
-  //   beforeEach(() => {
-  //     store.select(FlightInfoState.specialOffers).subscribe();
-  //   });
-  //   it('should show message Sorry! No result found :-( if response is empty', (done) => {
-  //     // arrange
-  //     specialOffersSubject.next([]);
-  //     // act
-  //     component.ngOnInit();
-  //     // assert
-  //     fixture.whenStable().then(() => {
-  //       fixture.detectChanges();
+        const noDataDebugElements = debugElement.queryAll(By.css('.no-data'));
+        const cardGroupDebugElements = debugElement.queryAll(
+          By.css('.card-group')
+        );
 
-  //       const noDataDebugElements = debugElement.queryAll(By.css('.no-data'));
-  //       console.log(noDataDebugElements);
-  //       expect(noDataDebugElements.length > 0).toBeTruthy();
-  //       done();
-  //     });
-  //   });
-  //   it('should show result on a UI', (done) => {
-  //     // arrange
-  //     specialOffersSubject.next([
-  //       {
-  //         title: 'Title',
-  //         airline: 'airline',
-  //         airline_title: 'airline_title',
-  //         flight_number: 'flight_number,',
-  //         'departure_at:': new Date(),
-  //         price: 1000,
-  //         duration: '123',
-  //         link: 'link',
-  //       },
-  //     ]);
-  //     // act
-  //     component.ngOnInit();
-  //     // assert
-  //     fixture.whenStable().then(() => {
-  //       fixture.detectChanges();
+        console.log(noDataDebugElements);
+        console.log(cardGroupDebugElements);
 
-  //       const noDataDebugElements = debugElement.queryAll(By.css('.no-data'));
-  //       const cardGroupDebugElements = debugElement.queryAll(
-  //         By.css('.card-group')
-  //       );
-
-  //       console.log(noDataDebugElements);
-  //       console.log(cardGroupDebugElements);
-
-  //       expect(noDataDebugElements.length).toBeFalsy();
-  //       expect(cardGroupDebugElements.length > 0).toBeTruthy();
-  //       done();
-  //     });
-  //   });
-  // });
+        expect(noDataDebugElements.length).toBeFalsy();
+        expect(cardGroupDebugElements.length > 0).toBeTruthy();
+        done();
+      });
+    });
+  });
 });
