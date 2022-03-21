@@ -2,19 +2,15 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  border: black;
 }
 
-.city-destination {
+.city-destination-label-wrap {
+  color: #673ab7;
+  font-size: 1.1rem;
   max-width: 1050px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-
-  &-label {
-    color: #673ab7;
-    font-size: 1.1rem;
-  }
 }
 
 .option {
@@ -34,9 +30,22 @@
   margin-left: 8px;
 }
 
-mat-form-field {
-  margin: 4px;
-  border-radius: 16px;
+.city-destination {
+  max-width: 1050px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  &-label {
+    color: #673ab7;
+    font-size: 1.1rem;
+  }
+}
+.city-destination-logo{
+  border-radius: 8px;
+}
+
+mat-form-field{
   background-image: url("https://images.kiwi.com/photos/220x165/photos.jpg");
 }
 
@@ -51,8 +60,26 @@ mat-form-field {
   }
 
   .mat-form-field-appearance-fill .mat-form-field-infix {
+    padding: 1em 0 1em 0;
+  }
+}
+
+::ng-deep .city-destination-dropdown {
+  .mat-form-field-wrapper {
+    padding-bottom: 0;
+
+    .mat-form-field-underline {
+      display: none;
+    }
+  }
+
+  .mat-form-field-appearance-fill .mat-form-field-infix {
     padding: 0.5em 0 1em 0;
   }
+}
+
+.ng-star-inserted {
+  width: 100%;
 }
 
 .mat-option .mat-icon {
@@ -71,3 +98,4 @@ mat-label {
   display: flex;
   align-items: center;
 }
+

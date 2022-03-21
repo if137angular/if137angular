@@ -1,0 +1,31 @@
+<div class="container">
+  <mat-spinner mode="indeterminate" color="accent" *ngIf="loading$ | async"></mat-spinner>
+  <div class="city-destination" *ngIf="(loading$ | async) === false">
+    <mat-form-field appearance="fill" class="city-destination-logo">
+      <mat-label class="city-destination-label-wrap">Select the city
+        <mat-select class="selected-city">
+          <div class="city-destination-dropdown">
+            <div *ngFor="let cities of (popularDestinations$ | async) | keyvalue">
+              <mat-form-field appearance="fill">
+                <mat-label class="city-destination-label">
+                  <img src="https://flagcdn.com/w40/{{cities.key.countryCode | lowercase}}.png" loading="lazy">
+                  {{cities.key.cityName}}
+                </mat-label>
+
+                <mat-select [ngModel]="selectedCities" (ngModelChange)="selectDestination($event)" name="sel3">
+                  <mat-option class="option" [value]="city" *ngFor="let city of cities.value">
+                    <span class="origin">{{city.originName}}</span>
+                    <mat-icon>trending_flat</mat-icon>
+                    <span class="destination">{{city.destinationName}}</span>
+                    <span class="price">starting at <b>{{(city.currencyCode)}}</b></span>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-select>
+      </mat-label>
+    </mat-form-field>
+  </div>
+</div>
+
