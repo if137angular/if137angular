@@ -87,7 +87,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { Subject } from 'rxjs';
 import { RequestDataState } from '../../store/request-data.state';
 
-fdescribe('FlightDataFormComponent', () => {
+describe('FlightDataFormComponent', () => {
   let component: FlightDataFormComponent;
   let fixture: ComponentFixture<FlightDataFormComponent>;
   let debugElement: DebugElement;

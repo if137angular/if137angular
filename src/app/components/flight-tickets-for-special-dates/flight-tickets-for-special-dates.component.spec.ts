@@ -36,7 +36,7 @@ import { any } from '@amcharts/amcharts5/.internal/core/util/Array';
 import { FlightTiketsForDatePayload } from 'src/app/models/flight-tickets-for-date.model';
 import { exp } from '@amcharts/amcharts5/.internal/core/util/Ease';
 
-fdescribe('FlightTicketsForSpecialDatesComponent', () => {
+describe('FlightTicketsForSpecialDatesComponent', () => {
   let component: FlightTicketsForSpecialDatesComponent;
   let fixture: ComponentFixture<FlightTicketsForSpecialDatesComponent>;
   let storeMock: any;

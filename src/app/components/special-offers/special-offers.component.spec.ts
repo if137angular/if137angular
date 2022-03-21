@@ -32,7 +32,7 @@ import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { GetSpecialOffers } from 'src/app/store/flight-info.action';
 import { SortPipe } from 'src/utils/sort.pipe';
 
-fdescribe('SpecialOffersComponent', () => {
+describe('SpecialOffersComponent', () => {
   let component: SpecialOffersComponent;
   let fixture: ComponentFixture<SpecialOffersComponent>;
   let debugElement: DebugElement;

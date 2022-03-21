@@ -13,7 +13,7 @@ import { MobileCityDestinationComponent } from './mobile-city-destination.compon
 
 
 
-fdescribe('MobileCityDestinationComponent', () => {
+describe('MobileCityDestinationComponent', () => {
   let component: MobileCityDestinationComponent;
   let fixture: ComponentFixture<MobileCityDestinationComponent>;
   let debugElement: DebugElement;

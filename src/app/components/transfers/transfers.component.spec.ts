@@ -18,7 +18,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 
-fdescribe('TransfersComponent', () => {
+describe('TransfersComponent', () => {
   let component: TransfersComponent;
   let fixture: ComponentFixture<TransfersComponent>;
   let storeMock: any;
