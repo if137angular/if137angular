@@ -11,7 +11,11 @@ import { RegisterAction } from '../../store/register.action';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  form: FormGroup;
+
+  hide: boolean = true;
+  fireBaseErrorMessege: string = '';
+  
+  registerForm: FormGroup;
 
   constructor(private fb: FormBuilder, private store: Store, private authService: AuthService) {}
 
@@ -19,23 +23,30 @@ export class RegisterComponent implements OnInit {
     this.initializeForm()
   }
 
+  getErrorMessage() {
+    if (this.registerForm.hasError('required')) {
+      return 'You must enter a value';
+    }
+    return
+  }
+
   initializeForm(): void {
-    this.form = this.fb.group({
+    this.registerForm = this.fb.group({
       username: ['', Validators.required],
       email: '',
       password: ['', Validators.required]
     })
-    console.log('initializeForm', this.form.valid)
+    console.log('initializeForm', this.registerForm.valid)
   }
 
   onSubmit() {
-    console.log('Submit ', this.form.value)
-    this.store.dispatch(new RegisterAction(this.form.value))
+    console.log('Submit ', this.registerForm.value)
+    this.store.dispatch(new RegisterAction(this.registerForm.value))
 
-    this.authService.register(this.form.value)
+    this.authService.register(this.registerForm.value)
     .subscribe((currentUser: CurrentUserInterface) => console.log('****Current USer', currentUser))
 
-    this.form.reset()
+    this.registerForm.reset()
   }
 
 }

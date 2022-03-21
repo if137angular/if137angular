@@ -57,3 +57,40 @@ a:hover {
 .btn:hover {
   opacity: 0.9;
 }
+
+
+mat-toolbar {
+  justify-content: center;
+
+  @media only screen and (max-width: 600px) {
+    padding: 0px;
+    margin-bottom: 50px;
+    justify-content: space-between;
+  }
+
+  .toolbar-wrapper {
+    display: flex;
+    max-width: 1110px;
+    display: flex;
+    align-items: center;
+    flex: 1;
+
+    a {
+      text-decoration: none;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      @media only screen and (max-width: 600px) {
+        flex-direction: column;
+      }
+    }
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .font-bold {
+    font-weight: 900;
+  }
+}
