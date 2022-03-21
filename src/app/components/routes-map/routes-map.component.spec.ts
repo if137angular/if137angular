@@ -86,7 +86,7 @@ import { Subject } from 'rxjs';
 import { RequestDataState } from '../../store/request-data.state';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 
-fdescribe('RoutesMapComponent', () => {
+describe('RoutesMapComponent', () => {
   let component: RoutesMapComponent;
   let fixture: ComponentFixture<RoutesMapComponent>;
   let debugElement: DebugElement;
