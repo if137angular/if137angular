@@ -43,10 +43,11 @@ describe('CurrencyDropdownComponent', () => {
       dispatch: jasmine.createSpy('dispatch'),
     };
 
-    flightsInfoServiceMock = {}; //jasmine.createSpy().and.returnValue({});
-    requestDataServiceMock = {}; // jasmine.createSpy().and.returnValue({});
-    requestDataStateMock = {}; // jasmine.createSpy().and.returnValue({});
-    flightInfoStateMock = {}; //jasmine.createSpy().and.returnValue({});
+    // jasmine.createSpy().and.returnValue({});
+    flightsInfoServiceMock = {};
+    requestDataServiceMock = {};
+    requestDataStateMock = {};
+    flightInfoStateMock = {};
 
     TestBed.configureTestingModule({
       imports: [
@@ -67,7 +68,6 @@ describe('CurrencyDropdownComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(CurrencyDropdownComponent);
-    // debugElement = fixture.debugElement;
     store = TestBed.get(Store);
     component = fixture.componentInstance;
 
