@@ -3,7 +3,7 @@
     [scrollWindow]="true">
     <div *ngFor="let info of flightInfo$ | async">
       <mat-card-content>
-        <app-flight-ticket [flightInfo]="info" [currency]="currency"></app-flight-ticket>
+        <app-flight-ticket [flightInfo]="info"></app-flight-ticket>
       </mat-card-content>
     </div>
   </div>

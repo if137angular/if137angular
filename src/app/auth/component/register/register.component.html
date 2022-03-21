@@ -1,11 +1,70 @@
+<!-- <button routerLink="/">Main</button>
+
+<mat-card>
+	<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+		<p>
+			<mat-form-field appearance="fill">
+				<mat-label>Full name</mat-label>
+				<input
+					matInput
+					type="text" 
+					formControlName="displayName"
+					placeholder="Full name"
+				>
+			</mat-form-field>
+		</p>
+		<p>
+			<mat-form-field appearance="fill">
+				<mat-label>Enter your email</mat-label>
+				<input
+					matInput
+					type="email"
+					placeholder="pat@example.com"
+					formControlName="email"
+				>
+
+				<mat-error *ngIf="registerForm.invalid">{{getErrorMessage()}}</mat-error>
+				
+			</mat-form-field>
+		</p>
+		<p>
+			<mat-form-field appearance="fill">
+				<mat-label>Enter your password</mat-label>
+				<input
+					matInput
+					[type]="hide ? 'password' : 'text'"
+					formControlName="password"
+					placeholder="Password"
+				>
+				<button class="icon-btn" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+					<mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+				</button>
+			</mat-form-field>
+		</p>
+		<p>
+			<input type="submit" value="Register">
+		</p>
+	</form>
+</mat-card> -->
+
+
 <div class="container">
-  <!-- <app-toolbar></app-toolbar> -->
+  <mat-toolbar color="primary">
+    <div class="toolbar-wrapper">
+      <a routerLink="/">
+        <img src="/assets/logo.svg" alt="Logo" />
+        <span class="font-bold">Flights Data Info</span>
+      </a>
+      <span class="spacer"></span>
+    </div>
+  </mat-toolbar>
+
   <div class="wrap">
     <h1>Sign Up</h1>
     <p>
       <a>Have an account?</a>
     </p>
-    <form [formGroup]="form" 
+    <form [formGroup]="registerForm" 
     (submit)="onSubmit()"
     >
       <div class="wrap-input">

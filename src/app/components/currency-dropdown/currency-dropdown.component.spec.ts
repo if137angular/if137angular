@@ -15,7 +15,7 @@ import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 
-fdescribe('CurrencyDropdownComponent', () => {
+describe('CurrencyDropdownComponent', () => {
   let component: CurrencyDropdownComponent;
   let fixture: ComponentFixture<CurrencyDropdownComponent>;
   let storeMock: any;

@@ -1,26 +1,20 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
-import { SetFormDate } from '../../store/request-data.action';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { GetPopularDestinations } from 'src/app/store/flight-info.action';
-import { FlightInfoState } from 'src/app/store/flight-info.state';
-import { Observable } from 'rxjs';
-import {
-  GetDestinationPopular,
-  DestinationPopular,
-  CityInfo,
-} from '../../models/city-destination.model';
-import { RequestDataState } from 'src/app/store/request-data.state';
-import { CurrencyDropdownModel } from 'src/app/models/Currency-dropdown.model';
+import {Component, Inject, OnInit} from '@angular/core';
+import {Select, Store} from "@ngxs/store";
+import {FlightInfoState} from "../../store/flight-info.state";
+import {Observable} from "rxjs";
+import {CityInfo, DestinationPopular, GetDestinationPopular} from "../../models/city-destination.model";
+import {RequestDataState} from "../../store/request-data.state";
+import {CurrencyDropdownModel} from "../../models/Currency-dropdown.model";
+import {GetPopularDestinations} from "../../store/flight-info.action";
+import {SetFormDate} from "../../store/request-data.action";
 
-@UntilDestroy()
 @Component({
-  selector: 'app-city-destination',
-  templateUrl: './city-destination.component.html',
-  styleUrls: ['./city-destination.component.scss'],
+  selector: 'app-mobile-city-destination',
+  templateUrl: './mobile-city-destination.component.html',
+  styleUrls: ['./mobile-city-destination.component.scss']
 })
+export class MobileCityDestinationComponent implements OnInit {
 
-export class CityDestinationComponent implements OnInit {
   @Select(FlightInfoState.popularDestinations)
   popularDestinations$: Observable<Map<CityInfo, DestinationPopular[]>>;
   @Select(RequestDataState.currency)
@@ -35,18 +29,16 @@ export class CityDestinationComponent implements OnInit {
   response: Map<CityInfo, DestinationPopular[]> = new Map<
     CityInfo,
     DestinationPopular[]
-  >();
+    >();
   cities: DestinationPopular[];
   selectedDestinstion: string = '';
   selectedOrigin: string = '';
   selectedCities: string = '';
 
   ngOnInit(): void {
-    this.currency$.pipe(untilDestroyed(this)).subscribe(() => {
-      this.store.dispatch(
+    this.store.dispatch(
         new GetPopularDestinations(this.popularDestinationCities)
       );
-    });
   }
 
   selectDestination(selectedDestination: DestinationPopular) {

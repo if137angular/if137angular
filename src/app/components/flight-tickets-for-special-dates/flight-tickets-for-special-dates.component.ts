@@ -20,9 +20,8 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
   @Select(FlightInfoState.flightTicketsForDate)
   flightInfo$: Observable<any>;
   @Select(FlightInfoState.loading)
-  loading$: Observable<any>;
+  loading$: Observable<boolean>;
 
-  currency: string;
   loading: boolean;
   cardsNumber: number = 10;
   constructor(private store: Store) {}
@@ -32,7 +31,7 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
   }
 
   getFlightInfo() {
-    this.formData$.pipe(untilDestroyed(this)).subscribe((formData) => {
+    this.formData$.pipe(untilDestroyed(this)).subscribe((formData: TicketsType) => {
       const payload = {
         codeFrom: formData.destinationFrom.code,
         codeTo: formData.destinationTo.code,
@@ -41,8 +40,6 @@ export class FlightTicketsForSpecialDatesComponent implements OnInit {
         direct: formData.transfers === 'Directly',
         cardsNumber: this.cardsNumber,
       };
-
-      this.currency = this.store.selectSnapshot(RequestDataState.currency);
       this.store.dispatch(new GetTicketsForSpecialDate(payload));
     });
   }

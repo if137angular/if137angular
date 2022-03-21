@@ -16,7 +16,7 @@ export class AuthService {
 
     return this.http.post<AuthResponsUserInterface>(url, data)
       .pipe(
-        map((response: AuthResponsUserInterface) => response.user)
+        map((response: AuthResponsUserInterface) => response.user),
       )
   }
 }

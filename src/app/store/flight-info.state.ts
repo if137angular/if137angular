@@ -557,7 +557,7 @@ export class FlightInfoState {
   getCityByCode(cityCode: string): CitiesModel {
     const cities = this.store.selectSnapshot(RequestDataState.cities);
     const matchedCity = cities.find(
-      (city: CitiesModel) => city.code === cityCode
+      (city: CitiesModel) => city.code === cityCode && city.code !== 'MOW'
     );
     return matchedCity;
   }
