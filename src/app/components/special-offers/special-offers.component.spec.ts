@@ -147,26 +147,6 @@ fdescribe('SpecialOffersComponent', () => {
     });
   });
 
-  // describe('#goToLink', () => {
-  //   beforeEach(() => {
-  //     store.selectSnapshot = jasmine
-  //       .createSpy('selectSnapshot')
-  //       .and.returnValue({
-  //         currency: "UAH"
-  //       });
-  //   });
-  //   it('should return link', () => {
-  //     // arrange / act
-  //     let link = '/search/MIL2403LPA1?t=FR16481076001648122900000255MXPLPA_0e2b9d095fc4e21a022e469141784c48_3806&search_date=19032022&expected_price_uuid=82fe6931-6532-450d-867c-99a7d996b295&expected_price_currency=usd'
-  //     component.goToLink(link);
-  //     // assert
-  //     expect(store.dispatch).toHaveBeenCalledWith(
-  //       `https://search.jetradar.com/flights/${link}&currency=uah&locale=en`,
-  //       '_blank'
-  //     );
-  //   });
-  // });
-
   describe('#getHours', () => {
     it('should return 60h', () => {
       expect(component.getHours(221)).toEqual('3h:41m');
@@ -183,7 +163,6 @@ fdescribe('SpecialOffersComponent', () => {
     it('should return UAH', () => {
       expect(component.getCurrency(23)).toEqual('UAH 23');
     });
-
   });
 
   describe('testing UI', () => {
