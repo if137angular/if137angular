@@ -14,11 +14,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { LoginComponent } from './component/login/login.component';
 import { CabinetComponent } from './component/cabinet/cabinet.component';
+import { LogoutComponent } from './component/logout/logout.component';
 
 const routes = [
   {
     path: 'register',
     component: RegisterComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   }
 ]
 
@@ -38,6 +43,7 @@ const routes = [
     RegisterComponent,
     LoginComponent,
     CabinetComponent,
+    LogoutComponent,
   ],
   providers: [AuthService]
 })
