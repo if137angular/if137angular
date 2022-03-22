@@ -59,7 +59,7 @@ describe('FlightPriceTrendsComponent', () => {
       providers: [
         { provide: Store, useValue: storeMock },
         { provide: FlightsInfoService, useValue: flightsInfoServiceMock },
-        { provide: RequestDataService, useValue: requestDataService },
+        { provide:  RequestDataService, useValue: requestDataService },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
@@ -79,7 +79,7 @@ describe('FlightPriceTrendsComponent', () => {
     flightPriceTrends.complete();
   });
 
-  fit('should create', () => {
+  fit('should create FlightPriceTrendsComponent', () => {
     expect(component).toBeTruthy();
 
   });
@@ -94,7 +94,7 @@ describe('FlightPriceTrendsComponent', () => {
 
       component.getDirectlyFlights(data);
 
-      expect(component.data).toContain({ transfers: 0 });
+      expect(component.data).toEqual([{ transfers: 0 }]);
 
     });
 
@@ -106,7 +106,7 @@ describe('FlightPriceTrendsComponent', () => {
 
       component.getFlightsWithTransfers(data);
 
-      expect(component.data).not.toContain({ transfers: 0 });
+      expect(component.data).not.toEqual([{ transfers: 0 }]);
 
     });
 
@@ -118,7 +118,7 @@ describe('FlightPriceTrendsComponent', () => {
 
       component.getDirectlyFlights(data);
 
-      expect(component.data).not.toContain({ transfers: 1 });
+      expect(component.data).not.toEqual([{ transfers: 1 }]);
 
     });
 
@@ -130,13 +130,13 @@ describe('FlightPriceTrendsComponent', () => {
 
       component.getFlightsWithTransfers(data);
 
-      expect(component.data).toContain({ transfers: 1 });
+      expect(component.data).toEqual([{ transfers: 1 }]);
 
     });
   });
 
-  fdescribe('#dispatchFlightPriceTrends', () => {
-    it('should dispatch GetFlightPriceTrends with appropriate params', () => {
+  describe('#dispatchFlightPriceTrends', () => {
+    fit('should dispatch GetFlightPriceTrends with appropriate params', () => {
       const formData = {
         destinationFrom:{
           code: 'LWO',
