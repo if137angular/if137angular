@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { OnInit, Component, Inject, NgZone, PLATFORM_ID } from '@angular/core';
 
 import { RoutesMapComponent } from './routes-map.component';
 
@@ -83,15 +84,18 @@ import { CovidMapComponent } from '../covid-map/covid-map.component';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { Subject } from 'rxjs';
 import { RequestDataState } from '../../store/request-data.state';
+import { FlightInfoState } from 'src/app/store/flight-info.state';
 
 describe('RoutesMapComponent', () => {
   let component: RoutesMapComponent;
   let fixture: ComponentFixture<RoutesMapComponent>;
   let debugElement: DebugElement;
   let storeMock: any;
+  let ngZoneMock: any;
   let store: any;
   let flightsInfoServiceMock: any;
   let requestDataService: any;
+   let formDataSubject = new Subject();
   let citiesSubject = new Subject();
 
   beforeEach(async () => {
@@ -104,13 +108,28 @@ describe('RoutesMapComponent', () => {
     };
     flightsInfoServiceMock = jasmine.createSpy().and.returnValue({});
 
+    ngZoneMock = {
+      select: jasmine.createSpy('select').withArgs(FlightInfoState.mapData).and.returnValue(formDataSubject.asObservable()), //????
+      runOutsideAngular: jasmine.createSpy('runOutsideAngular')
+    }
+
     TestBed.configureTestingModule({
       imports: [
+        // Module
+        AuthModule,
+        // Common
+        CommonModule,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
+        HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
+        NgxsModule.forRoot(appState, { developmentMode: !environment.production }),
+        NgxsLoggerPluginModule.forRoot({ disabled: environment.production }),
+        NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
+
+        // Angular Material
         MatSelectModule,
         MatAutocompleteModule,
         MatInputModule,
@@ -129,14 +148,26 @@ describe('RoutesMapComponent', () => {
         MatCardModule,
         MatProgressSpinnerModule,
         MatToolbarModule,
-        NgxsModule.forRoot(appState, {
-          developmentMode: true,
+        MatProgressBarModule,
+        MatMenuModule,
+        MtxSliderModule,
+        MatDialogModule,
+
+        // Other
+        InfiniteScrollModule,
+        FontAwesomeModule,
+        NgbModalModule,
+        FlatpickrModule.forRoot(),
+        CalendarModule.forRoot({
+          provide: DateAdapter,
+          useFactory: adapterFactory,
         }),
-        NgxsLoggerPluginModule.forRoot(),
+        NgbModule,
       ],
       declarations: [RoutesMapComponent],
       providers: [
         { provide: Store, useValue: storeMock },
+        { provide: NgZone, useValue: ngZoneMock },
         { provide: FlightsInfoService, useValue: flightsInfoServiceMock },
         { provide: RequestDataService, useValue: requestDataService },
       ],
@@ -156,7 +187,7 @@ describe('RoutesMapComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create RoutesMapComponent', () => {
     expect(component).toBeTruthy();
   });
 });

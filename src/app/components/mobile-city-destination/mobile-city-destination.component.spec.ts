@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgxsModule, Store } from '@ngxs/store';
 import { appState } from '../../store/app.state';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { RequestDataState } from '../../store/request-data.state';
 import { FlightInfoState } from '../../store/flight-info.state';
@@ -9,13 +9,13 @@ import { FlightsInfoService } from '../../services/flights-info.service';
 import { RequestDataService } from '../../services/request-data.service';
 import { GetPopularDestinations } from 'src/app/store/flight-info.action';
 import { SetFormDate } from "../../store/request-data.action";
-import { CityDestinationComponent } from './city-destination.component';
+import { MobileCityDestinationComponent } from './mobile-city-destination.component';
 
 
 
-describe('CityDestinationComponent', () => {
-  let component: CityDestinationComponent;
-  let fixture: ComponentFixture<CityDestinationComponent>;
+describe('MobileCityDestinationComponent', () => {
+  let component: MobileCityDestinationComponent;
+  let fixture: ComponentFixture<MobileCityDestinationComponent>;
   let debugElement: DebugElement;
   let storeMock: any;
   let store: any;
@@ -50,7 +50,7 @@ describe('CityDestinationComponent', () => {
           developmentMode: true,
         })
       ],
-      declarations: [CityDestinationComponent],
+      declarations: [MobileCityDestinationComponent],
       providers: [
         { provide: Store, useValue: storeMock },
         { provide: 'Window', useValue: windowMock },
@@ -60,7 +60,7 @@ describe('CityDestinationComponent', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CityDestinationComponent);
+    fixture = TestBed.createComponent(MobileCityDestinationComponent);
     debugElement = fixture.debugElement;
     store = TestBed.get(Store);
     component = fixture.componentInstance;

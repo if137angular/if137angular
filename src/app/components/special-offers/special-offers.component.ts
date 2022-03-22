@@ -22,9 +22,30 @@ export class SpecialOffersComponent implements OnInit {
   cityOrigin: string = 'IEV';
   destinationCity: string;
 
-  constructor(public store: Store) {}
+  constructor(public store: Store) { }
 
-  gotToLink(link: any) {
+  ngOnInit(): void {
+    this.formData$
+      .pipe(untilDestroyed(this))
+      .subscribe((formData: FormDataModel) => {
+        if (!formData.isFormValid) return;
+
+        this.destinationCity = formData.destinationTo.name;
+        this.currency = this.store.selectSnapshot(RequestDataState.currency);
+
+        const payload = {
+          cityOrigin: formData.destinationFrom
+            ? formData.destinationFrom.code
+            : this.cityOrigin,
+          cityDestination: '',
+          language: this.language,
+          currency: this.currency,
+        };
+        this.store.dispatch(new GetSpecialOffers(payload));
+      });
+  }
+
+  goToLink(link: any) {
     window.open(
       `https://search.jetradar.com/flights/${link}&currency=${this.currency}&locale=${this.language}`,
       '_blank'
@@ -49,26 +70,5 @@ export class SpecialOffersComponent implements OnInit {
       return ` ${minutes}m`;
     }
     return `${hours}h:${minutes}m`;
-  }
-
-  ngOnInit(): void {
-    this.formData$
-      .pipe(untilDestroyed(this))
-      .subscribe((formData: FormDataModel) => {
-        if (!formData.isFormValid) return;
-
-        this.destinationCity = formData.destinationTo.name;
-        this.currency = this.store.selectSnapshot(RequestDataState.currency);
-
-        const payload = {
-          cityOrigin: formData.destinationFrom
-            ? formData.destinationFrom.code
-            : this.cityOrigin,
-          cityDestination: '',
-          language: this.language,
-          currency: this.currency,
-        };
-        this.store.dispatch(new GetSpecialOffers(payload));
-      });
   }
 }

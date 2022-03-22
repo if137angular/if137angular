@@ -10,7 +10,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { CurrencyDropdownComponent } from './currency-dropdown.component';
 
 import { RequestDataState } from 'src/app/store/request-data.state';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { SetCurrency } from 'src/app/store/request-data.action';
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
@@ -24,6 +24,7 @@ describe('CurrencyDropdownComponent', () => {
   let requestDataServiceMock: any;
   let requestDataStateMock: any;
   let flightInfoStateMock: any;
+
   let formDataMock = new Subject();
   let currenciesSubject = new BehaviorSubject([{ code: '' }]);
   let currencySubject = new BehaviorSubject('');
@@ -42,10 +43,11 @@ describe('CurrencyDropdownComponent', () => {
       dispatch: jasmine.createSpy('dispatch'),
     };
 
-    flightsInfoServiceMock = {}; //jasmine.createSpy().and.returnValue({});
-    requestDataServiceMock = {}; // jasmine.createSpy().and.returnValue({});
-    requestDataStateMock = {}; // jasmine.createSpy().and.returnValue({});
-    flightInfoStateMock = {}; //jasmine.createSpy().and.returnValue({});
+    // jasmine.createSpy().and.returnValue({});
+    flightsInfoServiceMock = {};
+    requestDataServiceMock = {};
+    requestDataStateMock = {};
+    flightInfoStateMock = {};
 
     TestBed.configureTestingModule({
       imports: [
@@ -66,7 +68,6 @@ describe('CurrencyDropdownComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(CurrencyDropdownComponent);
-    // debugElement = fixture.debugElement;
     store = TestBed.get(Store);
     component = fixture.componentInstance;
 
@@ -81,4 +82,25 @@ describe('CurrencyDropdownComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('#setValue', () => {
+    beforeEach(() => {
+      store.selectSnapshot = jasmine
+        .createSpy('selectSnapshot')
+        .and.returnValue({
+          currency: "UAH"
+        });
+    });
+    it('should set new value of currency', () => {
+      // arrange / act
+      component.setValue('USD');
+      // assert
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new SetCurrency(
+          "USD"
+        )
+      );
+    });
+  });
+
 });

@@ -92,7 +92,7 @@ export class FlightInfoState {
   constructor(
     private flightInfoService: FlightsInfoService,
     private store: Store
-  ) {}
+  ) { }
 
   @Selector()
   static calendarOfPrices(state: FlightInfoStateModel): any {
@@ -252,17 +252,17 @@ export class FlightInfoState {
         const data: any = Object.values(response.data);
         const filterConfig: FilterConfigModel = {
           maxPrice:
-            _.maxBy(data, (specialOffers: any) => specialOffers.price)?.price ||
+            _.maxBy(data, (specialOffers: UniversalComponentModel) => specialOffers.price)?.price ||
             150,
           minPrice:
-            _.minBy(data, (specialOffers: any) => specialOffers.price)?.price ||
+            _.minBy(data, (specialOffers: UniversalComponentModel) => specialOffers.price)?.price ||
             1,
 
           maxDuration:
-            _.maxBy(data, (specialOffers: any) => specialOffers.duration)
+            _.maxBy(data, (specialOffers: UniversalComponentModel) => specialOffers.duration)
               ?.duration || 150,
           minDuration:
-            _.minBy(data, (specialOffers: any) => specialOffers.duration)
+            _.minBy(data, (specialOffers: UniversalComponentModel) => specialOffers.duration)
               ?.duration || 1,
 
           airline: true,
@@ -557,7 +557,7 @@ export class FlightInfoState {
   getCityByCode(cityCode: string): CitiesModel {
     const cities = this.store.selectSnapshot(RequestDataState.cities);
     const matchedCity = cities.find(
-      (city: CitiesModel) => city.code === cityCode
+      (city: CitiesModel) => city.code === cityCode && city.code !== 'MOW'
     );
     return matchedCity;
   }

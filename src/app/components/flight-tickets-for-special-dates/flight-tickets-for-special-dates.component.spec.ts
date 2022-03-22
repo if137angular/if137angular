@@ -30,6 +30,11 @@ import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
+import { GetTicketsForSpecialDate } from 'src/app/store/flight-info.action';
+import { constant } from 'lodash';
+import { any } from '@amcharts/amcharts5/.internal/core/util/Array';
+import { FlightTiketsForDatePayload } from 'src/app/models/flight-tickets-for-date.model';
+import { exp } from '@amcharts/amcharts5/.internal/core/util/Ease';
 
 describe('FlightTicketsForSpecialDatesComponent', () => {
   let component: FlightTicketsForSpecialDatesComponent;
@@ -104,8 +109,8 @@ describe('FlightTicketsForSpecialDatesComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FlightTicketsForSpecialDatesComponent);
     component = fixture.componentInstance;
-    store = TestBed.get(Store);
     debugElement = fixture.debugElement;
+    store = TestBed.inject(Store);
     fixture.detectChanges();
   });
 
@@ -117,4 +122,68 @@ describe('FlightTicketsForSpecialDatesComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('#getFlightInfo', () => {
+    it('should dispatch GetTicketsForSpecialDate whith parametrs', () => {
+      formDataSubject.next({
+        destinationFrom: {
+          code: 'LWO'
+        },
+        destinationTo: {
+          code: 'WAR'
+        },
+        startDate: new Date('2022-03-10'),
+        endDate: new Date('2022-03-14'),
+        transfers: 'Directly'
+      })
+      //act
+      component.getFlightInfo()
+      //assert
+      expect(store.dispatch).toHaveBeenCalledWith(new GetTicketsForSpecialDate({
+        cardsNumber: 10,
+        codeFrom: 'LWO',
+        codeTo: 'WAR',
+        direct: true,
+        startDate: '2022-03-10',
+        endDate: '2022-03-14',
+      } as any))
+    })
+
+    it('should dispatch GetTicketsForSpecialDate whith parametrs', () => {
+      formDataSubject.next({
+        destinationFrom: {
+          code: 'KIV'
+        },
+        destinationTo: {
+          code: 'LWO'
+        },
+        startDate: new Date('2022-03-14'),
+        endDate: new Date('2022-03-18'),
+        transfers: 'Transfers'
+      })
+      //act
+      component.getFlightInfo()
+      //assert
+      expect(store.dispatch).toHaveBeenCalledWith(new GetTicketsForSpecialDate({
+        cardsNumber: 10,
+        codeFrom: 'KIV',
+        codeTo: 'LWO',
+        direct: false,
+        startDate: '2022-03-14',
+        endDate: '2022-03-18',
+      } as any))
+    })
+  })
+
+  describe('#onScroll', () => {
+    it('should add cards numbers on page', () => {
+      //arrange
+      component.cardsNumber = 10
+      //act
+      component.onScroll()
+      //asert
+      expect(component.cardsNumber).toEqual(14)
+    })
+  })
+
 });

@@ -24,12 +24,13 @@ import { NgxsModule, Store } from '@ngxs/store';
 import { appState } from 'src/app/store/app.state';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { RequestDataState } from 'src/app/store/request-data.state';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { FlightsInfoService } from 'src/app/services/flights-info.service';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { GetSpecialOffers } from 'src/app/store/flight-info.action';
+import { SortPipe } from 'src/utils/sort.pipe';
 
 describe('SpecialOffersComponent', () => {
   let component: SpecialOffersComponent;
@@ -40,7 +41,7 @@ describe('SpecialOffersComponent', () => {
   let flightsInfoServiceMock: any;
   let requestDataService: any;
   let formDataSubject = new Subject();
-  let specialOffersSubject = new Subject();
+  let specialOffersSubject = new BehaviorSubject([{}]);
 
   beforeEach(() => {
     storeMock = {
@@ -53,6 +54,7 @@ describe('SpecialOffersComponent', () => {
       dispatch: jasmine.createSpy('dispatch'),
       selectSnapshot: jasmine.createSpy('selectSnapshot'),
     };
+
     flightsInfoServiceMock = jasmine.createSpy().and.returnValue({});
 
     TestBed.configureTestingModule({
@@ -85,18 +87,19 @@ describe('SpecialOffersComponent', () => {
         }),
         NgxsLoggerPluginModule.forRoot(),
       ],
-      declarations: [SpecialOffersComponent],
+      declarations: [SpecialOffersComponent, SortPipe],
       providers: [
         { provide: Store, useValue: storeMock },
         { provide: FlightsInfoService, useValue: flightsInfoServiceMock },
         { provide: RequestDataService, useValue: requestDataService },
+
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SpecialOffersComponent);
     debugElement = fixture.debugElement;
-    store = TestBed.get(Store);
+    store = TestBed.inject(Store);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -110,106 +113,55 @@ describe('SpecialOffersComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('#dispatchSpecialOffers', () => {
-    it('should dispatch GetSpecialOffers with appropriate params', () => {
-      // arrange
-      component.language = 'UA';
-      component.currency = 'USD';
-      const formData = {
+  describe('#ngOnInit', () => {
+    beforeEach(() => {
+      store.selectSnapshot = jasmine
+        .createSpy('selectSnapshot')
+        .and.returnValue("usd");
+
+      formDataSubject.next({
         destinationFrom: {
           code: 'LWO',
         },
-        destinationTo: null,
-      } as any;
-      // act
-      // component.dispatchSpecialOffers(formData);
-      // assert
-      expect(store.dispatch).toHaveBeenCalledWith(
-        new GetSpecialOffers({
-          cityOrigin: 'LWO',
-          cityDestination: '',
-          language: 'UA',
-          currency: 'USD',
-        })
-      );
-    });
-  });
-
-  describe('#onSelectedCurrencyChanged', () => {
-    beforeEach(() => {
-      store.selectSnapshot = jasmine
-        .createSpy('selectSnapshot')
-        .and.returnValue({
-          destinationFrom: {
-            code: 'LWO',
-          },
-          destinationTo: null,
-        });
-    });
-    // it('should dispatch GetSpecialOffers with selected currency', () => {
-    //   // arrange / act
-    //   component.onSelectedCurrencyChanged('EUR');
-    //   // assert
-    //   expect(store.dispatch).toHaveBeenCalledWith(
-    //     new GetSpecialOffers({
-    //       cityOrigin: 'LWO',
-    //       cityDestination: '',
-    //       language: 'en',
-    //       currency: 'EUR',
-    //     })
-    //   );
-    // });
-  });
-
-  describe('#onSelectedLanguageChanged', () => {
-    beforeEach(() => {
-      store.selectSnapshot = jasmine
-        .createSpy('selectSnapshot')
-        .and.returnValue({
-          destinationFrom: {
-            code: 'LWO',
-          },
-          destinationTo: null,
-        });
-    });
-    // it('should dispatch GetSpecialOffers with selected language', () => {
-    //   // arrange / act
-    //   component.onSelectedLanguageChanged('en');
-    //   // assert
-    //   expect(store.dispatch).toHaveBeenCalledWith(
-    //     new GetSpecialOffers({
-    //       cityOrigin: 'LWO',
-    //       cityDestination: '',
-    //       language: 'en',
-    //       currency: 'EUR',
-    //     })
-    //   );
-    // });
-  });
-
-  describe('#ngOnInit', () => {
-    beforeEach(() => {
-      formDataSubject.next({
-        destinationFrom: {
-          code: 'PARIS',
-        },
         destinationTo: {
-          code: 'KYIV',
+          code: '',
         },
+
+        isFormValid: true,
+        currency: 'usd'
       });
+
     });
-    it('should should dispatch GetSpecialOffers with form data', () => {
+    it('should dispatch GetSpecialOffers with appropriate params', () => {
       // arrange / act
       component.ngOnInit();
       // assert
       expect(store.dispatch).toHaveBeenCalledWith(
         new GetSpecialOffers({
-          cityOrigin: 'PARIS',
-          cityDestination: 'KYIV',
+          cityOrigin: 'LWO',
+          cityDestination: '',
           language: 'en',
           currency: 'usd',
         })
       );
+    });
+  });
+
+  describe('#getHours', () => {
+    it('should return 60h', () => {
+      expect(component.getHours(221)).toEqual('3h:41m');
+    });
+    it('should return 1m', () => {
+      expect(component.getHours(2024)).toEqual('33h:44m');
+    });
+    it('should return 60h 1m', () => {
+      expect(component.getHours(3601)).toEqual('60h:1m');
+    });
+  });
+
+  describe('#getCurrency', () => {
+    it('should return UAH', () => {
+      expect(component.getCurrency(23)).toEqual('UAH 23');
     });
   });
 
