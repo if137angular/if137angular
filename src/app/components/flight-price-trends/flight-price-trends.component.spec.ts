@@ -59,7 +59,7 @@ describe('FlightPriceTrendsComponent', () => {
       providers: [
         { provide: Store, useValue: storeMock },
         { provide: FlightsInfoService, useValue: flightsInfoServiceMock },
-        { provide:  RequestDataService, useValue: requestDataService },
+        { provide: RequestDataService, useValue: requestDataService },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
@@ -79,12 +79,11 @@ describe('FlightPriceTrendsComponent', () => {
     flightPriceTrends.complete();
   });
 
-  fit('should create FlightPriceTrendsComponent', () => {
+  it('should create FlightPriceTrends', () => {
     expect(component).toBeTruthy();
-
   });
 
-  fdescribe('#filterDataOnFieldTransfers', () => {
+  describe('#filterDataOnFieldTransfers', () => {
 
     it('should return data with { transfers: 0}', () => {
       const data = [
@@ -136,7 +135,7 @@ describe('FlightPriceTrendsComponent', () => {
   });
 
   describe('#dispatchFlightPriceTrends', () => {
-    fit('should dispatch GetFlightPriceTrends with appropriate params', () => {
+    it('should dispatch GetFlightPriceTrends with appropriate params', () => {
       const formData = {
         destinationFrom:{
           code: 'LWO',
@@ -162,36 +161,6 @@ describe('FlightPriceTrendsComponent', () => {
         )
       );
     });
-  });
-
-  fdescribe('#getData', () => {
-    beforeEach(() => {
-      flightPriceTrends.next([
-        {
-          origin: "",
-          destination: "",
-          departDate: "",
-          returnDate: "",
-        }
-      ]),
-      formData.next({
-        origin: '',
-        destination: '',
-        originCode: '',
-        destinationCode: '',
-        return_date: '',
-        depart_date: '',
-      })
-    })
-    it('should select flightPriceTrends from store', () => {
-      store
-        .select(FlightInfoState.flightPriceTrends)
-        .subscribe((state: FlightPriceTrendsRequest[]) =>
-          expect(component.data).toBe(state)
-        );
-        
-    });
-    
   });
   
 

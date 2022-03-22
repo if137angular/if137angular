@@ -51,11 +51,11 @@ describe('CovidMapComponent', () => {
     fixture.detectChanges();
   });
 
-  fit('should create CovidMapComponent', () => {
+  it('should create CovidMapComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  fdescribe('getCovidLevel', () => {
+  describe('getCovidLevel', () => {
     it('should return low', () => {
       const element = {
         cases: {
