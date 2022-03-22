@@ -93,6 +93,10 @@ export class CovidMapComponent implements OnInit {
           "name": "Low level of disease",
           "data": [{ "id": "" , "joined": 0 }]
         },
+        {
+          "name": "Окупанти",
+          "data": [{ "id": "RU" , "joined": 0 }]
+        },
       ];
 
       const arr = () => {

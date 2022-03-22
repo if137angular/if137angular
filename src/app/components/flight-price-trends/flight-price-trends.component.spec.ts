@@ -1,25 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FlightPriceTrendsComponent } from './flight-price-trends.component';
-import { BrowserModule, By } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from 'src/app/app-routing.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgxsModule, Store } from '@ngxs/store';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { RequestDataState } from 'src/app/store/request-data.state';
@@ -29,6 +14,8 @@ import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { RequestDataService } from 'src/app/services/request-data.service';
 import { FlightInfoState } from 'src/app/store/flight-info.state';
 import { GetFlightPriceTrends } from 'src/app/store/flight-info.action';
+import { FlightPriceTrendsRequest } from 'src/app/models/flight-price-trends.model';
+import { appState } from 'src/app/store/app.state';
 
 describe('FlightPriceTrendsComponent', () => {
   let component: FlightPriceTrendsComponent;
@@ -58,29 +45,15 @@ describe('FlightPriceTrendsComponent', () => {
       imports: [
         BrowserModule,
         AppRoutingModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatSelectModule,
-        MatAutocompleteModule,
-        MatInputModule,
         MatButtonModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatRadioModule,
-        MatSelectModule,
-        MatCheckboxModule,
-        MatTabsModule,
-        MatFormFieldModule,
-        MatTooltipModule,
         MatIconModule,
-        MatTableModule,
         MatButtonModule,
         MatCardModule,
-        MatProgressSpinnerModule,
-        MatToolbarModule,
         NgxsModule,
         NgxsLoggerPluginModule.forRoot(),
+        NgxsModule.forRoot(appState, {
+          developmentMode: true,
+        }),
       ],
       declarations: [FlightPriceTrendsComponent],
       providers: [
@@ -106,7 +79,7 @@ describe('FlightPriceTrendsComponent', () => {
     flightPriceTrends.complete();
   });
 
-  it('should create', () => {
+  it('should create FlightPriceTrends', () => {
     expect(component).toBeTruthy();
   });
 
@@ -120,7 +93,7 @@ describe('FlightPriceTrendsComponent', () => {
 
       component.getDirectlyFlights(data);
 
-      expect(component.data).toContain({ transfers: 0 });
+      expect(component.data).toEqual([{ transfers: 0 }]);
 
     });
 
@@ -132,7 +105,7 @@ describe('FlightPriceTrendsComponent', () => {
 
       component.getFlightsWithTransfers(data);
 
-      expect(component.data).not.toContain({ transfers: 0 });
+      expect(component.data).not.toEqual([{ transfers: 0 }]);
 
     });
 
@@ -144,7 +117,7 @@ describe('FlightPriceTrendsComponent', () => {
 
       component.getDirectlyFlights(data);
 
-      expect(component.data).not.toContain({ transfers: 1 });
+      expect(component.data).not.toEqual([{ transfers: 1 }]);
 
     });
 
@@ -156,7 +129,7 @@ describe('FlightPriceTrendsComponent', () => {
 
       component.getFlightsWithTransfers(data);
 
-      expect(component.data).toContain({ transfers: 1 });
+      expect(component.data).toEqual([{ transfers: 1 }]);
 
     });
   });
@@ -189,5 +162,6 @@ describe('FlightPriceTrendsComponent', () => {
       );
     });
   });
+  
 
 });
